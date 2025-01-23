@@ -1,0 +1,61 @@
+/*OWL CAROUSELS*/
+.owl-carousel .owl-nav button.owl-prev{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.owl-carousel .owl-nav button.owl-next{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.owl-carousel.owlMain .owl-nav button.owl-prev, .owl-carousel.owlMain .owl-nav button.owl-next{
+    width: 48px;
+    height: 48px;
+    background: var(--white);
+    border-radius: 100%;
+}
+
+.owl-carousel.owlMain .owl-nav button.owl-prev{
+    left: 0;
+}
+
+.owl-carousel.owlMain .owl-nav button.owl-next{
+    right: 0;
+}
+
+.owl-carousel.owlMain .owl-dots{
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+}
+
+.owl-carousel.owlMain .owl-dots .owl-dot{
+    width: 15px;
+    height: 15px;
+    background: var(--white);
+    margin-right: 10px;
+    border-radius: 100%;
+}
+
+.owl-carousel.owlMain .owl-dots .owl-dot.active{
+    background: var(--yellow);
+}
+
+.owl-carousel.owlPartners .owl-nav button.owl-prev, .owl-carousel.owlPartners .owl-nav button.owl-next{
+    width: 64px;
+    height: 64px;
+    background: var(--white3);
+    border-radius: 100%;
+}
+
+.owl-carousel.owlPartners .owl-nav button.owl-prev{
+    left: -25px;
+}
+
+.owl-carousel.owlPartners .owl-nav button.owl-next{
+    right: -25px;
+}

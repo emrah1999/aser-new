@@ -1,0 +1,11 @@
+/*FOOTER*/
+.footer{
+    padding: 25px 0;
+    background: var(--yellow2);
+}
+
+.footer__text{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}

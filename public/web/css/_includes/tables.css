@@ -1,0 +1,59 @@
+/*TABLES*/
+.table-data{
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table-data__thead-th{
+    width: auto;
+    font-size: 16px;
+    color: var(--black-2);
+    vertical-align: middle;
+    border: 0;
+}
+
+.table-data__tbody-td{
+    font-size: 14px;
+    color: var(--black-2);
+    vertical-align: middle;
+    border: 0;
+}
+
+.table-tarifs{
+    margin-bottom: 0;
+}
+
+.table-tarifs__caption{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.table-tarifs__tbody-td{
+    background-color: var(--white3) !important;
+    padding: 15px 10px!important;
+    font-size: 16px;
+    color: var(--black-2);
+    border: 0;
+}
+
+.table-orders-result__td{
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.table-orders-2__td{
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.table-orders-result-preview__th{
+    background-color: var(--yellow)!important;
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.table-orders-result-preview__td{
+    font-size: 14px;
+    color: var(--black-2);
+}

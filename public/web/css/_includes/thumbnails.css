@@ -1,0 +1,403 @@
+/*THUMBNAILS*/
+.thumbnail{
+    margin-bottom: 20px;
+    border-radius: 10px;
+
+}
+
+.thumbnail-works{
+    margin-bottom: 20px;
+}
+
+.thumbnail-works__img-block{
+    margin-bottom: 20px;
+}
+
+.thumbnail-works__title{
+    font-size: 24px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.thumbnail-works__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-tarifs{
+    margin-bottom: 40px;
+}
+
+.thumbnail-tarifs__img-block{
+    margin-bottom: 20px;
+}
+
+.thumbnail-tarifs__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.thumbnail-tarifs__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-cargo{
+    margin-bottom: 40px;
+}
+
+.thumbnail-cargo__img-block{
+    margin-bottom: 20px;
+}
+
+.thumbnail-cargo__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.thumbnail-cargo__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-partners{
+    min-height: 180px;
+    margin-bottom: 0;
+    border: 1px solid var(--white3);
+}
+
+.thumbnail-services__img-block{
+    margin-bottom: 20px;
+}
+
+.thumbnail-services__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-orders{
+    max-width: 270px;
+    margin-bottom: 0;
+}
+
+.thumbnail-orders__img-block{
+    margin-bottom: 20px;
+}
+
+.thumbnail-orders__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.thumbnail-orders__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.thumbnail-orders__link{
+    font-size: 16px;
+    padding: 12px 30px;
+}
+
+.thumbnail-orders__link-title{
+    margin-right: 10px;
+}
+
+.thumbnail-data{
+    padding: 20px;
+    border: 1px solid var(--white2);
+}
+
+.thumbnail-branches{
+    padding: 20px;
+    background: var(--white3);
+}
+
+.thumbnail-branches:last-child{
+    margin-bottom: 0;
+}
+
+.thumbnail-branches__title{
+    font-size: 16px;
+    color: var(--blue);
+    margin-bottom: 30px;
+}
+
+.thumbnail-branches__title2{
+    font-size: 14px;
+    color: rgba(0,0,0,.5);
+    margin-bottom: 5px;
+}
+
+.thumbnail-branches__desc2{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}
+
+.thumbnail-branches__link{
+    font-size: 14px;
+    padding: 15px 90px;
+}
+
+.thumbnail-cargomats{
+    background: var(--white3);
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.thumbnail-cargomats__title2{
+    font-size: 16px;
+    color: var(--black);
+    margin-bottom: 5px;
+}
+
+.thumbnail-cargomats__desc2{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}
+
+.thumbnail-cargomats__link{
+    font-size: 14px;
+    padding: 15px 90px;
+}
+
+.thumbnail-tarifs-2{
+    max-width: 700px;
+    background: var(--white3);
+    padding: 20px;
+    margin-bottom: 0;
+}
+
+.thumbnail-news__img-block{
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.thumbnail-news__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}
+
+.thumbnail-news__time{
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.thumbnail-news__time-icon{
+    margin-right: 10px;
+}
+
+.thumbnail-contact{
+    min-height: 150px;
+    background: var(--white3);
+    padding: 20px;
+    margin-bottom: 80px;
+}
+
+.thumbnail-contact__img-block{
+    margin-bottom: 20px;
+}
+
+.thumbnail-contact__title{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 5px;
+}
+
+.thumbnail-contact__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-contact__nav-socials{
+    margin-bottom: 0;
+}
+
+.thumbnail-contact__nav-socials-item{
+    width: 24px;
+    height: 24px;
+}
+
+.thumbnail-otp{
+    max-width: 570px;
+}
+
+.thumbnail-otp__img{
+    margin-bottom: 40px;
+}
+
+.thumbnail-otp__title{
+    font-size: 20px;
+    color: var(--black-2);
+    margin-bottom: 40px;
+}
+
+.thumbnail-login{
+    margin-bottom: 0;
+}
+
+.thumbnail-login__title{
+    font-size: 32px;
+    color: var(--black-2);
+    margin-bottom: 40px;
+}
+
+.thumbnail-profile-addresses{
+    background: var(--white3);
+    padding: 20px;
+}
+
+.thumbnail-profile-addresses__title{
+    font-size: 14px;
+    color: var(--white2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-addresses__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-title-block{
+    padding: 20px;
+    margin-bottom: 40px;
+    border: 1px solid var(--white2);
+}
+
+.thumbnail-profile-title-block__title{
+    font-size: 24px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-title-block__desc{
+    font-size: 16px;
+    color: var(--blue);
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-title-block__btn{
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.thumbnail-profile-title-block__btn-title{
+    margin-left: 10px;
+}
+
+.thumbnail-balances-transactions{
+    background: var(--white3);
+    padding: 20px;
+}
+
+.thumbnail-balances-transactions__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 5px;
+}
+
+.thumbnail-balances-transactions__desc{
+    font-size: 14px;
+    color: var(--white2);
+    margin-bottom: 0;
+}
+
+.thumbnail-balances-transactions__price{
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.thumbnail-balances-transactions__price--red{
+    color: var(--red);
+}
+
+.thumbnail-balances-transactions__price--green{
+    color: var(--green);
+}
+
+.thumbnail-profile-azerpoct-info{
+    padding: 5px 10px;
+    border: 1px solid var(--blue);
+}
+
+.thumbnail-profile-azerpoct-info__img{
+    margin-right: 10px;
+}
+
+.thumbnail-profile-azerpoct-info__title{
+    font-size: 13px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-curier-info{
+    padding: 5px 10px;
+    border: 1px solid var(--blue);
+}
+
+.thumbnail-profile-curier-info__img{
+    margin-right: 10px;
+}
+
+.thumbnail-profile-curier-info__title{
+    font-size: 13px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-notifications{
+    background: var(--white3);
+    padding: 20px;
+}
+
+.thumbnail-profile-notifications__img-block{
+    margin-right: 10px;
+}
+
+.thumbnail-profile-notifications__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-notifications__desc{
+    font-size: 14px;
+    color: var(--white2);
+    margin-bottom: 0;
+}
+
+.thumbnail-profile-settings{
+    background: var(--white3);
+}
+
+.thumbnail-profile-settings__link{
+    padding: 20px;
+}
+
+.thumbnail-profile-settings__img-block-1{
+    margin-right: 10px;
+}
+
+.thumbnail-profile-settings__title{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.thumbnail-shops{
+    margin-bottom: 40px;
+}

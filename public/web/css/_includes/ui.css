@@ -1,0 +1,43 @@
+/*UI*/
+:root{
+    --white: #fff;
+    --white2: #D3D3D3;
+    --white3: #F5F5F5;
+    --black: #000;
+    --black-2: #333;
+    --black3: #999;
+    --yellow: #F2C516;
+    --yellow2: #FDF9E9;
+    --red: #ff504d;
+    --blue: #00B0F0;
+    --green: #34C759;
+}
+
+body{
+    opacity: 0;
+    overflow-x: hidden;
+}
+
+a{
+    text-decoration: none;
+}
+
+.img-responsive{
+    width: 100%;
+}
+
+.center-block{
+    margin: 0 auto;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.nm{
+    margin: 0!important;
+}

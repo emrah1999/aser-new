@@ -1,0 +1,90 @@
+/*BUTTONS*/
+.btn{
+    border-radius: 10px;
+}
+
+.btn-block{
+    width: 100%;
+    display: block;
+}
+
+.btn-trns-yellow{
+    background: var(--white);
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+}
+
+.btn-trns-yellow--active{
+    background: var(--yellow);
+    color: var(--white);
+    border: 1px solid var(--yellow);
+}
+
+.btn-trns-yellow:hover, .btn-trns-yellow:active, .btn-trns-yellow:focus{
+    background: var(--white);
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+}
+
+.btn-yellow{
+    background: var(--yellow);
+    color: var(--white);
+    border: 1px solid var(--yellow);
+}
+
+.btn-yellow[disabled]{
+    background: var(--black-2);
+    color: var(--white);
+    border: 1px solid var(--black-2);
+}
+
+.btn-yellow:hover, .btn-yellow:active, .btn-yellow:focus{
+    background: var(--yellow);
+    color: var(--white);
+}
+
+.btn-black{
+    background: var(--black-2);
+    color: var(--white);
+    border: 1px solid var(--black-2);
+}
+
+.btn-black:hover, .btn-black:active, .btn-black:focus{
+    background: var(--black-2);
+    color: var(--white);
+}
+
+.btn-trns-black{
+    background: var(--white);
+    color: var(--black-2);
+    border: 1px solid var(--black-2);
+}
+
+.btn-trns-black:hover, .btn-trns-black:active, .btn-trns-black:focus{
+    background: var(--white);
+    color: var(--black-2);
+    border: 1px solid var(--black-2);
+}
+
+.btn-blue{
+    background: var(--blue);
+    color: var(--white);
+    border: 1px solid var(--blue);
+}
+
+.btn-blue:hover, .btn-blue:active, .btn-blue:focus{
+    background: var(--blue);
+    color: var(--white);
+}
+
+.btn-trns-blue{
+    background: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.btn-trns-blue:hover, .btn-trns-blue:active, .btn-trns-blue:focus{
+    background: var(--white);
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}

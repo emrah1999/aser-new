@@ -1,0 +1,31 @@
+/*HEADER*/
+.header{
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px 0 var(--white2);
+}
+
+.header-top{
+    padding: 25px 0;
+    background: var(--yellow2);
+}
+
+.header-top__text{
+    font-size: 13px;
+    color: var(--black-2);
+    margin-right: 20px;
+    margin-bottom: 0;
+}
+
+.header-top__btn{
+    padding: 12px 30px;
+    font-size: 16px;
+    margin-right: 30px;
+}
+
+.header-top__btn:last-child{
+    margin-right: 0;
+}
+
+.header-bottom{
+    padding: 20px 0;
+}

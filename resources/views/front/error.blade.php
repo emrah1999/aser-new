@@ -1,0 +1,1 @@
+<h1>{!! __('static.error_text') !!}</h1>

@@ -1,0 +1,484 @@
+.order-op>span,
+.order-op>a {
+    cursor: pointer;
+}
+
+.hide-on-web {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .hide-on-mobile {
+        display: none;
+    }
+    .hide-on-web {
+        display: block;
+    }
+}
+
+.modal-content {
+    max-height: 500px;
+    margin-top: 20%;
+}
+
+.modal-body {
+    overflow-y: auto;
+}
+
+
+/*Special orders basket*/
+
+#lblCartCount {
+    font-size: 12px;
+    background: #0f7b2f;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px;
+}
+
+.badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+    background-color: #c67605;
+}
+
+
+/*------------  Niko   -------------------*/
+
+
+/*= Reset CSS
+============= */
+
+
+/*= input focus effects css
+=========================== */
+
+:focus {
+    outline: none;
+}
+
+.input_custom {
+    position: relative;
+}
+
+
+/* necessary to give position: relative to parent. */
+
+#subscribe-email {
+    font: 15px/24px 'Lato', Arial, sans-serif;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+    border-radius: 30px;
+}
+
+.effect-20 {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    transition: 0.4s;
+    background: transparent;
+}
+
+.effect-20~.focus-border:before,
+.effect-20~.focus-border:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #ffce00;
+    transition: 0.3s;
+}
+
+.effect-20~.focus-border:after {
+    top: auto;
+    bottom: 0;
+    left: auto;
+    right: 0;
+}
+
+.effect-20~.focus-border i:before,
+.effect-20~.focus-border i:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 0;
+    background-color: #ffce00;
+    transition: 0.4s;
+}
+
+.effect-20~.focus-border i:after {
+    left: auto;
+    right: 0;
+    top: auto;
+    bottom: 0;
+}
+
+.effect-20:focus~.focus-border:before,
+.effect-20:focus~.focus-border:after,
+.has-content.effect-20~.focus-border:before,
+.has-content.effect-20~.focus-border:after {
+    width: 100%;
+    transition: 0.3s;
+}
+
+.effect-20:focus~.focus-border i:before,
+.effect-20:focus~.focus-border i:after,
+.has-content.effect-20~.focus-border i:before,
+.has-content.effect-20~.focus-border i:after {
+    height: 100%;
+    transition: 0.4s;
+}
+
+.effect-20~label {
+    position: absolute;
+    left: 14px;
+    width: 100%;
+    top: 10px;
+    color: #aaa;
+    transition: 0.3s;
+    z-index: -1;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+}
+
+.effect-20:focus~label,
+.has-content.effect-20~label {
+    top: -18px;
+    left: 0;
+    font-size: 12px;
+    color: #ffce00;
+    transition: 0.3s;
+}
+
+
+/*= input focus effects css End
+=============================== */
+
+.seperate_block {
+    margin-bottom: 30px;
+}
+
+
+/*------  toltip ----*/
+
+[data-tooltip] {
+    display: inline-block;
+    position: relative;
+    cursor: help;
+    padding: 4px;
+}
+
+
+/* Tooltip styling */
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    display: none;
+    position: absolute;
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    min-width: 300px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+
+/* Dynamic horizontal centering */
+
+[data-tooltip-position='top']:before,
+[data-tooltip-position='bottom']:before {
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+@media only screen and (max-width: 767px) {
+    [data-tooltip-position='top']:before,
+    [data-tooltip-position='bottom']:before {
+        left: 100%;
+        -ms-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+}
+
+
+/* Dynamic vertical centering */
+
+[data-tooltip-position='right']:before,
+[data-tooltip-position='left']:before {
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+[data-tooltip-position='top']:before {
+    bottom: 100%;
+    margin-bottom: 6px;
+}
+
+[data-tooltip-position='right']:before {
+    left: 100%;
+    margin-left: 6px;
+}
+
+[data-tooltip-position='bottom']:before {
+    top: 100%;
+    margin-top: 6px;
+}
+
+[data-tooltip-position='left']:before {
+    right: 100%;
+    margin-right: 6px;
+}
+
+
+/* Tooltip arrow styling/placement */
+
+[data-tooltip]:after {
+    content: '';
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+
+
+/* Dynamic horizontal centering for the tooltip */
+
+[data-tooltip-position='top']:after,
+[data-tooltip-position='bottom']:after {
+    left: 50%;
+    margin-left: -6px;
+}
+
+
+/* Dynamic vertical centering for the tooltip */
+
+[data-tooltip-position='right']:after,
+[data-tooltip-position='left']:after {
+    top: 50%;
+    margin-top: -6px;
+}
+
+[data-tooltip-position='top']:after {
+    bottom: 100%;
+    border-width: 6px 6px 0;
+    border-top-color: #000;
+}
+
+[data-tooltip-position='right']:after {
+    left: 100%;
+    border-width: 6px 6px 6px 0;
+    border-right-color: #000;
+}
+
+[data-tooltip-position='bottom']:after {
+    top: 100%;
+    border-width: 0 6px 6px;
+    border-bottom-color: #000;
+}
+
+[data-tooltip-position='left']:after {
+    right: 100%;
+    border-width: 6px 0 6px 6px;
+    border-left-color: #000;
+}
+
+
+/* Show the tooltip when hovering */
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    display: block;
+    z-index: 50;
+}
+
+.courier-check-box {
+    -webkit-appearance: checkbox !important;
+    -moz-appearance: checkbox !important;
+    appearance: auto !important;
+    display: block !important;
+}
+
+
+/*------------------- table ----- */
+
+[Table]*/ .table100 {
+    background-color: #fff;
+}
+
+table {
+    width: 100%;
+}
+
+th,
+td {
+    font-weight: unset;
+    padding-right: 10px;
+}
+
+.table100-head th {
+    padding: 15px;
+}
+
+.table100-body td {
+    padding: 15px;
+}
+
+
+/*==================================================================
+[ Fix header ]*/
+
+.table100 {
+    position: relative;
+    padding-top: 60px;
+}
+
+.table100-head {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.table100-body {
+    max-height: 585px;
+    overflow: auto;
+}
+
+
+/*==================================================================
+[ Ver1 ]*/
+
+.table100.ver1 th {
+    font-family: Lato-Bold;
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.4;
+    background-color: rgba(16, 69, 140, 1);
+}
+
+.table100.ver1 td {
+    font-family: Lato-Regular;
+    font-size: 15px;
+    color: #808080;
+    line-height: 1.4;
+}
+
+.table100.ver1 .table100-body tr:nth-child(even) {
+    background-color: #f8f6ff;
+}
+
+
+/*---------------------------------------------*/
+
+.table100.ver1 {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);
+}
+
+.table100.ver1 .ps__rail-y {
+    right: 5px;
+}
+
+.table100.ver1 .ps__rail-y::before {
+    background-color: #ebebeb;
+}
+
+.table100.ver1 .ps__rail-y .ps__thumb-y::before {
+    background-color: #cccccc;
+}
+
+.campaign-text {
+    text-align: center;
+}
+
+.campaign-text > p {
+    color: #ffce00;
+}
+
+.section-content > .sellers > li > a > img {
+    height: 50px;
+    width: 100px;
+}
+
+/**/
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    width: max-content;
+}
+
+.dropdown-content > li {
+    color: black;
+    padding: 12px;
+    display: block;
+    margin-left: 0 !important;
+    /*float: left;*/
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.tracking-search-buttons {
+    margin-top: 15px;
+}
+
+.tracking-search-buttons > button {
+    width: 48%;
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #ffce00;
+
+}

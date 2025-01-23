@@ -1,0 +1,651 @@
+@import "_includes/fonts.css";
+@import "_includes/ui.css";
+@import "_includes/buttons.css";
+@import "_includes/navs.css";
+@import "_includes/forms.css";
+@import "_includes/thumbnails.css";
+@import "_includes/media.css";
+@import "_includes/modals.css";
+@import "_includes/accordions.css";
+@import "_includes/tables.css?v=1.2";
+@import "_includes/paginations.css";
+@import "_includes/owl.css";
+@import "_includes/header.css";
+@import "_includes/footer.css";
+
+/*SECTIONS*/
+/* Dropdown container */
+.dropdown-container {
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+    left: 150px;
+}
+
+.dropdown-label {
+    background-color: #00b0f0;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-label:hover {
+    background-color: #0078b0;
+}
+
+.dropdown-icon {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 40px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(315deg);
+}
+
+.dropdown-checkbox {
+    display: none;
+}
+
+.dropdown-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9; /
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 10;
+    width: 100%;
+}
+
+.dropdown-menu li {
+    padding: 10px 20px;
+}
+
+.dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #eee;
+    border-radius: 8px;
+}
+
+.dropdown-checkbox:checked + .dropdown-menu {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .dropdown-container {
+        left: 0;
+        margin-right: 5px;
+    }
+
+    .dropdown-label {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    .dropdown-menu {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dropdown-label {
+        font-size: 10px;
+        padding: 6px 12px;
+    }
+
+    .dropdown-menu li a {
+        font-size: 10px;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
+}
+
+.section{
+    padding: 20px 0 40px;
+}
+
+.section-title{
+    font-size: 32px;
+    color: var(--black-2);
+    margin-bottom: 40px;
+}
+
+.section-desc{
+    font-size: 16px;
+    color: var(--black-2);
+}
+
+.section-main{
+    background: var(--blue);
+    min-height: 580px;
+}
+
+.section-main, .section-works, section-works-video, .section-offers{
+    padding: 40px 0;
+}
+
+.section-contact__text{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 5px;
+}
+
+.workhours{
+    margin-bottom: 20px;
+}
+
+.workhours__title{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 5px;
+}
+
+.workhours__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 5px;
+}
+
+.section-contact__block{
+    max-width: 860px;
+}
+
+.login-registration-question__title{
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.login-registration-question__link{
+    font-size: 14px;
+    color: var(--yellow);
+    text-decoration: none;
+}
+
+.login-sima{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.title-block{
+    margin-bottom: 40px;
+}
+
+.title-block__title{
+    font-size: 20px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.mobile-menu{
+    padding: 10px;
+}
+
+/*PROFILE*/
+.profile-title-block{
+    margin-bottom: 40px;
+}
+
+.profile-title-block__title{
+    font-size: 24px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+.profile-more-btn{
+    font-size: 24px;
+    color: var(--black-2);
+}
+
+/*RESPONSIVE*/
+@media (max-width: 575.98px) {
+    .img-responsive{
+        width: 100%;
+    }
+    .google-apple__img{
+        margin-right: 10px;
+    }
+    .header-top__btn{
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .nav-languages__link{
+        font-size: 14px;
+    }
+    .header-bottom{
+        padding: 10px 0;
+    }
+    .nav-menu{
+        display: block;
+    }
+    .nav-menu__link{
+        display: block;
+        padding: 5px 0;
+    }
+    .section{
+        padding: 0 0 20px;
+    }
+    .section-title{
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .section-main{
+        min-height: auto;
+        padding-top: 20px;
+    }
+    .media-slider__title{
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .media-slider__desc{
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .media-slider__link{
+        padding: 10px 20px;
+    }
+    .owl-carousel.owlMain .owl-dots{
+        bottom: 0;
+    }
+    .section-works{
+        padding-top: 20px;
+    }
+    .media-works__left{
+        margin-bottom: 20px;
+    }
+    .form-calculator{
+        padding: 20px 0;
+    }
+    .form-calculator__title{
+        font-size: 24px;
+    }
+    .form__btn{
+        padding: 10px 20px;
+    }
+    .form-calculator__result{
+        font-size: 24px;
+    }
+    .thumbnail-orders__link{
+        padding: 10px 20px;
+    }
+    .table-data__thead-th{
+        min-width: 200px;
+    }
+    .media-branches__map{
+        height: 300px;
+    }
+    .thumbnail-branches__link{
+        padding: 10px 20px;
+    }
+    .thumbnail-cargomats__link{
+        padding: 10px 20px;
+    }
+    .thumbnail-orders__link{
+        padding: 10px 20px;
+    }
+    .thumbnail-video__iframe{
+        height: 250px;
+    }
+    .nav-tab-categories{
+        margin-bottom: 20px;
+    }
+    .form-search-categories{
+        margin-bottom: 20px;
+    }
+    .form-search-categories__form-group{
+        margin-bottom: 10px;
+    }
+    .form-search-categories__form-checkbox-text {
+        font-size: 16px;
+    }
+    .title-block{
+        margin-bottom: 20px;
+    }
+    .form-tracking-search{
+        margin-bottom: 20px;
+    }
+    .form-tracking-search__btn{
+        margin-bottom: 20px;
+    }
+    .thumbnail-contact{
+        margin-bottom: 20px;
+    }
+    .form-registration__title{
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+    .form-registration__title-2{
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .form-registration__content{
+        margin-bottom: 20px;
+    }
+    .form-registration__btn-types{
+        margin-bottom: 20px;
+    }
+    .form-registration__btn-actions{
+        margin-bottom: 20px;
+    }
+    .form-registration__btn-type{
+        padding: 10px 20px;
+    }
+    .form-registration__btn-action{
+        margin-bottom: 10px;
+    }
+    .thumbnail-otp__img{
+        margin-bottom: 20px;
+    }
+    .thumbnail-otp__title{
+        margin-bottom: 20px;
+    }
+    .form-confirmation-otp__group{
+        margin-bottom: 20px;
+    }
+    .modal-otp__title{
+        margin-bottom: 20px;
+    }
+    .modal-otp__desc{
+        margin-bottom: 20px;
+    }
+    .thumbnail-login__title{
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .form-login__remember_forgot-block{
+        margin-bottom: 20px;
+    }
+    .nav-profile-menu__link{
+        font-size: 16px;
+        padding: 10px;
+    }
+    .profile-title-block{
+        margin-bottom: 20px;
+    }
+    .profile-title-block__title{
+        font-size: 20px;
+    }
+    .thumbnail-profile-title-block{
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .thumbnail-profile-title-block__title{
+        font-size: 20px;
+    }
+    .thumbnail-profile-title-block__desc{
+        font-size: 14px;
+    }
+    .thumbnail-balances-transactions{
+        padding: 10px;
+    }
+    .thumbnail-profile-notifications{
+        padding: 10px;
+    }
+    .profile-more-btn{
+        font-size: 20px;
+    }
+    .form-modal-profile__btn{
+        padding: 10px;
+    }
+    .form-modal-profile-balance-add__title{
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .form-profile-balances-confirmation__top{
+        margin-bottom: 20px;
+    }
+    .form-profile-balances-confirmation__title{
+        font-size: 20px;
+    }
+    .form-profile-balances-confirmation__price{
+        font-size: 20px;
+    }
+    .form-profile-azerpoct__title{
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .profile-notifications-more-btn{
+        font-size: 16px;
+    }
+    .footer{
+        padding: 10px 0;
+    }
+    .nav-menu-2__link{
+        padding-bottom: 10px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .img-responsive{
+        width: 100%;
+    }
+    .header-top__btn{
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .nav-languages__link{
+        font-size: 14px;
+    }
+    .header-bottom{
+        padding: 10px 0;
+    }
+    .nav-menu{
+        display: block;
+    }
+    .nav-menu__link{
+        display: block;
+        padding: 5px 0;
+    }
+    .section{
+        padding: 0 0 20px;
+    }
+    .section-title{
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .section-main{
+        min-height: 340px;
+        padding-top: 20px;
+    }
+    .media-slider__title{
+        font-size: 32px;
+    }
+    .media-slider__desc{
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    .media-slider__link{
+        padding: 10px 20px;
+    }
+    .owl-carousel.owlMain .owl-dots{
+        bottom: 0;
+    }
+    .section-works{
+        padding-top: 20px;
+    }
+    .media-works__left{
+        margin-bottom: 20px;
+    }
+    .table-data__thead-th{
+        min-width: 200px;
+    }
+    .media-branches__map{
+        height: 300px;
+    }
+    .form-search-categories{
+        margin-bottom: 20px;
+    }
+    .form-search-categories__form-group{
+        margin-bottom: 10px;
+    }
+    .form-search-categories__form-checkbox-text {
+        font-size: 16px;
+    }
+    .form-tracking-search{
+        margin-bottom: 20px;
+    }
+    .nav-profile-menu__link{
+        padding: 10px;
+        font-size: 16px;
+    }
+    .thumbnail-profile-title-block{
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .thumbnail-profile-title-block__title{
+        font-size: 20px;
+    }
+    .thumbnail-balances-transactions{
+        padding: 10px;
+    }
+    .profile-more-btn{
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .header-top__btn{
+        padding: 8px 5px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+    .nav-languages__link{
+        font-size: 14px;
+    }
+    .header-bottom{
+        padding: 10px 0;
+    }
+    .nav-menu{
+        display: block;
+    }
+    .nav-menu__link{
+        display: block;
+        padding: 5px 0;
+    }
+    .section-main{
+        min-height: 400px;
+    }
+    .media-slider__title{
+        font-size: 32px;
+    }
+    .media-slider__desc{
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    .owl-carousel.owlMain .owl-dots{
+        bottom: 0;
+    }
+
+
+    .table-data__thead-th{
+        min-width: 200px;
+    }
+    .media-branches__map{
+        height: 300px;
+    }
+    .nav-tab-categories__link{
+        padding: 5px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .header-top__btn{
+        padding: 10px;
+    }
+    .nav-menu__link{
+        padding: 5px 10px;
+    }
+    .table-data__thead-th{
+        min-width: 150px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .nav-menu__link {
+        padding: 5px 10px;
+    }
+}
+
+
+
+/*TABLES*/
+.table-data{
+    width: 1;
+    margin-bottom: 0;
+}
+
+.table-data__thead-th{
+    width: auto;
+    font-size: 16px;
+    color: var(--black-2);
+    vertical-align: middle;
+    border: 0;
+}
+
+.table-data__tbody-td{
+    font-size: 14px;
+    color: var(--black-2);
+    vertical-align: middle;
+    border: 0;
+}
+
+.table-tarifs{
+    margin-bottom: 0;
+}
+
+.table-tarifs__caption{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.table-tarifs__tbody-td{
+    background-color: var(--white3) !important;
+    padding: 15px 10px!important;
+    font-size: 16px;
+    color: var(--black-2);
+    border: 0;
+}
+
+.table-orders-result__td{
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.table-orders-2__td{
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.table-orders-result-preview__th{
+    background-color: var(--yellow)!important;
+    font-size: 14px;
+    color: var(--black-2);
+}
+
+.table-orders-result-preview__td{
+    font-size: 14px;
+    color: var(--black-2);
+}

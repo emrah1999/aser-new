@@ -1,0 +1,25 @@
+/*PAGINATIONS*/
+.pagination-data{
+    margin-bottom: 0;
+}
+
+.pagination-data__item{
+    margin-right: 10px;
+}
+
+.pagination-data__link{
+    padding: 6px 12px;
+    font-size: 14px;
+    color: var(--black);
+    border: 1px solid var(--white2);
+    border-radius: 8px;
+}
+
+.pagination-data__link--disabled{
+    background: var(--black3);
+    pointer-events: none;
+}
+
+.pagination-data__item--active .pagination-data__link{
+    border: 1px solid var(--yellow);
+}

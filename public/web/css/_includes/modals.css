@@ -1,0 +1,136 @@
+/*MODALS*/
+.modal-otp__dialog{
+    max-width: 670px;
+}
+
+.modal-otp__header, .modal-otp__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-otp__title{
+    font-size: 24px;
+    margin-bottom: 70px;
+}
+
+.modal-otp__desc{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 70px;
+}
+
+.modal-otp__title-time{
+    color: var(--yellow);
+}
+
+.modal-otp__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-balance-add__dialog{
+    max-width: 500px;
+}
+
+.modal-profile-balance-add__header, .modal-profile-balance-add__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-balance-add__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-balance-confirmation__dialog{
+    max-width: 370px;
+}
+
+.modal-profile-balance-confirmation__header, .modal-profile-balance-confirmation__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-balance-confirmation__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-promocode__dialog{
+    max-width: 370px;
+}
+
+.modal-profile-promocode__header, .modal-profile-promocode__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-promocode__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-curier-confirmation__dialog{
+    max-width: 370px;
+}
+
+.modal-profile-curier-confirmation__header, .modal-profile-curier-confirmation__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-curier-confirmation__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-azerpoct__dialog{
+    max-width: 370px;
+}
+
+.modal-profile-azerpoct__header, .modal-profile-azerpoct__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-curier__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-curier__dialog{
+    max-width: 370px;
+}
+
+.modal-profile-curier__header, .modal-profile-curier__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-curier__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-logout__dialog{
+    max-width: 370px;
+}
+
+.modal-profile-logout__header, .modal-profile-logout__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-logout__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-curier-orders__img-close{
+    cursor: pointer;
+}
+
+.modal-profile-curier-orders__dialog{
+    max-width: 1000px;
+}
+
+.modal-profile-curier-orders__header, .modal-profile-curier-orders__body{
+    padding: 20px;
+    border: 0;
+}
+
+.modal-profile-curier-orders__img-close{
+    cursor: pointer;
+}

@@ -1,0 +1,126 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\EmailListContent;
+use App\Notifications\Emails;
+use App\OTP;
+use App\Service\SendOTPCode;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\App;
+
+class OTPController extends Controller
+{
+    public function index($otp_session)
+    {
+        $otp_session = $otp_session;
+        return view('web.register.otp', compact('otp_session'));
+    }
+    
+    public function verifyOtp(Request $request, $locale){
+        //dd($request->otp_full);
+        $validator = Validator::make($request->all(), [
+            'otp_full' => ['required', 'string', 'max:6']
+        ]);
+        if ($validator->fails()) {
+            return response(['case' => 'warning', 'title' => 'OTP kodunda səhvlik var yenidən cəhd edin' . '!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
+        }
+    
+        try {
+        
+            $otp = OTP::where('otp', $request->otp_full)->where('is_verify', 0)->first();
+            //dd($otp);
+            if(is_null($otp)){
+                return redirect()->back()->with('error', 'OTP kodunda səhvlik var yenidən cəhd edin');
+            }
+            
+            $user = User::where('id', $otp->client_id)->whereNull('email_verified_at')->first();
+            
+            if(is_null($user)){
+                return redirect()->back()->with('error', 'Bu istifadəçi ya mövcud deyil ya da artıq təsdiqlənib');
+            }
+            
+            $otp->update([
+                'is_verify' => 1,
+            ]);
+            
+            $user->update([
+                'email_verified_at' => Carbon::now()
+            ]);
+    
+//            $email = EmailListContent::where(['type' => 'register_success'])->first();
+//
+//            if ($email) {
+//                $client = $user->name . ' ' . $user->surname;
+//                $lang = strtolower($user->language);
+//
+//                $email_title = $email->{'title_' . $lang}; //from
+//                $email_subject = $email->{'subject_' . $lang};
+//                $email_bottom = $email->{'content_bottom_' . $lang};
+//                $email_content = $email->{'content_' . $lang};
+//
+//                $terms_link = 'https://asercargo.az/uploads/static/terms.pdf';
+//
+//                $email_content = str_replace('{name_surname}', $client, $email_content);
+//                $email_content = str_replace('{after_link}', $terms_link, $email_content);
+//
+//                $user->notify(new Emails($email_title, $email_subject, $email_content, $email_bottom));
+//            }
+            return redirect()->route("get_account", ['locale' => App::getLocale()]);
+            /*return redirect()->route('get_account')->with([
+                'case' => 'success',
+                'title' => __('static.success'),
+                'content' => __('register.success_message')
+            ]);*/
+        }catch (\Exception $e){
+            dd($e);
+            return 'Error';
+        }
+        
+    }
+    
+    public function resendOtp(Request $request)
+    {
+        //dd($request->all());
+        try {
+    
+            $otp = OTP::where('otp_session', $request->otp_session)->where('is_verify', 0)->first();
+
+            $otpSentTime = $otp->created_at;
+            $currentTime = Carbon::now();
+    
+            if ($currentTime->diffInSeconds($otpSentTime) < 120) {
+                return response()->json(['success' => false, 'message' => '2 dəqiqə tamamlanmadan yeni OTP kodu tələb edilə bilməz.'], 429);
+            }
+    
+            $otp_session = $this->generateRandomCode();
+            $sendOtp = new SendOTPCode();
+            $sendOtp->send_sms($otp->client_id, $request->phone1, $otp_session);
+    
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP yenidən göndərildi',
+                'otp_session' => $otp_session
+            ]);
+        }catch (\Exception $e){
+            //dd($e);
+            return 'Error';
+        }
+        
+    }
+    
+    protected function generateRandomCode($length = 18) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomCode = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomCode .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomCode;
+    }
+}

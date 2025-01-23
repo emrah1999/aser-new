@@ -1,0 +1,234 @@
+/*NAVS*/
+.nav-languages{
+    position: relative;
+}
+
+.nav-languages__link{
+    font-size: 16px;
+    color: var(--black-2);
+    text-decoration: none;
+}
+
+.nav-languages__link-img{
+    position: relative;
+    top: -3px;
+}
+
+.nav-languages-2{
+    position: absolute;
+    right: 0;
+    bottom: -60px;
+    display: block;
+    min-width: 75px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.nav-languages-2__link{
+    display: block;
+    padding: 2px 10px;
+    font-size: 16px;
+    color: var(--black-2);
+    text-align: center;
+    text-decoration: none;
+}
+
+.nav-languages-2__link:hover{
+    background: var(--black-2);
+    color: var(--white);
+    transition: all .5s;
+}
+
+
+.nav-menu__item--active .nav-menu__link{
+    color: var(--yellow);
+}
+
+.nav-menu__item:last-child .nav-menu__link{
+    padding-right: 0;
+}
+
+.nav-menu__link{
+    padding: 5px 30px;
+    font-size: 16px;
+    color: var(--black-2);
+    text-decoration: none;
+    transition: all .5s;
+}
+
+.nav-menu__link:hover{
+    color: var(--yellow);
+    transition: all .5s;
+}
+
+.mobile-menu__item{
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    margin-bottom: 5px;
+}
+
+.mobile-menu__item:last-child{
+    margin-bottom: 0;
+}
+
+.nav-breadcrumbs__item{
+    position: relative;
+}
+
+.nav-breadcrumbs__link{
+    padding-right: 25px;
+    font-size: 16px;
+    color: var(--black-2);
+}
+
+.nav-breadcrumbs__item:not(.nav-breadcrumbs__item--active)::after{
+    content: url("../../images/content/other-breadcrumb.png");
+    position: absolute;
+    right: 0;
+}
+
+.nav-breadcrumbs__item--active{
+    font-size: 16px;
+    color: var(--yellow);
+}
+
+.nav-tab-categories{
+    margin-bottom: 80px;
+}
+
+.nav-tab-categories__link{
+    position: relative;
+    padding: 5px 10px;
+    background: var(--white);
+    font-size: 14px;
+    color: var(--black-2);
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+}
+
+.nav-tab-categories__link--active{
+    background: var(--blue);
+    color: var(--white);
+    z-index: 1;
+}
+
+.nav-tab-categories__link-img{
+    position: relative;
+    top: 4px;
+}
+
+.nav-contact{
+    margin-bottom: 20px;
+}
+
+.nav-contact__item{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}
+
+.nav-contact__img{
+    margin-right: 10px;
+}
+
+.nav-socials{
+    margin-bottom: 10px;
+}
+
+.nav-socials__item{
+    width: 30px;
+    height: 30px;
+    background: var(--white);
+    margin-right: 10px;
+    border-radius: 100%;
+}
+
+.nav-rules{
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+
+.nav-rules__item{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.nav-rules__item:last-child{
+    margin-bottom: 0;
+}
+
+.nav-restrictions-products{
+    display: block;
+    list-style: square;
+    list-style-position: inside;
+}
+
+.nav-restrictions-products__item{
+    font-size: 16px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.nav-profile-menu{
+    display: block;
+    background: var(--yellow2);
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.nav-profile-menu__link{
+    display: block;
+    padding: 20px 40px;
+    font-size: 20px;
+    color: var(--black-2);
+    cursor: pointer;
+}
+
+.nav-profile-menu__link:hover{
+    color: var(--yellow);
+}
+
+.nav-profile-menu__link:hover .nav-profile-menu__link-img:nth-child(1){
+    display: none;
+}
+
+.nav-profile-menu__link:hover .nav-profile-menu__link-img:nth-child(2){
+    display: block;
+}
+
+.nav-profile-menu__link--active{
+    color: var(--yellow);
+}
+
+.nav-profile-menu__link-img{
+    max-width: 25px;
+    margin-right: 10px;
+}
+
+.nav-profile-menu__link-img:nth-child(1){
+    display: block;
+}
+
+.nav-profile-menu__link-img:nth-child(2){
+    display: none;
+}
+
+.nav-profile-menu__link--active .nav-profile-menu__link-img:nth-child(1){
+    display: none;
+}
+
+.nav-profile-menu__link--active .nav-profile-menu__link-img:nth-child(2){
+    display: block;
+}
+
+.nav-menu-2__link{
+    display: block;
+    padding-bottom: 20px;
+    font-size: 14px;
+    color: var(--black-2);
+    text-decoration: none;
+}

@@ -1,0 +1,485 @@
+/*FORMS*/
+input::placeholder{
+    font-size: 14px;
+    color: var(--black3);
+}
+
+input[type="date"]{
+    cursor: pointer;
+}
+
+.form__group{
+    margin-bottom: 20px;
+}
+
+.form__label{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 5px;
+}
+
+.form__input{
+    display: block;
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 14px;
+    color: var(--black-2);
+    border: 1px solid var(--black-2);
+    border-radius: 8px;
+    outline: none;
+    box-shadow: none;
+}
+
+.form__textarea{
+    display: block;
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 14px;
+    color: var(--black-2);
+    border: 1px solid var(--black-2);
+    border-radius: 8px;
+    outline: none;
+    box-shadow: none;
+    resize: none;
+}
+
+.form__input--active{
+    border: 1px solid var(--yellow);
+}
+
+/*FORM ERRORS*/
+.form-error-text {
+    font-family: "NunitoSans-Regular";
+    font-size: 14px;
+    color: var(--red);
+}
+
+.form-error-text:not(label) {
+    border: 1px solid var(--red);
+}
+
+/*FORM SELECT*/
+.form__select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.form__select {
+    width: 100%;
+    padding: 15px 10px;
+    font-size: 14px;
+    color: var(--black-2);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid var(--black-2);
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.form__select--active{
+    border: 1px solid var(--yellow);
+}
+
+.form__select:focus {
+    outline: 0;
+    border-color: var(--black-2);
+    box-shadow: none;
+}
+
+.form__select-wrapper::after {
+    content: url("../../images/content/chevron-down.png");
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+/*FORM CHECKBOX*/
+.form-checkbox__input{
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form-checkbox__input:checked ~ .form-checkbox__span{
+    background: var(--yellow);
+    border: 1px solid var(--yellow);
+}
+
+.form-checkbox__span:after{
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.form-checkbox__input:checked ~ .form-checkbox__span:after {
+    display: block;
+}
+
+.form-checkbox__span:after{
+    position: absolute;
+    top: 50%;
+    left: 9px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.form-checkbox__span{
+    position: relative;
+    width: 24px;
+    height: 24px;
+    background: var(--white);
+    cursor: pointer;
+    border: 1px solid var(--white2);
+    border-radius: 3px;
+}
+
+.form-checkbox__span--error{
+    border: 1px solid var(--red);
+}
+
+.form-checkbox__text{
+    padding-left: 15px;
+    font-size: 14px;
+    color: var(--black-2);
+    cursor: pointer;
+}
+
+/*FORM CALCULATOR*/
+.form-calculator{
+    padding: 40px;
+    background: #F5F5F5;
+    border-radius: 8px;
+}
+
+.form-calculator__title{
+    font-size: 32px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}
+
+.form-calculator__desc{
+    font-size: 14px;
+    color: var(--black-2);
+    margin-bottom: 10px;
+}
+
+.form-calculator__btn{
+    padding: 15px 90px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.form-calculator__result{
+    font-size: 32px;
+    color: var(--black-2);
+    margin-bottom: 0;
+}
+
+/*FORM CURIER */
+.form-curier{
+    max-width: 840px;
+}
+
+.form-curier__btn{
+    padding: 15px 40px;
+    font-size: 16px;
+}
+
+/*FORM CARGOMAT*/
+.form-cargomat{
+    max-width: 380px;
+}
+
+.form-cargomat__btn{
+    padding: 12px 10px;
+    font-size: 16px;
+}
+
+/*FORM TRUST*/
+.form-trust{
+    max-width: 840px;
+}
+
+.form-trust__btn{
+    padding: 15px 40px;
+    font-size: 16px;
+}
+
+/*FORM SEARCH CATEGORIES*/
+.form-search-categories{
+    padding: 20px;
+    background: var(--yellow2);
+    border-radius: 8px;
+}
+
+.form-search-categories__form-group{
+    margin-bottom: 40px;
+}
+
+.form-search-categories__form-checkbox-text{
+    font-size: 20px;
+}
+
+/*FORM SEARCH*/
+.form-search{
+    position: relative;
+}
+
+.form-search__img{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+/*FORM TRACKING SEARCH*/
+.form-tracking-search{
+    max-width: 500px;
+}
+
+.form-tracking-search__btn{
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+/*FORM CONTACT*/
+.form-contact__title{
+    font-size: 24px;
+    color: var(--black-2);
+    margin-bottom: 40px;
+}
+
+.form-contact__btn{
+    padding: 15px 20px;
+    font-size: 16px;
+}
+
+/*FORM REGISTRATION*/
+.form-registration{
+    max-width: 660px;
+}
+
+.form-registration__title{
+    font-size: 40px;
+    color: var(--black-2);
+    margin-bottom: 30px;
+}
+
+.form-registration__title-2{
+    font-size: 30px;
+    color: var(--black-2);
+    margin-bottom: 60px;
+}
+
+.form-registration__content{
+    margin-bottom: 30px;
+}
+
+.form-registration__btn-types{
+    margin-bottom: 50px;
+}
+
+.form-registration__btn-type{
+    position: relative;
+    padding: 15px 10px;
+    font-size: 16px;
+}
+
+.form-registration__btn-type--pos-rel-right{
+    width: calc(100% + 10px);
+    z-index: 1;
+}
+
+.form-registration__btn-type--pos-rel-left{
+    width: calc(100% + 10px);
+    left: -10px;
+    z-index: 1;
+}
+
+.form-registration__btn-actions{
+    margin-bottom: 45px;
+}
+
+.form-registration__btn-action{
+    padding: 15px 10px;
+    font-size: 16px;
+}
+
+/*FORM OTP*/
+.form-registration-otp{
+    max-width: 400px;
+}
+
+.form-registration-otp__btn{
+    padding: 15px 10px;
+    font-size: 16px;
+}
+
+.form-confirmation-otp{
+    max-width: 400px;
+}
+
+.form-confirmation-otp__group{
+    margin-bottom: 70px;
+}
+
+.form__otp-field{
+    width: 50px;
+    height: 50px;
+    font-size: 14px;
+    text-align: center;
+    background: var(--white);
+    border: 1px solid var(--black-2);
+    border-radius: 8px;
+}
+
+.form__otp-field--active{
+    background: var(--yellow);
+    color: var(--black-2);
+}
+
+.form-confirmation-otp__btn{
+    padding: 15px 10px;
+    font-size: 16px;
+}
+
+/*FORM LOGIN*/
+.form-login{
+    max-width: 320px;
+}
+
+.form-login__title{
+    font-size: 32px;
+    color: var(--black-2);
+    margin-bottom: 40px;
+}
+
+.form-login__form-checkbox-span{
+    width: 18px;
+    height: 18px;
+}
+
+.form-login__form-checkbox-span::after{
+    left: 5px;
+}
+
+.form-login__remember_forgot-block{
+    margin-bottom: 60px;
+}
+
+.form-login__link-forgot{
+    font-size: 14px;
+    color: var(--black-2);
+    text-decoration: none;
+}
+
+.form-login__btn{
+    padding: 12px 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.form-modal-profile{
+    max-width: 270px;
+}
+
+.form-modal-profile__title{
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+
+.form-modal-profile__btn{
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.form-modal-profile-balance-add{
+    max-width: 320px;
+}
+
+.form-modal-profile-balance-add__title{
+    font-size: 24px;
+}
+
+.form-profile-balances-confirmation{
+    max-width: 450px;
+}
+
+.form-profile-balances-confirmation__top{
+    margin-bottom: 40px;
+}
+
+.form-profile-balances-confirmation__title{
+    font-size: 24px;
+    color: var(--black-2);
+    margin-bottom: 20px;
+}
+
+.form-profile-balances-confirmation__price{
+    font-size: 24px;
+    color: var(--blue);
+    margin-bottom: 0;
+}
+
+.form-profile-balances-confirmation__btn{
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.form-modal-profile-promocode__title{
+    margin-bottom: 10px;
+}
+
+.form-profile-curiers__btn-all-delete{
+    font-size: 16px;
+    color: var(--yellow);
+}
+
+.form-profile-azerpoct__title{
+    font-size: 24px;
+    color: var(--black-2);
+    margin-bottom: 40px;
+}
+
+.form-profile-azerpoct__btn{
+    padding: 10px 60px;
+    font-size: 16px;
+}
+
+.form-profile-information-edit__btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.form-profile-password-edit{
+    max-width: 680px;
+}
+
+.form-profile-password-edit__btn{
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.error-input {
+    border-color: red;
+}
+
+.form-profile-curier__label--no-active {
+    opacity: .3;
+}
+.form-profile-curier__img {
+    max-width: 50px;
+    display: block;
+    margin: 0 auto;
+}

@@ -1,0 +1,33 @@
+/*ACCORDIONS*/
+.accordion{
+    border-radius: 10px;
+}
+
+.accordion-questions__item{
+    margin-bottom: 20px;
+    border: 0;
+}
+
+.accordion-questions__button{
+    font-size: 14px;
+    color: var(--black-2);
+    background: var(--white3);
+    box-shadow: none;
+}
+
+.accordion-questions__button:after{
+    background-image: url("../../images/content/other-plus.png");
+}
+
+.accordion-questions__button:focus{
+    box-shadow: none;
+}
+
+.accordion-questions__button:not(.collapsed){
+    background: var(--white3);
+    box-shadow: none;
+}
+
+.accordion-questions__button:not(.collapsed):after{
+    background-image: url("../../images/content/other-minus.png");
+}
