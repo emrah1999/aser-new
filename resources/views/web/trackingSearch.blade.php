@@ -1,6 +1,6 @@
 @extends('web.layouts.web')
 @section('content')
-    <div class="container">
+    <div class="container new-style">
         <h1 class="section-title text-center font-n-b">Tracking Search</h1>
         <div class="form form-tracking-search center-block" name="formTrackingSearch" id="formTrackingSearch" novalidate="novalidate">
             <div class="row">
@@ -25,6 +25,14 @@
 
 
 
+@endsection
+@section('styles')
+    <style>
+        .new-style{
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+    </style>
 @endsection
 
 @section('scripts')

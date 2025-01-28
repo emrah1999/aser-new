@@ -12,6 +12,9 @@
                     color: var(--yellow);
                 }
             }
+            .is-invalid {
+                border: 1px solid red;
+            }
         </style>
 
 @endsection
@@ -67,26 +70,57 @@
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userEmail">{!! __('auth.Email') !!}</label>
-                                <input class="form__input" name="email"
-                                       value="{{ old('email')}}"
-                                       type="email" id="userEmail" placeholder="Emailiniz daxil edin" required>
-                                <div class="invalid-feedback"></div>
+                                <input class="form__input {{ session('errorType') == 'email' ? 'is-invalid' : '' }}"
+                                       name="email"
+                                       value="{{ session('errorType') == 'email' ? '' : old('email') }}"
+                                       type="email"
+                                       id="userEmail"
+                                       placeholder="Emailiniz daxil edin"
+                                       required>
+                                <div class="invalid-feedback">
+                                    @if (session('errorType') == 'email')
+                                        <strong> {{__('register.email_exists')}} </strong>
+                                    @endif
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
-                                <input class="form__input" name="phone1" value="{{ old('phone1')}}" type="text" id="phone" placeholder="xxx-xxx-xx-xx" required>
-                                <div class="invalid-feedback"></div>
+                                <input class="form__input {{ session('errorType') == 'number' ? 'is-invalid' : '' }}"
+                                       name="phone1"
+                                       value="{{ session('errorType') == 'number' ? '' : old('phone1') }}"
+                                       type="text"
+                                       id="phone"
+                                       placeholder="xxx-xxx-xx-xx"
+                                       required>
+                                <div class="invalid-feedback">
+                                    @if (session('errorType') == 'number')
+                                        <strong>{{__('register.phone_exists')}}</strong>
+                                    @endif
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userBirthdate">{!! __('auth.Birthday') !!}</label>
-                                <input class="form__input" name="birthday" value="{{ old('birthday')}}" type="date" id="userBirthdate" required>
-                                <div class="invalid-feedback"></div>
+                                <input class="form__input {{ session('errorType') == 'age' ? 'is-invalid' : '' }}"
+                                       name="birthday"
+                                       value="{{ session('errorType') == 'age' ? '' : old('birthday') }}"
+                                       type="date"
+                                       id="userBirthdate"
+                                       required>
+                                <div class="invalid-feedback">
+                                    @if (session('errorType') == 'age')
+                                        <strong>18 yaş dan böyük olmalısınız</strong>
+                                    @endif
+                                </div>
                             </div>
                         </div>
+
+
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userSex">{!! __('auth.Language') !!}</label>
@@ -172,20 +206,40 @@
 
                         <div class="col-sm-6">
                             <div class="form__group">
-                                <div class="form__group">
-                                    <label class="form__label" for="userPassportSeriaNumber">{!! __('auth.PassportNumber') !!}</label>
-                                    <input class="form__input" name="passport_number" value="{{ old('passport_number')}}" type="text" id="userPassportSeriaNumber" placeholder="Ş.V-nin nömrəsini daxil edin" required>
-                                    <div class="invalid-feedback"></div>
+                                <label class="form__label" for="userPassportSeriaNumber">{!! __('auth.PassportNumber') !!}</label>
+                                <input class="form__input {{ session('errorType') == 'passport_number' ? 'is-invalid' : '' }}"
+                                       name="passport_number"
+                                       value="{{ session('errorType') == 'passport_number' ? '' : old('passport_number') }}"
+                                       type="text"
+                                       id="userPassportSeriaNumber"
+                                       placeholder="Ş.V-nin nömrəsini daxil edin"
+                                       required>
+                                <div class="invalid-feedback">
+                                    @if (session('errorType') == 'passport_number')
+                                        <strong>{{__('register.passport_number_exists')}}</strong>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userPassportFinCode">{!! __('auth.PassportFIN') !!}</label>
-                                <input class="form__input" name="passport_fin" value="{{ old('passport_fin')}}" type="text" id="userPassportFinCode" placeholder="Fin kodu daxil edin" required>
-                                <div class="invalid-feedback"></div>
+                                <input class="form__input {{ session('errorType') == 'fin' ? 'is-invalid' : '' }}"
+                                       name="passport_fin"
+                                       value="{{ session('errorType') == 'fin' ? '' : old('passport_fin') }}"
+                                       type="text"
+                                       id="userPassportFinCode"
+                                       placeholder="Fin kodu daxil edin"
+                                       required>
+                                <div class="invalid-feedback">
+                                    @if (session('errorType') == 'fin')
+                                        <strong>{{ __('register.passport_fin_exists')}}</strong>
+                                    @endif
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userAddress">{!! __('auth.Address') !!}</label>

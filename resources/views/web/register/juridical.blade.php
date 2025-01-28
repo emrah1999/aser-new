@@ -12,8 +12,15 @@
                 color: var(--yellow);
             }
         }
-    </style>
 
+        .is-invalid {
+            border-color: red;
+        }
+        .invalid-feedback {
+            color: red;
+            font-size: 0.875rem;
+        }
+    </style>
 @endsection
 @section('content')
     @if (session('case'))
@@ -32,6 +39,7 @@
             </ul>
         </div>
     @endif
+
     <div class="content" id="content">
         <section class="section section-registration d-flex justify-content-center align-items-center">
             <div class="container-lg">
@@ -53,103 +61,141 @@
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userVoen">Vöen</label>
-                                    <input class="form__input" name="voen" type="text" id="userVoen" placeholder="Vöeni daxil edin" value="{{ old('voen') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <input class="form__input @error('voen') is-invalid @enderror" name="voen" type="text" id="userVoen" placeholder="Vöeni daxil edin" value="{{ old('voen') }}" required>
+                                    @error('voen')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="userCompanyName">Şirkətin adı</label>
-                                    <input class="form__input" name="company_name" type="text" id="userCompanyName" placeholder="Şirkətin adı daxil edin" value="{{ old('company_name') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <label class="form__label" for="userCompanyName">Şirkətin adı  </label>
+                                    <input class="form__input @error('company_name') is-invalid @enderror" name="company_name" type="text" id="userCompanyName" placeholder="Şirkətin adı daxil edin" value="{{ old('company_name') }}" required>
+                                    @error('company_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userName">{!! __('auth.Name') !!}</label>
-                                    <input class="form__input" name="name" type="text" id="userName" placeholder="Adınızı daxil edin" value="{{ old('name') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <input class="form__input @error('name') is-invalid @enderror" name="name" type="text" id="userName" placeholder="Adınızı daxil edin" value="{{ old('name') }}" required>
+                                    @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userSurname">{!! __('auth.Surname') !!}</label>
-                                    <input class="form__input" name="surname" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" value="{{ old('surname') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <input class="form__input @error('surname') is-invalid @enderror" name="surname" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" value="{{ old('surname') }}" required>
+                                    @error('surname')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userEmail">{!! __('auth.Email') !!}</label>
-                                    <input class="form__input" name="email" type="email" id="userEmail" placeholder="Emailiniz daxil edin" value="{{ old('email') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <input class="form__input {{ session('errorType') == 'email' ? 'is-invalid' : '' }}"
+                                           name="email"
+                                           value="{{ session('errorType') == 'email' ? '' : old('email') }}"
+                                           type="email"
+                                           id="userEmail"
+                                           placeholder="Emailiniz daxil edin"
+                                           required>
+                                    <div class="invalid-feedback">
+                                        @if (session('errorType') == 'email')
+                                            <strong> {{__('register.email_exists')}} </strong>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
-                                    <input class="form__input" name="phone1" type="text" id="phone" placeholder="xxx-xxx-xx-xx" value="{{ old('phone1') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <input class="form__input {{ session('errorType') == 'number' ? 'is-invalid' : '' }}"
+                                           name="phone1"
+                                           value="{{ session('errorType') == 'number' ? '' : old('phone1') }}"
+                                           type="text"
+                                           id="phone"
+                                           placeholder="xxx-xxx-xx-xx"
+                                           required>
+                                    <div class="invalid-feedback">
+                                        @if (session('errorType') == 'number')
+                                            <strong>{{__('register.phone_exists')}}</strong>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userSex">{!! __('auth.City') !!}</label>
                                     <div class="form__select-wrapper">
-                                        <select class="form__select" name="city" id="city" required>
+                                        <select class="form__select @error('city') is-invalid @enderror" name="city" id="city" required>
                                             <option value="">Seç</option>
                                             @foreach($cities as $city)
                                                 <option value="{{$city->name}}" {{ old('city') == $city->name ? 'selected' : '' }}>{{$city->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="invalid-feedback"></div>
+                                    @error('city')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userAddress">{!! __('auth.Address') !!}</label>
-                                    <input class="form__input" name="address1" type="text" id="userAddress" placeholder="Ünvanızı daxil edin" value="{{ old('address1') }}" required>
-                                    <div class="invalid-feedback"></div>
+                                    <input class="form__input @error('address1') is-invalid @enderror" name="address1" type="text" id="userAddress" placeholder="Ünvanınızı daxil edin" value="{{ old('address1') }}" required>
+                                    @error('address1')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userBranch">{!! __('auth.branch') !!}</label>
                                     <div class="form__select-wrapper">
-                                        <select class="form__select" name="branch_id" id="userBranch" required>
+                                        <select class="form__select @error('branch_id') is-invalid @enderror" name="branch_id" id="userBranch" required>
                                             <option value="0" disabled selected>{!! __('auth.branch') !!}</option>
                                             @foreach($branchs as $branch)
                                                 <option value="{{$branch->id}}" {{ old('branch_id') == $branch->id ? 'selected' : '' }}>{{$branch->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="invalid-feedback"></div>
+                                    @error('branch_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userSex">{!! __('auth.Language') !!}</label>
                                     <div class="form__select-wrapper">
-                                        <select class="form__select" name="language" id="language" required>
+                                        <select class="form__select @error('language') is-invalid @enderror" name="language" id="language" required>
                                             <option value="AZ" {{ old('language') == 'AZ' ? 'selected' : '' }}>AZ</option>
                                             <option value="EN" {{ old('language') == 'EN' ? 'selected' : '' }}>EN</option>
                                             <option value="RU" {{ old('language') == 'RU' ? 'selected' : '' }}>RU</option>
                                         </select>
                                     </div>
-                                    <div class="invalid-feedback"></div>
+                                    @error('language')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userPassword">{!! __('auth.Password') !!}</label>
                                     <div class="input-container" style="position: relative;">
-                                        <input class="form__input" name="password" value="{{ old('password')}}" type="password" id="userPassword" placeholder="Şifrənizi daxil edin" required style="padding-right: 30px;">
+                                        <input class="form__input @error('password') is-invalid @enderror" name="password" value="{{ old('password')}}" type="password" id="userPassword" placeholder="Şifrənizi daxil edin" required style="padding-right: 30px;">
                                         <span class="eye-icon" id="togglePassword1" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
-                <i class="fas fa-eye"></i>
-            </span>
+                                            <i class="fas fa-eye"></i>
+                                        </span>
                                     </div>
-                                    <div class="invalid-feedback"></div>
+                                    @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -157,83 +203,17 @@
                                 <div class="form__group">
                                     <label class="form__label" for="userPassword2">Təkrar şifrə</label>
                                     <div class="input-container" style="position: relative;">
-                                        <input class="form__input" name="user_password2" value="{{ old('user_password2')}}" type="password" id="userPassword2" placeholder="Təkrar şifrənizi daxil edin" required style="padding-right: 30px;">
+                                        <input class="form__input @error('user_password2') is-invalid @enderror" name="user_password2" value="{{ old('user_password2')}}" type="password" id="userPassword2" placeholder="Təkrar şifrənizi daxil edin" required style="padding-right: 30px;">
                                         <span class="eye-icon" id="togglePassword2" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
-                <i class="fas fa-eye"></i>
-            </span>
+                                            <i class="fas fa-eye"></i>
+                                        </span>
                                     </div>
-                                    <div class="invalid-feedback"></div>
+                                    @error('user_password2')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 
-
-{{--                            <div class="col-sm-6">--}}
-{{--                                <div class="form__group">--}}
-{{--                                    <label class="form__label" for="userSex">{!! __('auth.Gender') !!}</label>--}}
-{{--                                    <div class="form__select-wrapper">--}}
-{{--                                        <select class="form__select" name="gender" id="userSex" required>--}}
-{{--                                            <option value="">{!! __('auth.gender_select') !!}</option>--}}
-{{--                                            <option value="1">{!! __('auth.male') !!}</option>--}}
-{{--                                            <option value="0">{!! __('auth.female') !!}</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="invalid-feedback"></div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="col-sm-6">--}}
-{{--                                <div class="form__group">--}}
-{{--                                    <img src="{{asset('uploads/static/info.png')}}" height="15px" width="15px" data-toggle="tooltip" data-placement="right" title="" style="display: inline-block;" data-original-title="Bu bölmə “Dostunu gətir daha çox qazan” kampaniyası üçün nəzərdə tutulmuşdur. Burada, sizi xidmətimizdən istifadə etmək üçün dəvət edən dostunuzun Aser şəxsi nömrəsi yazılmalı və yaxud xidmətimizdən istifadə üçün sizin dəvət linkinizlə gələn dostlarınız qeydiyyat zamanı linkdə sizə məxsus olan Aser şəxsi nömrənizi qeyd etməlidilər.">--}}
-{{--                                    <label class="form__label" for="userRefer">{!! __('auth.ParentCode') !!}</label>--}}
-{{--                                    <input class="form__input" name="parent_code" type="text" id="userRefer">--}}
-{{--                                    <div class="invalid-feedback"></div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-                        </div>
-                    </div>
-                    <div class="form-registration__content form-registration__content--2 d-none">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form__group">
-                                    <label class="form__label" for="userPassportSeria">{!! __('auth.PassportSeries') !!}</label>
-                                    <div class="form__select-wrapper">
-                                        <select class="form__select" name="passport_series" id="userPassportSeria" required>
-                                            <option value="0" disabled {{ old('passport_series') ? '' : 'selected' }}>Seçin</option>
-                                            <option value="AA" {{ old('passport_series') == 'AA' ? 'selected' : '' }}>AA</option>
-                                            <option value="AZE" {{ old('passport_series') == 'AZE' ? 'selected' : '' }}>AZE</option>
-                                            <option value="MYI" {{ old('passport_series') == 'MYI' ? 'selected' : '' }}>MYI</option>
-                                            <option value="DYI" {{ old('passport_series') == 'DYI' ? 'selected' : '' }}>DYI</option>
-                                        </select>
-                                    </div>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-sm-6">
-                                <div class="form__group">
-                                    <div class="form__group">
-                                        <label class="form__label" for="userPassportSeriaNumber">{!! __('auth.PassportNumber') !!}</label>
-                                        <input class="form__input" name="passport_number" type="text" id="userPassportSeriaNumber" placeholder="Ş.V-nin nömrəsini daxil edin" value="{{ old('passport_number') }}" required>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form__group">
-                                    <label class="form__label" for="userPassportFinCode">{!! __('auth.PassportFIN') !!}</label>
-                                    <input class="form__input" name="passport_fin" type="text" id="userPassportFinCode" placeholder="Fin kodu daxil edin" value="{{ old('passport_fin') }}" required>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-registration__btn-actions form-registration__btn-actions--1">
-                        <div class="row justify-content-center align-items-center">
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form-checkbox d-flex justify-content-start align-items-center" for="userAgree">
@@ -244,29 +224,18 @@
                                         </a>
                                         <div class="invalid-feedback"></div>
                                     </label>
+                                    @error('agreement')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                             </div>
                             <div class="col-sm-6">
-                                <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--next font-n-b" type="button">Irəli</button>
+                                <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--submit font-n-b" name="formRegistrationPhysicalSubmit" type="submit">Qeydiyyatdan keçin</button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-registration__btn-actions form-registration__btn-actions--2 d-none">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="col-sm-6">
-                                <button class="btn btn-black btn-block form__btn form-registration__btn-action form-registration__btn-action--prev font-n-b" type="button">Geriyə qayıt</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--submit font-n-b" name="formRegistrationJuridicalSubmit" type="submit">Qeydiyyatdan keçin</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="login-registration-question">
-                        <p class="login-registration-question__block text-center">
-                            <span class="login-registration-question__title">Hesabınız var?</span>
-                            <a href="login.html" class="login-registration-question__link font-n-b">Daxil olun</a>
-                        </p>
-                    </div>
+
                 </form>
             </div>
         </section>

@@ -1408,8 +1408,8 @@ class AccountController extends Controller
     {
         try 
         {
-            $countries = Country::whereIn('id', [2])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
-            $countr = Country::whereIn('id', [2])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'client_id' => $this->userID])
                     ->whereNull('placed_by')
                     ->whereNull('canceled_by')
@@ -1428,9 +1428,11 @@ class AccountController extends Controller
             return view("front.error");
         }
     }
-    public function get_special_orders(Request $request, $country_id)
+    public function get_special_orders(Request $request,$a, $country_id)
     {
         try {
+            $countr = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+
             //return redirect()->route("get_account");
 
             $settings = SpecialOrdersSettings::first();
@@ -1444,16 +1446,17 @@ class AccountController extends Controller
                 return redirect()->route("get_account");
             }
 
+
             $percent = $settings->percent;
 
             $has_campaign = $settings->has_campaign;
             $campaign_text = $settings->campaign;
 
-            if (Country::where(['id' => $country_id, 'url_permission' => 1])->count() == 0) {
+            if (Country::where(['id' => $country_id])->count() == 0) {
                 if ($this->api) {
                     return 'Country not found!';
                 }
-                return redirect()->route("get_account");
+                return redirect()->route("get_account",['locale' => App::getLocale()]);
             }
 
             $currency = Country::leftJoin('currency as cur', 'countries.local_currency', '=', 'cur.id')
@@ -1565,7 +1568,7 @@ class AccountController extends Controller
             if ($this->api) {
                 return 'Something goes wrong!';
             }
-            return view("front.error");
+            return $exception;
         }
     }
 
@@ -2630,6 +2633,7 @@ class AccountController extends Controller
                     'item.invoice_doc',
                     'item.invoice_confirmed',
                     'item.price',
+                    'item.invoice_status as invoice_status',
                     'cur.name as currency',
                     'package.number as track',
                     'seller.title as seller',
@@ -5516,9 +5520,12 @@ class AccountController extends Controller
             ));
 
         }catch(Exception $e){
-            return 'erro';
+            return 'error';
         }
     }
+
+    public function change_notification()
+    {
+        return  view('web.account.profile.notification');
+    }
 }
-
-

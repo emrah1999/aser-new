@@ -6,7 +6,7 @@
             <div class="container-lg">
                 <div class="row">
                     @include('web.account.account_left_bar')
-                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7 bar-width">
                         <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
                             <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
                             <div class="dropdown-container">
@@ -64,7 +64,7 @@
                                             <th class="table-data__thead-th">{!! __('table.tracking') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.weight') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.delivery_amount') !!}</th>
-                                            <th class="table-data__thead-th">{!! __('table.debt') !!}</th>
+{{--                                            <th class="table-data__thead-th">{!! __('table.debt') !!}</th>--}}
                                             <th class="table-data__thead-th">Filial</th>
                                             <th class="table-data__thead-th">{!! __('table.invoice_status') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.status') !!}</th>
@@ -120,18 +120,18 @@
                                                     @endif
                                                 </td>
 
-                                                <td class="table-data__tbody-td">
-                                                    @if(($package->external_w_debt > 0 || $package->external_w_debt != null) && ($package->internal_w_debt > 0 || $package->internal_w_debt != null))
-                                                        <p>$ {{$package->external_w_debt}} </p>
-                                                        <p>₼ {{$package->internal_w_debt}}</p>
-                                                    @elseif($package->external_w_debt > 0 || $package->external_w_debt != null)
-                                                        $ {{$package->external_w_debt}}
-                                                    @elseif($package->internal_w_debt > 0 || $package->internal_w_debt != null)
-                                                        ₼ {{$package->internal_w_debt}}
-                                                    @else
-                                                        -
-                                                    @endif
-                                                </td>
+{{--                                                <td class="table-data__tbody-td">--}}
+{{--                                                    @if(($package->external_w_debt > 0 || $package->external_w_debt != null) && ($package->internal_w_debt > 0 || $package->internal_w_debt != null))--}}
+{{--                                                        <p>$ {{$package->external_w_debt}} </p>--}}
+{{--                                                        <p>₼ {{$package->internal_w_debt}}</p>--}}
+{{--                                                    @elseif($package->external_w_debt > 0 || $package->external_w_debt != null)--}}
+{{--                                                        $ {{$package->external_w_debt}}--}}
+{{--                                                    @elseif($package->internal_w_debt > 0 || $package->internal_w_debt != null)--}}
+{{--                                                        ₼ {{$package->internal_w_debt}}--}}
+{{--                                                    @else--}}
+{{--                                                        ---}}
+{{--                                                    @endif--}}
+{{--                                                </td>--}}
                                                 <td class="table-data__tbody-td">
                                                     {{$package->branch_name}}
                                                 </td>
@@ -252,6 +252,14 @@
         </section>
     </div>
 
+@endsection
+@section('styles')
+    <style>
+        .bar-width{
+            margin: -858px 20px 20px 315px ;
+            width: 83%;
+        }
+    </style>
 @endsection
 
 

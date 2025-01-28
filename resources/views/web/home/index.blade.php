@@ -135,7 +135,7 @@
                         <div class="col-md-6">
                             <div class="media-works__left">
                                 <iframe class="media-works__iframe" width="100%" height="320"
-                                        src="https://www.youtube.com/embed/P9HjbqMIZTA?list=RDP9HjbqMIZTA"
+                                        src="https://www.youtube.com/embed/sq_Ubu0by9k"
                                         allowfullscreen></iframe>
                             </div>
                         </div>

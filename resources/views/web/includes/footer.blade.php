@@ -74,7 +74,7 @@
 {{--        </div>--}}
 {{--    </div>--}}
 {{--</footer>--}}
-<footer class="footer" id="footer">
+<footer class="footer footer-new" id="footer">
     <div class="container-lg">
         <div class="row">
             <div class="col-md-12">

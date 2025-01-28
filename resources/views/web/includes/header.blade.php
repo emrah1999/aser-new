@@ -1,20 +1,8 @@
 <header class="header nm" id="header">
-    <div class="header-top">
+    <div style="display: none" class="header-top">
         <div class="container-lg">
             <div class="row justify-content-center align-items-center">
-                <div class="col-xl-6 col-lg-7 col-md-7 col-sm-10 col-9">
-                    <div class="d-flex justify-content-start align-items-center">
-                        <p class="header-top__text">Mobil tətbiqi yükləyin</p>
-                        <a href="#" class="google-apple__link">
-                            <img class="google-apple__img d-none d-sm-block" src="{{asset('web/images/content/other-google-play.png')}}" alt="Google Play">
-                            <img class="google-apple__img d-block d-sm-none" src="{{asset('web/images/content/other-google-play-2.png')}}" alt="Google Play">
-                        </a>
-                        <a href="#" class="google-apple__link">
-                            <img class="google-apple__img d-none d-sm-block" src="{{asset('web/images/content/other-apple-store.png')}}" alt="Apple Store">
-                            <img class="google-apple__img d-block d-sm-none" src="{{asset('web/images/content/other-apple-store-2.png')}}" alt="Apple Store">
-                        </a>
-                    </div>
-                </div>
+
                 <div class="col-xl-6 col-lg-5 col-md-5 col-sm-2 col-3">
                     <div class="row justify-content-between align-items-center">
                         <div class="col-auto d-none d-md-block">
@@ -30,24 +18,7 @@
                             @endif
                         </div>
                         <div class="col-auto d-md-none"></div>
-                        <div class="col-auto">
-                            <ul class="nav nav-languages">
-                                <li class="nav-languages__item">
-                                    <a href="#" class="nav-languages__link">
-                                        <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
-                                        <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
-                                    </a>
-                                    <ul class="nav nav-languages-2 d-none">
-                                        @foreach (Config::get('languages') as $lang => $language)
-                                            <li class="nav-languages-2__item">
-                                                <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
-                                            </li>
-                                        @endforeach
 
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -58,7 +29,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
                     <a href="{{ route('home_page', ['locale' => App::getLocale()]) }}" class="logo">
-                        <img class="logo__img" src="{{asset('web/images/logo/logo.png')}}" alt="Logo">
+                        <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px"  width=178px" alt="Logo">
                     </a>
                 </div>
                 <div class="col-auto d-none d-lg-block">
@@ -81,13 +52,23 @@
                         <li class="nav-menu__item">
                             <a href="{{ route('get_tracking_search', ['locale' => App::getLocale()]) }}" class="nav-menu__link">Tracking Search</a>
                         </li>
+                        @if(!Auth::check())
+                        <li class="nav-menu__item">
+                            <a href="{{route("register", ['locale' => App::getLocale()])}}" class="btn btn-yellow header-top__btn font-n-b">{!! __('auth.register') !!}</a>
+                            <a href="{{route("login", ['locale' => App::getLocale()])}}" class="btn btn-trns-black header-top__btn font-n-b">{!! __('auth.login') !!} </a>
+                        </li>
+                        @endif
+
+
+
+
                     </ul>
                 </div>
 
                 @if(Auth::check())
                     <div class="col-auto d-none d-xl-block">
                         <div class="media media-profile d-flex justify-content-center align-items-center">
-                            <div class="media-profile__left" style="position: relative;">
+                            <div class="media-profile__left" style="position: relative;top:20px">
                                 <a href="{{ route('get_account', ['locale' => App::getLocale()]) }}">
                                     <h6 class="media-profile__title font-n-b">
                                         {{ Auth::user()->name . ' ' . Auth::user()->surname }}
@@ -108,6 +89,25 @@
                         </div>
                     </div>
                 @endif
+
+            <div class="col-auto language-col">
+                <ul class="nav nav-languages">
+                    <li class="nav-languages__item">
+                        <a href="#" class="nav-languages__link">
+                            <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
+                            <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
+                        </a>
+                        <ul class="nav nav-languages-2 d-none">
+                            @foreach (Config::get('languages') as $lang => $language)
+                                <li class="nav-languages-2__item">
+                                    <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
+                                </li>
+                            @endforeach
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
                 
                 <div class="col-auto d-block d-lg-none">
                     <button class="btn btn-yellow mobile-menu" type="button">
@@ -159,3 +159,32 @@
     </div>
 </header>
 
+
+
+    <script>
+
+        document.querySelector('.nav-languages__link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const languageDropdown = this.nextElementSibling; // Açılır listeyi al
+
+            // Açıqsa, bağla
+            if (languageDropdown.classList.contains('d-none')) {
+                languageDropdown.classList.remove('d-none');
+            } else {
+                languageDropdown.classList.add('d-none');
+            }
+        });
+
+        // Sayfanın başqa bir yerinə tıkladığında açılan menüyü bağla
+        document.addEventListener('click', function(e) {
+            const languageMenu = document.querySelector('.nav-languages');
+            const isClickInside = languageMenu.contains(e.target);
+
+            if (!isClickInside) {
+                const languageDropdown = languageMenu.querySelector('.nav-languages-2');
+                if (!languageDropdown.classList.contains('d-none')) {
+                    languageDropdown.classList.add('d-none');
+                }
+            }
+        });
+    </script>

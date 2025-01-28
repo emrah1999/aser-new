@@ -1,4 +1,4 @@
-@extends('front.app')
+@extends('web.layouts.web')
 @section('content')
     <section class="content-page-section">
         <!-- brand crumb -->
@@ -7,14 +7,14 @@
             <div class="container-fluid page_containers ">
                 <div class="row">
                     <div class="page-content-part">
-                        @include('front.account.account_left_bar')
+                        @include('web.account.account_left_bar')
 
                         <div class="page-content-right">
                             <div class="order-block profile-information-block">
                                 <div class="order-form-header">
                                     <h3> {!! __('account_menu.declaration') !!} </h3>
                                 </div>
-                                <form id="preliminary_declaration_form" action="" method="post" redirect_url="{{route("post_seller_add")}}" style="width: 100% !important;">
+                                <form id="preliminary_declaration_form" action="" method="post" redirect_url="{{route("post_seller_add",['locale' => app()->getLocale()])}}" style="width: 100% !important;">
                                     @csrf
                                     <div class="order-form">
                                         <div class="store-inputs">
@@ -49,8 +49,81 @@
     </section>
 @endsection
 
-@section('css')
+@section('styles')
 <style>
+    .page-content-block {
+        padding: 20px 90px;
+    }
+
+    .page-content-part {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .page-content-right {
+        flex-grow: 1;
+        background-color: #f7f7f7;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-form-header h3 {
+        font-size: 24px;
+        color: #10458C;
+        font-weight: bold;
+    }
+
+    .form-element {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .calculate-input-block .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .order-button {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    .orange-button {
+        background-color: rgba(16, 69, 140, 1);
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .orange-button:hover {
+        background-color: #08315e;
+    }
+
+    @media (max-width: 768px) {
+        .page-content-block {
+            padding: 20px;
+        }
+
+        .page-content-part {
+            flex-direction: column;
+        }
+
+        .order-button {
+            text-align: center;
+        }
+    }
+
 
 </style>
 @endsection

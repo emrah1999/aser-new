@@ -10,12 +10,39 @@
 <script src="{{asset('web/js/courier.js')}}"></script>
 <script src="{{asset('web/js/main.js')}}"></script>
 <script>
-    // Hover ile açma işlevi
+
     document.querySelector('.media-profile__left').addEventListener('mouseover', function() {
         document.querySelector('.logout-menu').style.display = 'block';
     });
 
     document.querySelector('.media-profile__left').addEventListener('mouseleave', function() {
         document.querySelector('.logout-menu').style.display = 'none';
+    });
+</script>
+
+<script>
+
+    document.querySelector('.nav-languages__link').addEventListener('click', function(e) {
+        e.preventDefault();
+        const languageDropdown = this.nextElementSibling; // Açılır listeyi al
+
+        // Açıqsa, bağla
+        if (languageDropdown.classList.contains('d-none')) {
+            languageDropdown.classList.remove('d-none');
+        } else {
+            languageDropdown.classList.add('d-none');
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        const languageMenu = document.querySelector('.nav-languages');
+        const isClickInside = languageMenu.contains(e.target);
+
+        if (!isClickInside) {
+            const languageDropdown = languageMenu.querySelector('.nav-languages-2');
+            if (!languageDropdown.classList.contains('d-none')) {
+                languageDropdown.classList.add('d-none');
+            }
+        }
     });
 </script>

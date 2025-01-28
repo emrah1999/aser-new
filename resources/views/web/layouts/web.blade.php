@@ -4,6 +4,7 @@
     @include('web.includes.meta')
     @include('web.includes.styles')
     @yield('styles')
+    @yield('styles1')
 </head>
 <body>
 @include('web.includes.header')

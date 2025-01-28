@@ -85,6 +85,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
 		Route::group(['prefix' => '/details'], function () {
 			Route::get('/', 'AccountController@get_user_account')->name("get_user_settings");
+			Route::get('/change-notification-settings', 'AccountController@change_notification')->name("change_notification_settings");
 
 			Route::get('/update', 'AccountController@get_update_user_account')->name("get_update_user_account");
 			Route::post('/update', 'AccountController@post_update_user_account')->name("post_update_user_account");

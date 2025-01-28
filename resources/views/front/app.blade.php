@@ -202,7 +202,7 @@
 							</div> --}}
 							<div class="col header_top_left pl-0">
 								{{-- <a href="">{!! __('menu.dangerous_goods') !!}</a> --}}
-								 <a href="{{route("faq_page")}}">{!! __('menu.faqi') !!}</a>
+								 <a href="{{route("faq_page", ['locale' => App::getLocale()])}}">{!! __('menu.faqi') !!}</a>
 								<a class="terms" target="_blank" href="{{asset('uploads/static/terms.pdf')}}"> {!! __('menu.terms') !!} </a>
 							</div>
 							{{-- <div class="currency-block">

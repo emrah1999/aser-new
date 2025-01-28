@@ -253,20 +253,22 @@ class RegisterController extends Controller
 			$language_arr['input_birthday_min_error'] = __('register.input_birthday_min_error');
 
 			$language_arr['register_referral_info'] = __('register.referral_info');
-
+            $errorType=null;
             if($request->input('type') == 'juridical'){
                 return view('web.register.juridical', compact(
                     'lang',
                     'cities',
                     'language_arr',
-                    'branchs'
+                    'branchs',
+                    'errorType'
                 ));
             }else{
                 return view('web.register.index', compact(
                     'lang',
                     'cities',
                     'language_arr',
-                    'branchs'
+                    'branchs',
+                    'errorType'
                 ));
             }
 			
@@ -296,10 +298,10 @@ class RegisterController extends Controller
                 'city' => ['required', 'string', 'max:255'],
                 'address1' => ['required', 'string', 'max:255'],
                 /*'location_longitude' => ['required', 'string', 'max:255'],
-                'location_latitude' => ['required', 'string', 'max:255'],*/
-                'passport_series' => ['required', 'string', 'max:10'],
-                'passport_number' => ['required', 'string', 'max:20'],
-                'passport_fin' => ['required', 'string', 'max:15'],
+//                'location_latitude' => ['required', 'string', 'max:255'],*/
+//                'passport_series' => ['required', 'string', 'max:10'],
+//                'passport_number' => ['required', 'string', 'max:20'],
+//                'passport_fin' => ['required', 'string', 'max:15'],
                 'parent_code' => ['nullable', 'string', 'max:10'],
                 'agreement' => ['required'],
                 'password' => ['required', 'string', 'min:8'],
@@ -489,26 +491,30 @@ class RegisterController extends Controller
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
 
-            $errorType=null;
-            $birthday = $request->input('birthday');
-            $birthdayDate = Carbon::parse($birthday);
-            $age = Carbon::now()->diffInYears($birthdayDate);
             if (!$request->voen){
+                $birthday = $request->input('birthday');
+                $birthdayDate = Carbon::parse($birthday);
+                $age = Carbon::now()->diffInYears($birthdayDate);
                 if ($age < 18) {
+                    $errorType = 'age';
                     return redirect()->back()->with([
                         'case' => 'warning',
                         'title' => __('static.attention') . '!',
-                        'content' => '18 yaşdan böyük olmalısınız'
+                        'content' => '18 yaşdan böyük olmalısınız',
+                        'errorType' => $errorType,
                     ])->withInput();
                 }
+
             }
 
 			// Check for existing user conflicts
 			if (!User::where('email', $request->email)->select('id')->first() && User::withoutGlobalScope(DeletedScope::class)->where('email', $request->email)->select('id')->first()) {
-				return redirect()->back()->with([
+				$errorType = 'email';
+                return redirect()->back()->with([
 					'case' => 'warning', 
 					'title' => __('static.attention') . '!', 
-					'content' => __('register.user_deleted')
+					'content' => __('register.user_deleted'),
+                    'errorType' => $errorType,
 				])->withInput();
 			}
 
@@ -517,35 +523,45 @@ class RegisterController extends Controller
                 return redirect()->back()->with([
                     'case' => 'warning',
                     'title' => __('static.attention') . '!',
-                    'content' => __('register.email_exists')
+                    'content' => __('register.email_exists'),
+                    'errorType' => $errorType,
                 ])->with(compact('errorType'))->withInput();
             }
 
+            if (!$request->voen){
 			if (User::where('passport_number', $request->passport_number)->select('id')->first()) {
+                $errorType= 'passport_number';
 				return redirect()->back()->with([
 					'case' => 'warning', 
 					'title' => __('static.attention') . '!', 
-					'content' => __('register.passport_number_exists')
+					'content' => __('register.passport_number_exists'),
+                    'errorType' => $errorType,
 				])->withInput();
-			}
+			}}
 
+
+            if (!$request->voen){
 			if ($request->passport_series !== 'VOEN' && User::where('passport_fin', $request->passport_fin)->select('id')->first()) {
-				return redirect()->back()->with([
+				$errorType = 'fin';
+                return redirect()->back()->with([
 					'case' => 'warning', 
 					'title' => __('static.attention') . '!', 
-					'content' => __('register.passport_fin_exists')
+					'content' => __('register.passport_fin_exists'),
+                    'errorType' => $errorType,
 				])->withInput();
-			}
+			}}
 
 			$phone1 = str_replace(['(', ')', '-'], '', $request->phone1);
 			$phone1 = '994' . substr($phone1, 1);
 			$request->phone1 = $phone1;
 
 			if (User::whereNull('deleted_by')->whereRaw('(phone1 = ? or phone2 = ?)', [$phone1, $phone1])->select('id')->first()) {
-				return redirect()->back()->with([
+                $errorType = 'number';
+                return redirect()->back()->with([
 					'case' => 'warning', 
 					'title' => __('static.attention') . '!', 
-					'content' => __('register.phone_exists')
+					'content' => __('register.phone_exists'),
+                    'errorType' => $errorType,
 				])->withInput();
 			}
 
