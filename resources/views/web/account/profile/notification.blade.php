@@ -47,17 +47,22 @@
                     <div class="col-md-8">
                         <form action="" method="">
                             @csrf
-                            <div class="form-group">
-                                <label for="sms">SMS Göndər</label>
-                                <input type="checkbox" name="notifications[]" value="sms" id="sms">
+                            <div class="form-group d-flex justify-content-between align-items-center">
+                                <label class="form-check-label" for="sms">SMS Göndər</label>
+                                <div class="form-switch">
+                                    <input class="form-check-input" type="checkbox" name="notifications[]" value="sms" id="sms">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email">E-mail Göndər</label>
-                                <input type="checkbox" name="notifications[]" value="email" id="email">
+                            <div class="form-group d-flex justify-content-between align-items-center mt-2">
+                                <label class="form-check-label" for="email">E-mail Göndər</label>
+                                <div class="form-switch">
+                                    <input class="form-check-input" type="checkbox" name="notifications[]" value="email" id="email">
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Bildiriş Göndər</button>
                         </form>
                     </div>
+
+
                 </div>
             </div>
         </section>

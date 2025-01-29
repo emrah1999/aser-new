@@ -470,7 +470,7 @@ class AccountController extends Controller
     public function get_country_details(Request $request, $locale, $country_id)
     {
         try {
-            $countr = Country::whereIn('id', [2])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'country_id' => $country_id, 'client_id' => $this->userID])
                     ->whereNull('placed_by')
                     ->whereNull('canceled_by')
@@ -1414,14 +1414,70 @@ class AccountController extends Controller
                     ->whereNull('placed_by')
                     ->whereNull('canceled_by')
                     ->count();
+            $query = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
+                ->leftJoin('container', 'package.last_container_id', '=', 'container.id')
+                ->leftJoin('flight', 'container.flight_id', '=', 'flight.id')
+                ->leftJoin('lb_status as s', 'package.last_status_id', '=', 's.id')
+                ->leftJoin('currency as cur', 'item.currency_id', '=', 'cur.id')
+                ->leftJoin('currency as cur_package', 'package.currency_id', '=', 'cur_package.id')
+                ->leftJoin('seller', 'package.seller_id', '=', 'seller.id')
+                ->leftJoin('filial as f', 'package.branch_id', '=', 'f.id')
+                ->where('package.client_id', $this->userID)
+                ->whereNull('package.deleted_by');
+
+            $query->whereNotNull('package.delivered_by');
+            $packages = $query
+                ->select(
+                    'package.id',
+                    'package.internal_id',
+                    'item.invoice_doc',
+                    'item.invoice_confirmed',
+                    'item.invoice_status as invoice_status',
+                    'item.id as item_id',
+                    'item.price',
+                    'cur.name as currency',
+                    'package.number as track',
+                    'package.seller_id',
+                    'package.other_seller',
+                    'seller.title as seller',
+                    'package.volume_weight',
+                    'package.gross_weight',
+                    'package.chargeable_weight',
+                    'package.unit',
+                    'package.total_charge_value as amount',
+                    //'package.amount_usd',
+                    'package.paid_status',
+                    'package.paid',
+                    'package.paid_sum as paid_usd',
+                    'package.paid_azn',
+                    'package.last_status_date',
+                    'package.last_status_id',
+                    'package.is_warehouse',
+                    'package.currency_id',
+                    'cur_package.icon as cur_icon',
+                    'flight.name as flight',
+                    's.status_' . App::getLocale() . ' as status',
+                    's.color as status_color',
+                    'package.issued_to_courier_date', // has courier (null -> false, not null -> true)
+                    'package.amount_azn',
+                    'package.external_w_debt',
+                    'package.internal_w_debt',
+                    'f.name as branch_name'
+                )
+                ->orderBy('package.id', 'desc')
+                ->get();
+//            return $packages;
+
+
             return view("front.account.special_order_country", compact(
                 'countries',
                 'countr',
-                'not_paid_orders_count'
+                'not_paid_orders_count',
+                'packages'
             ));
 
         } catch (\Exception $exception) {
-            dd($exception);
+            return $exception;
             if ($this->api) {
                 return 'Something goes wrong!';
             }

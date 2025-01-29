@@ -1,8 +1,5 @@
 <div class="container-fluid page_containers">
     <div class="row">
-        <!-- Side bar -->
-
-
         <!-- Main content -->
         <div class="col-md-9 order-side-bar">
             <div class="tariff-select special-order-country">
@@ -14,7 +11,6 @@
                         </span>
                         {{$countr[0]->name}}
                     </div>
-
                     <div class="country-list list-tab no-reload">
                         <ul>
                             @foreach($countr as $country)
@@ -37,7 +33,6 @@
                     @else
                         @php($selected_country_id = $countr[0]->id)
                     @endif
-                    <a href="{{ route('special_order', ['locale' => App::getLocale(), 'country_id' => $selected_country_id]) }}" class="btn btn-orange special-order-btn" id="special_order_button"> + {!! __('buttons.order') !!}</a>
                     <a href="{{ route('special_order', ['locale' => App::getLocale(), 'country_id' => $selected_country_id]) . '?paid=no' }}" class="btn btn-orange" id="basket_special_order_button">
                         <i class="fa" style="font-size:24px">&#xf07a;</i>
                         @if($not_paid_orders_count > 0)

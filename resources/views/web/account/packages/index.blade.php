@@ -53,6 +53,7 @@
                                     <table class="table table-data">
                                         <thead>
                                         <tr class="table-data__thead-tr">
+                                            @if($currentStatus!=6)
                                             <th class="table-data__thead-th">
                                                 <label class="form-checkbox form-checkbox-all d-flex justify-content-start align-items-center">
                                                     <input class="form-checkbox__input" type="checkbox" id="selectRowsCheckbox">
@@ -60,6 +61,7 @@
                                                     <span class="form-checkbox__text"></span>
                                                 </label>
                                             </th>
+                                            @endif
                                             <th class="table-data__thead-th">{!! __('table.flight') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.tracking') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.weight') !!}</th>
@@ -80,6 +82,7 @@
                                                 @php($package_weight = $package->volume_weight)
                                             @endif
                                             <tr class="table-data__tbody-tr order_package_{{$package->id}}" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
+                                                @if($currentStatus!=6)
                                                 <td class="table-data__tbody-td" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
                                                     <label class="form-checkbox d-flex justify-content-start align-items-center" for="checkbox-{{$package->id}}"
                                                            style="position: relative; z-index: 1; cursor: pointer; display: flex; align-items: center;">
@@ -90,7 +93,7 @@
                                                         <span class="form-checkbox__text"></span>
                                                     </label>
                                                 </td>
-
+                                                @endif
                                                 <td class="table-data__tbody-td">
                                                     @if(isset($package->flight))
                                                         {{$package->flight}}

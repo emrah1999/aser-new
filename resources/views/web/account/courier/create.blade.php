@@ -258,7 +258,7 @@
                                     @php($referrals_packages_count++)
                                     @php($referrals_packages_class = 'class="referrals_packages_class"')
                                 @endif
-                            <tr class="table-orders-2__tr orderBlock">
+                                <tr class="table-orders-2__tr orderBlock">
 
                                     <td class="table-orders-2__td">
                                         <label class="form-checkbox d-flex justify-content-start align-items-center" for="package_{{$package->id}}">
@@ -280,32 +280,42 @@
                                     <td class="table-orders-2__td orderType">{{$package->payment_type}}</td>
                                     <td class="table-orders-2__td orderName">{{$package->client_name}} {{$package->client_surname}}</td>
 
-
-                            </tr>
+                                </tr>
                             @endforeach
                         </table>
                         <div class="d-flex justify-content-end">
                             <button class="btn btn-yellow btnOrderSelect font-n-b" type="button" data-bs-dismiss="modal" onclick="check_packages();">{!! __('courier.choose_button') !!}</button>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <button class="btn btn-secondary modal-button" type="button" data-bs-dismiss="modal">Bağla</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+@endsection
+@section('styles')
+<style>
+    .modal-button{
+        display: flex;
+    }
+</style>
 @endsection
 @section('scripts')
     <script>
         function choosePayment(hiddenInputId, activeButtonId, otherButtonIds) {
-            // Gizli input değerini tıklanan butona göre güncelle
-            const hiddenInput = document.getElementById(hiddenInputId);
-            hiddenInput.value = activeButtonId;  // Hidden input'a değer ata
 
-            // Tıklanan butonu aktif yap
+            const hiddenInput = document.getElementById(hiddenInputId);
+            hiddenInput.value = activeButtonId;
+
             const activeButton = document.getElementById(activeButtonId);
             activeButton.classList.add('form-profile-curier__label--active');
             activeButton.classList.remove('form-profile-curier__label--no-active');
 
-            // Diğer butonları pasif yap
+
             otherButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 button.classList.remove('form-profile-curier__label--active');

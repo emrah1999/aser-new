@@ -346,23 +346,20 @@ function paid_package_new(e, locale, url) {
     balance = parseFloat(balance);
     amount = parseFloat(amount);
 
-    // Kullanıcıya ödeme yöntemi seçtirme (kartla veya balansla ödeme)
+
     swal({
-        title: 'Ödeme yöntemini seçin',  // Başlık: Yalnızca bu yazıyı değiştirdik
-        text: '', // Burada herhangi bir ek açıklama yazmıyoruz
+        title: 'Ödəniş üsulunu seçin',
+        text: '',
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'Kartla Öde',  // Kartla ödeme butonu
-        confirmButtonText: 'Balansla Öde',  // Balansla ödeme butonu
+        cancelButtonText: 'Kartla ödə',
+        confirmButtonText: 'Balansdan ödə',
         cancelButtonColor: '#d33',
         confirmButtonColor: '#3085d6'
     }).then(function (result) {
         if (result.dismiss === swal.DismissReason.cancel) {
-            // "Kartla Öde" seçeneği
-            window.location.href = url; // Kartla ödeme için yönlendir
+            window.location.href = url;
         } else if (result.value) {
-            // "Balansla Öde" seçeneği seçildiyse, aşağıdaki kodlar çalışacak
-            // 1. Eğer kuryer varsa, ödeme yapılmasını engelle
             if (has_courier == 1) {
                 swal(
                     'Oops!',
@@ -372,7 +369,6 @@ function paid_package_new(e, locale, url) {
                 return false;
             }
 
-            // 2. Eğer bakiye 0 ya da işlem tutarı bakiye kadar değilse, uyarı göster
             if (balance == 0 || balance < amount) {
                 swal(
                     'Oops!',
@@ -382,7 +378,6 @@ function paid_package_new(e, locale, url) {
                 return false;
             }
 
-            // 3. Kullanıcıya onay sorusu göster
             swal({
                 title: confirm_message,
                 type: 'warning',
@@ -393,17 +388,14 @@ function paid_package_new(e, locale, url) {
                 confirmButtonText: 'Yes!'
             }).then(function (result) {
                 if (result.value) {
-                    // 4. Onaylandığında yükleme animasyonu göster
                     swal({
                         title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
                         text: 'Loading, please wait...',
                         showConfirmButton: false
                     });
 
-                    // 5. CSRF Token al
                     let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
 
-                    // 6. AJAX isteği gönder
                     $.ajax({
                         type: "post",
                         url: url,
@@ -411,7 +403,7 @@ function paid_package_new(e, locale, url) {
                             '_token': CSRF_TOKEN,
                         },
                         success: function (response) {
-                            swal.close(); // Yükleme animasyonunu kapat
+                            swal.close();
                             if (response.case === 'success') {
                                 let title;
                                 if (response.residue === 0) {
@@ -426,9 +418,8 @@ function paid_package_new(e, locale, url) {
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                                location.reload(); // Sayfayı yenile
+                                location.reload();
                             } else {
-                                // Eğer işlem başarılı değilse, hata mesajını göster
                                 swal(
                                     response.title,
                                     response.content,
@@ -438,7 +429,7 @@ function paid_package_new(e, locale, url) {
                         }
                     });
                 } else {
-                    return false; // Eğer onay verilmezse, işlem iptal edilir
+                    return false;
                 }
             });
         }
@@ -770,22 +761,18 @@ function bulk_paid_package_new(e, url) {
     let packageIds = JSON.parse(packageIdsInputHidden.value);
     let confirm_message = $(e).attr("data-confirm");
 
-    // Ödeme yöntemi seçimi için swal penceresi
     swal({
-        title: 'Ödeme yöntemini seçin',
+        title: 'Ödəniş üsulunu seçin',
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'Kartla Öde', // Kartla ödeme
-        confirmButtonText: 'Balansla Öde', // Balansla ödeme
+        cancelButtonText: 'Kartla ödə',
+        confirmButtonText: 'Balansdan ödə',
         cancelButtonColor: '#d33',
         confirmButtonColor: '#3085d6'
     }).then(function (result) {
         if (result.dismiss === swal.DismissReason.cancel) {
-            // "Kartla Öde" seçildiyse, normal ödeme işlemi yapılacak
-            window.location.href = url; // URL'ye yönlendirme yapılacak
+            window.location.href = url;
         } else if (result.value) {
-            // "Balansla Öde" seçildiyse, aşağıdaki işlemler çalışacak
-            // Onay penceresi gösterilir
             swal({
                 title: confirm_message,
                 type: 'warning',
@@ -843,7 +830,7 @@ function bulk_paid_package_new(e, url) {
                         }
                     });
                 } else {
-                    return false; // Onay verilmezse işlem iptal edilir
+                    return false;
                 }
             });
         }

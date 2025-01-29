@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
 
 class RegisterController extends Controller
 {
@@ -307,6 +308,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
+                'verification'=>['required'],
             ]);
         }
         if ($request->is_legality ==1){
@@ -333,6 +335,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
+                'verification'=>['required'],
             ]);
         }else{
             return Validator::make($request->all(), [
@@ -460,7 +463,6 @@ class RegisterController extends Controller
 	public function register(Request $request)
 	{
 		try {
-
 			$request->is_legality = $this->convert_to_ascii($request->is_legality);
 			$request->voen = $this->convert_to_ascii($request->voen);
 			$request->company_name = $this->convert_to_ascii($request->company_name);
@@ -604,8 +606,15 @@ class RegisterController extends Controller
 						$resend_email->resendAjax($request);*/
                         $userId = $user->getAttribute('id');
                         $otp_session = $this->generateRandomCode();
-                        $sendOtp = new SendOTPCode();
-                        $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                        if ( $request->verification=='sms'){
+                            $sendOtp = new SendOTPCode();
+                            $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                        }
+                        elseif ( $request->verification=='email'){
+                            $sendOtp = new SendOTPCode();
+                            $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                        }
+
 						Auth::logout();
                         
                         

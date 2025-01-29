@@ -106,19 +106,23 @@
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userBirthdate">{!! __('auth.Birthday') !!}</label>
-                                <input class="form__input {{ session('errorType') == 'age' ? 'is-invalid' : '' }}"
-                                       name="birthday"
-                                       value="{{ session('errorType') == 'age' ? '' : old('birthday') }}"
-                                       type="date"
-                                       id="userBirthdate"
-                                       required>
+                                <input
+                                        class="form__input {{ session('errorType') == 'age' ? 'is-invalid' : '' }}"
+                                        name="birthday"
+                                        value="{{ session('errorType') == 'age' ? '' : old('birthday') }}"
+                                        type="date"
+                                        id="userBirthdate"
+                                        max="{{ \Carbon\Carbon::now()->subYears(18)->format('Y-m-d') }}"
+                                        required
+                                >
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'age')
-                                        <strong>18 yaş dan böyük olmalısınız</strong>
+                                        <strong>18 yaşdan böyük olmalısınız</strong>
                                     @endif
                                 </div>
                             </div>
                         </div>
+
 
 
                         <div class="col-sm-6">
@@ -253,8 +257,8 @@
                                 <div class="input-container" style="position: relative;">
                                     <input class="form__input" name="password" value="{{ old('password')}}" type="password" id="userPassword" placeholder="Şifrənizi daxil edin" required style="padding-right: 30px;">
                                     <span class="eye-icon" id="togglePassword1" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
-                <i class="fas fa-eye"></i>
-            </span>
+                                        <i class="fas fa-eye"></i>
+                                    </span>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -266,12 +270,37 @@
                                 <div class="input-container" style="position: relative;">
                                     <input class="form__input" name="user_password2" value="{{ old('user_password2')}}" type="password" id="userPassword2" placeholder="Təkrar şifrənizi daxil edin" required style="padding-right: 30px;">
                                     <span class="eye-icon" id="togglePassword2" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
-                <i class="fas fa-eye"></i>
-            </span>
+                                        <i class="fas fa-eye"></i>
+                                    </span>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="form__group">
+                                <div class="input-container" style="position: relative;">
+                                    <label class="form-checkbox d-flex align-items-center" style="margin-right: 15px;">
+                                        <input class="form-checkbox__input" type="radio" name="verification" value="sms" id="smsVerification">
+                                        <span class="form-checkbox__span"></span> SMS təsdiq
+                                    </label>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form__group">
+
+                                <div class="input-container" style="position: relative;">
+                                    <label class="form-checkbox d-flex align-items-center">
+                                        <input class="form-checkbox__input" type="radio" name="verification" value="email" id="emailVerification">
+                                        <span class="form-checkbox__span"></span> Email təsdiq
+                                    </label>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+
 
                     </div>
                 </div>

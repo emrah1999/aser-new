@@ -8,9 +8,9 @@
             border-radius: 5px;
             font-family: Arial, sans-serif;
             font-size: 14px;
-            color: #155724;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
+            color: white;
+            background-color: var(--blue);
+            border: 1px solid var(--blue);
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             transition: opacity 0.5s ease;
             opacity: 1;
@@ -22,6 +22,16 @@
         .thumbnail-profile-addresses__img-block {
             position: relative;
         }
+        .thumbnail-style{
+            height: 55px;
+        }
+        .thumbnail-style2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
     </style>
 @endsection
 
@@ -58,8 +68,8 @@
                                     @php($information = str_replace('{name_surname}', Auth::user()->full_name(), $information))
                                     @php($information = str_replace('{aser_id}', Auth::user()->suite(), $information))
 
-                                    <div class="thumbnail thumbnail-profile-addresses d-flex justify-content-between align-items-start">
-                                        <div class="thumbnail-profile-addresses__caption">
+                                    <div class="thumbnail thumbnail-profile-addresses d-flex justify-content-between align-items-start thumbnail-style ">
+                                        <div class="thumbnail-profile-addresses__caption thumbnail-style2">
                                             <h6 class="thumbnail-profile-addresses__title">{{$detail->title}}</h6>
                                             <p class="thumbnail-profile-addresses__desc">{{$information}}</p>
                                         </div>
