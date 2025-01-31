@@ -213,6 +213,29 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-sm-6">
+                                <div class="form__group">
+                                    <div class="input-container" style="position: relative;">
+                                        <label class="form-checkbox d-flex align-items-center" style="margin-right: 15px;">
+                                            <input class="form-checkbox__input" type="radio" name="verification" value="sms" id="smsVerification">
+                                            <span class="form-checkbox__span"></span> SMS təsdiq
+                                        </label>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form__group">
+
+                                    <div class="input-container" style="position: relative;">
+                                        <label class="form-checkbox d-flex align-items-center">
+                                            <input class="form-checkbox__input" type="radio" name="verification" value="email" id="emailVerification">
+                                            <span class="form-checkbox__span"></span> Email təsdiq
+                                        </label>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
 
                             <div class="col-sm-6">
                                 <div class="form__group">

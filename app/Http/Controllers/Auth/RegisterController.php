@@ -463,6 +463,7 @@ class RegisterController extends Controller
 	public function register(Request $request)
 	{
 		try {
+//            return $request;
 			$request->is_legality = $this->convert_to_ascii($request->is_legality);
 			$request->voen = $this->convert_to_ascii($request->voen);
 			$request->company_name = $this->convert_to_ascii($request->company_name);

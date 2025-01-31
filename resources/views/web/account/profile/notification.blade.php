@@ -45,24 +45,22 @@
                     @include("web.account.account_left_bar")
 
                     <div class="col-md-8">
-                        <form action="" method="">
+                        <form id="notificationForm">
                             @csrf
                             <div class="form-group d-flex justify-content-between align-items-center">
                                 <label class="form-check-label" for="sms">SMS Göndər</label>
                                 <div class="form-switch">
-                                    <input class="form-check-input" type="checkbox" name="notifications[]" value="sms" id="sms">
+                                    <input class="form-check-input notification-switch" type="checkbox" name="notifications[]" value="sms" id="sms" {{$notification->sms_notification==1 ? 'checked':'' }}>
                                 </div>
                             </div>
                             <div class="form-group d-flex justify-content-between align-items-center mt-2">
                                 <label class="form-check-label" for="email">E-mail Göndər</label>
                                 <div class="form-switch">
-                                    <input class="form-check-input" type="checkbox" name="notifications[]" value="email" id="email">
+                                    <input class="form-check-input notification-switch" type="checkbox" name="notifications[]" value="email" id="email"{{$notification->email_notification==1 ? 'checked':'' }}>
                                 </div>
                             </div>
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </section>
@@ -118,7 +116,7 @@
         .form-group {
             margin-bottom: 20px;
             display: inline-block;
-            margin-right: 20px;
+            margin-right: 670px;
         }
 
         .form-group label {
@@ -164,4 +162,30 @@
         }
 
     </style>
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".notification-switch").forEach(function (checkbox) {
+                checkbox.addEventListener("change", function () {
+                    let formData = new FormData();
+                    formData.append('_token', '{{ csrf_token() }}'); // CSRF tokeni ekledik
+                    formData.append('type', this.value);
+                    formData.append('enabled', this.checked ? 1 : 0);
+
+                    fetch("{{ route('edit-notification') }}", {
+                        method: "POST",
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Güncelleme başarılı:", data);
+                        })
+                        .catch(error => {
+                            console.error("Hata oluştu:", error);
+                        });
+                });
+            });
+        });
+    </script>
 @endsection

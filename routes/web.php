@@ -206,6 +206,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
         Route::post('/resend', 'OTPController@resendOtp')->name("resend_otp");
     });
 });
+Route::post('/change-notification', 'AccountController@edit_notification')->name("edit-notification");
 
 Route::get('/secret/backend/cache-clear', 'ApiController@cache_clear');
 

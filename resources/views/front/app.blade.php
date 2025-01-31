@@ -554,7 +554,7 @@
 <script src="{{asset("frontend/js/jquery.form.min.js")}}"></script>
 <script src="{{asset("frontend/js/sweetalert2.min.js")}}"></script>
 <script src="{{asset("frontend/js/main.js?ver=0.2.6")}}"></script>
-<script src="{{asset("frontend/js/ajax.js?ver=1.0.4")}}"></script>
+<script src="{{asset("frontend/js/ajax.js?ver=1.1.4")}}"></script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>

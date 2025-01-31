@@ -1,7 +1,7 @@
 @import "_includes/fonts.css";
 @import "_includes/ui.css";
 @import "_includes/buttons.css";
-@import "_includes/navs.css";
+@import "_includes/navs.css?v=1.2";
 @import "_includes/forms.css";
 @import "_includes/thumbnails.css";
 @import "_includes/media.css";
@@ -600,7 +600,7 @@
     width: auto;
     font-size: 16px;
     color: var(--black-2);
-    vertical-align: middle;
+    vertical-align: top;
     border: 0;
 }
 

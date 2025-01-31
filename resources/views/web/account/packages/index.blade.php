@@ -12,7 +12,7 @@
                             <div class="dropdown-container">
                                 <label for="dropdown-toggle" class="dropdown-label" id="dropdown-label">
                                     @if($currentStatus==0)
-                                    Bütün bağlamalarım
+                                        Bütün bağlamalarım
                                     @elseif($currentStatus==3)
                                         Xarici anbardadır
                                     @elseif($currentStatus==4)
@@ -65,7 +65,7 @@
                                             <th class="table-data__thead-th">{!! __('table.flight') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.tracking') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.weight') !!}</th>
-                                            <th class="table-data__thead-th">{!! __('table.delivery_amount') !!}</th>
+                                            <th class="table-data__thead-th th-new">{!! __('table.delivery_amount') !!}</th>
 {{--                                            <th class="table-data__thead-th">{!! __('table.debt') !!}</th>--}}
                                             <th class="table-data__thead-th">Filial</th>
                                             <th class="table-data__thead-th">{!! __('table.invoice_status') !!}</th>
@@ -94,6 +94,7 @@
                                                     </label>
                                                 </td>
                                                 @endif
+
                                                 <td class="table-data__tbody-td">
                                                     @if(isset($package->flight))
                                                         {{$package->flight}}
@@ -123,18 +124,18 @@
                                                     @endif
                                                 </td>
 
-{{--                                                <td class="table-data__tbody-td">--}}
-{{--                                                    @if(($package->external_w_debt > 0 || $package->external_w_debt != null) && ($package->internal_w_debt > 0 || $package->internal_w_debt != null))--}}
-{{--                                                        <p>$ {{$package->external_w_debt}} </p>--}}
-{{--                                                        <p>₼ {{$package->internal_w_debt}}</p>--}}
-{{--                                                    @elseif($package->external_w_debt > 0 || $package->external_w_debt != null)--}}
-{{--                                                        $ {{$package->external_w_debt}}--}}
-{{--                                                    @elseif($package->internal_w_debt > 0 || $package->internal_w_debt != null)--}}
-{{--                                                        ₼ {{$package->internal_w_debt}}--}}
-{{--                                                    @else--}}
-{{--                                                        ---}}
-{{--                                                    @endif--}}
-{{--                                                </td>--}}
+{{--                                                                                                <td class="table-data__tbody-td">--}}
+{{--                                                                                                    @if(($package->external_w_debt > 0 || $package->external_w_debt != null) && ($package->internal_w_debt > 0 || $package->internal_w_debt != null))--}}
+{{--                                                                                                        <p>$ {{$package->external_w_debt}} </p>--}}
+{{--                                                                                                        <p>₼ {{$package->internal_w_debt}}</p>--}}
+{{--                                                                                                    @elseif($package->external_w_debt > 0 || $package->external_w_debt != null)--}}
+{{--                                                                                                        $ {{$package->external_w_debt}}--}}
+{{--                                                                                                    @elseif($package->internal_w_debt > 0 || $package->internal_w_debt != null)--}}
+{{--                                                                                                        ₼ {{$package->internal_w_debt}}--}}
+{{--                                                                                                    @else--}}
+{{--                                                                                                        ---}}
+{{--                                                                                                    @endif--}}
+{{--                                                                                                </td>--}}
                                                 <td class="table-data__tbody-td">
                                                     {{$package->branch_name}}
                                                 </td>
@@ -152,21 +153,21 @@
                                                             {!! __('status.invoice_uploaded') !!}
                                                         @endif
                                                     @endif
-                                                        @if($package->last_status_id == 7)
-                                                            <a href="#" style="display: none" target="_blank" class="fas fa-eye" placeholder="Prohibet not update">
+                                                    @if($package->last_status_id == 7)
+                                                        <a href="#" style="display: none" target="_blank" class="fas fa-eye" placeholder="Prohibet not update">
+                                                        </a>
+                                                    @else
+                                                        @if($package->invoice_status == 4)
+                                                            <a href="{{ $package->invoice_doc }}" target="_blank" class="fas fa-eye">
+                                                                {!! __('table.show_invoice_file') !!}
                                                             </a>
-                                                        @else
-                                                            @if($package->invoice_status == 4)
-                                                                <a href="{{ $package->invoice_doc }}" target="_blank" class="fas fa-eye">
-                                                                    {!! __('table.show_invoice_file') !!}
-                                                                </a>
 
-                                                            @elseif($package->invoice_status == 1)
-                                                                <a href="{{route('get_package_update', ['locale' => App::getLocale(), $package->id])}}" class="fas fa-upload" style="color: red;">
-                                                                    {!! __('table.upload_invoice_file') !!}
-                                                                </a>
-                                                            @endif
+                                                        @elseif($package->invoice_status == 1)
+                                                            <a href="{{route('get_package_update', ['locale' => App::getLocale(), $package->id])}}" class="fas fa-upload" style="color: red;">
+                                                                {!! __('table.upload_invoice_file') !!}
+                                                            </a>
                                                         @endif
+                                                    @endif
                                                 </td>
 
                                                 <td class="table-data__tbody-td">
@@ -189,7 +190,7 @@
                                                                      </span>
                                                         </div>
                                                     @endif
-                                                        <span class="order-status">
+                                                    <span class="order-status">
                                                                 {{$package->status}}
                                                                 <p class="order-status-changed"><span>{{$package->last_status_date ==null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
                                                             </span>
@@ -217,12 +218,12 @@
                                                         @endif
                                                     @endif
                                                 </td>
-{{--                                                <td class="order-info-link" style="text-align: center;">--}}
+                                                {{--                                                <td class="order-info-link" style="text-align: center;">--}}
                                                 <td class="order-info-link" style="vertical-align: middle; text-align: center; width: 50px;">
                                                     <span
                                                             onclick="show_package_items({{$package->id}}, '{{$package->track}}', '{{route('get_package_items', ['locale' => app()->getLocale()])}}');"
-                                                          class="order-view"
-                                                          style="display: inline-flex; align-items: center; justify-content: center; height: 100%; width: 100%; cursor: pointer;">
+                                                            class="order-view"
+                                                            style="display: inline-flex; align-items: center; justify-content: center; height: 100%; width: 100%; cursor: pointer;">
                                                         <i class="fas fa-eye"></i>
                                                     </span>
                                                 </td>
@@ -259,9 +260,22 @@
 @section('styles')
     <style>
         .bar-width{
-            margin: -858px 20px 20px 315px ;
+            margin: -800px 20px 20px 315px ;
             width: 83%;
         }
+       .th-new{
+            padding: 0 5px !important;
+            width: 25px;
+        }
+        /*.table-data__thead-th{*/
+        /*    vertical-align: top;*/
+        /*    width: auto;*/
+        /*}*/
+        /*th:nth-child(6), td:nth-child(6) {*/
+        /*    display: none;*/
+        /*}*/
+
+
     </style>
 @endsection
 

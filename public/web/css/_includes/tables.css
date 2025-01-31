@@ -17,6 +17,7 @@
     color: var(--black-2);
     vertical-align: middle;
     border: 0;
+    width: auto;
 }
 
 .table-tarifs{

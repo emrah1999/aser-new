@@ -24,13 +24,6 @@
                                 <table class="table table-data">
                                     <thead>
                                     <tr class="table-data__thead-tr">
-                                        <th class="table-data__thead-th">
-                                            <label class="form-checkbox form-checkbox-all d-flex justify-content-start align-items-center">
-                                                <input class="form-checkbox__input" type="checkbox" id="selectRowsCheckbox">
-                                                <span class="form-checkbox__span"></span>
-                                                <span class="form-checkbox__text"></span>
-                                            </label>
-                                        </th>
                                         <th class="table-data__thead-th">{!! __('table.flight') !!}</th>
                                         <th class="table-data__thead-th">{!! __('table.tracking') !!}</th>
                                         <th class="table-data__thead-th">{!! __('table.weight') !!}</th>
@@ -51,16 +44,6 @@
                                             @php($package_weight = $package->volume_weight)
                                         @endif
                                         <tr class="table-data__tbody-tr order_package_{{$package->id}}" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
-                                            <td class="table-data__tbody-td" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
-                                                <label class="form-checkbox d-flex justify-content-start align-items-center" for="checkbox-{{$package->id}}"
-                                                       style="position: relative; z-index: 1; cursor: pointer; display: flex; align-items: center;">
-                                                    <input id="checkbox-{{$package->id}}" class="form-checkbox__input" type="checkbox"
-                                                           style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
-                                                    <span class="form-checkbox__span"
-                                                          style="width: 20px; height: 20px; border: 1px solid #000; display: inline-block; position: relative;"></span>
-                                                    <span class="form-checkbox__text"></span>
-                                                </label>
-                                            </td>
 
                                             <td class="table-data__tbody-td">
                                                 @if(isset($package->flight))
@@ -206,7 +189,7 @@
 
 
                                     </tbody>
-                                </table>
+                                 </table>
                             @else
                                 <div class="profile-information-block sp-padding">
                                     <div class="form-alert show-alert">
@@ -227,10 +210,16 @@
 
 @section('styles')
 <style>
+    .thumbnail{
+        width: 73%;
+        margin-left: 10px;
+    }
+    .table-data__thead-th{
+        vertical-align: top;
+    }
     .left-bar-new-style{
         margin-top: -113px;
     }
-   /* Genel layout ve container ayarları */
    .page-content-block {
        padding: 20px 90px; /* Sol, sağ 90px, üst 20px boşluk */
    }
@@ -268,7 +257,7 @@
        display: block;
        text-decoration: none;
        color: inherit;
-       margin-bottom: 20px; /* Her ülke bloğu arasına boşluk bırak */
+       margin-bottom: 20px;
        transition: transform 0.3s ease;
    }
 
@@ -295,19 +284,18 @@
        max-width: 100%;
        height: auto;
        border-radius: 50%;
-       margin-right: 15px; /* Bayrak ile ülke adı arasında boşluk bırak */
+       margin-right: 15px;
    }
 
    .country-name {
        font-weight: bold;
        color: #333;
-       white-space: nowrap; /* Metnin taşmasını engelle */
+       white-space: nowrap;
        text-overflow: ellipsis;
        overflow: hidden;
-       max-width: 150px; /* Genişliği ayarla */
+       max-width: 150px;
    }
 
-   /* Uyarı mesajı */
    .alert {
        border-radius: 5px;
        margin-bottom: 20px;
@@ -340,7 +328,6 @@
        padding-left: 20px;
    }
 
-   /* Mobil uyumluluk */
    @media (max-width: 768px) {
        .page-content-part {
            flex-direction: column;

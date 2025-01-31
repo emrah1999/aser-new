@@ -12,7 +12,7 @@
         <li class="nav-profile-menu__item">
             <a href="{{ route('special_order_select', ['locale' => App::getLocale()]) }}"
             class="nav-profile-menu__link d-flex justify-content-start align-items-center
-                    {{ request()->routeIs('get_account') ? 'nav-profile-menu__link--active' : '' }}">
+                    {{ request()->routeIs('special_order_select') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-address.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/profile-menu-address-active.png" alt="ProfileMenu">
                 <span class="nav-profile-menu__link-title">{!! __('static.order_title') !!}</span>

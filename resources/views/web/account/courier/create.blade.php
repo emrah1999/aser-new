@@ -284,12 +284,10 @@
                             @endforeach
                         </table>
                         <div class="d-flex justify-content-end">
+                            <button class="btn btn-secondary modal-button" type="button" data-bs-dismiss="modal">Bağla</button>
                             <button class="btn btn-yellow btnOrderSelect font-n-b" type="button" data-bs-dismiss="modal" onclick="check_packages();">{!! __('courier.choose_button') !!}</button>
                         </div>
 
-                        <div class="d-flex justify-content-end mt-3">
-                            <button class="btn btn-secondary modal-button" type="button" data-bs-dismiss="modal">Bağla</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -301,6 +299,7 @@
 <style>
     .modal-button{
         display: flex;
+        margin-right: 5px;
     }
 </style>
 @endsection

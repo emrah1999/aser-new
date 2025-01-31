@@ -53,7 +53,10 @@ class User extends Authenticatable implements MustVerifyEmail
             'branch_id',
             'email_verified_at',
             'voen',
-            'company_name'
+            'company_name',
+            'sms_notification',
+            'email_notification',
+
 	];
 
 	/**

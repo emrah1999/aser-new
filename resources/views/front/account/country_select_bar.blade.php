@@ -1,16 +1,22 @@
 <div class="container-fluid page_containers">
     <div class="row">
-        <!-- Main content -->
         <div class="col-md-9 order-side-bar">
             <div class="tariff-select special-order-country">
                 <label>{!! __('labels.select_country_for_make_order') !!}</label>
                 <div class="country-select">
                     <div class="country-active flex align-items-center">
-                        <span class="country-flag">
-                            <img src="{{$countr[0]->flag}}" alt="{{$countr[0]->name}}">
-                        </span>
-                        {{$countr[0]->name}}
+                        @foreach($countr as $key => $country)
+                            @if($country->id == $country_id)
+                                <span class="country-flag">
+                                    <img src="{{$countr[$key]->flag}}" alt="{{$countr[$key]->name}}">
+                                </span>
+                                <span class="country-name">{{$countr[$key]->name }}</span>
+                                <span class="check-icon">&#10003;</span>
+                            @endif
+                        @endforeach
                     </div>
+
+
                     <div class="country-list list-tab no-reload">
                         <ul>
                             @foreach($countr as $country)
@@ -48,6 +54,29 @@
 
 @section('styles1')
     <style>
+        .country-active {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .check-icon {
+            margin-left: auto;
+            color: black;
+        }
+
+        .check-icon {
+            color: black;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .country-active{
+            margin-left: 140px;
+            width: 220px;
+        }
+
         .order-side-bar{
             margin: 20px 300px 1px 315px;
             width: 1000px;
@@ -75,8 +104,9 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin-left: auto; /* Sağ tarafa hizalama */
+            margin-left: auto;
             margin-right: 0;
+            position: relative;
         }
 
         .tariff-select label {
@@ -134,6 +164,8 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             margin-top: 10px;
+            margin-left: 140px;
+
         }
 
         .country-list ul {
@@ -173,8 +205,8 @@
             display: flex;
             gap: 10px;
             align-items: center;
-            justify-content: flex-end; /* Butonları sağa hizala */
-            margin-left: auto; /* Sağ tarafa hizalama */
+            justify-content: flex-end;
+            margin-left: auto;
             margin-right: 0;
         }
 

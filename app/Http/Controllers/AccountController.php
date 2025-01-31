@@ -485,7 +485,7 @@ class AccountController extends Controller
                     'countr'
                 ));
             }
-            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 
 
             $selected_country = Country::where('id', $country_id)->select('id', 'name_' . App::getLocale(), 'name_en', 'new_flag')->first();
@@ -1468,12 +1468,13 @@ class AccountController extends Controller
                 ->get();
 //            return $packages;
 
-
+            $country_id=2;
             return view("front.account.special_order_country", compact(
                 'countries',
                 'countr',
                 'not_paid_orders_count',
-                'packages'
+                'packages',
+                'country_id'
             ));
 
         } catch (\Exception $exception) {
@@ -1547,7 +1548,7 @@ class AccountController extends Controller
             }
             $rate_azn = $rate->rate;
 
-            $countr = Country::whereIn('id', [2])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
             $countrFlag = Country::where('id', $country_id)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->first();
 
             $packages_price_for_last_month = $this->packages_price_for_last_month();
@@ -1602,6 +1603,7 @@ class AccountController extends Controller
                     'orders'
                 );
             }
+//            return $countr;
             return view("front.account.special_order", compact(
                 'countr',
                 'packages_price_for_last_month',
@@ -5582,6 +5584,32 @@ class AccountController extends Controller
 
     public function change_notification()
     {
-        return  view('web.account.profile.notification');
+        $notification=User::query()
+            ->select('sms_notification','email_notification')
+            ->where('id',Auth::id())
+            ->first();
+//        return  $notification;
+        return  view('web.account.profile.notification',compact('notification'));
+    }
+
+    public function edit_notification(Request $request)
+    {
+        if($request->type=='sms'){
+            User::find(Auth::id())->update(['sms_notification'=>$request->enabled]);
+            return response()->json([
+                'message'=>'Success'
+            ]);
+        }
+        elseif($request->type='email'){
+            User::find(Auth::id())->update(['email_notification'=>$request->enabled]);
+            return response()->json([
+                'message'=>'Success'
+            ]);
+        }
+        else{
+            return response()->json([
+                'message'=>'Something went wrong'
+            ]);
+        }
     }
 }
