@@ -38,7 +38,7 @@
                             <a href="{{ route('tariffs_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.tariffs') !!}</a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('transport_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.transport') !!}</a>
+                            <a href="{{ route('transport_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.transparation') !!}</a>
                         </li>
                         <li class="nav-menu__item">
                             <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.our_services') !!}</a>
@@ -165,7 +165,7 @@
 
         document.querySelector('.nav-languages__link').addEventListener('click', function(e) {
             e.preventDefault();
-            const languageDropdown = this.nextElementSibling; // Açılır listeyi al
+            const languageDropdown = this.nextElementSibling;
 
             // Açıqsa, bağla
             if (languageDropdown.classList.contains('d-none')) {
@@ -175,7 +175,6 @@
             }
         });
 
-        // Sayfanın başqa bir yerinə tıkladığında açılan menüyü bağla
         document.addEventListener('click', function(e) {
             const languageMenu = document.querySelector('.nav-languages');
             const isClickInside = languageMenu.contains(e.target);

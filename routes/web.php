@@ -70,7 +70,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     
     Route::group(['prefix' => '/transport'], function () {
         Route::get('/', 'TransportController@show_transport')->name("transport_page");
-//        Route::get('/', 'TransportController@getTransportPage')->name("getTransportPage");
+        Route::get('/{id}', 'TransportController@getTransportPage')->name("getTransportPage");
     });
     
 

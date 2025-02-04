@@ -16,6 +16,7 @@ use App\Instruction;
 use App\Seller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\İnternationalDelivery;
 use App\CorporativeLogistic;
@@ -29,13 +30,59 @@ class IndexController extends HomeController
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
 
             $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image')->orderBy('id')->get();
-            $countries =İnternationalDelivery::all();
+
+
+            $countries =İnternationalDelivery::query()
+                ->select([
+                    'id','icon',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+
             $types = TariffType::all();
-            $faqs = Faq2::all();
-            $works = HowWork::all();
-            $deliveries =CorporativeLogistic::all();
-            $text = HomePageText::query()->first();
-            $carousels= Carousel::all();
+
+            $faqs = Faq2::query()
+                ->select([
+                    'id',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+
+            $works = HowWork::query()
+                ->select([
+                    'id','icon',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+
+            $deliveries =CorporativeLogistic::query()
+                ->select([
+                    'id','icon',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+
+
+            $text = HomePageText::query()
+                ->select([
+                    'id',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])->first();
+
+
+            $carousels= Carousel::query()
+                ->select([
+                    'id','icon',"link",
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+//            return $text;
             
             return view('web.home.index')->with([
                 'instructions' => $instructions,

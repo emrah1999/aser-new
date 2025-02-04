@@ -14,4 +14,5 @@ return [
     'tutorial' => 'Təlimat',
     'news' => 'Xəbərlər',
     'our_services' => 'Xidmətlərimiz',
+    'transparation'=>'Yük daşıma'
 ];

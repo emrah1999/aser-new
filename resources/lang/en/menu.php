@@ -14,4 +14,5 @@ return [
     'tutorial' => 'Tutorial',
     'news' => 'News',
     'our_services' => 'Our Services',
+    'transparation'=>'Cargo transportation'
 ];

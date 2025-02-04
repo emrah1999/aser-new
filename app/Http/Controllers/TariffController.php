@@ -18,9 +18,13 @@ use Illuminate\Support\Facades\Request;
 class TariffController extends HomeController
 {
     public function index(){
-        $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image','tarif_title')->orderBy('id')->get();
-        $countries =İnternationalDelivery::all();
-    
+        $countries =İnternationalDelivery::query()
+            ->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->get();
     
         return view('web.tariffs.index', compact(
             'countries'

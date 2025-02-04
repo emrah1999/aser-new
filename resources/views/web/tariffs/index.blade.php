@@ -15,9 +15,9 @@
                                         <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
                                     <div class="thumbnail-tarifs__caption text-center">
-                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name_az}}</h4>
+                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
                                         <p class="thumbnail-tarifs__desc">
-                                            {{$country->content_az}}
+                                            {{$country->content}}
                                         </p>
                                     </div>
                                 </a>

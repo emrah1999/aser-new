@@ -7,19 +7,15 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="media-cargo-service__body">
-                                <h4 class="media-cargo-service__title font-n-b">Hava nəqliyyatı</h4>
+                                <h4 class="media-cargo-service__title font-n-b">{{$delivery->name}}</h4>
                                 <p class="media-cargo-service__desc">
-                                    Türkiyədən Azərbaycana kargo şirkətləri geniş xidmət spektri
-                                    ilə müştərilərə sürətli və etibarlı çatdırılma təklif edir.
-                                    Bu şirkətlər arasında müxtəlif qiymət və şərtlərlə Türkiyədən
-                                    sifariş xidmətləri göstərənlər mövcuddur, beləliklə, müştərilər
-                                    öz tələblərinə uyğun ən sərfəli seçim edə bilərlər.
+                                   {{$delivery->content}}
                                 </p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media-cargo-service__right">
-                                <img class="media-cargo-service__img img-responsive" src="/web/images/content/cargo-service.png" alt="Cargo">
+                                <img class="media-cargo-service__img img-responsive" src="{{$delivery->icon}}" alt="Cargo">
                             </div>
                         </div>
                     </div>
@@ -106,6 +102,35 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-questions">
+            <div class="container-lg">
+                <h1 class="section-title text-center font-n-b">Suallar və cavablar</h1>
+                <div class="accordion accordion-questions" id="accordionQuestions">
+
+                    <div class="row">
+                        @foreach($faqs->chunk(6) as $faqChunk)
+                            <div class="col-md-6">
+                                @foreach($faqChunk as $faq)
+                                    <div class="accordion-item accordion-questions__item">
+                                        <h2 class="accordion-header accordion-questions__header">
+                                            <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
+                                                {{$faq->name}}
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
+                                            <div class="accordion-body accordion-questions__body">
+                                                {!! $faq->content !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </section>

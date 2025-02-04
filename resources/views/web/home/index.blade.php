@@ -10,9 +10,11 @@
                             <div class="row justify-content-center align-items-center">
                                 <div class="col">
                                     <div class="media-slider__left">
-                                        <h1 class="media-slider__title font-n-b">{{$carousel->name_az}}</h1>
-                                        <p class="media-slider__desc">A{{$carousel->content_az}}</p>
-                                        <a href="#" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
+                                        <h1 class="media-slider__title font-n-b">{{$carousel->name}}</h1>
+                                        <p class="media-slider__desc">A{{$carousel->content}}</p>
+                                        @if($carousel->link != null)
+                                        <a href="{{$carousel->link}}" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col d-none d-sm-block">
@@ -40,8 +42,8 @@
                                      src="{{$work->icon}}" alt="Work">
                             </div>
                             <div class="thumbnail-works__caption text-center">
-                                <h4 class="thumbnail-works__title font-n-b">{{$work->name_az}}</h4>
-                                <p class="thumbnail-works__desc">{{$work->content_azphp}}</p>
+                                <h4 class="thumbnail-works__title font-n-b">{{$work->name}}</h4>
+                                <p class="thumbnail-works__desc">{{$work->content}}</p>
                             </div>
                         </div>
                     </div>
@@ -87,9 +89,9 @@
                                         <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
                                     <div class="thumbnail-tarifs__caption text-center">
-                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name_az}}</h4>
+                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
                                         <p class="thumbnail-tarifs__desc">
-                                            {{$country->content_az}}
+                                            {{$country->content}}
                                         </p>
                                     </div>
                                 </a>
@@ -101,19 +103,19 @@
         </section>
         <section class="section section-offers">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">Yük daşıma</h2>
+                <h2 class="section-title text-center font-n-b">{!! __('menu.transparation') !!}</h2>
                 <div class="row">
                     @foreach($deliveries as $deliverie)
                     <div class="col-md-3 col-sm-6">
                         <div class="thumbnail thumbnail-cargo">
-                            <a href="{{$deliverie->icon}} " class="thumbnail-cargo__link">
+                            <a href="{{ route('getTransportPage', ['id' => $deliverie->id,'locale' => app()->getLocale()]) }} " class="thumbnail-cargo__link">
                                 <div class="thumbnail-cargo__img-block">
                                     <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
                                 </div>
                                 <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name_az}}</h4>
+                                    <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name}}</h4>
                                     <p class="thumbnail-cargo__desc">
-                                       {{$deliverie->content_az}}
+                                       {{$deliverie->content}}
                                     </p>
                                 </div>
                             </a>
@@ -207,9 +209,9 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title font-n-b">{{$text->name_az}}</h4>
+                            <h4 class="media-tarif-country__title font-n-b">{{$text->name}}</h4>
                             <p class="media-tarif-country__desc">
-                               {{$text->content_az}}
+                               {{$text->content}}
                             </p>
                         </div>
                     </div>
@@ -403,12 +405,12 @@
                                     <div class="accordion-item accordion-questions__item">
                                         <h2 class="accordion-header accordion-questions__header">
                                             <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
-                                                {{$faq->name_az}}
+                                                {{$faq->name}}
                                             </button>
                                         </h2>
                                         <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
                                             <div class="accordion-body accordion-questions__body">
-                                                {!! $faq->content_az !!}
+                                                {!! $faq->content !!}
                                             </div>
                                         </div>
                                     </div>

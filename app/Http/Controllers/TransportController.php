@@ -6,16 +6,47 @@ use App\Faq;
 use App\CorporativeLogistic;
 use App\Faq2;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 
 class TransportController extends Controller
 {
     public function show_transport(){
-        $faqs = Faq2::all();
-        $deliveries =CorporativeLogistic::all();
+        $faqs = Faq2::query()
+            ->select([
+                'id',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->get();
+        $deliveries =CorporativeLogistic::query()
+            ->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->get();
         return view('web.transport.index',compact('faqs','deliveries'));
     }
     
-    public function getTransportPage(){
-        return view('web.transport.single');
+    public function getTransportPage($locale, $id){
+//        return $id;
+        $delivery =CorporativeLogistic::query()
+            ->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->where('id',$id)
+            ->first();
+        $faqs = Faq2::query()
+            ->select([
+                'id',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->get();
+
+        return view('web.transport.single',compact('delivery','faqs'));
     }
 }

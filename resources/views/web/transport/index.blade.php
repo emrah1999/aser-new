@@ -8,14 +8,14 @@
                     @foreach($deliveries as $deliverie)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-cargo">
-                                <a href="{{$deliverie->icon}} " class="thumbnail-cargo__link">
+                                <a href="{{ route('getTransportPage', ['id' => $deliverie->id,'locale' => app()->getLocale()]) }} " class="thumbnail-cargo__link">
                                     <div class="thumbnail-cargo__img-block">
                                         <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
                                     </div>
                                     <div class="thumbnail-cargo__caption text-center">
-                                        <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name_az}}</h4>
+                                        <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name}}</h4>
                                         <p class="thumbnail-cargo__desc">
-                                            {{$deliverie->content_az}}
+                                            {{$deliverie->content}}
                                         </p>
                                     </div>
                                 </a>
@@ -121,12 +121,12 @@
                                     <div class="accordion-item accordion-questions__item">
                                         <h2 class="accordion-header accordion-questions__header">
                                             <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
-                                                {{$faq->name_az}}
+                                                {{$faq->name}}
                                             </button>
                                         </h2>
                                         <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
                                             <div class="accordion-body accordion-questions__body">
-                                                {!! $faq->content_az !!}
+                                                {!! $faq->content !!}
                                             </div>
                                         </div>
                                     </div>

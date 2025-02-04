@@ -14,4 +14,5 @@ return [
     'tutorial' => 'Руководство',
     'news' => 'Новости',
     'our_services' => 'Услуги',
+    'transparation'=>'Грузоперевозки'
 ];
