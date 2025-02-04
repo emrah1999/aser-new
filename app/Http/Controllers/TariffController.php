@@ -7,6 +7,7 @@ use App\ContractDetail;
 use App\Country;
 use App\ExchangeRate;
 use App\Faq;
+use App\İnternationalDelivery;
 use App\Seller;
 use App\TariffType;
 use Carbon\Carbon;
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Request;
 class TariffController extends HomeController
 {
     public function index(){
-        $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image')->orderBy('id')->get();
+        $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image','tarif_title')->orderBy('id')->get();
+        $countries =İnternationalDelivery::all();
     
     
         return view('web.tariffs.index', compact(

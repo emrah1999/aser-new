@@ -79,7 +79,7 @@
                             <div class="thumbnail-profile-settings__caption-block">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <div class="thumbnail-profile-settings__img-block-1">
-                                        <img class="thumbnail-profile-settings__img" src="/web/images/content/profile-settings4.png" alt="Settings">
+                                        <img class="thumbnail-profile-settings__img" src="/web/images/content/notification-new.png" height="24px" width="24px" alt="Settings">
                                     </div>
                                     <div class="thumbnail-profile-settings__caption">
                                         <h6 class="thumbnail-profile-settings__title font-n-b">Bildiriş məlumatlandırma</h6>

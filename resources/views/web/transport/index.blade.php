@@ -1,76 +1,31 @@
 @extends('web.layouts.web')
 @section('content')
     <div class="content" id="content">
-        <section class="section section-cargo">
+        <section class="section section-offers">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">Yük daşıma</h2>
                 <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-1.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Hava nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Hava nəqliyyatı ilə istənilən ölçülü yüklərin,
-                                        həmçinin təhlükəli yüklərin və canlı  heyvanların
-                                        dünyanın istənilən nöqtələrə daşınması
-                                    </p>
-                                </div>
-                            </a>
+                    @foreach($deliveries as $deliverie)
+                        <div class="col-md-3 col-sm-6">
+                            <div class="thumbnail thumbnail-cargo">
+                                <a href="{{$deliverie->icon}} " class="thumbnail-cargo__link">
+                                    <div class="thumbnail-cargo__img-block">
+                                        <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
+                                    </div>
+                                    <div class="thumbnail-cargo__caption text-center">
+                                        <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name_az}}</h4>
+                                        <p class="thumbnail-cargo__desc">
+                                            {{$deliverie->content_az}}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-2.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Avtomobil  nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Fəaliyyət göstərdiyimiz xarici ölkələrdə
-                                        istənilən ölçülü yüklərin avtomobil nəqliyyatı ilə bir nöqtədə digər nöqtəyə daşınması
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-3.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Dəniz nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Dəniz nəqliyyatı ilə istənilən ölçülü yüklərin dünyanın istənilən nöqtəsinə daşınması
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-4.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Dəmiryolu nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Dəmiryolu nəqliyyatı ilə istənilən ölçülü yüklərin dünyanın istənilən nöqtəsinə daşınması
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
+
         <section class="section section-contact">
             <div class="container-lg">
                 <div class="section-contact__block center-block">
@@ -151,6 +106,35 @@
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-questions">
+            <div class="container-lg">
+                <h1 class="section-title text-center font-n-b">Suallar və cavablar</h1>
+                <div class="accordion accordion-questions" id="accordionQuestions">
+
+                    <div class="row">
+                        @foreach($faqs->chunk(6) as $faqChunk)
+                            <div class="col-md-6">
+                                @foreach($faqChunk as $faq)
+                                    <div class="accordion-item accordion-questions__item">
+                                        <h2 class="accordion-header accordion-questions__header">
+                                            <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
+                                                {{$faq->name_az}}
+                                            </button>
+                                        </h2>
+                                        <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
+                                            <div class="accordion-body accordion-questions__body">
+                                                {!! $faq->content_az !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </section>

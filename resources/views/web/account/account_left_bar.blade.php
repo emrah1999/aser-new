@@ -13,8 +13,8 @@
             <a href="{{ route('special_order_select', ['locale' => App::getLocale()]) }}"
             class="nav-profile-menu__link d-flex justify-content-start align-items-center
                     {{ request()->routeIs('special_order_select') ? 'nav-profile-menu__link--active' : '' }}">
-                <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-address.png" alt="ProfileMenu">
-                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/profile-menu-address-active.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img" src="/web/images/content/other-plus.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/other-plus.png" alt="ProfileMenu">
                 <span class="nav-profile-menu__link-title">{!! __('static.order_title') !!}</span>
             </a>
         </li>
@@ -31,8 +31,8 @@
             <a href="{{ route('get_seller_otp', ['locale' => App::getLocale()]) }}"
                class="nav-profile-menu__link d-flex justify-content-start align-items-center
                     {{ request()->routeIs('get_seller_otp', ['locale' => App::getLocale()]) ? 'nav-profile-menu__link--active' : '' }}">
-                <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-package.png" alt="ProfileMenu">
-                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/profile-menu-package-active.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img" src="/web/images/content/otp-new.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/otp-new.png" alt="ProfileMenu">
                 <span class="nav-profile-menu__link-title">OTP</span>
             </a>
         </li>
@@ -73,8 +73,8 @@
         </li>
         <li class="nav-profile-menu__item">
             <a href="{{route("get_sub_accounts", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_sub_accounts') ? 'nav-profile-menu__link--active' : '' }}">
-                <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-notification.png" alt="ProfileMenu">
-                <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-notification-active.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img" src="/web/images/content/referal-new.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img" src="/web/images/content/referal-new.png" alt="ProfileMenu">
                 <span class="nav-profile-menu__link-title">Referal Hesablar</span>
             </a>
         </li>

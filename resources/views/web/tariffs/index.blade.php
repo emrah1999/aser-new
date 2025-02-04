@@ -8,16 +8,16 @@
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-tarifs">
-                                <a href="{{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}
-" class="thumbnail-tarifs__link">
+                                <a href="
+{{--                                {{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}--}}
+                                    " class="thumbnail-tarifs__link">
                                     <div class="thumbnail-tarifs__img-block">
-                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->screen_image}}" alt="Tarif">
+                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
                                     <div class="thumbnail-tarifs__caption text-center">
-                                        <h4 class="thumbnail-tarifs__title font-n-b">Türkiyədən Azərbaycana kargo</h4>
+                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name_az}}</h4>
                                         <p class="thumbnail-tarifs__desc">
-                                            Hava nəqliyyatı ilə istənilən ölçülü yüklərin,
-                                            həmçinin təhlükəli yüklərin və canlı  istənilən nöqtələrə daşınması
+                                            {{$country->content_az}}
                                         </p>
                                     </div>
                                 </a>

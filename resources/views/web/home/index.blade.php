@@ -4,69 +4,27 @@
         <section class="section section-main">
             <div class="container-lg">
                 <div class="owl-carousel owl-main owlMain">
+                    @foreach($carousels as $carousel)
                     <div class="owl-main__item">
                         <div class="media media-slider center-block">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col">
                                     <div class="media-slider__left">
-                                        <h1 class="media-slider__title font-n-b">Sizin <span
-                                                    class="media-slider__title-span">etibarlı</span> daşıyıcınız</h1>
-                                        <p class="media-slider__desc">ABŞ-ın online mağazalarından sifarişlərin
-                                            çatdırılması</p>
+                                        <h1 class="media-slider__title font-n-b">{{$carousel->name_az}}</h1>
+                                        <p class="media-slider__desc">A{{$carousel->content_az}}</p>
                                         <a href="#" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
                                     </div>
                                 </div>
                                 <div class="col d-none d-sm-block">
                                     <div class="media-slider__right">
                                         <img class="media-slider__img img-responsive"
-                                             src="/web/images/content/slider.png" alt="Slider">
+                                             src="{{$carousel->icon}}" alt="Slider">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="owl-main__item">
-                        <div class="media media-slider center-block">
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col">
-                                    <div class="media-slider__left">
-                                        <h1 class="media-slider__title font-n-b">Sizin <span
-                                                    class="media-slider__title-span">etibarlı</span> daşıyıcınız</h1>
-                                        <p class="media-slider__desc">Türkiyənin online mağazalarından sifarişlərin
-                                            çatdırılması</p>
-                                        <a href="#" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
-                                    </div>
-                                </div>
-                                <div class="col d-none d-sm-block">
-                                    <div class="media-slider__right">
-                                        <img class="media-slider__img img-responsive"
-                                             src="/web/images/content/slider.png" alt="Slider">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-main__item">
-                        <div class="media media-slider center-block">
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col">
-                                    <div class="media-slider__left">
-                                        <h1 class="media-slider__title font-n-b">Sizin <span
-                                                    class="media-slider__title-span">etibarlı</span> daşıyıcınız</h1>
-                                        <p class="media-slider__desc">Almaniyanın online mağazalarından sifarişlərin
-                                            çatdırılması</p>
-                                        <a href="#" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
-                                    </div>
-                                </div>
-                                <div class="col d-none d-sm-block">
-                                    <div class="media-slider__right">
-                                        <img class="media-slider__img img-responsive"
-                                             src="/web/images/content/slider.png" alt="Slider">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
                 </div>
             </div>
         </section>
@@ -74,57 +32,20 @@
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">Aser Cargo Express necə işləyir?</h2>
                 <div class="row">
+                    @foreach($works as $work)
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="thumbnail thumbnail-works">
                             <div class="thumbnail-works__img-block">
                                 <img class="thumbnail-works__img img-responsive"
-                                     src="/web/images/content/work-1.png" alt="Work">
+                                     src="{{$work->icon}}" alt="Work">
                             </div>
                             <div class="thumbnail-works__caption text-center">
-                                <h4 class="thumbnail-works__title font-n-b">Qeydiyyatdan keçin</h4>
-                                <p class="thumbnail-works__desc">Aserdə qeydiyyatdan keçin, ABŞ, Almaniya, İngiltərə və
-                                    Türkiyədə şəxsi ünvanınınz olsun</p>
+                                <h4 class="thumbnail-works__title font-n-b">{{$work->name_az}}</h4>
+                                <p class="thumbnail-works__desc">{{$work->content_azphp}}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="thumbnail thumbnail-works">
-                            <div class="thumbnail-works__img-block">
-                                <img class="thumbnail-works__img img-responsive"
-                                     src="/web/images/content/work-2.png" alt="Work">
-                            </div>
-                            <div class="thumbnail-works__caption text-center">
-                                <h4 class="thumbnail-works__title font-n-b">Xaricdən sifariş edin</h4>
-                                <p class="thumbnail-works__desc">Şəxsi kabinetinizə daxil olaraq xaricdəki ünvanızı əldə
-                                    edin</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="thumbnail thumbnail-works">
-                            <div class="thumbnail-works__img-block">
-                                <img class="thumbnail-works__img img-responsive"
-                                     src="/web/images/content/work-3.png" alt="Work">
-                            </div>
-                            <div class="thumbnail-works__caption text-center">
-                                <h4 class="thumbnail-works__title font-n-b">Xarici anbara çatdırılma</h4>
-                                <p class="thumbnail-works__desc">Sifarişiniz bizim xaricdəki anbarlarımıza daxil
-                                    edilir</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="thumbnail thumbnail-works">
-                            <div class="thumbnail-works__img-block">
-                                <img class="thumbnail-works__img img-responsive"
-                                     src="/web/images/content/work-4.png" alt="Work">
-                            </div>
-                            <div class="thumbnail-works__caption text-center">
-                                <h4 class="thumbnail-works__title font-n-b">Təhvil al</h4>
-                                <p class="thumbnail-works__desc">Sifarişinizi Bakıya çatdırılır</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -159,15 +80,16 @@
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-tarifs">
-                                <a href="{{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}" class="thumbnail-tarifs__link">
+                                <a href="
+{{--                                {{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}--}}
+                                " class="thumbnail-tarifs__link">
                                     <div class="thumbnail-tarifs__img-block">
-                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->screen_image}}" alt="Tarif">
+                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
                                     <div class="thumbnail-tarifs__caption text-center">
-                                        <h4 class="thumbnail-tarifs__title font-n-b">Türkiyədən Azərbaycana kargo</h4>
+                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name_az}}</h4>
                                         <p class="thumbnail-tarifs__desc">
-                                            Hava nəqliyyatı ilə istənilən ölçülü yüklərin,
-                                            həmçinin təhlükəli yüklərin və canlı  istənilən nöqtələrə daşınması
+                                            {{$country->content_az}}
                                         </p>
                                     </div>
                                 </a>
@@ -181,69 +103,23 @@
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">Yük daşıma</h2>
                 <div class="row">
+                    @foreach($deliveries as $deliverie)
                     <div class="col-md-3 col-sm-6">
                         <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
+                            <a href="{{$deliverie->icon}} " class="thumbnail-cargo__link">
                                 <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-1.png" alt="Cargo">
+                                    <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
                                 </div>
                                 <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Hava nəqliyyatı</h4>
+                                    <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name_az}}</h4>
                                     <p class="thumbnail-cargo__desc">
-                                        Hava nəqliyyatı ilə istənilən ölçülü yüklərin,
-                                        həmçinin təhlükəli yüklərin və canlı  heyvanların
-                                        dünyanın istənilən nöqtələrə daşınması
+                                       {{$deliverie->content_az}}
                                     </p>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-2.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Avtomobil  nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Fəaliyyət göstərdiyimiz xarici ölkələrdə
-                                        istənilən ölçülü yüklərin avtomobil nəqliyyatı ilə bir nöqtədə digər nöqtəyə daşınması
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-3.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Dəniz nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Dəniz nəqliyyatı ilə istənilən ölçülü yüklərin dünyanın istənilən nöqtəsinə daşınması
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="thumbnail thumbnail-cargo">
-                            <a href="header-cargo-service.html" class="thumbnail-cargo__link">
-                                <div class="thumbnail-cargo__img-block">
-                                    <img class="thumbnail-cargo__img img-responsive" src="/web/images/content/offer-4.png" alt="Cargo">
-                                </div>
-                                <div class="thumbnail-cargo__caption text-center">
-                                    <h4 class="thumbnail-cargo__title font-n-b">Dəmiryolu nəqliyyatı</h4>
-                                    <p class="thumbnail-cargo__desc">
-                                        Dəmiryolu nəqliyyatı ilə istənilən ölçülü yüklərin dünyanın istənilən nöqtəsinə daşınması
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -321,6 +197,20 @@
                                     <h6 class="thumbnail-services__title text-center font-n-b">Etibarnamə</h6>
                                 </div>
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section section-tarifs-country">
+            <div class="container-lg">
+                <div class="media media-tarif-country">
+                    <div class="row">
+                        <div class="media-tarif-country__body">
+                            <h4 class="media-tarif-country__title font-n-b">{{$text->name_az}}</h4>
+                            <p class="media-tarif-country__desc">
+                               {{$text->content_az}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -513,12 +403,12 @@
                                     <div class="accordion-item accordion-questions__item">
                                         <h2 class="accordion-header accordion-questions__header">
                                             <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
-                                                {{$faq->question}}
+                                                {{$faq->name_az}}
                                             </button>
                                         </h2>
                                         <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
                                             <div class="accordion-body accordion-questions__body">
-                                                {!! $faq->answer !!}
+                                                {!! $faq->content_az !!}
                                             </div>
                                         </div>
                                     </div>
@@ -530,7 +420,16 @@
                 </div>
             </div>
         </section>
-
-
     </div>
+@endsection
+@section('styles')
+    <style>
+        .media-tarif-country__title{
+            text-align: center;
+        }
+        .thumbnail-services__img{
+            border-radius: 10px;
+            height: 320px;
+        }
+    </style>
 @endsection

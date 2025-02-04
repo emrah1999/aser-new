@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Carousel;
 use App\ContractDetail;
 use App\Country;
 use App\Faq;
+use App\Faq2;
+use App\HomePageText;
+use App\HowWork;
 use App\TariffType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,6 +17,8 @@ use App\Seller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\İnternationalDelivery;
+use App\CorporativeLogistic;
 
 class IndexController extends HomeController
 {
@@ -23,15 +29,24 @@ class IndexController extends HomeController
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
 
             $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image')->orderBy('id')->get();
+            $countries =İnternationalDelivery::all();
             $types = TariffType::all();
-            $faqs = Faq::all();
+            $faqs = Faq2::all();
+            $works = HowWork::all();
+            $deliveries =CorporativeLogistic::all();
+            $text = HomePageText::query()->first();
+            $carousels= Carousel::all();
             
             return view('web.home.index')->with([
                 'instructions' => $instructions,
                 'sellers' => $sellers,
                 'countries' => $countries,
                 'types' => $types,
-                'faqs' => $faqs
+                'faqs' => $faqs,
+                'carousels' => $carousels,
+                'works' => $works,
+                'deliveries' => $deliveries,
+                'text' => $text,
             ]);
 
             // return view('home')->with([
@@ -41,6 +56,7 @@ class IndexController extends HomeController
             //     //'types' => $types
             // ]);
         } catch (\Exception $exception) {
+            return $exception->getMessage();
             return view("front.error");
         }
     }
