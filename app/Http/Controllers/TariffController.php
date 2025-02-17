@@ -92,7 +92,23 @@ class TariffController extends HomeController
                 )
                 ->get();
 
-            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $country = İnternationalDelivery::query()
+                    ->select(['id','icon',
+                        DB::raw("name_" . App::getLocale() . " as name"),
+                        DB::raw("content_" . App::getLocale() . " as content"),
+                        DB::raw("sub_title_" . App::getLocale() . " as sub_title"),
+                        DB::raw("sub_description_" . App::getLocale() . " as sub_description"),
+                    ])
+                ->where('id', $country_id)
+                    ->first();
+
+//            return $country;
+
+            $countries = İnternationalDelivery::query()
+                ->select([
+                    'id',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                ])->get();
     
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->whereNotNull('img')->select('url', 'img', 'title')->take(6)->get();
             $faqs = Faq::all();
@@ -100,6 +116,7 @@ class TariffController extends HomeController
             
             return view('web.tariffs.single', compact(
                 'tariffs',
+                'country',
                 'countries',
                 'sellers',
                 'faqs',

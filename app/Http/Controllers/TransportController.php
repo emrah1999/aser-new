@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Faq;
 use App\CorporativeLogistic;
 use App\Faq2;
+use App\TransportText;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,14 @@ class TransportController extends Controller
                 DB::raw("content_" . App::getLocale() . " as content")
             ])
             ->get();
-        return view('web.transport.index',compact('faqs','deliveries'));
+
+        $text=TransportText::query()
+            ->select([
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->first();
+        return view('web.transport.index',compact('faqs','deliveries','text'));
     }
     
     public function getTransportPage($locale, $id){

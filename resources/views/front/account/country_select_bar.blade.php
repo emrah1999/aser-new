@@ -11,7 +11,9 @@
                                     <img src="{{$countr[$key]->flag}}" alt="{{$countr[$key]->name}}">
                                 </span>
                                 <span class="country-name">{{$countr[$key]->name }}</span>
-                                <span class="check-icon">&#10003;</span>
+                                <span class=""><i class="fas fa-chevron-down"></i></span>
+
+
                             @endif
                         @endforeach
                     </div>

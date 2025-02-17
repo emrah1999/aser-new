@@ -205,8 +205,10 @@
 }
 
 .nav-profile-menu__link-img{
-    max-width: 25px;
+    max-width: 55px;
     margin-right: 10px;
+    height: 55px;
+    width: 55px;
 }
 
 .nav-profile-menu__link-img:nth-child(1){

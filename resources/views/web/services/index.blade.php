@@ -92,12 +92,9 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title font-n-b">Türkiyədən Azərbaycana kargo şirkətləri</h4>
+                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
                             <p class="media-tarif-country__desc">
-                                Türkiyədən Azərbaycana kargo şirkətləri geniş xidmət spektri ilə müştərilərə
-                                sürətli və etibarlı çatdırılma təklif edir. Bu şirkətlər arasında müxtəlif
-                                qiymət və şərtlərlə Türkiyədən sifariş xidmətləri göstərənlər mövcuddur,
-                                beləliklə, müştərilər öz tələblərinə uyğun ən sərfəli seçim edə bilərlər.
+                                {{$text->content}}
                             </p>
                         </div>
                     </div>

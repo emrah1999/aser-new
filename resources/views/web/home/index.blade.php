@@ -83,7 +83,7 @@
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-tarifs">
                                 <a href="
-{{--                                {{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}--}}
+                                {{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}
                                 " class="thumbnail-tarifs__link">
                                     <div class="thumbnail-tarifs__img-block">
                                         <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
@@ -209,7 +209,7 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title font-n-b">{{$text->name}}</h4>
+                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
                             <p class="media-tarif-country__desc">
                                {{$text->content}}
                             </p>

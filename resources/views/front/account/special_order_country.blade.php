@@ -20,176 +20,199 @@
 
                     <div class="thumbnail thumbnail-data">
                         <div class="table-responsive">
-                            @if(count($packages) > 0)
-                                <table class="table table-data">
-                                    <thead>
-                                    <tr class="table-data__thead-tr">
-                                        <th class="table-data__thead-th">{!! __('table.flight') !!}</th>
-                                        <th class="table-data__thead-th">{!! __('table.tracking') !!}</th>
-                                        <th class="table-data__thead-th">{!! __('table.weight') !!}</th>
-                                        <th class="table-data__thead-th">{!! __('table.delivery_amount') !!}</th>
-                                        {{--                                            <th class="table-data__thead-th">{!! __('table.debt') !!}</th>--}}
-                                        <th class="table-data__thead-th">Filial</th>
-                                        <th class="table-data__thead-th">{!! __('table.invoice_status') !!}</th>
-                                        <th class="table-data__thead-th">{!! __('table.status') !!}</th>
-                                        <th class="table-data__thead-th">{!! __('table.pay') !!}</th>
-                                        <th><i class="fa fa-cog" aria-hidden="true"></i></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($packages as $index => $package)
-                                        @if($package->chargeable_weight == 1)
-                                            @php($package_weight = $package->gross_weight)
-                                        @else
-                                            @php($package_weight = $package->volume_weight)
-                                        @endif
-                                        <tr class="table-data__tbody-tr order_package_{{$package->id}}" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
-
-                                            <td class="table-data__tbody-td">
-                                                @if(isset($package->flight))
-                                                    {{$package->flight}}
-                                                @else
-                                                    ---
-                                                @endif
-                                            </td>
-                                            <td class="table-data__tbody-td">
-                                                <div>{{ $package->track }}</div>
-                                                <div>{{ $package->internal_id }}</div>
-                                            </td>
-
-                                            <td class="table-data__tbody-td">
-                                                @if($package_weight > 0)
-                                                    {{$package_weight}} {{$package->unit}}
-
-                                                @else
-                                                    -
-                                                @endif
-                                            </td>
-
-                                            <td class="table-data__tbody-td">
-                                                @if($package->amount > 0)
-                                                    {{$package->cur_icon}} {{$package->amount}}
-                                                @else
-                                                    -
-                                                @endif
-                                            </td>
-
-                                            {{--                                                <td class="table-data__tbody-td">--}}
-                                            {{--                                                    @if(($package->external_w_debt > 0 || $package->external_w_debt != null) && ($package->internal_w_debt > 0 || $package->internal_w_debt != null))--}}
-                                            {{--                                                        <p>$ {{$package->external_w_debt}} </p>--}}
-                                            {{--                                                        <p>₼ {{$package->internal_w_debt}}</p>--}}
-                                            {{--                                                    @elseif($package->external_w_debt > 0 || $package->external_w_debt != null)--}}
-                                            {{--                                                        $ {{$package->external_w_debt}}--}}
-                                            {{--                                                    @elseif($package->internal_w_debt > 0 || $package->internal_w_debt != null)--}}
-                                            {{--                                                        ₼ {{$package->internal_w_debt}}--}}
-                                            {{--                                                    @else--}}
-                                            {{--                                                        ---}}
-                                            {{--                                                    @endif--}}
-                                            {{--                                                </td>--}}
-                                            <td class="table-data__tbody-td">
-                                                {{$package->branch_name}}
-                                            </td>
-                                            <td class="table-data__tbody-td">
-                                                @if($package->last_status_id == 7)
-                                                    <p style="color: red;" aria-placeholder="Qadağan edilən bağlama"></p>
-                                                @else
-                                                    @if($package->invoice_status == 1)
-                                                        <p style="color: red;">{!! __('status.no_invoice') !!}</p>
-                                                    @elseif($package->invoice_status == 2)
-                                                        {!! __('status.incorrect_invoice') !!}
-                                                    @elseif($package->invoice_status == 3)
-                                                        {!! __('status.correct_invoice') !!}
-                                                    @elseif($package->invoice_status == 4)
-                                                        {!! __('status.invoice_uploaded') !!}
-                                                    @endif
-                                                @endif
-                                                @if($package->last_status_id == 7)
-                                                    <a href="#" style="display: none" target="_blank" class="fas fa-eye" placeholder="Prohibet not update">
-                                                    </a>
-                                                @else
-                                                    @if($package->invoice_status == 4)
-                                                        <a href="{{ $package->invoice_doc }}" target="_blank" class="fas fa-eye">
-                                                            {!! __('table.show_invoice_file') !!}
-                                                        </a>
-
-                                                    @elseif($package->invoice_status == 1)
-                                                        <a href="{{route('get_package_update', ['locale' => App::getLocale(), $package->id])}}" class="fas fa-upload" style="color: red;">
-                                                            {!! __('table.upload_invoice_file') !!}
-                                                        </a>
-                                                    @endif
-                                                @endif
-                                            </td>
-
-                                            <td class="table-data__tbody-td">
-                                                @if($package->last_status_id == 38)
-                                                    <span class="btn btn-sm btn-info"
-                                                          data-toggle="collapse"
-                                                          href="#duty_not_paid">i</span>
-                                                    <div class="collapse" id="duty_not_paid">
-                                                                     <span class="card card-body">
-                                                                        {!! __('status.duty_not_paid') !!}
-                                                                     </span>
-                                                    </div>
-                                                @elseif($package->last_status_id == 39)
-                                                    <span class="btn btn-sm btn-info"
-                                                          data-toggle="collapse"
-                                                          href="#duty_paid">i</span>
-                                                    <div class="collapse" id="duty_paid">
-                                                                     <span class="card card-body">
-                                                                        {!! __('status.duty_paid') !!}
-                                                                     </span>
-                                                    </div>
-                                                @endif
-                                                <span class="order-status">
-                                                                {{$package->status}}
-                                                                <p class="order-status-changed"><span>{{$package->last_status_date ==null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
+                            @if(count($orders) > 0)
+                                <div class="n-order-table sp-order-table desktop-show" style="overflow-x: auto;">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>{!! __('table.id') !!}</th>
+                                            <th>{!! __('table.url') !!}</th>
+                                            <th>{!! __('table.price') !!}</th>
+                                            <th>{!! __('table.debt') !!}</th>
+                                            <th>{!! __('table.status') !!}</th>
+                                            <th>{!! __('table.amount_for_special_order') !!}</th>
+                                            <th>{!! __('table.pay') !!}</th>
+                                            <th>{!! __('table.actions') !!}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($orders as $order)
+                                            <tr class="order_{{$order->id}}">
+                                                <td>{{$order->id}}</td>
+                                                <td>
+                                                    @php($urls = $order->urls)
+                                                    @php($url_arr = explode(',', $urls))
+                                                    @for($i = 0; $i < count($url_arr); $i++)
+                                                        @php($url = $url_arr[$i])
+                                                        @php($url_show = $url)
+                                                        @if(strlen($url) > 20)
+                                                            @php($url_show = substr($url, 0, 20) . '...')
+                                                        @endif
+                                                        <p class="order_link">
+                                                            <a href="{{$url}}" target="_blank">{{$url_show}}</a>
+                                                        </p>
+                                                    @endfor
+                                                </td>
+                                                <td class="strong-p">
+                                                    {{$order->price}} {{$order->currency}}
+                                                </td>
+                                                <td class="strong-p">
+                                                    {{$order->cargo_debt + $order->common_debt}} {{$order->currency}}
+                                                </td>
+                                                <td>
+                                                            <span class="order-status">
+                                                                {{$order->status}}
                                                             </span>
-                                            </td>
-                                            <td class="table-data__tbody-td">
-                                                @if($package->paid_status == 1)
-                                                    <button type="button" disabled class="btn btn-paid"
-                                                            style="cursor: not-allowed !important;">{!! __('static.paid') !!}
-                                                    </button>
-                                                @else
-                                                    @if($package->amount > 0)
-                                                        <button
-                                                                type="button" class="btn btn-yellow"
-                                                                data-has-courier="{{$package->has_courier}}"
-                                                                data-has-courier-message="{!! __('static.packages_has_courier_message') !!}"
-                                                                data-balance="{{Auth::user()->balance()}}"
-                                                                data-balance-message="{!! __('static.packages_balance_message') !!}"
-                                                                data-amount="{{sprintf('%0.2f', $package->amount_usd - $package->paid)}}"
-                                                                data-confirm="{!! __('static.confirm_pay') !!}"
-                                                                onclick="paid_package_new(this, '{{route("pay_order", ['locale' => App::getLocale(), $package->id])}}');">
+                                                </td>
+                                                <td>
+                                                    {{$order->total_amount}} {{$order->currency}}
+                                                </td>
+                                                <td class="order-payment">
+                                                    @if(($order->is_paid == 0 || $order->cargo_debt > 0 || $order->common_debt > 0) && $order->waiting_for_payment == 0)
+
+                                                        <button class="btn"
+                                                                onclick="pay_special_order('{{route("pay_to_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}', this);">
                                                             {!! __('buttons.pay') !!}
                                                         </button>
                                                     @else
-                                                        -
+                                                        <button disabled
+                                                                class="btn">{!! __('static.paid') !!}</button>
                                                     @endif
+                                                </td>
+                                                <td class="order-op">
+                                                    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; height: 100%;">
+        <span onclick="show_items_for_special_orders('{{$order->group_code}}', '{{route("show_orders_for_group_special_orders", [$country_id, 'locale' => App::getLocale()])}}');" class="order-view">
+            <i class="fas fa-eye"></i>
+        </span>
+
+                                                        @if($order->disable == 0 && $order->is_paid == 0 && $order->waiting_for_payment == 0)
+                                                            <a href="{{route("get_special_order_update", [$country_id, $order->id, 'locale' => App::getLocale()])}}" class="order-update" title="">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+
+                                                            <button class="order-delete-btn" data-confirm="{!! __('static.confirm_delete_for_special_order') !!}" onclick="delete_special_order(this, '{{route("delete_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}');">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        @endif
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <div class="mobile-show">
+                                    <div class="order-item">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                            @foreach($orders as $order)
+                                                <tr>
+                                                    <td>{!! __('table.url') !!}</td>
+                                                    <td>
+                                                        @php($urls = $order->urls)
+                                                        @php($url_arr = explode(',', $urls))
+                                                        @for($j = 0; $j < count($url_arr); $j++)
+                                                            @php($url = $url_arr[$j])
+                                                            @php($url_show = $url)
+                                                            @if(strlen($url) > 20)
+                                                                @php($url_show = substr($url, 0, 20) . '...')
+                                                                    @endif
+                                                                    <p>
+                                                                        <a href="{{$url}}"
+                                                                           target="_blank">{{$url_show}}</a>
+                                                                    </p>
+                                                                    @endfor
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! __('table.price') !!}</td>
+                                                    <td>
+                                                        {{$order->price}} {{$order->currency}}
+                                                        <span class="price-block"> ({{$order->price_azn}} AZN)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        {!! __('table.cargo_debt') !!}
+                                                    </td>
+                                                    <td>
+                                                        {{$order->cargo_debt}} {{$order->currency}}
+                                                        <span class="price-block"> ({{$order->cargo_debt_azn}} AZN)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! __('table.common_debt') !!}</td>
+                                                    <td>
+                                                        {{$order->common_debt}} {{$order->currency}}
+                                                        <span class="price-block"> ({{$order->common_debt_azn}} AZN)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! __('table.status') !!}</td>
+                                                    <td>
+                                                                <span class="order-status">
+                                                                    {{$order->status}}
+                                                                </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! __('table.amount_for_special_order') !!}</td>
+                                                    <td>
+                                                        {{$order->total_amount}} {{$order->currency}}
+                                                        <span class="price-block">({{$order->total_amount_azn}} AZN)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! __('table.pay') !!}</td>
+                                                    <td class="order-payment">
+                                                        @if(($order->is_paid == 0 || $order->cargo_debt > 0 || $order->common_debt > 0) && $order->waiting_for_payment == 0)
+                                                            <button class="btn"
+                                                                    onclick="pay_special_order('{{route("pay_to_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}', this);">
+                                                                {!! __('buttons.pay') !!}
+                                                            </button>
+                                                        @else
+                                                            <button disabled
+                                                                    class="btn">{!! __('static.paid') !!}</button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{!! __('table.details') !!}</td>
+                                                    <td>
+                                                                <span
+                                                                        onclick="show_items_for_special_orders('{{$order->group_code}}', '{{route("show_orders_for_group_special_orders", [$country_id, 'locale' => App::getLocale()])}}');"
+                                                                        class="order-view"><i
+                                                                            class="fas fa-eye"></i></span>
+                                                    </td>
+                                                </tr>
+                                                @if($order->disable == 0 && $order->is_paid == 0 && $order->waiting_for_payment == 0)
+                                                    <tr>
+                                                        <td>{!! __('table.edit') !!}</td>
+                                                        <td>
+                                                            <a href="{{route("get_special_order_update", [$country_id, $order->id, 'locale' => App::getLocale()])}}"
+                                                               class="order-update" title=""><i
+                                                                        class="fas fa-pencil-alt"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{!! __('table.delete') !!}</td>
+                                                        <td class="order-delete" style="padding-top: 0;">
+                                                            <button class="order-delete-btn"
+                                                                    data-confirm="{!! __('static.confirm_delete_for_special_order') !!}"
+                                                                    onclick="delete_special_order(this, '{{route("delete_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}');">
+                                                                <i class="fas fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
                                                 @endif
-                                            </td>
-                                            {{--                                                <td class="order-info-link" style="text-align: center;">--}}
-                                            <td class="order-info-link" style="vertical-align: middle; text-align: center; width: 50px;">
-                                                    <span
-                                                            onclick="show_package_items({{$package->id}}, '{{$package->track}}', '{{route('get_package_items', ['locale' => app()->getLocale()])}}');"
-                                                            class="order-view"
-                                                            style="display: inline-flex; align-items: center; justify-content: center; height: 100%; width: 100%; cursor: pointer;">
-                                                        <i class="fas fa-eye"></i>
-                                                    </span>
-                                            </td>
-
-
-                                            </td>
-
-                                        </tr>
-
-
-                                    @endforeach
-
-
-
-                                    </tbody>
-                                 </table>
+                                                <br>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             @else
                                 <div class="profile-information-block sp-padding">
                                     <div class="form-alert show-alert">
@@ -197,6 +220,7 @@
                                     </div>
                                 </div>
                             @endif
+
 
                         </div>
                     </div>
@@ -210,6 +234,9 @@
 
 @section('styles')
 <style>
+    .order_link{
+        margin-bottom: 0;
+    }
     .thumbnail{
         width: 73%;
         margin-left: 10px;
@@ -341,6 +368,173 @@
            margin-bottom: 10px;
        }
    }
+
+    .n-order-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .n-order-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .n-order-table th,
+    .n-order-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 0px solid #ddd;
+    }
+
+    .n-order-table th {
+        background: #FFF7E6;
+        color: #000;
+        font-weight: bold;
+    }
+
+    .n-order-table tr:hover {
+        background: #f1f1f1;
+    }
+
+    .n-order-table a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .n-order-table a:hover {
+        text-decoration: underline;
+    }
+
+    .order-status {
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .order-status[data-status="pending"] {
+        background: #ffc107;
+    }
+
+    .order-status[data-status="paid"] {
+        background: #28a745;
+    }
+
+    .order-status[data-status="cancelled"] {
+        background: #dc3545;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+
+    .order-payment .btn {
+        background: #28a745;
+        color: #fff;
+    }
+
+    .order-payment .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    .order-op {
+        display: flex;
+        margin-top: 10%;
+        padding-bottom: 15%;
+        gap: 17px;
+        align-items: center;
+        vertical-align: center;
+
+    }
+
+    .order-op .fas {
+        cursor: pointer;
+        font-size: 16px;
+        color: #007bff;
+    }
+
+    .order-op .fas:hover {
+        color: #0056b3;
+    }
+
+    .order-delete-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #dc3545;
+    }
+
+    .order-delete-btn:hover {
+        color: #b71c1c;
+    }
+
+    @media (max-width: 768px) {
+        .desktop-show {
+            display: none;
+        }
+
+        .mobile-show {
+            display: block;
+        }
+
+        .order-item {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item table {
+            width: 100%;
+        }
+
+        .order-item td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-item .order-view,
+        .order-item .order-update,
+        .order-item .order-delete-btn {
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .order-item .order-view {
+            color: #007bff;
+        }
+
+        .order-item .order-update {
+            color: #ffc107;
+        }
+
+        .order-item .order-delete-btn {
+            color: #dc3545;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .mobile-show {
+            display: none;
+        }
+
+        .desktop-show {
+            display: block;
+        }
+    }
+
 
 
 

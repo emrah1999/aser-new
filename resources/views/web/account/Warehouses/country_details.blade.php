@@ -18,8 +18,14 @@
             left: -120px;
             transform: translateY(-50%);
         }
+        .color-style{
+            height: 35px;
+            width: 23px;
+            margin-top: -5px;
+        }
 
         .thumbnail-profile-addresses__img-block {
+            color: var(--blue);
             position: relative;
         }
         .thumbnail-style{
@@ -73,9 +79,9 @@
                                             <h6 class="thumbnail-profile-addresses__title">{{$detail->title}}</h6>
                                             <p class="thumbnail-profile-addresses__desc">{{$information}}</p>
                                         </div>
-                                        <div class="thumbnail-profile-addresses__img-block" onclick="copyToClipboardAddress('{{$information}}', event)">
+                                        <div class="thumbnail-profile-addresses__img-block color-style" onclick="copyToClipboardAddress('{{$information}}', event)">
                                             <img
-                                                    class="thumbnail-profile-addresses__img"
+                                                    class="thumbnail-profile-addresses__img color-style"
                                                     src="/web/images/content/profile-file.png"
                                                     alt="Profile"
                                                     style="cursor: pointer;">

@@ -7,18 +7,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="media-tarif-country__body">
-                                <h4 class="media-tarif-country__title font-n-b">Türkiyədən Azərbaycana kargo şirkətləri</h4>
+                                <h4 class="media-tarif-country__title font-n-b">{{$country->name}}</h4>
                                 <p class="media-tarif-country__desc">
-                                    Türkiyədən Azərbaycana kargo şirkətləri geniş xidmət spektri ilə müştərilərə
-                                    sürətli və etibarlı çatdırılma təklif edir. Bu şirkətlər arasında müxtəlif
-                                    qiymət və şərtlərlə Türkiyədən sifariş xidmətləri göstərənlər mövcuddur,
-                                    beləliklə, müştərilər öz tələblərinə uyğun ən sərfəli seçim edə bilərlər.
+                                   {{$country->content}}
                                 </p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="media-tarif-country__right">
-                                <img class="media-tarif-country__img img-responsive" src="/web/images/content/tarif-country.png" alt="Tarif">
+                                <img class="media-tarif-country__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                             </div>
                         </div>
                     </div>
@@ -45,12 +42,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="media-tarif-country__body">
-                                <h4 class="media-tarif-country__title font-n-b">Bağlamaların ölçüləri</h4>
+                                <h4 class="media-tarif-country__title font-n-b">{{$country->sub_title}}</h4>
                                 <p class="media-tarif-country__desc">
-                                    Amerikadanölçüsü 60 sm və 60 sm-dən böyük olan bağlamaların daşınma
-                                    haqqı həm həcm, həm də fiziki çəki əsasında hesablanır və alınan
-                                    göstəricilərdən böyük olanı daşınma haqqının hesablanması üçün
-                                    əsas çəki kimi qəbul edilir.
+                                    {{$country->sub_description}}
                                 </p>
                             </div>
                         </div>

@@ -1,6 +1,50 @@
 @extends('web.layouts.web')
 @section('styles')
     <style>
+        .col-sm-6 {
+            width: 50%;
+            float: left;
+        }
+
+        .form__group {
+            margin-bottom: 15px;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .form-checkbox {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .form-checkbox__input {
+            margin-right: 5px;
+        }
+
+        .form-checkbox__span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .form-checkbox.d-flex.align-items-center {
+            display: flex;
+            align-items: center;
+        }
+
+        .invalid-feedback {
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+
         @keyframes blink {
             0% {
                 color: var(--yellow);
@@ -240,8 +284,8 @@
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form-checkbox d-flex justify-content-start align-items-center" for="userAgree">
-                                        <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree">
-                                        <span class="form-checkbox__span"></span>
+                                        <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree" >
+                                        <span class="form-checkbox__span" style="border-radius: 2px;width: 25px"></span>
                                         <a href="https://asercargo.az/uploads/static/terms.pdf" target="_blank">
                                             <span class="form-checkbox__text" style="animation: blink 1s infinite;">{!! __('auth.agreement') !!}</span>
                                         </a>
@@ -272,7 +316,7 @@
             const type = passwordField.type === 'password' ? 'text' : 'password';
             passwordField.type = type;
 
-            // İkonu değiştir
+
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');
@@ -283,7 +327,7 @@
             const type = passwordField.type === 'password' ? 'text' : 'password';
             passwordField.type = type;
 
-            // İkonu değiştir
+
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');

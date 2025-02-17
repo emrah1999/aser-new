@@ -25,6 +25,20 @@
                 </div>
             </div>
         </section>
+        <section class="section section-tarifs-country">
+            <div class="container-lg">
+                <div class="media media-tarif-country">
+                    <div class="row">
+                        <div class="media-tarif-country__body">
+                            <h1 class="media-tarif-country__title font-n-b" >{{$text->name}}</h1>
+                            <p class="media-tarif-country__desc">
+                                {{$text->content}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="section section-contact">
             <div class="container-lg">

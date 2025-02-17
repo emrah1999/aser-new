@@ -1414,71 +1414,49 @@ class AccountController extends Controller
                     ->whereNull('placed_by')
                     ->whereNull('canceled_by')
                     ->count();
-            $query = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
-                ->leftJoin('container', 'package.last_container_id', '=', 'container.id')
-                ->leftJoin('flight', 'container.flight_id', '=', 'flight.id')
-                ->leftJoin('lb_status as s', 'package.last_status_id', '=', 's.id')
-                ->leftJoin('currency as cur', 'item.currency_id', '=', 'cur.id')
-                ->leftJoin('currency as cur_package', 'package.currency_id', '=', 'cur_package.id')
-                ->leftJoin('seller', 'package.seller_id', '=', 'seller.id')
-                ->leftJoin('filial as f', 'package.branch_id', '=', 'f.id')
-                ->where('package.client_id', $this->userID)
-                ->whereNull('package.deleted_by');
 
-            $query->whereNotNull('package.delivered_by');
-            $packages = $query
+
+            $query = SpecialOrderGroups::leftJoin('currency as cur', 'special_order_groups.currency_id', '=', 'cur.id')
+                ->leftJoin('lb_status as s', 'special_order_groups.last_status_id', '=', 's.id')
+                ->where(['special_order_groups.client_id' => $this->userID]);
+
+            $orders = $query->orderBy('special_order_groups.id', 'desc')
                 ->select(
-                    'package.id',
-                    'package.internal_id',
-                    'item.invoice_doc',
-                    'item.invoice_confirmed',
-                    'item.invoice_status as invoice_status',
-                    'item.id as item_id',
-                    'item.price',
+                    'special_order_groups.id',
+                    'special_order_groups.group_code',
+                    'special_order_groups.urls',
+                    'special_order_groups.price',
                     'cur.name as currency',
-                    'package.number as track',
-                    'package.seller_id',
-                    'package.other_seller',
-                    'seller.title as seller',
-                    'package.volume_weight',
-                    'package.gross_weight',
-                    'package.chargeable_weight',
-                    'package.unit',
-                    'package.total_charge_value as amount',
-                    //'package.amount_usd',
-                    'package.paid_status',
-                    'package.paid',
-                    'package.paid_sum as paid_usd',
-                    'package.paid_azn',
-                    'package.last_status_date',
-                    'package.last_status_id',
-                    'package.is_warehouse',
-                    'package.currency_id',
-                    'cur_package.icon as cur_icon',
-                    'flight.name as flight',
                     's.status_' . App::getLocale() . ' as status',
-                    's.color as status_color',
-                    'package.issued_to_courier_date', // has courier (null -> false, not null -> true)
-                    'package.amount_azn',
-                    'package.external_w_debt',
-                    'package.internal_w_debt',
-                    'f.name as branch_name'
+                    'special_order_groups.is_paid',
+                    'special_order_groups.paid',
+                    'special_order_groups.disable',
+                    'special_order_groups.cargo_debt',
+                    'special_order_groups.common_debt',
+                    'special_order_groups.waiting_for_payment'
                 )
-                ->orderBy('package.id', 'desc')
                 ->get();
-//            return $packages;
+
+            foreach ($orders as $order) {
+                //$order->price_azn = sprintf('%0.2f', $order->price * $rate_azn);
+                //$order->cargo_debt_azn = sprintf('%0.2f', $order->cargo_debt * $rate_azn);
+                //$order->common_debt_azn = sprintf('%0.2f', $order->common_debt * $rate_azn);
+                $total_amount = ($order->price - $order->paid) + $order->cargo_debt + $order->common_debt;
+                $order->total_amount = sprintf('%0.2f', $total_amount);
+                //$order->total_amount_azn = sprintf('%0.2f', $total_amount * $rate_azn);
+            }
 
             $country_id=2;
             return view("front.account.special_order_country", compact(
                 'countries',
                 'countr',
                 'not_paid_orders_count',
-                'packages',
+                'orders',
                 'country_id'
             ));
 
         } catch (\Exception $exception) {
-            return $exception;
+            return $exception->getMessage();
             if ($this->api) {
                 return 'Something goes wrong!';
             }

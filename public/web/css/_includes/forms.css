@@ -148,7 +148,6 @@ input[type="date"]{
 }
 
 .form-checkbox__text{
-    padding-left: 15px;
     font-size: 14px;
     color: var(--black-2);
     cursor: pointer;

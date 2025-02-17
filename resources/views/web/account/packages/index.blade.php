@@ -27,10 +27,10 @@
                                 </label>
                                 <input type="checkbox" id="dropdown-toggle" class="dropdown-checkbox" />
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">Xarici anbardadır</a></li>
-                                    <li><a href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">Anbardan göndərilib</a></li>
-                                    <li><a href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">Bakı ofisindədir</a></li>
-                                    <li><a href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">Arxiv</a></li>
+                                    <li class="bar-padding"><a class="bar-margin href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">Xarici anbardadır</a></li>
+                                    <li class="bar-padding"><a class="bar-margin href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">Anbardan göndərilib</a></li>
+                                    <li class="bar-padding"><a class="bar-margin href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">Bakı ofisindədir</a></li>
+                                    <li class="bar-padding"><a class="bar-margin href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">Arxiv</a></li>
                                 </ul>
                             </div>
 
@@ -259,12 +259,25 @@
 @endsection
 @section('styles')
     <style>
+        .nav-profile-menu__link-img{
+            height: 50px;
+            width: 100px;
+        }
         .bar-width{
-            margin: -800px 20px 20px 315px ;
+            margin: -1100px 20px 20px 315px ;
             width: 83%;
         }
+        .bar-margin{
+            padding-top : 4px;
+            padding-bottom: 4px;
+        }
+        .bar-padding{
+            margin-top:-5px ;
+            margin-bottom:-5px ;
+        }
        .th-new{
-            padding: 0 5px !important;
+            padding: 7px 0 !important;
+           margin-top: 20px;
             width: 25px;
         }
         /*.table-data__thead-th{*/
