@@ -1,7 +1,7 @@
 @extends('web.layouts.web')
 @section('content')
     <div class="container new-style">
-        <h1 class="section-title text-center font-n-b">Tracking Search</h1>
+        <h1 class="section-title text-center font-n-b">{{$title->tracking_search}}</h1>
         <div class="form form-tracking-search center-block" name="formTrackingSearch" id="formTrackingSearch" novalidate="novalidate">
             <div class="row">
                 <form id="trackingSearchForm" action="{{ route('tracking_search_in_aser', ['locale' => app()->getLocale()]) }}" method="POST">

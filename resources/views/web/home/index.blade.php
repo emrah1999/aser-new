@@ -32,7 +32,7 @@
         </section>
         <section class="section section-works">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">Aser Cargo Express necə işləyir?</h2>
+                <h2 class="section-title text-center font-n-b">{{$title->how_it_work}}</h2>
                 <div class="row">
                     @foreach($works as $work)
                     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -77,7 +77,7 @@
         </section>
         <section class="section section-tarifs">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">Xaricdən sifarişlərin sərfəli çatdıırlması</h2>
+                <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
                 <div class="row">
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
@@ -103,7 +103,7 @@
         </section>
         <section class="section section-offers">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">{!! __('menu.transparation') !!}</h2>
+                <h2 class="section-title text-center font-n-b">{{$title->corporative_logistics}}</h2>
                 <div class="row">
                     @foreach($deliveries as $deliverie)
                     <div class="col-md-3 col-sm-6">
@@ -127,7 +127,7 @@
         </section>
         <section class="section section-services">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Digər xidmətlər</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->services}}</h1>
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="thumbnail thumbnail-services">
@@ -220,7 +220,7 @@
         </section>
         <section class="section section-partners">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">Əməkdaşlarımız</h2>
+                <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>
                 <div class="owl-carousel owl-partners owlPartners">
                     <div class="owl-partners__item">
                         <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
@@ -361,7 +361,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Bloqlar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="thumbnail thumbnail-blogs">
@@ -395,7 +395,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Suallar və cavablar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->faqs}}</h1>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">

@@ -3,7 +3,7 @@
     <div class="content" id="content">
         <section class="section section-contact">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Bizimlə əlaqə</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->contacts}}</h1>
                 <div class="row">
                     <br>
                     <div class="col-lg-6">
@@ -62,7 +62,7 @@
     <script>
         function initMap() {
             // Bakı şəhərinin koordinatları
-            const location = { lat: 40.409264, lng: 49.867092 };  // Bakı şəhəri
+            const location = { lat: 40.409264, lng: 49.867092 };
 
             // Xəritəni yarat
             const map = new google.maps.Map(document.getElementById("map"), {

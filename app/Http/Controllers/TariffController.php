@@ -10,6 +10,7 @@ use App\Faq;
 use App\İnternationalDelivery;
 use App\Seller;
 use App\TariffType;
+use App\Title;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -25,9 +26,22 @@ class TariffController extends HomeController
                 DB::raw("content_" . App::getLocale() . " as content")
             ])
             ->get();
+
+        $fields = [
+            'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
+            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+
     
         return view('web.tariffs.index', compact(
-            'countries'
+            'countries',
+            'title'
         ));
     }
     

@@ -3,7 +3,7 @@
     <div class="content" id="content">
         <section class="section section-services">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{!! __('menu.our_services') !!}</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->services}}</h1>
                 <div class="row">
 
                     <div class="col-md-4 col-sm-6">
@@ -105,7 +105,7 @@
             <div class="container-lg">
                 <div class="section-contact__block center-block">
                     <form class="form form-contact" name="formContact" id="formContact" method="post" action="/" novalidate="novalidate">
-                        <h3 class="form-contact__title text-center font-n-b">Sualınız var? Bizə yazın</h3>
+                        <h3 class="form-contact__title text-center font-n-b">{{$title->feedback}}</h3>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form__group">
@@ -152,7 +152,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Bloqlar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="thumbnail thumbnail-blogs">
@@ -186,7 +186,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Suallar və cavablar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->faqs}}</h1>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">

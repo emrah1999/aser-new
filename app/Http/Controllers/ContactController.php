@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Title;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Contact;
@@ -10,7 +13,18 @@ class ContactController extends HomeController
 {
     public function index()
     {
-        return view('web.contact.header-contact');
+        $fields = [
+            'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
+            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+
+        return view('web.contact.header-contact',compact('title'));
     }
 
     public function message(Request $request)

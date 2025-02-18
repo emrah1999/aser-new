@@ -5,15 +5,28 @@ namespace App\Http\Controllers;
 use App\Item;
 use App\Package;
 use App\PackageStatus;
+use App\Title;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TrackingSearchController extends Controller
 {
     public function get_tracking_search(){
-        return view('web.trackingSearch');
+        $fields = [
+            'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
+            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+
+        return view('web.trackingSearch',compact('title'));
     }
     public function local_tracking_search(Request $request)
     {

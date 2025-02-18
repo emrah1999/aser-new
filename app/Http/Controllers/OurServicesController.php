@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Faq;
 use App\Faq2;
 use App\ServiceText;
+use App\Title;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -24,8 +25,17 @@ class OurServicesController extends Controller
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content")
                 ])->first();
+            $fields = [
+                'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
+                'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+            ];
 
-            return view("web.services.index", compact("faqs", "text"));
+            $title = Title::query()
+                ->select(array_map(function($field) {
+                    return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+                }, $fields))
+                ->first();
+            return view("web.services.index", compact("faqs", "text",'title'));
         } catch (\Exception $exception) {
             return view("front.error");
         }

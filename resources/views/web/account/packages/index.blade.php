@@ -302,26 +302,22 @@
             var selectRowsCheckbox = document.getElementById('selectRowsCheckbox');
             var payBtn = document.getElementById('payBtn');
 
-            // Satırdaki tıklama olayını düzenleme
             tableRows.forEach(function (row) {
                 var checkbox = row.querySelector('input[type="checkbox"]');
 
                 row.addEventListener('click', function (event) {
-                    // Eğer tıklanan eleman checkbox değilse checkbox'ı tetikle
                     if (!event.target.closest('input[type="checkbox"]')) {
                         checkbox.checked = !checkbox.checked;
                         handleCheckboxSelection(checkbox, row);
                     }
                 });
 
-                // Checkbox'a tıklandığında sadece checkbox durumu güncellensin
                 checkbox.addEventListener('click', function (event) {
-                    event.stopPropagation(); // Satır tıklamasıyla çakışmayı önlemek için
+                    event.stopPropagation();
                     handleCheckboxSelection(checkbox, row);
                 });
             });
 
-            // "Tümünü Seç" checkbox'ı tıklanınca
             selectRowsCheckbox.addEventListener('change', function () {
                 tableRows.forEach(function (row) {
                     var checkbox = row.querySelector('input[type="checkbox"]');
@@ -367,12 +363,10 @@
 
         dropdownLinks.forEach(link => {
             link.addEventListener('click', function(event) {
-                // event.preventDefault(); // Sayfanın yenilənməsinin qarşısını alır
 
                 const selectedText = this.textContent;
                 dropdownLabel.textContent = selectedText + ' ';
 
-                // Bütün bağlamalarım mətninin silinməsi üçün lazım olan əvəzetməni əlavə et
                 dropdownLabel.appendChild(document.querySelector('.dropdown-icon'));
 
                 // Linkin URL-i ilə yönləndirmə

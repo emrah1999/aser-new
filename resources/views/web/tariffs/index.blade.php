@@ -3,7 +3,7 @@
     <div class="content" id="content">
         <section class="section section-tarifs">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">Xaricdən sifarişlərin sərfəli çatdıırlması</h2>
+                <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
                 <div class="row">
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
@@ -29,7 +29,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Bloqlar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="thumbnail thumbnail-blogs">
