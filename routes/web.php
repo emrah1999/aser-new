@@ -22,6 +22,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     // Change the name of controllers
 	Route::get('/login-test', 'LoginClientController@index');
 	Route::get('/register-physical', 'RegisterController@getPhysicalRegister');
+	Route::get('/registevvv', 'RegisterController@getPhysicalRegister');
 	Route::get('/register-juridical', 'RegisterController@getJuridicalRegister');
 	Route::get('/register-otp', 'RegisterController@getOTPRegister');
 	Route::get('/terms-and-conditions', 'IndexController@terms_and_conditions') -> name("terms_and_conditions");
