@@ -5,6 +5,8 @@
     @include('web.includes.styles')
     @yield('styles')
     @yield('styles1')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 <body>
 @include('web.includes.header')

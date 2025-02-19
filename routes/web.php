@@ -215,3 +215,4 @@ Route::get('/balance/callback/millikart', 'BalanceController@callback_millikart'
 Route::post('/secret/payment/callback/paytr', 'BalanceController@callback_paytr')->name("callback_paytr");
 Route::post('/callback/pasha', 'BalanceController@callback_pashaBank')->name("callback_pashaBank");
 Route::post('/callback/special-order', 'BalanceController@callback_pashaBank_special')->name("callback_pashaBank_special");
+Route::post('/calculate','IndexController@calculate')->name("calculate");

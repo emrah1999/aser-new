@@ -14,11 +14,14 @@ class OurServicesController extends Controller
 {
     public function index() {
         try {
-            $faqs = Faq2::query()
-                ->select([
-                    DB::raw("name_" . App::getLocale() . " as name"),
-                    DB::raw("content_" . App::getLocale() . " as content")
-                ])->get();
+            $faqs = Faq::query()->where('page',3)->select([
+                'id',
+                DB::raw("question_" . App::getLocale() . " as name"),
+                DB::raw("answer_" . App::getLocale() . " as content")
+            ])
+                ->get();
+
+
 
             $text=ServiceText::query()
                 ->select([

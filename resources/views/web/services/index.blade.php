@@ -201,12 +201,12 @@
                                     <div class="accordion-item accordion-questions__item">
                                         <h2 class="accordion-header accordion-questions__header">
                                             <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
-                                                {{$faq->name_az}}
+                                                {{$faq->name}}
                                             </button>
                                         </h2>
                                         <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
                                             <div class="accordion-body accordion-questions__body">
-                                                {!! $faq->content_az !!}
+                                                {!! $faq->content!!}
                                             </div>
                                         </div>
                                     </div>

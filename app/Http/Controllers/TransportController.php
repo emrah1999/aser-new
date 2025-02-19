@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\DB;
 class TransportController extends Controller
 {
     public function show_transport(){
-        $faqs = Faq2::query()
-            ->select([
-                'id',
-                DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
-            ])
+        $faqs = Faq::query()->where('page',2)->select([
+            'id',
+            DB::raw("question_" . App::getLocale() . " as name"),
+            DB::raw("answer_" . App::getLocale() . " as content")
+        ])
             ->get();
         $deliveries =CorporativeLogistic::query()
             ->select([
@@ -60,13 +59,15 @@ class TransportController extends Controller
             ])
             ->where('id',$id)
             ->first();
-        $faqs = Faq2::query()
-            ->select([
-                'id',
-                DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
-            ])
+        $faqs = Faq::query()->where('page',2)
+        ->where('sub_category_id',$id)
+        ->select([
+            'id',
+            DB::raw("question_" . App::getLocale() . " as name"),
+            DB::raw("answer_" . App::getLocale() . " as content")
+        ])
             ->get();
+
 
         return view('web.transport.single',compact('delivery','faqs'));
     }
