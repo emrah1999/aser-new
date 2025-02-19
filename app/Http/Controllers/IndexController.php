@@ -27,6 +27,7 @@ class IndexController extends HomeController
     public function index()
     {
         try {
+
             $instructions = Instruction::all();
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
 

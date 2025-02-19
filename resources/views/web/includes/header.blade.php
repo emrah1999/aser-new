@@ -157,7 +157,27 @@
             </div>
         </div>
     </div>
+
+
 </header>
+
+<section class="section section-breadcrumbs">
+    <div class="container-lg">
+        <div class="row justify-content-center align-items-start">
+            <div class="col-sm-6 col-7">
+                <ul class="nav nav-breadcrumbs font-n-b">
+                    <li class="nav-breadcrumbs__item">
+                        <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
+                    </li>
+                    @yield('breadcrumbs')
+                </ul>
+            </div>
+            <div class="col-sm-6 col-5">
+
+            </div>
+        </div>
+    </div>
+</section>
 
 
 

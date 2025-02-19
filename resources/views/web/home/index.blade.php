@@ -222,46 +222,16 @@
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>
                 <div class="owl-carousel owl-partners owlPartners">
+                    @foreach($sellers as $seller)
                     <div class="owl-partners__item">
                         <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
                             <div class="thumbnail-partners__img-block">
                                 <img class="thumbnail-partners__img img-responsive"
-                                     src="/web/images/content/partner-1.png" alt="Partner">
+                                     src="{{$seller->img}}" alt="Partner">
                             </div>
                         </div>
                     </div>
-                    <div class="owl-partners__item">
-                        <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
-                            <div class="thumbnail-partners__img-block">
-                                <img class="thumbnail-partners__img img-responsive"
-                                     src="/web/images/content/partner-2.png" alt="Partner">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-partners__item">
-                        <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
-                            <div class="thumbnail-partners__img-block">
-                                <img class="thumbnail-partners__img img-responsive"
-                                     src="/web/images/content/partner-3.png" alt="Partner">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-partners__item">
-                        <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
-                            <div class="thumbnail-partners__img-block">
-                                <img class="thumbnail-partners__img img-responsive"
-                                     src="/web/images/content/partner-4.png" alt="Partner">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-partners__item">
-                        <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
-                            <div class="thumbnail-partners__img-block">
-                                <img class="thumbnail-partners__img img-responsive"
-                                     src="/web/images/content/partner-4.png" alt="Partner">
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

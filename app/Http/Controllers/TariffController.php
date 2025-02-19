@@ -7,6 +7,8 @@ use App\ContractDetail;
 use App\Country;
 use App\ExchangeRate;
 use App\Faq;
+use App\Faq2;
+use App\HomePageText;
 use App\İnternationalDelivery;
 use App\Seller;
 use App\TariffType;
@@ -31,6 +33,8 @@ class TariffController extends HomeController
             'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
             'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
         ];
+        $types = TariffType::all();
+
 
         $title = Title::query()
             ->select(array_map(function($field) {
@@ -38,10 +42,32 @@ class TariffController extends HomeController
             }, $fields))
             ->first();
 
+        $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
+
+        $text = HomePageText::query()
+            ->select([
+                'id',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])->first();
+
+        $faqs = Faq2::query()
+            ->select([
+                'id',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->get();
+
+
     
         return view('web.tariffs.index', compact(
             'countries',
-            'title'
+            'title',
+            'sellers',
+            'text',
+            'types',
+            'faqs'
         ));
     }
     

@@ -1,23 +1,11 @@
 @extends('web.layouts.web')
+@section('breadcrumbs')
+    {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
+    {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.branches') !!}</li>
+@endsection
 @section('content')
     <div class="content" id="content">
-        <section class="section section-breadcrumbs">
-            <div class="container-lg">
-                <div class="row justify-content-center align-items-start">
-                    <div class="col-sm-6 col-7">
-                        <ul class="nav nav-breadcrumbs font-n-b">
-                            <li class="nav-breadcrumbs__item">
-                                <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">Xidmətlərimiz</a>
-                            </li>
-                            <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">Filiallar</li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-5">
-
-                    </div>
-                </div>
-            </div>
-        </section>
         <section class="section section-branches">
             <div class="container-lg">
                 <div class="media media-branches">

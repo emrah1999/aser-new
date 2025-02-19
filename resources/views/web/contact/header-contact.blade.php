@@ -1,4 +1,9 @@
 @extends('web.layouts.web')
+@section('breadcrumbs')
+    {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
+    {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.contacs') !!}</li>
+@endsection
 @section('content')
     <div class="content" id="content">
         <section class="section section-contact">
