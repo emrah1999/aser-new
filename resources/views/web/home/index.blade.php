@@ -237,12 +237,12 @@
         </section>
         <section class="section section-calculator">
             <div class="container-lg">
-                <form class="form form-calculator" name="formCalculator" id="formCalculator"
-                      novalidate="novalidate">
+                <form class="form form-calculator" name="formCalculator" id="formCalculator" novalidate="novalidate">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12 d-block d-md-none">
                             <h1 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h1>
-                            <p class="form-calculator__desc">{!! __('static.calculate_text') !!}</p>
+                            <p class="form-calculator__desc">{!! __('static.calculate_text') !!} </p>
                         </div>
                         <div class="col-md-7">
                             <div class="row">
@@ -278,7 +278,7 @@
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="unit" id="calc_weight_type" required>
                                                 <option value="kq">kg</option>
-                                                <option value="gm">g</option>
+                                                <option value="gm">gr</option>
                                             </select>
                                         </div>
                                     </div>
@@ -315,7 +315,7 @@
                                 <div class="col-sm-12">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <button class="btn btn-yellow form__btn form-calculator__btn font-n-b"
-                                                name="formCalculatorSubmit" type="submit">Hesabla</button>
+                                                name="formCalculatorSubmit" type="button">Hesabla</button>
                                     </div>
                                     <p id="amount" class="form-calculator__result text-center font-n-b"> 00.0</p>
                                 </div>
@@ -404,4 +404,35 @@
             height: 320px;
         }
     </style>
+@endsection
+@section('scripts')
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".form-calculator__btn").click(function(e) {
+            e.preventDefault();
+            var formData = $('#formCalculator').serializeArray();
+                $.ajax({
+                url: "{{ route('calculate') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if (response.case === "success") {
+                        $("#amount").text(response.amount);
+                    } else {
+                        alert(response.content);
+                    }
+                },
+                error: function() {
+                }
+            });
+        });
+
+    </script>
+
+
 @endsection

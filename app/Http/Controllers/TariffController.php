@@ -51,16 +51,16 @@ class TariffController extends HomeController
                 DB::raw("content_" . App::getLocale() . " as content")
             ])->first();
 
-        $faqs = Faq2::query()
-            ->select([
-                'id',
-                DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
-            ])
+        $faqs = Faq::query()->where('page',1)->select([
+            'id',
+            DB::raw("question_" . App::getLocale() . " as name"),
+            DB::raw("answer_" . App::getLocale() . " as content")
+        ])
             ->get();
 
 
-    
+
+
         return view('web.tariffs.index', compact(
             'countries',
             'title',
@@ -151,7 +151,14 @@ class TariffController extends HomeController
                 ])->get();
     
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->whereNotNull('img')->select('url', 'img', 'title')->take(6)->get();
-            $faqs = Faq::all();
+            $faqs = Faq::query()->where('page',1)
+                ->where('sub_category_id',$country_id)
+                ->select([
+                    'id',
+                    DB::raw("question_" . App::getLocale() . " as name"),
+                    DB::raw("answer_" . App::getLocale() . " as content")
+                ])
+                ->get();
             $types = TariffType::all();
             
             return view('web.tariffs.single', compact(

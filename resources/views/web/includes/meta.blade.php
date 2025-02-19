@@ -12,3 +12,4 @@
 <meta property="og:locale:alternate" content="en_GB" />
 <meta name="csrf-token" secret="{{csrf_token()}}">
 <title>Aser</title>
+<meta name="csrf-token" content="{{ csrf_token() }}">
