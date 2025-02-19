@@ -39,9 +39,9 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
+                            <h1 class="media-tarif-country__title font-n-b">{{$text->name1}}</h1>
                             <p class="media-tarif-country__desc">
-                                {{$text->content}}
+                                {{$text->content1}}
                             </p>
                         </div>
                     </div>
@@ -55,9 +55,9 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
+                            <h1 class="media-tarif-country__title font-n-b">{{$text->name2}}</h1>
                             <p class="media-tarif-country__desc">
-                                {{$text->content}}
+                                {{$text->content2}}
                             </p>
                         </div>
                     </div>
@@ -90,9 +90,9 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
+                            <h1 class="media-tarif-country__title font-n-b">{{$text->name3}}</h1>
                             <p class="media-tarif-country__desc">
-                                {{$text->content}}
+                                {{$text->content3}}
                             </p>
                         </div>
                     </div>

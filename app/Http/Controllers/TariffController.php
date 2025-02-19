@@ -12,6 +12,7 @@ use App\Faq2;
 use App\HomePageText;
 use App\İnternationalDelivery;
 use App\Seller;
+use App\TariffText;
 use App\TariffType;
 use App\Title;
 use Carbon\Carbon;
@@ -45,12 +46,18 @@ class TariffController extends HomeController
 
         $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
 
-        $text = HomePageText::query()
+        $text=TariffText::query()
             ->select([
-                'id',
-                DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
-            ])->first();
+                DB::raw("name_1_" . App::getLocale() . " as name1"),
+                DB::raw("content_2_" . App::getLocale() . " as content1"),
+
+                DB::raw("name_2_" . App::getLocale() . " as name2"),
+                DB::raw("content_2_" . App::getLocale() . " as content2"),
+
+                DB::raw("name_3_" . App::getLocale() . " as name3"),
+                DB::raw("content_3_" . App::getLocale() . " as content3")
+            ])
+            ->first();
 
         $faqs = Faq::query()->where('page',1)->select([
             'id',
