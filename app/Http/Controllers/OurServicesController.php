@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Blog;
 use App\Faq;
 use App\Faq2;
 use App\ServiceText;
@@ -38,7 +39,19 @@ class OurServicesController extends Controller
                     return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
                 }, $fields))
                 ->first();
-            return view("web.services.index", compact("faqs", "text",'title'));
+
+
+            $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
+                ->where('page',1)
+                ->select([
+                    'id','icon',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+
+
+            return view("web.services.index", compact("faqs", "text",'title','blogs'));
         } catch (\Exception $exception) {
             return view("front.error");
         }
