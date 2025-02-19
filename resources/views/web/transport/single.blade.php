@@ -34,7 +34,7 @@
             <div class="container-lg">
                 <div class="section-contact__block center-block">
                     <form class="form form-contact" name="formContact" id="formContact" method="post" action="/" novalidate="novalidate">
-                        <h3 class="form-contact__title text-center font-n-b">Sualınız var? Bizə yazın</h3>
+                        <h3 class="form-contact__title text-center font-n-b">{{$title->feedback}}</h3>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form__group">
@@ -81,41 +81,26 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Bloqlar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
-                                <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="/web/images/content/blog-1.png" alt="Blog">
-                                </div>
-                            </a>
+                    @foreach($blogs as $blog)
+                        <div class="col-sm-4">
+                            <div class="thumbnail thumbnail-blogs">
+                                <a href="#" class="thumbnail-blogs__link">
+                                    <div class="thumbnail-blogs__img-block">
+                                        <img class="thumbnail-blogs__img img-responsive" src="{{$blog->icon}}" alt="Blog">
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
-                                <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="/web/images/content/blog-1.png" alt="Blog">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
-                                <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="/web/images/content/blog-1.png" alt="Blog">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">Suallar və cavablar</h1>
+                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">

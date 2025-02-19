@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Blog;
 use App\Carousel;
 use App\ContractDetail;
 use App\Country;
@@ -27,6 +28,12 @@ class IndexController extends HomeController
     public function index()
     {
         try {
+            $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+                ->get();
 
             $instructions = Instruction::all();
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
@@ -107,6 +114,7 @@ class IndexController extends HomeController
                 'deliveries' => $deliveries,
                 'text' => $text,
                 'title' => $title,
+                'blogs' => $blogs,
             ]);
 
             // return view('home')->with([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Blog;
 use App\Contract;
 use App\ContractDetail;
 use App\Country;
@@ -57,7 +58,14 @@ class TariffController extends HomeController
             DB::raw("answer_" . App::getLocale() . " as content")
         ])
             ->get();
-
+        $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
+            ->where('page',2)
+            ->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->get();
 
 
 
@@ -67,7 +75,8 @@ class TariffController extends HomeController
             'sellers',
             'text',
             'types',
-            'faqs'
+            'faqs',
+            'blogs'
         ));
     }
     
@@ -160,6 +169,27 @@ class TariffController extends HomeController
                 ])
                 ->get();
             $types = TariffType::all();
+
+            $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
+                ->where('page',1)
+                ->where('sub_category_id',$country_id)
+                ->select([
+                    'id','icon',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content")
+                ])
+                ->get();
+
+            $fields = [
+                'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
+                'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+            ];
+
+            $title = Title::query()
+                ->select(array_map(function($field) {
+                    return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+                }, $fields))
+                ->first();
             
             return view('web.tariffs.single', compact(
                 'tariffs',
@@ -167,10 +197,12 @@ class TariffController extends HomeController
                 'countries',
                 'sellers',
                 'faqs',
-                'types'
+                'types',
+                'blogs',
+                'title'
             ));
         } catch (\Exception $exception) {
-            dd($exception);
+
             return view('front.error');
         }
     }

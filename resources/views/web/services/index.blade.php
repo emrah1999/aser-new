@@ -159,33 +159,18 @@
             <div class="container-lg">
                 <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
-                                <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="/web/images/content/blog-1.png" alt="Blog">
-                                </div>
-                            </a>
+                    @foreach($blogs as $blog)
+                        <div class="col-sm-4">
+                            <div class="thumbnail thumbnail-blogs">
+                                <a href="#" class="thumbnail-blogs__link">
+                                    <div class="thumbnail-blogs__img-block">
+                                        <img class="thumbnail-blogs__img img-responsive" src="{{$blog->icon}}" alt="Blog">
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
-                                <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="/web/images/content/blog-1.png" alt="Blog">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
-                                <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="/web/images/content/blog-1.png" alt="Blog">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </section>
