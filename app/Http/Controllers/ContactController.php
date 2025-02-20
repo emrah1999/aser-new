@@ -23,8 +23,9 @@ class ContactController extends HomeController
                 return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
             }, $fields))
             ->first();
+        $breadcrumbs=1;
 
-        return view('web.contact.header-contact',compact('title'));
+        return view('web.contact.header-contact',compact('title', 'breadcrumbs'));
     }
 
     public function message(Request $request)
