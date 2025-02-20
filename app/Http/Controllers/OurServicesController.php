@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use App\Faq;
-use App\Faq2;
+use App\Menu;
 use App\ServiceText;
 use App\Title;
 use Illuminate\Http\Request;
@@ -50,8 +50,11 @@ class OurServicesController extends Controller
                 ])
                 ->get();
 
+            $breadcrumbs=1;
 
-            return view("web.services.index", compact("faqs", "text",'title','blogs'));
+
+
+            return view("web.services.index", compact("faqs", "text",'title','blogs','breadcrumbs'));
         } catch (\Exception $exception) {
             return view("front.error");
         }
@@ -60,7 +63,9 @@ class OurServicesController extends Controller
     public function branches(){
         try {
             $branches = DB::table('filial')->where('is_active', 1)->get();
-            return view("web.services.branches", compact('branches'));
+            $breadcrumbs=1;
+
+            return view("web.services.branches", compact('branches','breadcrumbs'));
         }catch (\Exception $exception){
             return view("front.error");
         }

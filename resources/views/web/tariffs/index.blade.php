@@ -5,6 +5,13 @@
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.tariff') !!}</li>
 @endsection
 
+@section('title')
+    {{$menu['tariff']->{'title_' . App::getLocale()} }}
+@endsection
+
+@section('description')
+    {{$menu['tariff']->{'description_' . App::getLocale()} }}
+@endsection
 @section('content')
     <div class="content" id="content">
         <section class="section section-tarifs">
@@ -14,8 +21,7 @@
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-tarifs">
-                                <a href="
-                                {{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}
+                                <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}
                                     " class="thumbnail-tarifs__link">
                                     <div class="thumbnail-tarifs__img-block">
                                         <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">

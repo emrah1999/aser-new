@@ -82,9 +82,8 @@
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-tarifs">
-                                <a href="
-                                {{ route('show_tariffs', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}
-                                " class="thumbnail-tarifs__link">
+                                <a href="{{ route('menuIndex',
+                                        ['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
                                     <div class="thumbnail-tarifs__img-block">
                                         <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
@@ -108,7 +107,7 @@
                     @foreach($deliveries as $deliverie)
                     <div class="col-md-3 col-sm-6">
                         <div class="thumbnail thumbnail-cargo">
-                            <a href="{{ route('getTransportPage', ['id' => $deliverie->id,'locale' => app()->getLocale()]) }} " class="thumbnail-cargo__link">
+                            <a href="{{ route('menuIndex',['locale' => App::getLocale(),$deliverie->slug]) }}" class="thumbnail-cargo__link">
                                 <div class="thumbnail-cargo__img-block">
                                     <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
                                 </div>

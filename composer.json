@@ -17,7 +17,8 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "spatie/laravel-translation-loader": "^2.6"
+        "spatie/laravel-translation-loader": "^2.6",
+      "ext-couchbase": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

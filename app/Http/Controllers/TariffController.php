@@ -23,13 +23,13 @@ use Illuminate\Support\Facades\Request;
 class TariffController extends HomeController
 {
     public function index(){
-        $countries =İnternationalDelivery::query()
-            ->select([
-                'id','icon',
-                DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
-            ])
-            ->get();
+//        $countries =İnternationalDelivery::query()
+//            ->select([
+//                'id','icon',
+//                DB::raw("name_" . App::getLocale() . " as name"),
+//                DB::raw("content_" . App::getLocale() . " as content")
+//            ])
+//            ->get();
 
         $fields = [
             'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
@@ -74,7 +74,18 @@ class TariffController extends HomeController
             ])
             ->get();
 
+        $countries =İnternationalDelivery::query()
+            ->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content"),
+                DB::raw("slug_" . App::getLocale() . " as slug")
+            ])
+            ->get();
 
+//        return $text;
+
+        $breadcrumbs=1;
 
         return view('web.tariffs.index', compact(
             'countries',
@@ -83,7 +94,8 @@ class TariffController extends HomeController
             'text',
             'types',
             'faqs',
-            'blogs'
+            'blogs',
+            'breadcrumbs'
         ));
     }
     
@@ -197,6 +209,8 @@ class TariffController extends HomeController
                     return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
                 }, $fields))
                 ->first();
+
+            $breadcrumbs=1;
             
             return view('web.tariffs.single', compact(
                 'tariffs',
@@ -206,7 +220,8 @@ class TariffController extends HomeController
                 'faqs',
                 'types',
                 'blogs',
-                'title'
+                'title',
+                'breadcrumbs'
             ));
         } catch (\Exception $exception) {
 

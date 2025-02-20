@@ -4,6 +4,15 @@
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.branches') !!}</li>
 @endsection
+
+@section('title')
+    {{$menu['branch']->{'title_' . App::getLocale()} }}
+@endsection
+
+@section('description')
+    {{$menu['branch']->{'description_' . App::getLocale()} }}
+@endsection
+
 @section('content')
     <div class="content" id="content">
         <section class="section section-branches">

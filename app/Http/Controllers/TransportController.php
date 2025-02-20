@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Blog;
 use App\Faq;
 use App\CorporativeLogistic;
-use App\Faq2;
 use App\Title;
 use App\TransportText;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
@@ -21,13 +19,13 @@ class TransportController extends Controller
             DB::raw("answer_" . App::getLocale() . " as content")
         ])
             ->get();
-        $deliveries =CorporativeLogistic::query()
-            ->select([
-                'id','icon',
-                DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
-            ])
-            ->get();
+//        $deliveries =CorporativeLogistic::query()
+//            ->select([
+//                'id','icon',
+//                DB::raw("name_" . App::getLocale() . " as name"),
+//                DB::raw("content_" . App::getLocale() . " as content")
+//            ])
+//            ->get();
 
         $text=TransportText::query()
             ->select([
@@ -55,7 +53,19 @@ class TransportController extends Controller
             ])
             ->get();
 
-        return view('web.transport.index',compact('faqs','deliveries','text','title','blogs'));
+        $deliveries =CorporativeLogistic::query()
+            ->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content"),
+                DB::raw("slug_" . App::getLocale() . " as slug")
+            ])
+            ->get();
+        $breadcrumbs=1;
+
+
+
+        return view('web.transport.index',compact('faqs','deliveries','text','title','blogs','breadcrumbs'));
     }
     
     public function getTransportPage($locale, $id){
@@ -99,7 +109,10 @@ class TransportController extends Controller
             }, $fields))
             ->first();
 
+        $breadcrumbs=1;
 
-        return view('web.transport.single',compact('delivery','faqs','blogs','title'));
+
+
+        return view('web.transport.single',compact('delivery','faqs','blogs','title','breadcrumbs'));
     }
 }

@@ -35,22 +35,29 @@
                 <div class="col-auto d-none d-lg-block">
                     <ul class="nav nav-menu">
                         <li class="nav-menu__item">
-                            <a href="{{ route('tariffs_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.tariffs') !!}</a>
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
+                                {{ optional($menu['tariff'])->{'name_' . App::getLocale()} }}
+                            </a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('transport_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.transparation') !!}</a>
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
+                                {{ optional($menu['logistics'])->{'name_' . App::getLocale()} }}</a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.our_services') !!}</a>
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['services'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['services'])->{'name_' . App::getLocale()} }}</a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('ourServices_branhces', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('auth.branch') !!}</a>
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['branch'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['branch'])->{'name_' . App::getLocale()} }}</a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('contact_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.contact') !!}</a>
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['contact'])->{'name_' . App::getLocale()} }}</a>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('get_tracking_search', ['locale' => App::getLocale()]) }}" class="nav-menu__link">Tracking Search</a>
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['trackingSearch'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['trackingSearch'])->{'name_' . App::getLocale()} }}</a>
                         </li>
                         @if(!Auth::check())
                         <li class="nav-menu__item">
@@ -161,23 +168,26 @@
 
 </header>
 
-<section class="section section-breadcrumbs">
-    <div class="container-lg">
-        <div class="row justify-content-center align-items-start">
-            <div class="col-sm-6 col-7">
-                <ul class="nav nav-breadcrumbs font-n-b">
-                    <li class="nav-breadcrumbs__item">
-                        <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
-                    </li>
-                    @yield('breadcrumbs')
-                </ul>
-            </div>
-            <div class="col-sm-6 col-5">
+@if(($breadcrumbs ?? 0) == 1)
+    <section class="section section-breadcrumbs">
+        <div class="container-lg">
+            <div class="row justify-content-center align-items-start">
+                <div class="col-sm-6 col-7">
+                    <ul class="nav nav-breadcrumbs font-n-b">
+                        <li class="nav-breadcrumbs__item">
+                            <a href="" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
+                        </li>
+                        @yield('breadcrumbs')
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-5">
 
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+@endif
+
 
 
 

@@ -5,6 +5,16 @@
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.logistics') !!}</li>
 @endsection
+
+
+@section('title')
+    {{$menu['logistics']->{'title_' . App::getLocale()} }}
+@endsection
+
+@section('description')
+    {{$menu['logistics']->{'description_' . App::getLocale()} }}
+@endsection
+
 @section('content')
     <div class="content" id="content">
         <section class="section section-offers">
@@ -14,8 +24,9 @@
                     @foreach($deliveries as $deliverie)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-cargo">
-                                <a href="{{ route('getTransportPage', ['id' => $deliverie->id,'locale' => app()->getLocale()]) }} " class="thumbnail-cargo__link">
-                                    <div class="thumbnail-cargo__img-block">
+                                <a href="{{ route('menuIndex',['locale' => App::getLocale(),$deliverie->slug]) }}" class="thumbnail-cargo__link">
+
+                                <div class="thumbnail-cargo__img-block">
                                         <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
                                     </div>
                                     <div class="thumbnail-cargo__caption text-center">

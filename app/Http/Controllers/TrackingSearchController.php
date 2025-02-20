@@ -26,7 +26,10 @@ class TrackingSearchController extends Controller
             }, $fields))
             ->first();
 
-        return view('web.trackingSearch',compact('title'));
+        $breadcrumbs=1;
+
+
+        return view('web.trackingSearch',compact('title','breadcrumbs'));
     }
     public function local_tracking_search(Request $request)
     {
