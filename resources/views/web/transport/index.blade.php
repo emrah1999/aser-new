@@ -3,7 +3,9 @@
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
-    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.logistics') !!}</li>
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link nav-breadcrumbs__item--active">{!! __('breadcrumbs.logistics') !!}</a>
+    </li>
 @endsection
 
 
@@ -19,7 +21,7 @@
     <div class="content" id="content">
         <section class="section section-offers">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">{{$title->corporative_logistics}}</h2>
+                <h1 class="section-title text-center font-n-b">{{$title->corporative_logistics}}</h1>
                 <div class="row">
                     @foreach($deliveries as $deliverie)
                         <div class="col-md-3 col-sm-6">
@@ -47,7 +49,7 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h1 class="media-tarif-country__title font-n-b" >{{$text->name}}</h1>
+                            <h2 class="media-tarif-country__title font-n-b" >{{$text->name}}</h2>
                             <p class="media-tarif-country__desc">
                                 {{$text->content}}
                             </p>
@@ -108,7 +110,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
@@ -127,7 +129,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->faqs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">

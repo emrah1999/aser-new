@@ -10,7 +10,7 @@
                             <div class="row justify-content-center align-items-center">
                                 <div class="col">
                                     <div class="media-slider__left">
-                                        <h1 class="media-slider__title font-n-b">{{$carousel->name}}</h1>
+                                        <h2 class="media-slider__title font-n-b">{{$carousel->name}}</h2>
                                         <p class="media-slider__desc">A{{$carousel->content}}</p>
                                         @if($carousel->link != null)
                                         <a href="{{$carousel->link}}" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
@@ -126,7 +126,7 @@
         </section>
         <section class="section section-services">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->services}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->services}}</h2>
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="thumbnail thumbnail-services">
@@ -240,7 +240,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-12 d-block d-md-none">
-                            <h1 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h1>
+                            <h2 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h2>
                             <p class="form-calculator__desc">{!! __('static.calculate_text') !!} </p>
                         </div>
                         <div class="col-md-7">
@@ -330,7 +330,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
                     @foreach($blogs as $blog)
                     <div class="col-sm-4">
@@ -349,7 +349,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->faqs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">

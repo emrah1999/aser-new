@@ -2,7 +2,10 @@
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
-    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">Tracking Search</li>
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['trackingSearch'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link nav-breadcrumbs__item--active">Tracking Search</a>
+    </li>
+
 @endsection
 @section('content')
     <div class="container new-style">

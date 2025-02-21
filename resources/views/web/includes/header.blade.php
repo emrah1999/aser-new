@@ -175,7 +175,7 @@
                 <div class="col-sm-6 col-7">
                     <ul class="nav nav-breadcrumbs font-n-b">
                         <li class="nav-breadcrumbs__item">
-                            <a href="" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
+                            <a href="{{ route('home_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
                         </li>
                         @yield('breadcrumbs')
                     </ul>

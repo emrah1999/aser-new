@@ -285,7 +285,7 @@
                                 <div class="form__group">
                                     <label class="form-checkbox d-flex justify-content-start align-items-center" for="userAgree">
                                         <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree" >
-                                        <span class="form-checkbox__span" style="border-radius: 2px;width: 25px"></span>
+                                        <span class="form-checkbox__span" style="border-radius: 50px;width: 25px"></span>
                                         <a href="https://asercargo.az/uploads/static/terms.pdf" target="_blank">
                                             <span class="form-checkbox__text" style="animation: blink 1s infinite;">{!! __('auth.agreement') !!}</span>
                                         </a>
