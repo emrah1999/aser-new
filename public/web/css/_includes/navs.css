@@ -127,6 +127,10 @@
 .nav-tab-categories__link-img{
     position: relative;
     top: 4px;
+    height: 25px;
+    width: 25px;
+    margin-bottom: 10px;
+    margin-right: 5px;
 }
 
 .nav-contact{
@@ -191,7 +195,7 @@
 
 .nav-profile-menu__link{
     display: block;
-    padding: 20px 40px;
+    padding: 5px 40px;
     font-size: 20px;
     color: var(--black-2);
     cursor: pointer;
@@ -242,4 +246,46 @@
     font-size: 14px;
     color: var(--black-2);
     text-decoration: none;
+}
+
+ .header-bottom {
+     position: relative;
+     z-index: 1000;
+ }
+.nav-menu__item {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;  !important;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+    min-width: 250px;
+    text-align: right;
+}
+
+.nav-menu__item:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: 10px 15px;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f4f4f4;
 }

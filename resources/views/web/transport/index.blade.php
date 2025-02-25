@@ -49,7 +49,7 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h2 class="media-tarif-country__title font-n-b" >{{$text->name}}</h2>
+                            <h2 class="media-tarif-country__title align-text-custom" >{{$text->name}}</h2>
                             <p class="media-tarif-country__desc">
                                 {{$text->content}}
                             </p>

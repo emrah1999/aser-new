@@ -69,16 +69,6 @@
         </div>
     @endif
 
-    @if ($errors->any())
-        <div class="alert alert-danger" style="height: 4rem;">
-            <strong>{!! __('static.error') !!}  </strong> {!!  __('static.error_text') !!}
-            <ul>
-                @foreach ($errors->all() as $item => $error)
-                    <li>{!! $error !!} </li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="content" id="content">
     <section class="section section-registration d-flex justify-content-center align-items-center">
         <div class="container-lg">

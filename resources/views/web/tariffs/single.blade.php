@@ -118,6 +118,7 @@
                         <div class="col-xxl-6 col-xl-7">
                             <div class="media-tarifs-country__body">
                                 <form class="form form-calculator bg-white" name="formCalculator" id="formCalculator" method="post" action="/" novalidate="novalidate">
+                                    @csrf
                                     <div class="row">
                                         <h2 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h2>
                                         <div class="row">
@@ -255,6 +256,33 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".form-calculator__btn").click(function(e) {
+            e.preventDefault();
+            var formData = $('#formCalculator').serializeArray();
+            $.ajax({
+                url: "{{ route('calculate') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if (response.case === "success") {
+                        $("#amount").text(response.amount);
+                    } else {
+                        alert(response.content);
+                    }
+                },
+                error: function() {
+                }
+            });
+        });
+
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 

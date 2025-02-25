@@ -123,4 +123,40 @@ class OTPController extends Controller
         }
         return $randomCode;
     }
+
+    public function getOnayCodeList(Request $request){
+        $data=[];
+        try {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://onaykodu.bionet.az/api/trendyolsms-list?cargo_id=2",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER=>0,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'X-Api-Key: BisFgRG9lIewerWFPostazeo0Ijcargo2MjMASDDIyS.xvbde'
+                )
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $response = json_decode($response);
+            if (is_array($response)) {
+                $data=$response;
+            }
+            $date=date('d.m.Y H:i:s', strtotime('-3 minutes'));
+            return view('web.account.onay_code',compact('data','date'));
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+            return view("front.error");
+        }
+    }
 }

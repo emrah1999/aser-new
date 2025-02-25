@@ -47,7 +47,7 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title font-n-b">{{$text->name1}}</h4>
+                            <h4 class="media-tarif-country__title align-text-custom">{{$text->name1}}</h4>
                             <p class="media-tarif-country__desc">
                                 {{$text->content1}}
                             </p>
@@ -63,7 +63,7 @@
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title font-n-b">{{$text->name2}}</h4>
+                            <h4 class="media-tarif-country__title align-text-custom">{{$text->name2}}</h4>
                             <p class="media-tarif-country__desc">
                                 {{$text->content2}}
                             </p>
