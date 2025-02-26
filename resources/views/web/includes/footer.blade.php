@@ -122,35 +122,26 @@
                     <div class="col-xl-3 col-lg-3 col-md-3">
                         <p class="footer__text font-n-b">Tariflər</p>
                         <ul class="nav nav-menu-2 flex-column">
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('tariffs_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Türkiyədən Azərbaycana kargo</a>
-                            </li>
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('tariffs_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Amerikadan Azərbaycana kargo</a>
-                            </li>
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('tariffs_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Almaniyadan Azərbaycana kargo</a>
-                            </li>
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('tariffs_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">İngiltərədən Azərbaycana kargo</a>
-                            </li>
+                            @foreach ($tariffs as $tariff)
+                                <li class="nav-menu-2__item">
+                                    <a href="{{ route('menuIndex',['locale' => App::getLocale(),$tariff['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link">
+                                        {{ $tariff['name_'. \Illuminate\Support\Facades\App::getLocale()] }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3">
                         <p class="footer__text font-n-b">Logistika  xidməti</p>
                         <ul class="nav nav-menu-2 flex-column">
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('transport_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Hava nəqliyyatı</a>
-                            </li>
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('transport_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Avtomobil nəqliyyatı</a>
-                            </li>
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('transport_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Dəniz nəqliyyatı</a>
-                            </li>
-                            <li class="nav-menu-2__item">
-                                <a href="{{route('transport_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Dəmiryolu nəqliyyatı</a>
-                            </li>
+                            @foreach ($logistics as $logistic)
+                                <li class="nav-menu-2__item">
+                                    <a href="{{ route('menuIndex',['locale' => App::getLocale(),$logistic['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link">
+                                        {{ $logistic['name_'. \Illuminate\Support\Facades\App::getLocale()] }}
+                                    </a>
+                                </li>
+                            @endforeach
+
                         </ul>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2">
