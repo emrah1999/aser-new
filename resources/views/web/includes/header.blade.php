@@ -35,24 +35,33 @@
                 <div class="col-auto d-none d-lg-block">
                     <ul class="nav nav-menu">
                         <li class="nav-menu__item">
-                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
                                 {{ optional($menu['tariff'])->{'name_' . App::getLocale()} }}
+                                <span class="dropdown-arrow"></span>
                             </a>
-{{--                            <ul class="dropdown-menu">--}}
-{{--                                <li><a href="#">Türkiye'den Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">Amerika'dan Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">Almanya'dan Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">İngiltere'den Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">İsviçre'den Azerbaycan'a kargo</a></li>--}}
-{{--                            </ul>--}}
+                            <ul class="dropdown-menu-nav">
+                                @foreach ($tariffs as $tariff)
+                                    <li>
+                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$tariff['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}">
+                                            {{ $tariff['name_'. \Illuminate\Support\Facades\App::getLocale()] }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </li>
                         <li class="nav-menu__item">
-                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
-                                {{ optional($menu['logistics'])->{'name_' . App::getLocale()} }}</a>
-                            <ul class="dropdown-menu">
-{{--                                @foreach($tariffs as $tariff )--}}
-{{--                                <li><a href="#">{{$tariff['name_'. \Illuminate\Support\Facades\App::getLocale()]}}</a></li>--}}
-{{--                                @endforeach--}}
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
+                                {{ optional($menu['logistics'])->{'name_' . App::getLocale()} }}
+                                <span class="dropdown-arrow"></span>
+                            </a>
+                            <ul class="dropdown-menu-nav">
+                                @foreach ($logistics as $logistic)
+                                    <li>
+                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$logistic['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}">
+                                            {{ $logistic['name_'. \Illuminate\Support\Facades\App::getLocale()] }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </li>
                         <li class="nav-menu__item">
@@ -85,9 +94,6 @@
                         </li>
                         @endif
 
-
-
-
                     </ul>
                 </div>
 
@@ -102,7 +108,6 @@
                                 </a>
                                 <p class="media-profile__desc">ID: AS{{ Auth::user()->suite() }}</p>
 
-                                <!-- Açılır menü -->
                                 <div class="logout-menu" style="display: none; position: absolute; top: 100%; left: 0; background-color: #FFCC00; padding: 5px; width: 100%; text-align: center; border-radius: 4px;">
                                     <a href="{{route("logout", ['locale' => App::getLocale()])}}" class="logout-link" style="color: black; font-weight: bold; text-decoration: none;">{!! __("labels.logout") !!}</a>
 

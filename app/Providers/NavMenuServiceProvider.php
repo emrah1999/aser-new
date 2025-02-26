@@ -35,8 +35,8 @@ class NavMenuServiceProvider extends ServiceProvider
         $menu['contact']=Menu::query()->where('id',5)->first();
         $menu['trackingSearch']=Menu::query()->where('id',6)->first();
 
-        $tariffs[]=İnternationalDelivery::all();
-        $logistics[]=CorporativeLogistic::all();
+        $tariffs=İnternationalDelivery::all();
+        $logistics=CorporativeLogistic::all();
 
 
         View::share('menu', $menu);
