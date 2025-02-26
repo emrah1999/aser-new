@@ -69,16 +69,6 @@
         </div>
     @endif
 
-    @if ($errors->any())
-        <div class="alert alert-danger" style="height: 4rem;">
-            <strong>{!! __('static.error') !!}  </strong> {!!  __('static.error_text') !!}
-            <ul>
-                @foreach ($errors->all() as $item => $error)
-                    <li>{!! $error !!} </li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="content" id="content">
     <section class="section section-registration d-flex justify-content-center align-items-center">
         <div class="container-lg">
@@ -354,7 +344,7 @@
                             <div class="form__group">
                                 <label class="form-checkbox d-flex justify-content-start align-items-center" for="userAgree">
                                     <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree">
-                                    <span class="form-checkbox__span" style="border-radius: 2px;width: 25px"></span>
+                                    <span class="form-checkbox__span" style="border-radius: 50px;width: 25px"></span>
                                     <a href="https://asercargo.az/uploads/static/terms.pdf" target="_blank">
                                         <span class="form-checkbox__text" style="animation: blink 1s infinite;">{!! __('auth.agreement') !!}</span>
                                     </a>
@@ -380,7 +370,7 @@
                 <div class="login-registration-question">
                     <p class="login-registration-question__block text-center">
                         <span class="login-registration-question__title">Hesabınız var?</span>
-                        <a href="login.html" class="login-registration-question__link font-n-b">Daxil olun</a>
+                        <a href="{{route("login", ['locale' => App::getLocale()])}}" class="login-registration-question__link font-n-b">Daxil olun</a>
                     </p>
                 </div>
             </form>
@@ -390,13 +380,11 @@
 @endsection
 @section('scripts')
     <script>
-        // Şifrə göster/gizle işlemleri
         document.getElementById('togglePassword1').addEventListener('click', function() {
             const passwordField = document.getElementById('userPassword');
             const type = passwordField.type === 'password' ? 'text' : 'password';
             passwordField.type = type;
 
-            // İkonu değiştir
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');
@@ -407,7 +395,6 @@
             const type = passwordField.type === 'password' ? 'text' : 'password';
             passwordField.type = type;
 
-            // İkonu değiştir
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');

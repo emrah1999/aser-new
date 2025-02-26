@@ -2,7 +2,9 @@
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
-    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{!! __('breadcrumbs.contacs') !!}</li>
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link nav-breadcrumbs__item--active">{!! __('breadcrumbs.contacs') !!}</a>
+    </li>
 @endsection
 
 @section('title')
@@ -38,7 +40,7 @@
                             </li>
                             <li class="nav nav-contact__item">
                                 <img class="nav-contact__img" src="{{ asset('web/images/content/contact-email-2.png') }}" alt="Contact">
-                                <span class="nav-contact__title">info@colibri.az</span>
+                                <span class="nav-contact__title">info@asercargo.az</span>
                             </li>
                         </ul>
                         <div class="workhours">

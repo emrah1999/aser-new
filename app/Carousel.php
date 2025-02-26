@@ -13,6 +13,7 @@ class Carousel extends Model
         'content_az',
         'content_en',
         'content_ru',
-        'icon'
+        'icon',
+        'rank'
     ];
 }

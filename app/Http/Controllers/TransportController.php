@@ -55,12 +55,14 @@ class TransportController extends Controller
 
         $deliveries =CorporativeLogistic::query()
             ->select([
-                'id','icon',
+                'id','icon','rank',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
                 DB::raw("slug_" . App::getLocale() . " as slug")
             ])
+            ->orderBy('rank', 'asc')
             ->get();
+
         $breadcrumbs=1;
 
 

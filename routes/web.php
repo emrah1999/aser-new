@@ -25,13 +25,14 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     Route::get('/register-juridical', 'RegisterController@getJuridicalRegister');
     Route::get('/register-otp', 'RegisterController@getOTPRegister');
     Route::get('/terms-and-conditions', 'IndexController@terms_and_conditions') -> name("terms_and_conditions");
-    Route::get('/transport', 'IndexController@show_transport')->name("transport_page");
+//    Route::get('/transport', 'IndexController@show_transport')->name("transport_page");
     Route::get('/promo-code', 'IndexController@promo_code') -> name("promo_code");
     Route::get('/index', 'IndexController@index');
+    Route::get('/onay-kodu', 'OTPController@getOnayCodeList')->name("onay_code_list");
 
     Route::get('/reset-password', 'IndexController@reset')->name('reset_email');
 
-    Route::get('/tracking-search', 'TrackingSearchController@get_tracking_search')->name("get_tracking_search");
+//    Route::get('/tracking-search', 'TrackingSearchController@get_tracking_search')->name("get_tracking_search");
     Route::get('/local-tracking-search', 'TrackingSearchController@local_tracking_search')->name("local_tracking_search");
 //    Route::get('/tracking-search-in-ASER', 'TrackingSearchController@tracking_search_in_aser')->name('tracking_search_in_aser');
     Route::post('/tracking-search-in-ASER', 'TrackingSearchController@tracking_search_in_aser')->name('tracking_search_in_aser');

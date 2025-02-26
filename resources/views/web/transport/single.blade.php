@@ -2,8 +2,8 @@
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
-    <li class="nav-breadcrumbs__item">
-        <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.logistics') !!}</a>
+    <li class="nav-breadcrumbs__item ">
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.logistics') !!}</a>
     </li>
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{{$delivery->name}}</li>
 @endsection
@@ -15,7 +15,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="media-cargo-service__body">
-                                <h4 class="media-cargo-service__title font-n-b">{{$delivery->name}}</h4>
+                                <h1 class="media-cargo-service__title font-n-b">{{$delivery->name}}</h1>
                                 <p class="media-cargo-service__desc">
                                    {{$delivery->content}}
                                 </p>
@@ -81,7 +81,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
@@ -100,7 +100,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">

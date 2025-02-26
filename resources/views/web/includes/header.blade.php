@@ -38,14 +38,33 @@
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
                                 {{ optional($menu['tariff'])->{'name_' . App::getLocale()} }}
                             </a>
+{{--                            <ul class="dropdown-menu">--}}
+{{--                                <li><a href="#">Türkiye'den Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">Amerika'dan Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">Almanya'dan Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">İngiltere'den Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">İsviçre'den Azerbaycan'a kargo</a></li>--}}
+{{--                            </ul>--}}
                         </li>
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
                                 {{ optional($menu['logistics'])->{'name_' . App::getLocale()} }}</a>
+                            <ul class="dropdown-menu">
+{{--                                @foreach($tariffs as $tariff )--}}
+{{--                                <li><a href="#">{{$tariff['name_'. \Illuminate\Support\Facades\App::getLocale()]}}</a></li>--}}
+{{--                                @endforeach--}}
+                            </ul>
                         </li>
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['services'])->{'slug_' . App::getLocale()}]) }}"
                                class="nav-menu__link">{{ optional($menu['services'])->{'name_' . App::getLocale()} }}</a>
+{{--                            <ul class="dropdown-menu">--}}
+{{--                                <li><a href="#">Türkiye'den Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">Amerika'dan Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">Almanya'dan Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">İngiltere'den Azerbaycan'a kargo</a></li>--}}
+{{--                                <li><a href="#">İsviçre'den Azerbaycan'a kargo</a></li>--}}
+{{--                            </ul>--}}
                         </li>
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['branch'])->{'slug_' . App::getLocale()}]) }}"
@@ -175,7 +194,7 @@
                 <div class="col-sm-6 col-7">
                     <ul class="nav nav-breadcrumbs font-n-b">
                         <li class="nav-breadcrumbs__item">
-                            <a href="" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
+                            <a href="{{ route('home_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.homePage') !!}</a>
                         </li>
                         @yield('breadcrumbs')
                     </ul>
@@ -217,3 +236,5 @@
             }
         });
     </script>
+
+

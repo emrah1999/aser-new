@@ -2,8 +2,8 @@
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
-    <li class="nav-breadcrumbs__item">
-        <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.tariff') !!}</a>
+    <li class="nav-breadcrumbs__item ">
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link ">{!! __('breadcrumbs.tariff') !!}</a>
     </li>
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{{$country->name}}</li>
 @endsection
@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="media-tarif-country__body">
-                                <h4 class="media-tarif-country__title font-n-b">{{$country->name}}</h4>
+                                <h1 class="media-tarif-country__title font-n-b">{{$country->name}}</h1>
                                 <p class="media-tarif-country__desc">
                                    {{$country->content}}
                                 </p>
@@ -118,8 +118,9 @@
                         <div class="col-xxl-6 col-xl-7">
                             <div class="media-tarifs-country__body">
                                 <form class="form form-calculator bg-white" name="formCalculator" id="formCalculator" method="post" action="/" novalidate="novalidate">
+                                    @csrf
                                     <div class="row">
-                                        <h1 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h1>
+                                        <h2 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h2>
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form__group">
@@ -205,7 +206,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
@@ -224,7 +225,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->feedback}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->feedback}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">
@@ -255,6 +256,33 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(".form-calculator__btn").click(function(e) {
+            e.preventDefault();
+            var formData = $('#formCalculator').serializeArray();
+            $.ajax({
+                url: "{{ route('calculate') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if (response.case === "success") {
+                        $("#amount").text(response.amount);
+                    } else {
+                        alert(response.content);
+                    }
+                },
+                error: function() {
+                }
+            });
+        });
+
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 

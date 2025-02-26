@@ -7,11 +7,11 @@
                     @foreach($carousels as $carousel)
                     <div class="owl-main__item">
                         <div class="media media-slider center-block">
-                            <div class="row justify-content-center align-items-center">
+                            <div class="row justify-content-center align-items-center carousel-locale">
                                 <div class="col">
                                     <div class="media-slider__left">
-                                        <h1 class="media-slider__title font-n-b">{{$carousel->name}}</h1>
-                                        <p class="media-slider__desc">A{{$carousel->content}}</p>
+                                        <h2 class="media-slider__title font-n-b">{{$carousel->name}}</h2>
+                                        <p class="media-slider__desc">{{$carousel->content}}</p>
                                         @if($carousel->link != null)
                                         <a href="{{$carousel->link}}" class="btn btn-yellow media-slider__link font-n-b">Ətraflı</a>
                                         @endif
@@ -53,21 +53,23 @@
         </section>
         <section class="section section-works-video">
             <div class="container-lg">
+
                 <div class="media media-works">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-md-6">
                             <div class="media-works__left">
+
                                 <iframe class="media-works__iframe" width="100%" height="320"
                                         src="https://www.youtube.com/embed/sq_Ubu0by9k"
                                         allowfullscreen></iframe>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="media-works__right">
+                                <h2 class="section-title  font-n-b">{{$title->video}}</h2>
                                 <p class="media-works__title">
-                                    Dünyanın müxtəlif yerlərindən, xüsusilə Amerika, İngiltərə, İspaniya və
-                                    Almaniyadan daşınmalar həyata keçiririk. Bu ölkələrdən göndərdiyiniz bağlamaları
-                                    ən qısa zamanda və təhlükəsiz şəkildə ünvana çatdırırıq.
+                                    {{$contents->video}}
                                 </p>
                             </div>
                         </div>
@@ -78,6 +80,19 @@
         <section class="section section-tarifs">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
+                <div class="container">
+                    <div class="row centered-row">
+                            <div class="titles-content">
+                                <p class="media-titles-content">
+                                   {{$contents->international_delivery}}
+                                </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
                 <div class="row">
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">
@@ -103,6 +118,16 @@
         <section class="section section-offers">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->corporative_logistics}}</h2>
+                <div class="container">
+                    <div class="row centered-row">
+                        <div class="titles-content">
+                            <p class="media-titles-content">
+                                {{$contents->corporative_logistics}}
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     @foreach($deliveries as $deliverie)
                     <div class="col-md-3 col-sm-6">
@@ -126,7 +151,7 @@
         </section>
         <section class="section section-services">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->services}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->services}}</h2>
                 <div class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="thumbnail thumbnail-services">
@@ -240,7 +265,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-12 d-block d-md-none">
-                            <h1 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h1>
+                            <h2 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h2>
                             <p class="form-calculator__desc">{!! __('static.calculate_text') !!} </p>
                         </div>
                         <div class="col-md-7">
@@ -252,7 +277,7 @@
                                             <select class="form__select" name="country" id="calcCountry" required>
                                                 <option value="null" disabled selected>Ölkə seçin</option>
                                                 @foreach($countries as $country)
-                                                    <option value="{{$country->id}}">{{$country->name}} - {!! __('static.baku') !!}</option>
+                                                    <option value="{{$country->id}}">{{$country->name}}</option>
                                                 @endforeach
                                             </select>
                                             <label id="calcCountryErrorMessage" class="form-error-text" for="calcCountry"></label>
@@ -330,7 +355,7 @@
         </section>
         <section class="section section-blogs">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->blogs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
                     @foreach($blogs as $blog)
                     <div class="col-sm-4">
@@ -349,7 +374,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->faqs}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">
@@ -386,7 +411,35 @@
         .thumbnail-services__img{
             border-radius: 10px;
             height: 320px;
+            width: 400px;
         }
+        .centered-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*height: 100vh;*/
+        }
+
+        .titles-content p {
+            text-align: center;
+            margin-bottom: 50px;
+            width: 70%;
+            box-sizing: border-box;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+        .media-slider__img{
+            border-radius: 50%;
+        }
+        /*.carousel-locale{*/
+        /*    width: 70vw;*/
+        /*}*/
+
+
+
+
+
     </style>
 @endsection
 @section('scripts')

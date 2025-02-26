@@ -7,7 +7,6 @@ use App\Carousel;
 use App\ContractDetail;
 use App\Country;
 use App\Faq;
-use App\Faq2;
 use App\HomePageText;
 use App\HowWork;
 use App\TariffType;
@@ -43,11 +42,12 @@ class IndexController extends HomeController
 
             $countries =İnternationalDelivery::query()
                 ->select([
-                    'id','icon',
+                    'id','icon','rank',
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content"),
                     DB::raw("slug_" . App::getLocale() . " as slug")
                 ])
+                ->orderBy('rank', 'asc')
                 ->get();
 
             $types = TariffType::all();
@@ -70,11 +70,12 @@ class IndexController extends HomeController
 
             $deliveries =CorporativeLogistic::query()
                 ->select([
-                    'id','icon',
+                    'id','icon','rank',
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content"),
                     DB::raw("slug_" . App::getLocale() . " as slug")
                 ])
+                ->orderBy('rank', 'asc')
                 ->get();
 
 
@@ -88,22 +89,46 @@ class IndexController extends HomeController
 
             $carousels= Carousel::query()
                 ->select([
-                    'id','icon',"link",
+                    'id','icon',"link",'rank',
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content")
                 ])
+                ->orderBy('rank', 'asc')
                 ->get();
 
             $fields = [
                 'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
-                'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+                'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search','video'
             ];
 
             $title = Title::query()
-                ->select(array_map(function($field) {
-                    return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
-                }, $fields))
+                ->select(array_merge(
+                    [DB::raw('id')],
+                    array_map(function($field) {
+                        return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+                    }, $fields)
+                ))
                 ->first();
+
+            $contents = Title::query()
+                ->where('id',2)
+                ->select(array_merge(
+                    [DB::raw('id')],
+                    array_map(function($field) {
+                        return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+                    }, $fields)
+                ))
+                ->first();
+//            $tariffs=İnternationalDelivery::query()
+//                ->select([
+//                    'id',
+//                    DB::raw("name_" . App::getLocale() . " as name"),
+//                ])
+//                ->get();
+//            ;
+//            $logistics[]=CorporativeLogistic::all();
+//            return  $tariffs;
+
             
             return view('web.home.index')->with([
                 'instructions' => $instructions,
@@ -117,6 +142,7 @@ class IndexController extends HomeController
                 'text' => $text,
                 'title' => $title,
                 'blogs' => $blogs,
+                'contents' => $contents,
             ]);
 
             // return view('home')->with([
@@ -223,8 +249,19 @@ class IndexController extends HomeController
         if ($validator->fails()) {
             return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
         }
+//        return $request;
         try {
-            $country_id = $request->country;
+            if ($request->country==1) {
+                $country_id = 7;
+            }elseif ($request->country==2) {
+                $country_id = 2;
+            }elseif ($request->country==3) {
+                $country_id = 9;
+            }elseif ($request->country==4) {
+                $country_id = 12;
+            }
+
+//            $country_id = $request->country;
             $type = $request->type;
             $unit = $request->unit;
             $weight = $request->weight;
