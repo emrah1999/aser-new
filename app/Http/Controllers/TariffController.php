@@ -70,7 +70,8 @@ class TariffController extends HomeController
             ->select([
                 'id','icon',
                 DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
+                DB::raw("content_" . App::getLocale() . " as content"),
+                DB::raw("slug_" . App::getLocale() . " as slug")
             ])
             ->get();
 
@@ -149,7 +150,8 @@ class TariffController extends HomeController
                 ->select([
                     'id','icon',
                     DB::raw("name_" . App::getLocale() . " as name"),
-                    DB::raw("content_" . App::getLocale() . " as content")
+                    DB::raw("content_" . App::getLocale() . " as content"),
+                    DB::raw("slug_" . App::getLocale() . " as slug")
                 ])
                 ->get();
 

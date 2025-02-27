@@ -110,8 +110,8 @@
 
         <section class="section section-calculator">
             <div class="container-lg">
-                <form class="form form-calculator" name="formCalculator" id="formCalculator"
-                      novalidate="novalidate">
+                <form class="form form-calculator" name="formCalculator" id="formCalculator" novalidate="novalidate">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12 d-block d-md-none">
                             <h2 class="form-calculator__title font-n-b">{!! __('static.calculator') !!}</h2>
@@ -151,7 +151,7 @@
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="unit" id="calc_weight_type" required>
                                                 <option value="kq">kg</option>
-                                                <option value="gm">g</option>
+                                                <option value="gm">gr</option>
                                             </select>
                                         </div>
                                     </div>
@@ -211,7 +211,7 @@
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
                             <div class="thumbnail thumbnail-blogs">
-                                <a href="#" class="thumbnail-blogs__link">
+                                <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $blog->slug]) }}" class="thumbnail-blogs__link">
                                     <div class="thumbnail-blogs__img-block">
                                         <img class="thumbnail-blogs__img img-responsive" src="{{$blog->icon}}" alt="Blog">
                                     </div>
@@ -259,56 +259,82 @@
 
 @section('styles')
     <style>
-        /* Breadcrumb Nav */
         .breadcrumb-nav {
-            background-color: #f8f9fa; /* Açıq boz arxa fon */
+            background-color: #f8f9fa;
             padding: 10px 15px;
             border-radius: 5px;
         }
 
-        /* Breadcrumb List */
         .breadcrumb-list {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             align-items: center;
-            gap: 8px; /* Elementlər arasında boşluq */
+            gap: 8px;
         }
 
-        /* Breadcrumb Item */
         .breadcrumb-item {
             font-size: 14px;
-            color: #6c757d; /* Boz rəng */
+            color: #6c757d;
             display: flex;
             align-items: center;
         }
 
-        /* Breadcrumb Link */
         .breadcrumb-link {
             text-decoration: none;
-            color: #007bff; /* Mavi rəng */
+            color: #007bff;
             font-weight: 500;
             transition: color 0.3s ease-in-out;
         }
 
         .breadcrumb-link:hover {
-            color: #0056b3; /* Daha tünd mavi */
+            color: #0056b3;
         }
 
-        /* Breadcrumb Separators */
         .breadcrumb-item:not(:last-child)::after {
-            content: "›"; /* Ayırıcı işarəsi */
+            content: "›";
             margin-left: 8px;
             color: #6c757d;
             font-weight: bold;
         }
 
-        /* Aktiv Breadcrumb */
         .breadcrumb-item[aria-current] {
             font-weight: 600;
-            color: #343a40; /* Qara rəng */
+            color: #343a40;
         }
 
     </style>
+@endsection
+
+@section('scripts')
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(".form-calculator__btn").click(function(e) {
+        e.preventDefault();
+        var formData = $('#formCalculator').serializeArray();
+        $.ajax({
+            url: "{{ route('calculate') }}",
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                if (response.case === "success") {
+                    $("#amount").text(response.amount);
+                } else {
+                    alert(response.content);
+                }
+            },
+            error: function() {
+            }
+        });
+    });
+
+</script>
+
+
 @endsection

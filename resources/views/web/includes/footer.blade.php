@@ -112,10 +112,12 @@
                                 <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Mağazalar</a>
                             </li>
                             <li class="nav-menu-2__item">
-                                <a href="{{route('contact_footer_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Bizimlə əlaqə</a>
+                                <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
+                                   class="nav-menu-2__link">{{ optional($menu['contact'])->{'name_' . App::getLocale()} }}</a>
                             </li>
+
                             <li class="nav-menu-2__item">
-                                <a href="#" class="nav-menu-2__link">Bloq</a>
+                                <a href="{{ route('blogs', ['locale' => App::getLocale()]) }}" class="nav-menu-2__link">Bloq</a>
                             </li>
                         </ul>
                     </div>
@@ -147,12 +149,13 @@
                     <div class="col-xl-2 col-lg-2 col-md-2">
                         <p class="footer__text font-n-b">Faydalı məqalələr</p>
                         <ul class="nav nav-menu-2 flex-column">
+                            @foreach($footerBlogs as $footerBlog)
                             <li class="nav-menu-2__item">
-                                <a href="#" class="nav-menu-2__link">Trendyoldan necə sifariş edək?</a>
+
+                                <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $footerBlog['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link">{{$footerBlog['name_'. \Illuminate\Support\Facades\App::getLocale()]}}</a>
                             </li>
-                            <li class="nav-menu-2__item">
-                                <a href="#" class="nav-menu-2__link">Smart Customs</a>
-                            </li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>

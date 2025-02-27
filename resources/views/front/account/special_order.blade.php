@@ -26,7 +26,6 @@
 
 								<div class="n-order-top flex space-between">
 									<h1 class="n-order-title"><img src="{{$countrFlag->flag}}" alt=""> {!! __('static.order_title') !!}</h1>
-
 								</div>
 								<div class="last-30-day-notf" style="line-height: 20px; margin-top: 0px !important; margin-bottom: 0!important;">
 									Mobil telefonların sifarişi “Sifariş et” xidməti ilə qəbul olunmur.

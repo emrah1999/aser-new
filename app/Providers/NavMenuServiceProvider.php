@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Blog;
 use App\CorporativeLogistic;
 use App\İnternationalDelivery;
 use App\Menu;
@@ -38,9 +39,13 @@ class NavMenuServiceProvider extends ServiceProvider
         $tariffs=İnternationalDelivery::all();
         $logistics=CorporativeLogistic::all();
 
+        $footerBlogs=Blog::query()->where('show',1)->get();
+
+
 
         View::share('menu', $menu);
         View::share('tariffs', $tariffs);
         View::share('logistics', $logistics);
+        View::share('footerBlogs', $footerBlogs);
     }
 }

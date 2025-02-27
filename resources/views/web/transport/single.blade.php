@@ -86,7 +86,7 @@
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
                             <div class="thumbnail thumbnail-blogs">
-                                <a href="#" class="thumbnail-blogs__link">
+                                <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $blog->slug]) }}" class="thumbnail-blogs__link">
                                     <div class="thumbnail-blogs__img-block">
                                         <img class="thumbnail-blogs__img img-responsive" src="{{$blog->icon}}" alt="Blog">
                                     </div>
@@ -100,7 +100,7 @@
         </section>
         <section class="section section-questions">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
+                <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">
