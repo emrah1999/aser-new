@@ -30,7 +30,8 @@ class IndexController extends HomeController
             $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)->select([
                 'id','icon',
                 DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content")
+                DB::raw("content_" . App::getLocale() . " as content"),
+                DB::raw("slug_" . App::getLocale() . " as slug")
             ])
                 ->get();
 
@@ -247,7 +248,7 @@ class IndexController extends HomeController
             'length' => ['nullable'],
         ]);
         if ($validator->fails()) {
-            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
+            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => 'Ölkə və çəki mütləq daxil edilməlidir']);
         }
 //        return $request;
         try {
@@ -308,7 +309,6 @@ class IndexController extends HomeController
 
             return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Uyğun tarif tapılmadı!']);
         } catch (\Exception $exception) {
-            return $exception->getMessage();
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!']);
         }
     }

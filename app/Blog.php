@@ -18,7 +18,8 @@ class Blog extends Model
         'slug_ru',
         'icon',
         'page',
-        'sub_category_id'
+        'sub_category_id',
+        'show'
     ];
     
     public function category(){

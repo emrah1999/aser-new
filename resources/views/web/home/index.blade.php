@@ -275,7 +275,7 @@
                                         <label class="form__label" for="calcCountry">{!! __('static.country') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="country" id="calcCountry" required>
-                                                <option value="null" disabled selected>Ölkə seçin</option>
+                                                <option  disabled selected>Ölkə seçin</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{$country->id}}">{{$country->name}}</option>
                                                 @endforeach
@@ -360,12 +360,13 @@
                     @foreach($blogs as $blog)
                     <div class="col-sm-4">
                         <div class="thumbnail thumbnail-blogs">
-                            <a href="#" class="thumbnail-blogs__link">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $blog->slug]) }}" class="thumbnail-blogs__link">
                                 <div class="thumbnail-blogs__img-block">
-                                    <img class="thumbnail-blogs__img img-responsive" src="{{$blog->icon}}" alt="Blog">
+                                    <img class="thumbnail-blogs__img img-responsive" src="{{ $blog->icon }}" alt="Blog">
                                 </div>
                             </a>
                         </div>
+
                     </div>
                     @endforeach
 

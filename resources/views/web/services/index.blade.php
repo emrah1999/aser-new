@@ -173,7 +173,7 @@
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
                             <div class="thumbnail thumbnail-blogs">
-                                <a href="#" class="thumbnail-blogs__link">
+                                <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $blog->slug]) }}" class="thumbnail-blogs__link">
                                     <div class="thumbnail-blogs__img-block">
                                         <img class="thumbnail-blogs__img img-responsive" src="{{$blog->icon}}" alt="Blog">
                                     </div>

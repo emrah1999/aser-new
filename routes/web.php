@@ -29,6 +29,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     Route::get('/promo-code', 'IndexController@promo_code') -> name("promo_code");
     Route::get('/index', 'IndexController@index');
     Route::get('/onay-kodu', 'OTPController@getOnayCodeList')->name("onay_code_list");
+    Route::get('/blogs', 'BlogController@index')->name("blogs");
 
     Route::get('/reset-password', 'IndexController@reset')->name('reset_email');
 

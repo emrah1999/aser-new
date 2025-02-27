@@ -6,7 +6,7 @@
             <div class="container-lg">
                 <div class="row">
                     @include('web.account.account_left_bar')
-                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7 bar-width">
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
                         <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
                             <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
                             <div class="dropdown-container">
@@ -263,10 +263,10 @@
             height: 50px;
             width: 100px;
         }
-        .bar-width{
-            margin: -1100px 20px 20px 315px ;
-            width: 83%;
-        }
+        /*.bar-width{*/
+        /*    margin: -1100px 20px 20px 315px ;*/
+        /*    width: 83%;*/
+        /*}*/
         .bar-margin{
             padding-top : 4px;
             padding-bottom: 4px;
