@@ -23,11 +23,16 @@ class NewsController extends HomeController
         }
     }
 
-    public function news_details(Request $request) {
+    public function news_details(Request $request , $locale, $id) {
         try {
-            return view('web.news.show');
+            $news = DB::table('news')->where('is_active', 1)
+                ->where('id', $id)
+                ->select('id', 'name_' . App::getLocale() . ' as name', 'content_'.App::getLocale().' as content', 'image', 'slug', 'created_at')->first();
+
+            return view('web.news.show', compact('news'));
         } catch (\Exception $exception) {
             //dd($exception);
+            return $exception->getMessage();
             return view('front.error');
         }
     }

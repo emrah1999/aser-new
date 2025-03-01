@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Blog;
-use App\Carousel;
-use App\ContractDetail;
-use App\Country;
-use App\Faq;
-use App\HomePageText;
-use App\HowWork;
-use App\TariffType;
-use App\Title;
+use App\{Blog,
+    Carousel,
+    ContractDetail,
+    Country,
+    Faq,
+    HomePageText,
+    HowWork,
+    Partner,
+    TariffType,
+    Title,
+    Seller,
+    İnternationalDelivery,
+    CorporativeLogistic};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Instruction;
-use App\Seller;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use App\İnternationalDelivery;
-use App\CorporativeLogistic;
+use Illuminate\Support\Facades\{App,DB,Validator};
 
 class IndexController extends HomeController
 {
@@ -36,7 +34,7 @@ class IndexController extends HomeController
                 ->get();
 
             $instructions = Instruction::all();
-            $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
+            $partners = Partner::all();
 
             $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image')->orderBy('id')->get();
 
@@ -133,7 +131,7 @@ class IndexController extends HomeController
             
             return view('web.home.index')->with([
                 'instructions' => $instructions,
-                'sellers' => $sellers,
+                'partners' => $partners,
                 'countries' => $countries,
                 'types' => $types,
                 'faqs' => $faqs,

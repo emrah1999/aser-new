@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="media-tarif-country__right">
-                                <img class="media-tarif-country__img img-responsive" src="{{$country->icon}}" alt="Tarif">
+                                <img class="media-tarif-country__img img-responsive" src="{{$country->internal_images}}" alt="Tarif">
                             </div>
                         </div>
                     </div>

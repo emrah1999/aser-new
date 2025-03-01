@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="media-cargo-service__right">
-                                <img class="media-cargo-service__img img-responsive" src="{{$delivery->icon}}" alt="Cargo">
+                                <img class="media-cargo-service__img img-responsive" src="{{$delivery->internal_images}}" alt="Cargo">
                             </div>
                         </div>
                     </div>
