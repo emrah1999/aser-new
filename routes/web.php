@@ -78,7 +78,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
     Route::group(['prefix' => '/news'], function () {
         Route::get('/', 'NewsController@show_news')->name("news_page");
-        Route::get('/details', 'NewsController@news_details')->name("news_details");
+        Route::get('/{id}', 'NewsController@news_details')->name("news_details");
     });
 
     Route::group(['prefix' => '/account', 'middleware' => ['Login', 'auth']], function () {

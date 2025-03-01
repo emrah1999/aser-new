@@ -19,7 +19,8 @@ class Blog extends Model
         'icon',
         'page',
         'sub_category_id',
-        'show'
+        'show',
+        'internal_images'
     ];
     
     public function category(){

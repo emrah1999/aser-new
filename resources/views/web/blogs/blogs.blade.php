@@ -1,4 +1,15 @@
 @extends('web.layouts.web')
+@section('title')
+    {{$blog->ceo_title}}
+@endsection
+
+@section('description')
+    {{$blog->seo_description}}
+@endsection
+
+
+
+
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
@@ -23,7 +34,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="media-cargo-service__right">
-                                <img class="media-cargo-service__img img-responsive" src="{{$blog->icon}}" alt="Cargo">
+                                <img class="media-cargo-service__img img-responsive" src="{{$blog->internal_images}}" alt="Cargo">
                             </div>
                         </div>
                     </div>

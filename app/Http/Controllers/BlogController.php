@@ -39,13 +39,15 @@ class BlogController extends Controller
     {
 
         $blog = Blog::query()->select([
-            'id','icon',
+            'id','icon','internal_images',
             DB::raw("name_" . App::getLocale() . " as name"),
-            DB::raw("content_" . App::getLocale() . " as content")
+            DB::raw("content_" . App::getLocale() . " as content"),
+            DB::raw("ceo_title_" . App::getLocale() . " as ceo_title"),
+            DB::raw("seo_description_" . App::getLocale() . " as seo_description"),
         ])
             ->where('id',$id)
             ->first();
 
-        return view('web.home.blogs',compact('blog'));
+        return view('web.blogs.blogs',compact('blog'));
     }
 }

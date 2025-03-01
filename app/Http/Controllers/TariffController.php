@@ -11,6 +11,7 @@ use App\Faq;
 use App\Faq2;
 use App\HomePageText;
 use App\İnternationalDelivery;
+use App\Partner;
 use App\Seller;
 use App\TariffText;
 use App\TariffType;
@@ -36,7 +37,7 @@ class TariffController extends HomeController
             'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
         ];
         $types = TariffType::all();
-
+        $partners = Partner::all();
 
         $title = Title::query()
             ->select(array_map(function($field) {
@@ -77,7 +78,7 @@ class TariffController extends HomeController
 
         $countries =İnternationalDelivery::query()
             ->select([
-                'id','icon','rank',
+                'id','icon','rank','internal_images',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
                 DB::raw("slug_" . App::getLocale() . " as slug")
@@ -97,7 +98,8 @@ class TariffController extends HomeController
             'types',
             'faqs',
             'blogs',
-            'breadcrumbs'
+            'breadcrumbs',
+            'partners'
         ));
     }
     
@@ -129,7 +131,7 @@ class TariffController extends HomeController
 
             $countries = İnternationalDelivery::query()
                 ->select([
-                    'id',
+                    'id','internal_images',
                     DB::raw("name_" . App::getLocale() . " as name"),
                 ])->get();
     

@@ -246,12 +246,12 @@
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>
                 <div class="owl-carousel owl-partners owlPartners">
-                    @foreach($sellers as $seller)
+                    @foreach($partners as $partner)
                     <div class="owl-partners__item">
                         <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
                             <div class="thumbnail-partners__img-block">
                                 <img class="thumbnail-partners__img img-responsive"
-                                     src="{{$seller->img}}" alt="Partner">
+                                     src="{{$partner->icon}}" alt="Partner">
                             </div>
                         </div>
                     </div>
