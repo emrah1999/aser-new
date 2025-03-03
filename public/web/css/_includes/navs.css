@@ -25,6 +25,15 @@
     border-radius: 8px;
 }
 
+.language-col-mob{
+    display: none;
+}
+.language-col-mob{
+    position: relative;
+    left: 19px;
+    top: -2px;
+    padding-bottom: 10px;
+}
 .nav-languages-2__link{
     display: block;
     padding: 2px 10px;
@@ -307,4 +316,16 @@
 
 .dropdown-menu-nav li:hover {
     background-color: #f4f4f4;
+}
+@media only screen and (max-width: 767px) {
+    .language-col-mob{
+        display: block;
+    }
+    .language-col{
+        display: none;
+    }
+    .nav-languages-2{
+        right: unset;
+        left: 50px;
+    }
 }

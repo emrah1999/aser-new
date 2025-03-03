@@ -1,29 +1,5 @@
 <header class="header nm" id="header">
-    <div style="display: none" class="header-top">
-        <div class="container-lg">
-            <div class="row justify-content-center align-items-center">
-
-                <div class="col-xl-6 col-lg-5 col-md-5 col-sm-2 col-3">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-auto d-none d-md-block">
-                            @if(Auth::check())
-{{--                                <a href="{{route("logout", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center">--}}
-{{--                                    <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-exit.png" alt="ProfileMenu">--}}
-{{--                                    <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-exit.png" alt="ProfileMenu">--}}
-{{--                                    <span class="nav-profile-menu__link-title">{!! __('auth.logout') !!}</span>--}}
-{{--                                </a>--}}
-                            @else
-                                <a href="{{route("register", ['locale' => App::getLocale()])}}" class="btn btn-yellow header-top__btn font-n-b">{!! __('auth.register') !!}</a>
-                                <a href="{{route("login", ['locale' => App::getLocale()])}}" class="btn btn-trns-black header-top__btn font-n-b">{!! __('auth.login') !!} </a>
-                            @endif
-                        </div>
-                        <div class="col-auto d-md-none"></div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="header-bottom">
         <div class="container-lg">
             <div class="row justify-content-between align-items-center">
@@ -67,13 +43,7 @@
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['services'])->{'slug_' . App::getLocale()}]) }}"
                                class="nav-menu__link">{{ optional($menu['services'])->{'name_' . App::getLocale()} }}</a>
-{{--                            <ul class="dropdown-menu">--}}
-{{--                                <li><a href="#">Türkiye'den Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">Amerika'dan Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">Almanya'dan Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">İngiltere'den Azerbaycan'a kargo</a></li>--}}
-{{--                                <li><a href="#">İsviçre'den Azerbaycan'a kargo</a></li>--}}
-{{--                            </ul>--}}
+
                         </li>
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['branch'])->{'slug_' . App::getLocale()}]) }}"
@@ -149,26 +119,59 @@
                 </div>
             </div>
             <div class="menu-mobile-block d-none">
-                <ul class="nav nav-menu">
-                    <li class="nav-menu__item">
-                        <a href="{{ route('about_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.about') !!}</a>
-                    </li>
-                    <li class="nav-menu__item">
-                        <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.our_services') !!}</a>
-                    </li>
-                    <li class="nav-menu__item">
-                        <a href="{{ route('ourServices_branhces', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('auth.branch') !!}</a>
-                    </li>
-                    <li class="nav-menu__item">
-                        <a href="{{ route('sellers_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.sellers') !!}</a>
-                    </li>
-                    <li class="nav-menu__item">
-                        <a href="{{ route('ourServices_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">Tracking Search</a>
-                    </li>
-                    <li class="nav-menu__item">
-                        <a href="{{ route('contact_page', ['locale' => App::getLocale()]) }}" class="nav-menu__link">{!! __('menu.contact') !!}</a>
-                    </li>
-                </ul>
+            <ul class="nav nav-menu">
+                        <li class="nav-menu__item">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
+                                {{ optional($menu['tariff'])->{'name_' . App::getLocale()} }}
+                            </a>
+                            
+                        </li>
+                        <li class="nav-menu__item">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
+                                {{ optional($menu['logistics'])->{'name_' . App::getLocale()} }}
+                            </a>
+                            
+                        </li>
+                        <li class="nav-menu__item">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['services'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['services'])->{'name_' . App::getLocale()} }}</a>
+
+                        </li>
+                        <li class="nav-menu__item">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['branch'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['branch'])->{'name_' . App::getLocale()} }}</a>
+                        </li>
+                        <li class="nav-menu__item">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['contact'])->{'name_' . App::getLocale()} }}</a>
+                        </li>
+                        <li class="nav-menu__item">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['trackingSearch'])->{'slug_' . App::getLocale()}]) }}"
+                               class="nav-menu__link">{{ optional($menu['trackingSearch'])->{'name_' . App::getLocale()} }}</a>
+                        </li>
+                        <li>
+                        <div class="col-auto language-col-mob">
+                            <ul class="nav nav-languages">
+                                <li class="nav-languages__item">
+                                    <a href="#" class="nav-languages__link">
+                                        <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
+                                        <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
+                                    </a>
+                                    <ul class="nav nav-languages-2  d-none">
+                                        @foreach (Config::get('languages') as $lang => $language)
+                                            <li class="nav-languages-2__item">
+                                                <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
+                                            </li>
+                                        @endforeach
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        </li>
+                       
+
+                    </ul>
                 @if(Auth::check())
                     <div class="col-auto d-none d-xl-block">
                         <div class="media media-profile d-flex justify-content-center align-items-center">
