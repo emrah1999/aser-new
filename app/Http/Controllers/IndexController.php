@@ -10,6 +10,7 @@ use App\{Blog,
     HomePageText,
     HowWork,
     Partner,
+    Service,
     TariffType,
     Title,
     Seller,
@@ -26,6 +27,14 @@ class IndexController extends HomeController
     {
         try {
             $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content"),
+                DB::raw("slug_" . App::getLocale() . " as slug")
+            ])
+                ->get();
+
+            $services = Service::query()->select([
                 'id','icon',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
@@ -142,6 +151,7 @@ class IndexController extends HomeController
                 'title' => $title,
                 'blogs' => $blogs,
                 'contents' => $contents,
+                'services'=>$services,
             ]);
 
             // return view('home')->with([

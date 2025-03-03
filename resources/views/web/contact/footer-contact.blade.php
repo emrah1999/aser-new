@@ -1,9 +1,24 @@
 @extends('web.layouts.web')
+@section('breadcrumbs')
+    {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
+    {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link nav-breadcrumbs__item--active">{!! __('breadcrumbs.contacs') !!}</a>
+    </li>
+@endsection
+
+@section('title')
+    {{$menu['contact']->{'title_' . App::getLocale()} }}
+@endsection
+
+@section('description')
+    {{$menu['contact']->{'description_' . App::getLocale()} }}
+@endsection
 @section('content')
 <div class="content" id="content">
     <section class="section section-contact">
         <div class="container-lg">
-            <h1 class="section-title text-center font-n-b">Bizimlə əlaqə</h1>
+            <h1 class="section-title text-center font-n-b">{{$title->contacts}}</h1>
             <div class="section-contact__block center-block">
                 <div class="row">
                     <div class="col-md-3 col-sm-6">
@@ -13,7 +28,7 @@
                             </div>
                             <div class="thumbnail-contact__caption">
                                 <h6 class="thumbnail-contact__title font-n-b">Bizə zəng edin</h6>
-                                <p class="thumbnail-contact__desc">(+99412) 310 07 09</p>
+                                <p class="thumbnail-contact__desc">(+994) 12 310 39 39</p>
                             </div>
                         </div>
                     </div>
@@ -37,17 +52,18 @@
                                 <h6 class="thumbnail-contact__title font-n-b">Sosial media</h6>
                                 <ul class="nav nav-socials thumbnail-contact__nav-socials justify-content-center align-items-center">
                                     <li class="nav-socials__item thumbnail-contact__nav-socials-item d-flex justify-content-center align-items-center">
-                                        <a href="#" class="nav-socials__link thumbnail-contact__nav-socials-link">
+                                        <a href="https://www.facebook.com/people/Aser-Cargo/pfbid04EgswBfoXuLYbR94GVm8h8zuJ3PCocFT5bweeUA1aRtyGiGDgZXXhR3TwcDGPkZLl/"  class="nav-socials__link thumbnail-contact__nav-socials-link">
                                             <img class="nav-socials__img thumbnail-contact__nav-socials-img" src="{{asset('web/images/content/social-facebook.png')}}" alt="Facebook">
                                         </a>
                                     </li>
                                     <li class="nav-socials__item thumbnail-contact__nav-socials-item d-flex justify-content-center align-items-center">
-                                        <a href="#" class="nav-socials__link thumbnail-contact__nav-socials-link">
+                                        <a href="https://www.instagram.com/asercargo.az?igsh=OWxraHl6Nm5jbml2"
+                                           class="nav-socials__link thumbnail-contact__nav-socials-link">
                                             <img class="nav-socials__img thumbnail-contact__nav-socials-img" src="{{asset('web/images/content/social-instagram.png')}}" alt="Instagram">
                                         </a>
                                     </li>
                                     <li class="nav-socials__item thumbnail-contact__nav-socials-item d-flex justify-content-center align-items-center">
-                                        <a href="#" class="nav-socials__link thumbnail-contact__nav-socials-link">
+                                        <a href="https://youtube.com/@asercargo" class="nav-socials__link thumbnail-contact__nav-socials-link">
                                             <img class="nav-socials__img thumbnail-contact__nav-socials-img" src="{{asset('web/images/content/social-youtube.png')}}" alt="Youtube">
                                         </a>
                                     </li>
@@ -68,7 +84,7 @@
                     </div>
                 </div>
                 <form class="form form-contact" name="formContact" id="formContact" method="post" action="/" novalidate="novalidate">
-                    <h3 class="form-contact__title text-center font-n-b">Sualınız var? Bizə yazın</h3>
+                    <h3 class="form-contact__title text-center font-n-b">{{$title->corporative_logistics}}</h3>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form__group">

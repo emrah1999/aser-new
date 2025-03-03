@@ -83,14 +83,14 @@
             // Xəritəni yarat
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 14,
-                center: location,  // Xəritənin mərkəzi Bakı
+                center: location,
             });
 
             // Marker əlavə et
             new google.maps.Marker({
                 position: location,
                 map: map,
-                title: "Bakı şəhəri!",  // Markerin başlığı
+                title: "Bakı şəhəri!",
             });
         }
 

@@ -129,7 +129,7 @@
                                                         <select class="form__select" name="country" id="calcCountry" required>
                                                             <option value="null" disabled selected>Ölkə seçin</option>
                                                             @foreach($countries as $country)
-                                                                <option value="{{$country->id}}">{{$country->name}} - {!! __('static.baku') !!}</option>
+                                                                <option value="{{$country->id}}">{{$country->name}}</option>
                                                             @endforeach
                                                         </select>
                                                         <label id="calcCountryErrorMessage" class="form-error-text" for="calcCountry"></label>

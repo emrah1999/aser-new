@@ -6,6 +6,7 @@ use App\Blog;
 use App\CorporativeLogistic;
 use App\İnternationalDelivery;
 use App\Menu;
+use App\Service;
 
 class MenuController extends Controller
 {
@@ -13,7 +14,13 @@ class MenuController extends Controller
     {
         $data=['locale'=>$locale,'slug'=>$slug];
 
+
         $country=İnternationalDelivery::query()->where('slug_az',$slug)
+            ->orWhere('slug_en',$slug)
+            ->orWhere('slug_ru',$slug)
+            ->first();
+
+        $service=Service::query()->where('slug_az',$slug)
             ->orWhere('slug_en',$slug)
             ->orWhere('slug_ru',$slug)
             ->first();
@@ -27,6 +34,9 @@ class MenuController extends Controller
             ->orWhere('slug_ru',$slug)
             ->first();
         $menu = Menu::where('slug_' . $locale, $slug)->first();
+        if($service){
+            return app(OurServicesController::class)->get_services($locale,$service->id);
+        }
         if($blog){
             return app(BlogController::class)->get_blogs($locale,$blog->id);
         }
@@ -55,7 +65,7 @@ class MenuController extends Controller
             return app(OurServicesController::class)->branches();
         }
         elseif ($menuId == 5){
-            return app(ContactController::class)->index();
+            return app(ContactController::class)->index_footer();
         }
         elseif ($menuId == 6){
             return app(TrackingSearchController::class)->get_tracking_search();

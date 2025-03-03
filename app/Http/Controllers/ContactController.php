@@ -51,6 +51,17 @@ class ContactController extends HomeController
 
     public function index_footer()
     {
-        return view('web.contact.footer-contact');
+        $fields = [
+            'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
+            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+        $breadcrumbs=1;
+        return view('web.contact.footer-contact',compact('title', 'breadcrumbs'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Blog;
 use App\Faq;
 use App\Menu;
+use App\Service;
 use App\ServiceText;
 use App\Title;
 use Illuminate\Http\Request;
@@ -40,6 +41,13 @@ class OurServicesController extends Controller
                 }, $fields))
                 ->first();
 
+            $services = Service::query()->select([
+                'id','icon',
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content"),
+                DB::raw("slug_" . App::getLocale() . " as slug")
+            ])
+                ->get();
 
             $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
                 ->where('page',1)
@@ -55,7 +63,7 @@ class OurServicesController extends Controller
 
 
 
-            return view("web.services.index", compact("faqs", "text",'title','blogs','breadcrumbs'));
+            return view("web.services.index", compact("faqs", "text",'title','blogs','breadcrumbs','services'));
         } catch (\Exception $exception) {
             return view("front.error");
         }
@@ -78,5 +86,21 @@ class OurServicesController extends Controller
         }catch (\Exception $exception){
             return view("front.error");
         }
+    }
+
+    public function get_services($locale , $id)
+    {
+        $service = Service::query()->select([
+            'id','icon','internal_images',
+            DB::raw("name_" . App::getLocale() . " as name"),
+            DB::raw("content_" . App::getLocale() . " as content"),
+            DB::raw("ceo_title_" . App::getLocale() . " as ceo_title"),
+            DB::raw("seo_description_" . App::getLocale() . " as seo_description"),
+        ])
+            ->where('id',$id)
+            ->first();
+
+
+        return view("web.services.single", compact('service'));
     }
 }
