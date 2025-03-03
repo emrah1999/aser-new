@@ -153,78 +153,20 @@
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->services}}</h2>
                 <div class="row">
+                    @foreach($services as $service)
                     <div class="col-md-4 col-sm-6">
                         <div class="thumbnail thumbnail-services">
-                            <a href="#" class="thumbnail-services__link">
+                            <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $service->slug]) }}" class="thumbnail-services__link">
                                 <div class="thumbnail-services__img-block">
-                                    <img class="thumbnail-services__img img-responsive" src="/web/images/content/service-1.png" alt="Service">
+                                    <img class="thumbnail-services__img img-responsive" src="{{$service->icon}}" alt="Service">
                                 </div>
                                 <div class="thumbnail-services__caption">
-                                    <h6 class="thumbnail-services__title text-center font-n-b">Anbar xidməti</h6>
+                                    <h6 class="thumbnail-services__title text-center font-n-b">{{$service->name}}</h6>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="thumbnail thumbnail-services">
-                            <a href="#" class="thumbnail-services__link">
-                                <div class="thumbnail-services__img-block">
-                                    <img class="thumbnail-services__img img-responsive" src="/web/images/content/service-2.png" alt="Service">
-                                </div>
-                                <div class="thumbnail-services__caption">
-                                    <h6 class="thumbnail-services__title text-center font-n-b">Ünvanda təhvil alma xidməti</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="thumbnail thumbnail-services">
-                            <a href="#" class="thumbnail-services__link">
-                                <div class="thumbnail-services__img-block">
-                                    <img class="thumbnail-services__img img-responsive" src="/web/images/content/service-3.png" alt="Service">
-                                </div>
-                                <div class="thumbnail-services__caption">
-                                    <h6 class="thumbnail-services__title text-center font-n-b">E-ticarət əməliyyatları</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="thumbnail thumbnail-services">
-                            <a href="#" class="thumbnail-services__link">
-                                <div class="thumbnail-services__img-block">
-                                    <img class="thumbnail-services__img img-responsive" src="/web/images/content/service-4.png" alt="Service">
-                                </div>
-                                <div class="thumbnail-services__caption">
-                                    <h6 class="thumbnail-services__title text-center font-n-b">Kargomat</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="thumbnail thumbnail-services">
-                            <a href="#" class="thumbnail-services__link">
-                                <div class="thumbnail-services__img-block">
-                                    <img class="thumbnail-services__img img-responsive" src="/web/images/content/service-5.png" alt="Service">
-                                </div>
-                                <div class="thumbnail-services__caption">
-                                    <h6 class="thumbnail-services__title text-center font-n-b">Kuryer</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="thumbnail thumbnail-services">
-                            <a href="#" class="thumbnail-services__link">
-                                <div class="thumbnail-services__img-block">
-                                    <img class="thumbnail-services__img img-responsive" src="/web/images/content/service-6.png" alt="Service">
-                                </div>
-                                <div class="thumbnail-services__caption">
-                                    <h6 class="thumbnail-services__title text-center font-n-b">Etibarnamə</h6>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                        @endforeach
                 </div>
             </div>
         </section>

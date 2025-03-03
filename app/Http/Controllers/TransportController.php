@@ -75,12 +75,13 @@ class TransportController extends Controller
 //        return $id;
         $delivery =CorporativeLogistic::query()
             ->select([
-                'id','icon',
+                'id','icon','internal_images',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content")
             ])
             ->where('id',$id)
             ->first();
+
         $faqs = Faq::query()->where('page',2)
         ->where('sub_category_id',$id)
         ->select([
