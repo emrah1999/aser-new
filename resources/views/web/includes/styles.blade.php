@@ -31,7 +31,7 @@
     .dropdown-menu {
         position: absolute;
         top: 100%;
-        right: 0;  !important;
+        right: 0 !important;
         background-color: white;
         border: 1px solid #ddd;
         border-radius: 4px;
