@@ -9,7 +9,7 @@
 @import "_includes/accordions.css?v=1.15";
 @import "_includes/tables.css?v=1.2";
 @import "_includes/paginations.css";
-@import "_includes/owl.css?v=1.0.0";
+@import "_includes/owl.css?v=1.0.1";
 @import "_includes/header.css?v=1.1";
 @import "_includes/footer.css";
 
@@ -276,7 +276,7 @@
         margin-bottom: 20px;
     }
     .form-calculator{
-        padding: 20px 0;
+        padding: 20px 15px;
     }
     .form-calculator__title{
         font-size: 24px;
