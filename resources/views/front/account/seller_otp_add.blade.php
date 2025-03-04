@@ -12,7 +12,7 @@
                         <div class="page-content-right">
                             <div class="order-block profile-information-block">
                                 <div class="order-form-header">
-                                    <h3> {!! __('account_menu.declaration') !!} </h3>
+                                    <h3> {!! __('buttons.create_otp') !!} </h3>
                                 </div>
                                 <form id="preliminary_declaration_form" action="" method="post" redirect_url="{{route("post_seller_add",['locale' => app()->getLocale()])}}" style="width: 100% !important;">
                                     @csrf
@@ -59,7 +59,6 @@
         display: flex;
         flex-wrap: nowrap;
         gap: 20px;
-        align-items: flex-start;
     }
 
     .page-content-right {
