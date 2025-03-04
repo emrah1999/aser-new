@@ -179,7 +179,7 @@ class TariffController extends HomeController
                 $country_id = 12;
             }
 
-            $tariffs = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
+            $tariffAll = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
                 ->leftJoin('currency', 'contract_detail.currency_id', '=', 'currency.id')
                 ->leftJoin('tariff_types', 'contract_detail.type_id', '=', 'tariff_types.id')
                 ->leftJoin('exchange_rate', function($join) {
@@ -231,7 +231,7 @@ class TariffController extends HomeController
                 ->get();
             
             return view('web.tariffs.single', compact(
-                'tariffs',
+                'tariffAll',
                 'country',
                 'countries',
                 'sellers',

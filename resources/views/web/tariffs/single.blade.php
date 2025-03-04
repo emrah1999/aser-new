@@ -36,7 +36,7 @@
                                     <table class="table table-tarifs">
                                         <caption class="table-tarifs__caption caption-top text-center font-n-b">STANDART</caption>
                                         <tbody class="table-tarifs__tbody">
-                                        @foreach($tariffs->where('type_id', 1) as $tariff)
+                                        @foreach($tariffAll->where('type_id', 1) as $tariff)
                                             <tr class="table-tarifs__tbody-tr">
                                                 @php($rate = $tariff->rate == 0 ? $tariff->charge : $tariff->rate)
                                                 <td class="table-tarifs__tbody-td font-n-b">Kq {{$tariff->from_weight}} - Kq {{$tariff->to_weight}}</td>
@@ -95,7 +95,7 @@
                         <div class="col-xl-2 col-md-4 col-sm-6">
                             <div class="thumbnail thumbnail-shops d-flex justify-content-center align-items-center">
                                 <a href="#" class="thumbnail-shops__link">
-                                    <img class="thumbnail-shops__img" src="{{$seller->img}}" alt="Shop">
+                                    <img class="thumbnail-shops__img" src="{{$seller->img}}" width="100"  alt="Shop">
                                 </a>
                             </div>
                         </div>

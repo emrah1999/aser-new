@@ -331,4 +331,7 @@
         right: unset;
         left: 50px;
     }
+    .nav-breadcrumbs{
+        margin-top: 15px;
+    }
 }

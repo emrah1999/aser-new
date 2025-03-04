@@ -9,17 +9,11 @@
                     <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
                         <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
                             <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('courier.azerpost_title') !!}</h4>
-                            <div class="d-flex justify-content-center align-items-center">
-                                <button class="btn btn-blue thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileBalanceAdd">
-                                    <img class="thumbnail-profile-title-block__btn-img" src="/web/images/content/other-plus-3.png" alt="Add">
-                                    <span class="thumbnail-profile-title-block__btn-title d-none d-lg-block">Yeni kuryer sifariş et</span>
-                                </button>
-                            </div>
+                            
                         </div>
                         <form class="form form-profile-azerpoct" name="formProfileAzerpoct" id="formProfileAzerpoct" method="post" action="{{route("courier_create_order_region", ['locale' => App::getLocale()])}}" novalidate="novalidate">
                             @csrf
                             <input type="hidden" required name="packages_list" id="checked_packages_region">
-                            <h3 class="form-profile-azerpoct__title text-center font-n-b">Azərpoçt</h3>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form__group">

@@ -65,7 +65,11 @@
         background-color: #f4f4f4;
     }
 
-
+    @media (max-width: 768px) {
+        .dropdown-menu{
+            max-width: 200px;
+        }
+    }
 
 
 </style>
