@@ -83,7 +83,6 @@
 
                                 </div>
                             </div>
-                            </div>
                             <div class="media-profile__right">
                                 <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
                             </div>
@@ -119,7 +118,7 @@
                 </div>
             </div>
             <div class="menu-mobile-block d-none">
-            <ul class="nav nav-menu">
+                <ul class="nav nav-menu">
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
                                 {{ optional($menu['tariff'])->{'name_' . App::getLocale()} }}
@@ -150,24 +149,24 @@
                                class="nav-menu__link">{{ optional($menu['trackingSearch'])->{'name_' . App::getLocale()} }}</a>
                         </li>
                         <li>
-                        <div class="col-auto language-col-mob">
-                            <ul class="nav nav-languages">
-                                <li class="nav-languages__item">
-                                    <a href="#" class="nav-languages__link">
-                                        <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
-                                        <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
-                                    </a>
-                                    <ul class="nav nav-languages-2  d-none">
-                                        @foreach (Config::get('languages') as $lang => $language)
-                                            <li class="nav-languages-2__item">
-                                                <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
-                                            </li>
-                                        @endforeach
+                            <div class="col-auto language-col-mob">
+                                <ul class="nav nav-languages">
+                                    <li class="nav-languages__item">
+                                        <a href="#" class="nav-languages__link">
+                                            <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
+                                            <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
+                                        </a>
+                                        <ul class="nav nav-languages-2  d-none">
+                                            @foreach (Config::get('languages') as $lang => $language)
+                                                <li class="nav-languages-2__item">
+                                                    <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
+                                                </li>
+                                            @endforeach
 
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                        
 
