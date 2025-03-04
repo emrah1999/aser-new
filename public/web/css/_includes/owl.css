@@ -59,16 +59,18 @@
 .owl-carousel.owlPartners .owl-nav button.owl-next{
     right: -25px;
 }
-
-@media only screen and (max-width: 767px) {
-    .owl-carousel.owlMain .owl-nav button.owl-prev, .owl-carousel.owlMain .owl-nav button.owl-next{
-        width: 30px;
-        height: 30px;
-    }
+@media only screen and (max-width: 992px) {
     .owl-carousel.owlPartners .owl-nav button.owl-prev{
         left: 0px;
     }
     .owl-carousel.owlPartners .owl-nav button.owl-next{
         right: 0px;
     }
+}
+@media only screen and (max-width: 767px) {
+    .owl-carousel.owlMain .owl-nav button.owl-prev, .owl-carousel.owlMain .owl-nav button.owl-next{
+        width: 30px;
+        height: 30px;
+    }
+    
 }

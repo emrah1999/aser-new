@@ -154,7 +154,7 @@
                 <h2 class="section-title text-center font-n-b">{{$title->services}}</h2>
                 <div class="row">
                     @foreach($services as $service)
-                    <div class="col-md-4 col-sm-6">
+                    <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="thumbnail thumbnail-services">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $service->slug]) }}" class="thumbnail-services__link">
                                 <div class="thumbnail-services__img-block">
@@ -375,12 +375,24 @@
         .media-slider__img{
             border-radius: 50%;
         }
+        
         /*.carousel-locale{*/
         /*    width: 70vw;*/
         /*}*/
-        @media only screen and (max-width: 767px) {
+        @media only screen and (max-width: 992px) {
             .thumbnail-services__img{
                 width: 350px;
+            }
+        }
+        @media only screen and (max-width: 767px) {
+            
+            .titles-content p{
+                width: 90%;
+            }
+            .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
+                width: 90%; 
+                text-align: center; 
+                margin: 0 auto;
             }
         }
 
