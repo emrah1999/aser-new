@@ -312,14 +312,14 @@
             display: block;
             padding: 15px;
             text-align: center;
-            color: #10458C;
+            color: #1c305c;
             text-decoration: none;
             font-weight: bold;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .sub-account-tab ul li.active a {
-            background-color: #10458C;
+            background-color: #1c305c;
             color: #fff;
         }
 
@@ -380,10 +380,10 @@
         }
 
         @media (max-width: 768px) {
-            .desktop-show {
-                display: none;
+            
+            .n-order-status ul{
+                overflow-x: scroll;
             }
-
             .mobile-show {
                 display: block;
             }
@@ -398,7 +398,7 @@
         }
 
         .orange-button {
-            background-color: #10458C;
+            background-color: #1c305c;
             color: #fff;
             padding: 10px 20px;
             border: none;
@@ -451,6 +451,7 @@
         }
 
         .n-order-status li a {
+            height: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -458,7 +459,7 @@
             padding: 15px;
             text-align: center;
             text-decoration: none;
-            color: #10458C;
+            color: #1c305c;
             background-color: #f7f7f7;
             border-radius: 5px;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -466,7 +467,7 @@
 
         .n-order-status li a:hover,
         .n-order-status li a:focus {
-            background-color: #10458C;
+            background-color: #1c305c;
             color: #fff;
         }
 
@@ -547,7 +548,7 @@
         }
 
         .order-op .order-view {
-            color: #10458C;
+            color: #1c305c;
             cursor: pointer;
             font-size: 18px;
             display: inline-block;

@@ -21,10 +21,10 @@
         <li class="nav-profile-menu__item">
             <a href="{{ route('onay_code_list', ['locale' => App::getLocale()]) }}"
             class="nav-profile-menu__link d-flex justify-content-start align-items-center
-                    {{ request()->routeIs('special_order_select') ? 'nav-profile-menu__link--active' : '' }}">
+                    {{ request()->routeIs('onay_code_list') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img leftbar-icon-special" src="/web/images/content/trendyolOTP.png" height="20px" width="10px" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/trendyolOTP.png" alt="ProfileMenu">
-                <span class="nav-profile-menu__link-title">Trendyol OTP</span>
+                <span class="nav-profile-menu__link-title">Trendyol Onay kodu</span>
             </a>
         </li>
         <li class="nav-profile-menu__item">
@@ -52,13 +52,13 @@
                 <span class="nav-profile-menu__link-title">{!! __('account_menu.balance') !!}</span>
             </a>
         </li>
-        <li class="nav-profile-menu__item">
+        {{--<li class="nav-profile-menu__item">
             <a href="#" class="nav-profile-menu__link d-flex justify-content-start align-items-center">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-promocode.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-promocode.png" alt="ProfileMenu">
                 <span class="nav-profile-menu__link-title">Promokod</span>
             </a>
-        </li>
+        </li>--}}
         <li class="nav-profile-menu__item">
             <a href="{{route("get_courier_page", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_courier_page') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-curier.png" alt="ProfileMenu">
@@ -73,13 +73,13 @@
                 <span class="nav-profile-menu__link-title">{!! __('account_menu.courier_azerpost') !!}</span>
             </a>
         </li>
-        <li class="nav-profile-menu__item">
+        {{--<li class="nav-profile-menu__item">
             <a href="{{route("get_notification_page", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_notification_page') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-notification.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-notification.png" alt="ProfileMenu">
                 <span class="nav-profile-menu__link-title">Bildirişlər</span>
             </a>
-        </li>
+        </li>--}}
         <li class="nav-profile-menu__item">
             <a href="{{route("get_sub_accounts", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_sub_accounts') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/referal-new.png" alt="ProfileMenu">
