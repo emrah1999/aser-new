@@ -378,7 +378,11 @@
         /*.carousel-locale{*/
         /*    width: 70vw;*/
         /*}*/
-
+        @media only screen and (max-width: 767px) {
+            .thumbnail-services__img{
+                width: 350px;
+            }
+        }
 
 
 
