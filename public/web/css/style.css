@@ -1,7 +1,7 @@
 @import "_includes/fonts.css?v=1.2";
 @import "_includes/ui.css";
 @import "_includes/buttons.css";
-@import "_includes/navs.css?v=2.12";
+@import "_includes/navs.css?v=2.13";
 @import "_includes/forms.css?v=1.2";
 @import "_includes/thumbnails.css";
 @import "_includes/media.css";
@@ -9,7 +9,7 @@
 @import "_includes/accordions.css?v=1.15";
 @import "_includes/tables.css?v=1.2";
 @import "_includes/paginations.css";
-@import "_includes/owl.css?v=1.0.1";
+@import "_includes/owl.css?v=1.0.2";
 @import "_includes/header.css?v=1.1";
 @import "_includes/footer.css";
 
@@ -89,13 +89,29 @@
 .dropdown-checkbox:checked + .dropdown-menu {
     display: block;
 }
-
+.media-profile{
+    margin-top: -12px;
+}
+.btn-user-mobile i{
+    color: #fff;
+}
+.btn-user-mobile{
+    position: absolute;
+    right: 18px;
+    padding: 10px 15px;
+}
+@media (max-width: 992px) {
+    .media-profile{
+        margin-top: -42px;
+    }
+    
+}
 @media (max-width: 768px) {
     .dropdown-container {
         left: 0;
         margin-right: 5px;
     }
-
+    
     .dropdown-label {
         font-size: 12px;
         padding: 8px 15px;
@@ -103,6 +119,12 @@
 
     .dropdown-menu {
         width: 150px;
+    }
+    .footer-menu{
+        text-align: center
+    }
+    .footer-tab-menu{
+        margin: 10px 0px;
     }
 }
 

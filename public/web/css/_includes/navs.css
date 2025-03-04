@@ -317,13 +317,16 @@
 .dropdown-menu-nav li:hover {
     background-color: #f4f4f4;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 992px) {
     .language-col-mob{
         display: block;
     }
     .language-col{
         display: none;
     }
+}
+@media only screen and (max-width: 767px) {
+    
     .nav-languages-2{
         right: unset;
         left: 50px;
