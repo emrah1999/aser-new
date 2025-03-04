@@ -8,7 +8,7 @@
                         <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px"  width=178px" alt="Logo">
                     </a>
                 </div>
-                <div class="col-auto d-none d-lg-block">
+                <div class="col-auto d-none d-xl-block">
                     <ul class="nav nav-menu">
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
@@ -63,32 +63,36 @@
                             <a href="{{route("login", ['locale' => App::getLocale()])}}" class="btn btn-trns-black header-top__btn font-n-b">{!! __('auth.login') !!} </a>
                         </li>
                         @endif
+                        <li>
+                        @if(Auth::check())
+                            <div class="col-auto d-none d-lg-block">
+                                <div class="media media-profile d-flex justify-content-center align-items-center">
+                                    <div class="media-profile__left" style="position: relative;top:20px">
+                                        <a href="{{ route('get_account', ['locale' => App::getLocale()]) }}">
+                                            <h6 class="media-profile__title font-n-b">
+                                                {{ Auth::user()->name . ' ' . Auth::user()->surname }}
+                                            </h6>
+                                        </a>
+                                        <p class="media-profile__desc">ID: AS{{ Auth::user()->suite() }}</p>
 
-                    </ul>
-                </div>
+                                        <div class="logout-menu" style="display: none; position: absolute; top: 100%; left: 0; background-color: #FFCC00; padding: 5px; width: 100%; text-align: center; border-radius: 4px;">
+                                            <a href="{{route("logout", ['locale' => App::getLocale()])}}" class="logout-link" style="color: black; font-weight: bold; text-decoration: none;">{!! __("labels.logout") !!}</a>
 
-                @if(Auth::check())
-                    <div class="col-auto d-none d-xl-block">
-                        <div class="media media-profile d-flex justify-content-center align-items-center">
-                            <div class="media-profile__left" style="position: relative;top:20px">
-                                <a href="{{ route('get_account', ['locale' => App::getLocale()]) }}">
-                                    <h6 class="media-profile__title font-n-b">
-                                        {{ Auth::user()->name . ' ' . Auth::user()->surname }}
-                                    </h6>
-                                </a>
-                                <p class="media-profile__desc">ID: AS{{ Auth::user()->suite() }}</p>
-
-                                <div class="logout-menu" style="display: none; position: absolute; top: 100%; left: 0; background-color: #FFCC00; padding: 5px; width: 100%; text-align: center; border-radius: 4px;">
-                                    <a href="{{route("logout", ['locale' => App::getLocale()])}}" class="logout-link" style="color: black; font-weight: bold; text-decoration: none;">{!! __("labels.logout") !!}</a>
-
+                                        </div>
+                                    </div>
+                                    <div class="media-profile__right">
+                                        <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="media-profile__right">
-                                <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                        @endif
+                        </li>
+
+                    </ul>
+                    
+                </div>
+
+                
 
             <div class="col-auto language-col">
                 <ul class="nav nav-languages">
@@ -108,8 +112,24 @@
                     </li>
                 </ul>
             </div>
-                
-                <div class="col-auto d-block d-lg-none">
+                 
+                <div class="col-auto d-block d-xl-none">
+                    @if(Auth::check())
+                        <div class="col-auto d-block d-xl-none">
+                            <div class="media media-profile d-flex justify-content-center align-items-center">
+                                <div class="media-profile__left" style="position: relative;top:20px">
+                                    <a class="btn btn-yellow btn-user-mobile" href="{{ route('get_account', ['locale' => App::getLocale()]) }}">
+                                        <h6 class="media-profile__title font-n-b">
+                                         <i class="fa fa-user"></i> 
+                                        </h6>
+                                    </a>
+                                </div>
+                                <div class="media-profile__right">
+                                    <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <button class="btn btn-yellow mobile-menu" type="button">
                         <span class="mobile-menu__item"></span>
                         <span class="mobile-menu__item"></span>

@@ -89,13 +89,29 @@
 .dropdown-checkbox:checked + .dropdown-menu {
     display: block;
 }
-
+.media-profile{
+    margin-top: -12px;
+}
+.btn-user-mobile i{
+    color: #fff;
+}
+.btn-user-mobile{
+    position: absolute;
+    right: 18px;
+    padding: 10px 15px;
+}
+@media (max-width: 992px) {
+    .media-profile{
+        margin-top: -42px;
+    }
+    
+}
 @media (max-width: 768px) {
     .dropdown-container {
         left: 0;
         margin-right: 5px;
     }
-
+    
     .dropdown-label {
         font-size: 12px;
         padding: 8px 15px;
@@ -103,6 +119,12 @@
 
     .dropdown-menu {
         width: 150px;
+    }
+    .footer-menu{
+        text-align: center
+    }
+    .footer-tab-menu{
+        margin: 10px 0px;
     }
 }
 
