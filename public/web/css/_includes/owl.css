@@ -65,4 +65,10 @@
         width: 30px;
         height: 30px;
     }
+    .owl-carousel.owlPartners .owl-nav button.owl-prev{
+        left: 0px;
+    }
+    .owl-carousel.owlPartners .owl-nav button.owl-next{
+        right: 0px;
+    }
 }
