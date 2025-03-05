@@ -9,6 +9,7 @@
                         </a>
                     </div>
 
+
                     <div class="col-xl-10 col-lg-10 col-md-10  d-none d-lg-block ">
                         <div class="row">
                             <div class="col-xl-3 col-lg-3 col-md-3 footer-tab-menu">
@@ -39,10 +40,13 @@
                                         <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
                                             class="nav-menu-2__link">{{ optional($menu['contact'])->{'name_' . App::getLocale()} }}</a>
                                     </li>
-
+                                    
                                     <li class="nav-menu-2__item">
-                                        <a href="{{ route('blogs', ['locale' => App::getLocale()]) }}" class="nav-menu-2__link">Bloq</a>
-                                    </li>
+                                      <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['blog'])->{'slug_' . App::getLocale()}]) }}"
+                                   class="nav-menu-2__link">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</a>
+                            </li>
+                                    
+              
                                 </ul>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 footer-tab-menu">
@@ -85,6 +89,10 @@
                             </div>
                             @endif
                         </div>
+
+
+                            
+                        </ul>
 
                     </div>
                     <div class="d-block d-lg-none">

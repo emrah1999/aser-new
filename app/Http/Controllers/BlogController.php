@@ -32,7 +32,9 @@ class BlogController extends Controller
                 return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
             }, $fields))
             ->first();
-        return view('web.blogs.index', compact('blogs', 'title'));
+        $breadcrumbs = 1;
+
+        return view('web.blogs.index', compact('blogs', 'title', 'breadcrumbs'));
     }
 
     public function get_blogs($locale,$id)
@@ -47,7 +49,8 @@ class BlogController extends Controller
         ])
             ->where('id',$id)
             ->first();
+        $breadcrumbs = 1;
 
-        return view('web.blogs.blogs',compact('blog'));
+        return view('web.blogs.blogs',compact('blog','breadcrumbs'));
     }
 }

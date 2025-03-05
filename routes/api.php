@@ -13,6 +13,7 @@
 
 //Route::get('/login-client-account/{token}', 'Api\LoginClientController@login');
 
+use App\Http\Controllers\OTPController;
 use Illuminate\Support\Facades\Route;
 Route::get('/get-api-token', [\App\Http\Controllers\Api\OtherApiController::class, 'getFcmToken']);
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
@@ -48,6 +49,8 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
     Route::get('/users', [\App\Http\Controllers\Api\UserDetailsController::class, 'user_details'])->name('user_details');
     Route::post('/user/update', [\App\Http\Controllers\AccountController::class, 'post_update_user_account'])->name('api_update_user_data');
     Route::post('/profile-image', [\App\Http\Controllers\AccountController::class, 'update_user_profile_image'])->name('api_update_user_profile_image');
+    Route::get('trendyol-otp',[OTPController::class,'getTrendyolOTP']);
+    Route::get('amazon-otp',[OTPController::class,'getAmazonOTP']);
 
 
     //special order api

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\EmailListContent;
 use App\Notifications\Emails;
 use App\OTP;
+use App\SellerOtp;
 use App\Service\SendOTPCode;
 use App\User;
 use Illuminate\Http\Request;
@@ -159,4 +160,58 @@ class OTPController extends Controller
             return view("front.error");
         }
     }
+
+    public function getTrendyolOTP(){
+        $data=[];
+        try {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://onaykodu.bionet.az/api/trendyolsms-list?cargo_id=2",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER=>0,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'X-Api-Key: BisFgRG9lIewerWFPostazeo0Ijcargo2MjMASDDIyS.xvbde'
+                )
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            $response = json_decode($response);
+            if (is_array($response)) {
+                $data=$response;
+            }
+            $date=date('d.m.Y H:i:s', strtotime('-3 minutes'));
+            return  response()->json([
+                'success' => true,
+                'data' => $data,
+                'date' => $date
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => $exception->getMessage()
+            ]);
+        }
+    }
+
+
+    public function getAmazonOTP(){
+
+        $otp = SellerOtp::paginate(30);
+        return response()->json([
+            'success' => true,
+            'data' => $otp
+        ]);
+    }
+
+
 }

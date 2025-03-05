@@ -1,4 +1,7 @@
 @extends('web.layouts.web')
+@section('breadcrumbs')
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</li>
+@endsection
 @section('content')
     <div class="content" id="content">
         <section class="section section-blogs">
@@ -12,6 +15,7 @@
                                     <div class="thumbnail-blogs__img-block">
                                         <img class="thumbnail-blogs__img img-responsive" src="{{ $blog->icon }}" alt="Blog">
                                     </div>
+                                    <h4 class="thumbnail-blog-2__title font-n-b">{{$blog->name}}</h4>
                                 </a>
                             </div>
 
@@ -24,6 +28,13 @@
     </div>
 @endsection
 @section('styles')
+     <style>
+         .thumbnail-blog-2__title{
+             margin-top: 10px;
+             color: black;
+             text-align: center;
+         }
+     </style>
 
 @endsection
 @section('scripts')
