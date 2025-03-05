@@ -60,52 +60,46 @@
                 </div>
             </div>
         </section>
-        <section class="section section-tarifs-order-how">
-            <div class="container-lg">
-                <h4 class="section-title text-center font-n-b">Sifarişləri hardan edək?</h4>
-                <p class="section-desc text-center">Sifarişlərinizi Türkiyənin, Amerikanın, İngiltərənin, İspaniyanın müxtəlif mağazalardan edə bilərsiniz</p>
-                <ul class="nav nav-shops justify-content-start justify-content-md-between">
+        <section class="seller-section-unique section seller-section-tarifs-order-how">
+            <div class="seller-section-unique container-lg">
+                <h4 class="seller-section-unique section-title text-center font-n-b">Sifarişləri hardan edək?</h4>
+                <p class="seller-section-unique section-desc text-center">
+                    Sifarişlərinizi Türkiyənin, Amerikanın, İngiltərənin, İspaniyanın müxtəlif mağazalardan edə bilərsiniz
+                </p>
+                <ul class="seller-section-unique nav seller-section-nav-shops">
                     <li class="nav-shops__item nav-shops__item--active">
-                        <a href="#" class="nav-shops__link">Bütün mağazalar</a>
+                        <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Bütün mağazalar</a>
                     </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">Aksessuar</a>
-                    </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">Geyim</a>
-                    </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">Elektronika</a>
-                    </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">İdman</a>
-                    </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">Kosmetika</a>
-                    </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">Kitab</a>
-                    </li>
-                    <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link">Baxım</a>
-                    </li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Aksessuar</a></li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Geyim</a></li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Elektronika</a></li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">İdman</a></li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Kosmetika</a></li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Kitab</a></li>
+                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Baxım</a></li>
                 </ul>
-                <div class="row align-items-center">
+                <div class="seller-section-unique row align-items-center">
                     @foreach($sellers as $seller)
-                        <div class="col-xl-2 col-md-4 col-sm-6">
-                            <div class="thumbnail thumbnail-shops d-flex justify-content-center align-items-center">
-                                <a href="#" class="thumbnail-shops__link">
-                                    <img class="thumbnail-shops__img" src="{{$seller->img}}" width="100"  alt="Shop">
+                        <div class="col-xl-2 col-md-4 col-sm-6 seller-logo-container">
+                            <div class="seller-thumbnail">
+                                <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}">
+                                    <img class="seller-logo" src="{{$seller->img}}" alt="Shop">
                                 </a>
                             </div>
                         </div>
                     @endforeach
                 </div>
                 <div class="text-center">
-                    <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="btn btn-trns-yellow btn-shops">Daha çoxunu göstər</a>
+                    <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="btn seller-btn">
+                        Daha çoxunu göstər
+                    </a>
                 </div>
             </div>
         </section>
+
+
+
+
         <section class="section section-tarifs-calculator">
             <div class="container-lg">
                 <div class="media media-tarifs-country">
@@ -259,6 +253,101 @@
         .section-tarifs-calculator{
             background-color:  #fdf9e9;
         }
+
+        .seller-section-unique {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .seller-section-nav-shops {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            border-bottom: 2px solid #eee;
+            list-style: none;
+        }
+
+        .nav-shops__item a {
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .nav-shops__item--active a {
+            color: #fbbf24; /* Sarı renk */
+            font-weight: bold;
+            position: relative;
+        }
+
+        .section-title {
+            margin-bottom: 30px;
+        }
+        .section-desc{
+            margin-bottom: 50px;
+
+        }
+
+        .nav-shops__item--active a::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: #fbbf24;
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+        }
+
+        .seller-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .seller-thumbnail {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .seller-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .seller-btn {
+            display: inline-block;
+            background-color: #fbbf24;
+            color: #000;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        .seller-btn:hover {
+            background-color: #eab308;
+        }
+
     </style>
 @endsection
 
