@@ -305,7 +305,9 @@
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $blog->slug]) }}" class="thumbnail-blogs__link">
                                 <div class="thumbnail-blogs__img-block">
                                     <img class="thumbnail-blogs__img img-responsive" src="{{ $blog->icon }}" alt="Blog">
+
                                 </div>
+                                <h4 class="thumbnail-blog-2__title font-n-b">{{$blog->name}}</h4>
                             </a>
                         </div>
 
@@ -348,6 +350,11 @@
 @endsection
 @section('styles')
     <style>
+        .thumbnail-blog-2__title{
+            margin-top: 10px;
+            color: black;
+            text-align: center;
+        }
         .media-tarif-country__title{
             text-align: center;
         }

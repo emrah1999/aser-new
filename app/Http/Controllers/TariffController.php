@@ -81,7 +81,9 @@ class TariffController extends HomeController
                 'id','icon','rank','internal_images',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
-                DB::raw("slug_" . App::getLocale() . " as slug")
+                DB::raw("slug_" . App::getLocale() . " as slug"),
+                DB::raw("cover_description_" . App::getLocale() . " as cover_description"),
+
             ])
             ->orderBy('rank', 'asc')
             ->get();
@@ -118,7 +120,7 @@ class TariffController extends HomeController
 
 
             $country = İnternationalDelivery::query()
-                    ->select(['id','icon',
+                    ->select(['id','icon','internal_images',
                         DB::raw("name_" . App::getLocale() . " as name"),
                         DB::raw("content_" . App::getLocale() . " as content"),
                         DB::raw("sub_title_" . App::getLocale() . " as sub_title"),

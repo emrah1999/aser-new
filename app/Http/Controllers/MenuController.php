@@ -33,7 +33,11 @@ class MenuController extends Controller
             ->orWhere('slug_en',$slug)
             ->orWhere('slug_ru',$slug)
             ->first();
-        $menu = Menu::where('slug_' . $locale, $slug)->first();
+        $menu = Menu::where('slug_az',$slug)
+            ->orWhere('slug_en',$slug)
+            ->orWhere('slug_ru',$slug)
+            ->first();
+
         if($service){
             return app(OurServicesController::class)->get_services($locale,$service->id);
         }
@@ -70,6 +74,10 @@ class MenuController extends Controller
         elseif ($menuId == 6){
             return app(TrackingSearchController::class)->get_tracking_search();
         }
+        elseif ($menuId == 7){
+            return app(BlogController::class)->index();
+        }
+
        return app(IndexController::class)->index();
     }
 

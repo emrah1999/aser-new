@@ -8,13 +8,9 @@
 @endsection
 
 
-
-
 @section('breadcrumbs')
-    {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
-    {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
     <li class="nav-breadcrumbs__item ">
-        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['logistics'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link">{!! __('breadcrumbs.logistics') !!}</a>
+        <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['blog'])->{'slug_' . App::getLocale()}]) }}" class="nav-breadcrumbs__link ">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</a>
     </li>
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{{$blog->name}}</li>
 @endsection
