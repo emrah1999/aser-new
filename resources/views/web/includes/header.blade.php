@@ -98,13 +98,19 @@
                 <ul class="nav nav-languages">
                     <li class="nav-languages__item">
                         <a href="#" class="nav-languages__link">
-                            <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
+                            <span class="nav-languages__link-title">
+                            <img class="nav-tab-country__link-img" src="/web/images/content/{{ App::getLocale() }}.svg" alt="az">
+                            {{ Config::get('languages')[App::getLocale()] }}</span>
                             <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
                         </a>
                         <ul class="nav nav-languages-2 d-none">
                             @foreach (Config::get('languages') as $lang => $language)
                                 <li class="nav-languages-2__item">
-                                    <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
+                                    <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link d-flex">                                       
+                                    
+                                    <img class="nav-tab-country__link-img" src="/web/images/content/{{ $language }}.svg" alt="az">
+                                    
+                                    {{ $language }}</a>
                                 </li>
                             @endforeach
 
@@ -173,13 +179,16 @@
                                 <ul class="nav nav-languages">
                                     <li class="nav-languages__item">
                                         <a href="#" class="nav-languages__link">
-                                            <span class="nav-languages__link-title">{{ Config::get('languages')[App::getLocale()] }}</span>
+                                            <span class="nav-languages__link-title">
+                                            <img class="nav-tab-country__link-img" src="/web/images/content/{{ App::getLocale() }}.svg" alt="az"> {{ Config::get('languages')[App::getLocale()] }}</span>
                                             <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
                                         </a>
                                         <ul class="nav nav-languages-2  d-none">
                                             @foreach (Config::get('languages') as $lang => $language)
                                                 <li class="nav-languages-2__item">
-                                                    <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link">{{ $language }}</a>
+                                                    <a href="{{ route('set_locale_language', $lang) }}" class="nav-languages-2__link"
+                                                    <img class="nav-tab-country__link-img" src="/web/images/content/{{ $language }}.svg" alt="az">
+                                                    {{ $language }}</a>
                                                 </li>
                                             @endforeach
 

@@ -58,6 +58,19 @@
                 $('.footer-logistic-icon').addClass('fa-chevron-down')
             }
         })
+        $('#footer-blog').click(function() {
+            if ($('.footer-blog-menus').hasClass('d-none')) {
+                $('.footer-blog-menus').addClass('d-block')
+                $('.footer-blog-menus').removeClass('d-none')
+                $('.footer-blog-icon').removeClass('fa-chevron-down')
+                $('.footer-blog-icon').addClass('fa-chevron-up')
+            } else {
+                $('.footer-blog-menus').removeClass('d-block')
+                $('.footer-blog-menus').addClass('d-none')
+                $('.footer-blog-icon').removeClass('fa-chevron-up')
+                $('.footer-blog-icon').addClass('fa-chevron-down')
+            }
+        })
     })
 </script>
 
