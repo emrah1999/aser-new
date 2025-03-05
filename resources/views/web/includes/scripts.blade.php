@@ -11,13 +11,7 @@
 <script src="{{asset('web/js/main.js')}}"></script>
 <script>
 
-    document.querySelector('.media-profile__left').addEventListener('mouseover', function() {
-        document.querySelector('.logout-menu').style.display = 'block';
-    });
-
-    document.querySelector('.media-profile__left').addEventListener('mouseleave', function() {
-        document.querySelector('.logout-menu').style.display = 'none';
-    });
+    
     $(document).ready(function() {
         $('#footer-tariff').click(function() {
             if ($('.footer-tariff-menus').hasClass('d-none')) {
@@ -72,6 +66,14 @@
             }
         })
     })
+
+    document.querySelector('.media-profile__left').addEventListener('mouseover', function() {
+        document.querySelector('.logout-menu').style.display = 'block';
+    });
+
+    document.querySelector('.media-profile__left').addEventListener('mouseleave', function() {
+        document.querySelector('.logout-menu').style.display = 'none';
+    });
 </script>
 
 <script>

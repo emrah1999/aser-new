@@ -245,7 +245,7 @@
         vertical-align: top;
     }
     .left-bar-new-style{
-        margin-top: -113px;
+        /* margin-top: -113px; */
     }
    .page-content-block {
        padding: 20px 90px; /* Sol, sağ 90px, üst 20px boşluk */
