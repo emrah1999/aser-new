@@ -139,7 +139,7 @@
         </div>
     </div>
 </div>
-@section('styles')
+@section('styles1')
 <style>
     .mobile-menu-head{
         background: #fdf9e9;

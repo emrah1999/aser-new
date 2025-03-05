@@ -61,7 +61,7 @@
                             @endphp
                             @foreach($countries as $country)
                                 <a href="{{ route('get_country_details', ['locale' => App::getLocale(), 'country_id' => $country->id]) }}"
-                                   class="nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center {{ $currentCountryId == $country->id ? 'nav-tab-categories__link--active active' : '' }}">
+                                   class="nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center {{ $currentCountryId == $country->id ? 'nav-tab-categories__link--active mr-10 active' : '' }}">
                                     <img class="nav-tab-categories__link-img" src="{{ $country->new_flag }}">
                                     <span class="nav-tab-categories__link-title d-none d-md-block"> {{ $country->name }}</span>
                                 </a>
