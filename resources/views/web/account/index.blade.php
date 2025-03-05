@@ -18,7 +18,7 @@
                         </div>
                         <div class="nav nav-tab-categories">
                             @foreach($countries as $country)
-                                <a href="{{route('get_country_details', ['locale' => App::getLocale(), $country->id])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center">
+                                <a href="{{route('get_country_details', ['locale' => App::getLocale(), $country->id])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-10">
                                     <img class="nav-tab-categories__link-img" src="{{$country->new_flag}}" alt="Turkey">
                                     <span class="nav-tab-categories__link-title d-none d-md-block"> {{$country->name}}</span>
                                 </a>

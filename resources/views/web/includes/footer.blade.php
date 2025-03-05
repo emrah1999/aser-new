@@ -160,8 +160,8 @@
                         </div>
                         @if(count($footerBlogs)>0)
                         <div class="col-xl-2 col-lg-2 col-md-2 footer-tab-menu">
-                            <p class="footer__text font-n-b">Faydalı məqalələr</p>
-                            <ul class="nav nav-menu-2 flex-column">
+                            <p class="footer__text font-n-b" id="footer-blog">Faydalı məqalələr <i class="fa fa-chevron-down footer-blog-icon"></i></p>
+                            <ul class="nav nav-menu-2 flex-column footer-blog-menus d-none">
                                 @foreach($footerBlogs as $footerBlog)
                                 <li class="nav-menu-2__item">
 
