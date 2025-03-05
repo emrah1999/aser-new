@@ -99,7 +99,7 @@
                             <div class="thumbnail thumbnail-tarifs">
                                 <a href="{{ route('menuIndex',
                                         ['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
-                                    <div class="thumbnail-tarifs__img-block">
+                                    <div class="thumbnail-tarifs__img-block text-center">
                                         <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
                                     <div class="thumbnail-tarifs__caption text-center">
@@ -158,10 +158,9 @@
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="thumbnail thumbnail-services">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $service->slug]) }}" class="thumbnail-services__link">
-                                <div class="thumbnail-services__img-block">
+                                <div class="thumbnail-services__img-block text-center">
                                     <img class="thumbnail-services__img img-responsive" src="{{$service->icon}}" alt="Service">
-                                </div>
-                                <div class="thumbnail-services__caption">
+                                
                                     <h6 class="thumbnail-services__title text-center font-n-b">{{$service->name}}</h6>
                                 </div>
                             </a>
@@ -361,8 +360,8 @@
         }
         .thumbnail-services__img{
             border-radius: 10px;
-            height: 320px;
-            width: 400px;
+            height: 200px;
+            width: 250px;
         }
         .centered-row {
             display: flex;
@@ -389,11 +388,14 @@
         /*}*/
         @media only screen and (max-width: 992px) {
             .thumbnail-services__img{
-                width: 350px;
+                height: 170px;
+                width: 230px;
             }
         }
         @media only screen and (max-width: 767px) {
-            
+            .thumbnail-tarifs__img{
+                width: 75%;
+            }
             .titles-content p{
                 width: 90%;
             }
