@@ -19,7 +19,8 @@
     right: 0;
     bottom: -60px;
     display: block;
-    min-width: 75px;
+    min-width: 83px;
+    padding-left: 8px;
     background: white;
     border: 1px solid black;
     border-radius: 8px;

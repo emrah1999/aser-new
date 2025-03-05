@@ -180,7 +180,7 @@
                                     <li class="nav-languages__item">
                                         <a href="#" class="nav-languages__link">
                                             <span class="nav-languages__link-title">
-                                            <img class="nav-tab-country__link-img" src="/web/images/content/{{ App::getLocale() }}.svg" alt="az"> {{ Config::get('languages')[App::getLocale()] }}</span>
+                                            <img class="nav-tab-country__link-img" src="/web/images/content/{{ strtoupper(App::getLocale()) }}.svg" alt="az"> {{ Config::get('languages')[App::getLocale()] }}</span>
                                             <img class="nav-languages__link-img" src="{{asset('web/images/content/chevron-down.png')}}" alt="Language">
                                         </a>
                                         <ul class="nav nav-languages-2  d-none">
