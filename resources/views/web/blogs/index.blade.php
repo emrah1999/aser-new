@@ -1,4 +1,7 @@
 @extends('web.layouts.web')
+@section('breadcrumbs')
+    <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</li>
+@endsection
 @section('content')
     <div class="content" id="content">
         <section class="section section-blogs">

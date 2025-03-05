@@ -31,7 +31,7 @@
                                     <div class="thumbnail-tarifs__caption text-center">
                                         <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
                                         <p class="thumbnail-tarifs__desc">
-                                            {{$country->content}}
+                                            {{$country->cover_description}}
                                         </p>
                                     </div>
                                 </a>

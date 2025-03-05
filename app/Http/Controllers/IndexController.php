@@ -29,7 +29,6 @@ class IndexController extends HomeController
             $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)->select([
                 'id','icon',
                 DB::raw("name_" . App::getLocale() . " as name"),
-                DB::raw("content_" . App::getLocale() . " as content"),
                 DB::raw("slug_" . App::getLocale() . " as slug")
             ])
                 ->get();
@@ -66,6 +65,7 @@ class IndexController extends HomeController
                     DB::raw("question_" . App::getLocale() . " as name"),
                     DB::raw("answer_" . App::getLocale() . " as content")
                 ])
+                ->whereNull('page')
                 ->get();
 
             $works = HowWork::query()

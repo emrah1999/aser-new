@@ -42,7 +42,9 @@
                             </li>
 
                             <li class="nav-menu-2__item">
-                                <a href="{{ route('blogs', ['locale' => App::getLocale()]) }}" class="nav-menu-2__link">Bloq</a>
+{{--                                <a href="{{ route('blogs', ['locale' => App::getLocale()]) }}" class="nav-menu-2__link">Bloq</a>--}}
+                                <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['blog'])->{'slug_' . App::getLocale()}]) }}"
+                                   class="nav-menu-2__link">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</a>
                             </li>
                         </ul>
                     </div>
