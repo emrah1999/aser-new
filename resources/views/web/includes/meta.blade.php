@@ -11,5 +11,5 @@
 <meta property="og:locale:alternate" content="ru_RU" />
 <meta property="og:locale:alternate" content="en_GB" />
 <meta name="csrf-token" secret="{{csrf_token()}}">
-<title>Aser</title>
+<title>Aser Cargo Express | Amerika, Ingiltere, Almaniya ve Turkiyeden catdirilma xidmeti</title>
 <meta name="csrf-token" content="{{ csrf_token() }}">
