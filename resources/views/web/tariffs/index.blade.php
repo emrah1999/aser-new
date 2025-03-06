@@ -230,22 +230,20 @@
                 <div class="accordion accordion-questions" id="accordionQuestions">
 
                     <div class="row">
-                        @foreach($faqs->chunk(6) as $faqChunk)
+                        @foreach($faqs as $faq)
                             <div class="col-md-6">
-                                @foreach($faqChunk as $faq)
-                                    <div class="accordion-item accordion-questions__item">
-                                        <h2 class="accordion-header accordion-questions__header">
-                                            <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
-                                                {{$faq->name}}
-                                            </button>
-                                        </h2>
-                                        <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
-                                            <div class="accordion-body accordion-questions__body">
-                                                {!! $faq->content !!}
-                                            </div>
+                                <div class="accordion-item accordion-questions__item">
+                                    <h2 class="accordion-header accordion-questions__header">
+                                        <button class="accordion-button accordion-questions__button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false">
+                                            {{$faq->name}}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" data-bs-parent="#accordionQuestions{{$faq->id}}">
+                                        <div class="accordion-body accordion-questions__body">
+                                            {!! $faq->content !!}
                                         </div>
                                     </div>
-                                @endforeach
+                                </div>
                             </div>
                         @endforeach
                     </div>
