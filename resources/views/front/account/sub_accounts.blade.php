@@ -361,6 +361,8 @@
 
 @section('scripts')
 <script>
+
+
     $(document).ready(function() {
         $("#tbodyWeb tr").slice(12).hide();
         var mincount = 10;
