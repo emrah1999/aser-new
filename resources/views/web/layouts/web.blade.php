@@ -3,8 +3,8 @@
 <head>
     @include('web.includes.meta')
     @include('web.includes.styles')
-    @yield('styles')
     @yield('styles1')
+    @yield('styles')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
@@ -16,5 +16,6 @@
 @include('web.includes.footer')
 @include('web.includes.scripts')
 @yield('scripts')
+@yield('scripts1')
 </body>
 </html>

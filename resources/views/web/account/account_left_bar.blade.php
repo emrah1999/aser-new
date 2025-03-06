@@ -154,7 +154,7 @@
     
 </style>
 @endsection
-@section('scripts')
+@section('scripts1')
 <script>
     $('#account-menu-title').click(function() {
         if ($('.nav-profile-menu').hasClass('d-none')) {
@@ -171,5 +171,6 @@
             $('.mobile-icon-menu').addClass('fa-chevron-down')
         }
     })
+
 </script>
 @endsection
