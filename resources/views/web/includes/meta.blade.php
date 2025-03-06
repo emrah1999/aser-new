@@ -5,11 +5,10 @@
 <meta name="description" content="@yield('description')">
 <meta name="keywords" content="@yield('keywords')">
 <meta property="og:image" content="@yield('og-image')"/>
-<meta property="og:title" content="@yield('title')"/>
+<meta property="og:title" content=""/>
 <meta property="og:description" content="@yield('description')"/>
 <meta property="og:locale" content="az_AZ" />
 <meta property="og:locale:alternate" content="ru_RU" />
 <meta property="og:locale:alternate" content="en_GB" />
 <meta name="csrf-token" secret="{{csrf_token()}}">
-<title>Aser Cargo Express | Amerika, Ingiltere, Almaniya ve Turkiyeden catdirilma xidmeti</title>
-<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>@yield('title','Aser Cargo Express | Amerika, Ingiltere, Almaniya ve Turkiyeden catdirilma xidmeti')</title>
