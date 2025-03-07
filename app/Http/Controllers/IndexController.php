@@ -82,7 +82,9 @@ class IndexController extends HomeController
                     'id','icon','rank',
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content"),
-                    DB::raw("slug_" . App::getLocale() . " as slug")
+                    DB::raw("slug_" . App::getLocale() . " as slug"),
+                    DB::raw("cover_description_" . App::getLocale() . " as cover_description"),
+
                 ])
                 ->orderBy('rank', 'asc')
                 ->get();

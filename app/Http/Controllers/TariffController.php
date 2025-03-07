@@ -125,6 +125,8 @@ class TariffController extends HomeController
                         DB::raw("content_" . App::getLocale() . " as content"),
                         DB::raw("sub_title_" . App::getLocale() . " as sub_title"),
                         DB::raw("sub_description_" . App::getLocale() . " as sub_description"),
+                        DB::raw("ceo_title_" . App::getLocale() . " as ceo_title"),
+                        DB::raw("seo_description_" . App::getLocale() . " as seo_description"),
                     ])
                 ->where('id', $country_id)
                     ->first();

@@ -140,7 +140,7 @@
                                 <div class="thumbnail-cargo__caption text-center">
                                     <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name}}</h4>
                                     <p class="thumbnail-cargo__desc">
-                                       {{$deliverie->content}}
+                                       {{$deliverie->cover_description}}
                                     </p>
                                 </div>
                             </a>
