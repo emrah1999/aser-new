@@ -1,4 +1,12 @@
 @extends('web.layouts.web')
+
+@section('title')
+    {{$delivery->ceo_title}}
+@endsection
+
+@section('description')
+    {{$delivery->seo_description }}
+@endsection
 @section('breadcrumbs')
     {{-- <li class="breadcrumb-item"><a class="breadcrumb-link" href="">Kateqoriyalar</a></li> --}}
     {{--    <li class="breadcrumb-item" aria-current="">Cari Səhifə</li>--}}
