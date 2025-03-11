@@ -209,6 +209,7 @@
     font-size: 20px;
     color: var(--black-2);
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .nav-profile-menu__link:hover{
@@ -230,8 +231,8 @@
 .nav-profile-menu__link-img{
     max-width: 55px;
     margin-right: 10px;
-    height: 55px;
-    width: 55px;
+    height: 35px;
+    width: 35px;
 }
 
 .nav-profile-menu__link-img:nth-child(1){
@@ -261,6 +262,7 @@
  .header-bottom {
      position: relative;
      z-index: 1000;
+
  }
 .nav-menu__item {
     position: relative;
@@ -286,7 +288,7 @@
 .dropdown-menu-nav {
     position: absolute;
     top: 100%;
-    right: 0;
+    /*right: 0;*/
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -295,7 +297,7 @@
     margin: 0;
     display: none;
     width: auto;
-    text-align: right;
+    text-align: left;
 }
 
 .nav-menu__item:hover .dropdown-menu-nav {

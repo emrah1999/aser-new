@@ -106,5 +106,6 @@ return [
     'using_way_warehouse_title' => 'Sifarişiniz bizim ABŞ, Türkiyə, Almaniya və ya İngiltərədə yerləşən anbara qəbul edilir.',
     'using_way_delivery_home_head' => 'Sifarişlərinizi ünvanınıza çatdırırıq',
     'using_way_delivery_home_title' => 'Sifarişiniz Bakıya çatdırılır',
+    'selectItem'=>'Zəhmət olmasa, sifariş etmək istədiyiniz ölkəni seçin',
 
 ];

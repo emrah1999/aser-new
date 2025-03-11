@@ -62,37 +62,38 @@
         <section class="section section-contact">
             <div class="container-lg">
                 <div class="section-contact__block center-block">
-                    <form class="form form-contact" name="formContact" id="formContact" method="post" action="/" novalidate="novalidate">
+                    <form  class="form form-contact" name="formContact" id="formContact" method="post" action="{{route('send_feedback',['locale' => App::getLocale()])}}" novalidate="novalidate">
+                       @csrf
                         <h3 class="form-contact__title text-center font-n-b">{{$title->contacts}}</h3>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userName">Ad</label>
-                                    <input class="form__input" name="user_name" type="text" id="userName" placeholder="Adınızı daxil edin" required>
+                                    <input class="form__input" name="name" type="text" id="userName" placeholder="Adınızı daxil edin" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userSurname">Soyad</label>
-                                    <input class="form__input" name="user_surname" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" required>
+                                    <input class="form__input" name="surname" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userEmail">Email</label>
-                                    <input class="form__input" name="user_email" type="email" id="userEmail" placeholder="Emailiniz daxil edin" required>
+                                    <input class="form__input" name="email" type="email" id="userEmail" placeholder="Emailiniz daxil edin" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userPhone">Telefon</label>
-                                    <input class="form__input" name="user_phone" type="text" id="userPhone" placeholder="Telefon nömrənizi daxil edin" required>
+                                    <input class="form__input" name="phone" type="text" id="userPhone" placeholder="Telefon nömrənizi daxil edin" required>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form__group">
                                     <label class="form__label" for="userMessage">Mesaj</label>
-                                    <textarea class="form__textarea" name="user_message" id="userMessage" rows="6" placeholder="Mesajınızı yazın......" required></textarea>
+                                    <textarea class="form__textarea" name="message" id="userMessage" rows="6" placeholder="Mesajınızı yazın......" required></textarea>
                                 </div>
                             </div>
                         </div>

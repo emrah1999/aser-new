@@ -143,3 +143,11 @@
     });
 </script>
 @endsection
+
+@section('styles')
+    <style>
+        .form-checkbox__span{
+            margin-right: 9px;
+        }
+    </style>
+@endsection

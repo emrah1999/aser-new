@@ -1,6 +1,10 @@
 @extends('web.layouts.web')
 @section('styles')
     <style>
+        .nav-tab-categories__link{
+            margin-right: 10px;
+        }
+
         .custom-alert {
             position: absolute;
             z-index: 9999;

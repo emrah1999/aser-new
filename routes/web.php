@@ -25,6 +25,8 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     Route::get('/register-juridical', 'RegisterController@getJuridicalRegister');
     Route::get('/register-otp', 'RegisterController@getOTPRegister');
     Route::get('/terms-and-conditions', 'IndexController@terms_and_conditions') -> name("terms_and_conditions");
+    Route::get('/get-sellers/{type}', 'IndexController@get_seller_by_type') -> name("get_seller_by_type");
+    Route::post('/feedback', 'IndexController@feedback') -> name("send_feedback");
 //    Route::get('/transport', 'IndexController@show_transport')->name("transport_page");
     Route::get('/promo-code', 'IndexController@promo_code') -> name("promo_code");
     Route::get('/index', 'IndexController@index');
