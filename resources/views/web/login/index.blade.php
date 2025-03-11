@@ -38,7 +38,7 @@
                             <div class="form-login__remember_forgot-block d-flex justify-content-between align-items-center">
                                 <label class="form-checkbox form-login__form-checkbox d-flex justify-content-start align-items-center" for="userRemember">
                                     <input class="form-checkbox__input form-login__form-checkbox-input" name="user_remember" type="checkbox" id="userRemember">
-                                    <span class="form-checkbox__span form-login__form-checkbox-span"></span>
+                                    <span class="form-checkbox__span form-login__form-checkbox-span" style="margin-right: 7px" ></span>
                                     <span class="form-checkbox__text form-login__form-checkbox-text">Məni xatırla</span>
                                 </label>
                                 <a href="{{ route('password.request', ['locale' => App::getLocale()]) }}" class="form-login__link-forgot">{!! __('auth.forgot_password')!!}</a>

@@ -10,6 +10,7 @@ use App\{Blog,
     HomePageText,
     HowWork,
     Partner,
+    SellerCategory,
     Service,
     TariffType,
     Title,
@@ -20,7 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Instruction;
 use Illuminate\Support\Facades\{App,DB,Validator};
-
+use App\Jobs\CollectorInWarehouseJob;
 class IndexController extends HomeController
 {
     public function index()
@@ -322,5 +323,65 @@ class IndexController extends HomeController
         } catch (\Exception $exception) {
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!']);
         }
+    }
+
+    public function feedback(Request $request)
+    {
+        $client = 'muradnesrullayev19@gmail.com';
+        $cc_email = 'muradnesrullayev19@gmail.com';
+        $title = 'test_message';
+        $subject = 'test_message2';
+
+        $name = $request->input('name');
+        $surname = $request->input('surname');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $message = $request->input('message');
+        $bottom = $request->input('bottom');
+        $button = $request->input('button', '');
+
+        $content = "
+            <h3>Yeni Mesaj Alındı</h3>
+            <p><strong>Ad:</strong> $name</p>
+            <p><strong>Soyad:</strong> $surname</p>
+            <p><strong>E-posta:</strong> $email</p>
+            <p><strong>Telefon:</strong> $phone</p>
+            <p><strong>Mesaj:</strong> $message</p>
+        ";
+
+        $validated = $request->validate([
+
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'message' => 'required|string',
+
+        ]);
+
+        CollectorInWarehouseJob::dispatch($client, $cc_email, $title, $subject, $content, $bottom, $button);
+
+        return response()->json(['message' => 'E-posta kuyruğa alındı ve gönderilecek!']);
+    }
+
+    public function get_seller_by_type($locale,$type)
+    {
+        if($type==1){
+            $type=[141,142,143];
+        }elseif($type==2){
+            $type=[128];
+        }elseif($type==3){
+            $type=[133];
+        }elseif ($type==4){
+            $type=[113];
+        }elseif ($type==5){
+            $type=[101];
+        }elseif ($type==6){
+            $type=[134];
+        }
+        $seller_ids=SellerCategory::whereIn('category_id',$type)->pluck('id')->toArray();
+        $sellers =Seller::query()->whereIn('id',$seller_ids)->whereNotNull('img')->orderBy('id','desc')->limit(6)->get();
+        return $sellers;
+
     }
 }

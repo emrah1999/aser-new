@@ -75,37 +75,35 @@
                     Sifarişlərinizi Türkiyənin, Amerikanın, İngiltərənin, İspaniyanın müxtəlif mağazalardan edə bilərsiniz
                 </p>
                 <ul class="seller-section-unique nav seller-section-nav-shops">
-                    <li class="nav-shops__item nav-shops__item--active">
-                        <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Bütün mağazalar</a>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="1">Aksessuar</a>
                     </li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Aksessuar</a></li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Geyim</a></li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Elektronika</a></li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">İdman</a></li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Kosmetika</a></li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Kitab</a></li>
-                    <li class="nav-shops__item"><a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="nav-shops__link">Baxım</a></li>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="2">Geyim</a>
+                    </li>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="3">Elektronika</a>
+                    </li>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="4">İdman</a>
+                    </li>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="5">Kosmetika</a>
+                    </li>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="6">Kitab</a>
+                    </li>
+                    <li class="nav-shops__item">
+                        <a href="#" class="nav-shops__link" data-type="5">Baxım</a>
+                    </li>
                 </ul>
-                <div class="seller-section-unique row align-items-center">
-                    @foreach($sellers as $seller)
-                        <div class="col-xl-2 col-md-4 col-sm-6 seller-logo-container">
-                            <div class="seller-thumbnail">
-                                <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}">
-                                    <img class="seller-logo" src="{{$seller->img}}" alt="Shop">
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
+                <div id="sellers-list" class="seller-section-unique row align-items-center">
                 </div>
                 <div class="text-center">
-                    <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="btn seller-btn">
-                        Daha çoxunu göstər
-                    </a>
+                    <a  href="{{route("sellers_page", ['locale' => App::getLocale()])}}"  class="btn seller-btn" >Daha çoxunu göstər</a>
                 </div>
             </div>
         </section>
-
-
 
 
         <section class="section section-tarifs-calculator">
@@ -257,6 +255,9 @@
 @endsection
 @section('styles')
     <style>
+        .seller-btn{
+            text-align: center;
+        }
         .media-tarif-country__title{
             margin-bottom: 20px;
         }
@@ -363,11 +364,55 @@
 
 @section('scripts')
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const navItems = document.querySelectorAll('.nav-shops__item');
+            const sellersList = document.getElementById('sellers-list');
+            const showMoreBtn = document.getElementById('show-more-btn');
+
+            const defaultCategory = navItems[3];
+            defaultCategory.classList.add('nav-shops__item--active');
+            const defaultCategoryType = defaultCategory.querySelector('.nav-shops__link').getAttribute('data-type');
+            const locale = document.documentElement.lang;
+            loadSellers(locale, defaultCategoryType);
+
+            navItems.forEach(function(item) {
+                item.querySelector('.nav-shops__link').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    navItems.forEach(function(nav) {
+                        nav.classList.remove('nav-shops__item--active');
+                    });
+                    item.classList.add('nav-shops__item--active');
+                    const categoryType = this.getAttribute('data-type');
+                    loadSellers(locale, categoryType);
+                });
+            });
+
+            function loadSellers(locale, type) {
+                sellersList.innerHTML = '';
+                fetch(`/` + locale + `/get-sellers/` + type)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(function(seller) {
+                            let sellerDiv = document.createElement('div');
+                            sellerDiv.classList.add('col-xl-2', 'col-md-4', 'col-sm-6', 'seller-logo-container');
+                            sellerDiv.innerHTML = `
+                        <div class="seller-thumbnail">
+                            <a href="${seller.url}">
+                                <img class="seller-logo" src="${seller.img}" alt="${seller.name}">
+                            </a>
+                        </div>
+                    `;
+                            sellersList.appendChild(sellerDiv);
+                        });
+                        showMoreBtn.style.display = 'block';
+                    })
+                    .catch(error => console.log('Error:', error));
             }
         });
+
+
+
 
         $(".form-calculator__btn").click(function(e) {
             e.preventDefault();

@@ -27,9 +27,9 @@
                         <div class="col-md-6">
                             <div class="media-cargo-service__body">
                                 <h1 class="media-cargo-service__title font-n-b">{{$service->name}}</h1>
-                                <p class="media-cargo-service__desc">
-                                   {!! __($service->content) !!}
-                                </p>
+                                <div class="media-cargo-service__desc">
+                                    {!! __($service->content) !!}
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -42,4 +42,16 @@
             </div>
         </section>
     </div>
+@endsection
+
+@section('styles')
+    <style>
+        .media-cargo-service__desc p {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+
+    </style>
 @endsection

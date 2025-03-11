@@ -7,9 +7,9 @@
             <div class="row">
                 @include('web.account.account_left_bar')
                 <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
-                    <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
-                        <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
-                        <div class="dropdown-container d-none d-lg-block">
+                    <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center row">
+                        <div class="col-md-3"><h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4></div>
+                        <div class="dropdown-container d-none d-lg-block col-md-4" >
                             <label for="dropdown-toggle" class="dropdown-label" id="dropdown-label">
                                 @if($currentStatus==0)
                                 Bütün bağlamalarım
@@ -34,7 +34,7 @@
                             </ul>
                         </div>
 
-                        <div class="d-flex justify-content-center align-items-center d-none d-lg-block">
+                        <div class="d-flex justify-content-center align-items-center col-md-4 d-none d-lg-block">
                             <button
                                 type="button" class="btn btn-yellow thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" id="payBtn" disabled
                                 data-balance-message="{!! __('static.packages_balance_message') !!}"
@@ -328,6 +328,15 @@
 
 @section('scripts')
 <script>
+
+    document.addEventListener("click", function(event) {
+        let dropdown = document.querySelector(".dropdown-container");
+        let checkbox = document.getElementById("dropdown-toggle");
+
+        if (!dropdown.contains(event.target)) {
+            checkbox.checked = false;
+        }
+    });
     document.addEventListener('DOMContentLoaded', function() {
         var tableRows = document.querySelectorAll('tbody tr');
         var packageIds = [];

@@ -218,7 +218,7 @@
                                     @else
                                     <div class="profile-information-block sp-padding">
                                         <div class="form-alert show-alert">
-                                            <p>{!! __('static.table_no_item') !!}</p>
+                                            <p>{!! __('static.selectItem') !!}</p>
                                         </div>
                                     </div>
                                     @endif

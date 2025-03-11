@@ -25,7 +25,7 @@
                             <div class="media-cargo-service__body">
                                 <h1 class="media-cargo-service__title font-n-b">{{$delivery->name}}</h1>
                                 <p class="media-cargo-service__desc">
-                                   {{$delivery->content}}
+                                   {!! $delivery->content !!}
                                 </p>
                             </div>
                         </div>
