@@ -9,6 +9,7 @@ use App\{Blog,
     Faq,
     HomePageText,
     HowWork,
+    Mail\FeedbackMail,
     Partner,
     SellerCategory,
     Service,
@@ -20,7 +21,7 @@ use App\{Blog,
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Instruction;
-use Illuminate\Support\Facades\{App,DB,Validator};
+use Illuminate\Support\Facades\{App, DB, Mail, Validator};
 use App\Jobs\CollectorInWarehouseJob;
 class IndexController extends HomeController
 {
@@ -327,18 +328,12 @@ class IndexController extends HomeController
 
     public function feedback(Request $request)
     {
-        $client = 'muradnesrullayev19@gmail.com';
-        $cc_email = 'muradnesrullayev19@gmail.com';
-        $title = 'test_message';
-        $subject = 'test_message2';
 
         $name = $request->input('name');
         $surname = $request->input('surname');
         $email = $request->input('email');
         $phone = $request->input('phone');
         $message = $request->input('message');
-        $bottom = $request->input('bottom');
-        $button = $request->input('button', '');
 
         $content = "
             <h3>Yeni Mesaj Alındı</h3>
@@ -359,9 +354,18 @@ class IndexController extends HomeController
 
         ]);
 
-        CollectorInWarehouseJob::dispatch($client, $cc_email, $title, $subject, $content, $bottom, $button);
+        $details = [
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'message' => $request->input('message'),
+            'title' => 'Aser Cargo user Feedback'
+        ];
 
-        return response()->json(['message' => 'E-posta kuyruğa alındı ve gönderilecek!']);
+        Mail::to('muradnesrullayev91@gmail.com')->send(new FeedbackMail($details));
+        return redirect()->back();
+
     }
 
     public function get_seller_by_type($locale,$type)
