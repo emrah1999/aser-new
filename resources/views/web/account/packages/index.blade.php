@@ -7,10 +7,10 @@
             <div class="row">
                 @include('web.account.account_left_bar')
                 <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
-                    <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center row">
+                    <div class="thumbnail thumbnail-profile-title-block packages-boxes d-flex justify-content-between align-items-center row">
                         <div class="col-md-3"><h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4></div>
-                        <div class="dropdown-container d-none d-lg-block col-md-4" >
-                            <label for="dropdown-toggle" class="dropdown-label" id="dropdown-label">
+                        <div class="dropdown-container d-none d-lg-block col-md-5 col-6" >
+                            <label for="dropdown-toggle" class="dropdown-label float-right" id="dropdown-label">
                                 @if($currentStatus==0)
                                 Bütün bağlamalarım
                                 @elseif($currentStatus==3)
@@ -34,9 +34,9 @@
                             </ul>
                         </div>
 
-                        <div class="d-flex justify-content-center align-items-center col-md-4 d-none d-lg-block">
+                        <div class="d-flex justify-content-center align-items-center col-md-3 col-6 d-none d-lg-block">
                             <button
-                                type="button" class="btn btn-yellow thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" id="payBtn" disabled
+                                type="button" class="btn btn-yellow thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b float-right" id="payBtn" disabled
                                 data-balance-message="{!! __('static.packages_balance_message') !!}"
                                 data-confirm="{!! __('static.confirm_pay') !!}"
                                 onclick="bulk_paid_package_new(this, '{{route("bulk_pay", ['locale' => App::getLocale()])}}')">{!! __('buttons.pay_all') !!}
