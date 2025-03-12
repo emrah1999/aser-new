@@ -15,11 +15,14 @@
 
 /*SECTIONS*/
 /* Dropdown container */
+
+.float-right{
+    float: right;
+}
 .dropdown-container {
     display: inline-block;
     position: relative;
     margin-right: 10px;
-    left: 150px;
 }
 
 .dropdown-label {
@@ -425,6 +428,9 @@
     .thumbnail-profile-title-block{
         padding: 10px;
         margin-bottom: 20px;
+    }
+    .packages-boxes {
+        margin: 5px 2px 5px;
     }
     .thumbnail-profile-title-block__title{
         font-size: 20px;
