@@ -27,11 +27,28 @@
                             </label>
                             <input type="checkbox" id="dropdown-toggle" class="dropdown-checkbox" />
                             <ul class="dropdown-menu">
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">Xarici anbardadır</a></li>
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">Anbardan göndərilib</a></li>
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">Bakı ofisindədir</a></li>
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">Arxiv</a></li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">
+                                        Xarici anbardadır
+                                    </a>
+                                </li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">
+                                        Anbardan göndərilib
+                                    </a>
+                                </li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">
+                                        Bakı ofisindədir
+                                    </a>
+                                </li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">
+                                        Arxiv
+                                    </a>
+                                </li>
                             </ul>
+
                         </div>
 
                         <div class="d-flex justify-content-center align-items-center col-md-3 col-6 d-none d-lg-block">
@@ -290,9 +307,9 @@
 @endsection
 @section('styles')
 <style>
-    .nav-profile-menu__link-img {
-        height: 50px;
-        width: 100px;
+    .dropdown-menu{
+        width: 55%;
+        left: 40%;
     }
 
     /*.bar-width{*/
@@ -307,6 +324,9 @@
     .bar-padding {
         margin-top: -5px;
         margin-bottom: -5px;
+    }
+    #dropdown-label{
+        width: 60%;
     }
 
     .th-new {
@@ -415,7 +435,6 @@
 
             dropdownLabel1.appendChild(document.querySelector('.dropdown-icon'));
 
-            // Linkin URL-i ilə yönləndirmə
             window.location.href = this.href;
         });
     });

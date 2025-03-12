@@ -363,7 +363,7 @@ class IndexController extends HomeController
             'title' => 'Aser Cargo user Feedback'
         ];
 
-        Mail::to('muradnesrullayev91@gmail.com')->send(new FeedbackMail($details));
+        Mail::to('info@asercargo.az')->send(new FeedbackMail($details));
         return redirect()->back();
 
     }
