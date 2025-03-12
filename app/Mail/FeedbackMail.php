@@ -21,7 +21,7 @@ class FeedbackMail extends Mailable
     public function build()
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
-            ->subject('Test Email')
+            ->subject('Aser Cargo user feedback')
             ->view('emails.feedback')
             ->with('details', $this->details);
     }
