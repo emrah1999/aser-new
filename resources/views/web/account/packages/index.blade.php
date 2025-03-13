@@ -8,8 +8,10 @@
                 @include('web.account.account_left_bar')
                 <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
                     <div class="thumbnail thumbnail-profile-title-block packages-boxes d-flex justify-content-between align-items-center row">
-                        <div class="col-md-3"><h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4></div>
-                        <div class="dropdown-container d-none d-lg-block col-md-5 col-6" >
+                        <div class="col-md-3">
+                            <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
+                        </div>
+                        <div class="dropdown-container d-none d-lg-block col-md-5 col-6">
                             <label for="dropdown-toggle" class="dropdown-label float-right" id="dropdown-label">
                                 @if($currentStatus==0)
                                 Bütün bağlamalarım
@@ -85,7 +87,7 @@
                                 <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">Arxiv</a></li>
                             </ul>
                         </div>
-                        
+
                         <div class="d-flex justify-content-center align-items-center">
                             <button
                                 type="button" class="btn btn-yellow thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" id="payBtn" disabled
@@ -96,7 +98,7 @@
                         </div>
                     </div>
                     <div class="thumbnail thumbnail-data">
-                        <div class="table-responsive">
+                        <div class="table-responsive d-none d-lg-block">
                             @if(count($packages) > 0)
                             <table class="table table-data">
                                 <thead>
@@ -135,9 +137,9 @@
                                             <label class="form-checkbox d-flex justify-content-start align-items-center" for="checkbox-{{$package->id}}"
                                                 style="position: relative; z-index: 1; cursor: pointer; display: flex; align-items: center;">
                                                 <input id="checkbox-{{$package->id}}" class="form-checkbox__input" type="checkbox"
-                                                    style="position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                                                    style="position: relative; width: 20px; height: 20px; opacity: 1; cursor: pointer; z-index: 2;">
                                                 <span class="form-checkbox__span"
-                                                    style="width: 20px; height: 20px; border: 1px solid #000; display: inline-block; position: relative;"></span>
+                                                    style="width: 20px; height: 20px; border: 1px solid #000; display: inline-block; position: relative; margin-left: -20px;"></span>
                                                 <span class="form-checkbox__text"></span>
                                             </label>
                                         </td>
@@ -189,10 +191,10 @@
                                         </td>
                                         <td class="table-data__tbody-td">
                                             @if($package->last_status_id == 7)
-                                            <p style="color: red;" aria-placeholder="Qadağan edilən bağlama"></p>
+                                            <p style="color: red;margin-bottom:0px" aria-placeholder="Qadağan edilən bağlama"></p>
                                             @else
                                             @if($package->invoice_status == 1)
-                                            <p style="color: red;">{!! __('status.no_invoice') !!}</p>
+                                            <p style="color: red;margin-bottom:0px">{!! __('status.no_invoice') !!}</p>
                                             @elseif($package->invoice_status == 2)
                                             {!! __('status.incorrect_invoice') !!}
                                             @elseif($package->invoice_status == 3)
@@ -267,7 +269,7 @@
                                             @endif
                                         </td>
                                         {{-- <td class="order-info-link" style="text-align: center;">--}}
-                                        <td class="order-info-link" style="vertical-align: middle; text-align: center; width: 50px;">
+                                        <td class="order-info-link" style="vertical-align: middle; text-align: center; width: 50px;border-style: hidden;">
                                             <span
                                                 onclick="show_package_items({{$package->id}}, '{{$package->track}}', '{{route('get_package_items', ['locale' => app()->getLocale()])}}');"
                                                 class="order-view"
@@ -297,6 +299,195 @@
                             @endif
 
                         </div>
+                        <div class="d-block d-lg-none">
+                            @if(count($packages) > 0)
+                            @foreach($packages as $index => $package)
+                            @if($package->chargeable_weight == 1)
+                            @php($package_weight = $package->gross_weight)
+                            @else
+                            @php($package_weight = $package->volume_weight)
+                            @endif
+                            <div class="row box-row ">
+                                <div class="col-6">
+                                    <label class="form-checkbox d-flex justify-content-start align-items-center" for="checkbox-{{$package->id}}"
+                                        style="position: relative; z-index: 1; cursor: pointer; display: flex; align-items: center;">
+                                        <input id="checkbox-{{$package->id}}" class="form-checkbox__input" type="checkbox"
+                                            style="position: relative; width: 20px; height: 20px; opacity: 1; cursor: pointer; z-index: 2;">
+                                        <span class="form-checkbox__span"
+                                            style="width: 20px; height: 20px; border: 1px solid #000; display: inline-block; position: relative; margin-left: -20px;"></span>
+                                        <span class="form-checkbox__text"></span>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <span
+                                        onclick="show_package_items({{$package->id}}, '{{$package->track}}', '{{route('get_package_items', ['locale' => app()->getLocale()])}}');"
+                                        class="order-view"
+                                        style="height: 100%; width: 100%; cursor: pointer;">
+                                        Ətraflı <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="row box-row ">
+                                <div class="col-6">
+                                    {!! __('table.flight') !!}
+                                </div>
+                                <div class="col-6">
+                                    @if(isset($package->flight))
+                                    {{$package->flight}}
+                                    @else
+                                    ---
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    {!! __('table.tracking') !!}
+                                </div>
+                                <div class="col-6">
+                                    <span class="text-toggle">
+                                        <span class="short-text">{{ Str::limit($package->track, 15) }}</span>
+                                        <span class="full-text">{{ $package->track }}</span>
+                                    </span>
+                                    <span>{{ $package->internal_id }}</span>
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    {!! __('table.weight') !!}
+                                </div>
+                                <div class="col-6">
+                                    @if($package_weight > 0)
+                                    {{$package_weight}} {{$package->unit}}
+
+                                    @else
+                                    -
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    {!! __('table.delivery_amount') !!}
+                                </div>
+                                <div class="col-6">
+                                    @if($package->amount > 0)
+                                    {{$package->cur_icon}} {{$package->amount}}
+                                    @else
+                                    -
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    Filial
+                                </div>
+                                <div class="col-6">
+                                    {{$package->branch_name}}
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    {!! __('table.invoice_status') !!}
+                                </div>
+                                <div class="col-6">
+                                    @if($package->last_status_id == 7)
+                                    <p style="color: red;margin-bottom:0px" aria-placeholder="Qadağan edilən bağlama"></p>
+                                    @else
+                                    @if($package->invoice_status == 1)
+                                    <p style="color: red;margin-bottom:0px">{!! __('status.no_invoice') !!}</p>
+                                    @elseif($package->invoice_status == 2)
+                                    {!! __('status.incorrect_invoice') !!}
+                                    @elseif($package->invoice_status == 3)
+                                    {!! __('status.correct_invoice') !!}
+                                    @elseif($package->invoice_status == 4)
+                                    {!! __('status.invoice_uploaded') !!}
+                                    @endif
+                                    @endif
+                                    @if($package->last_status_id == 7)
+                                    <a href="#" style="display: none" target="_blank" class="fas fa-eye" placeholder="Prohibet not update">
+                                    </a>
+                                    @else
+                                    @if($package->invoice_status == 4)
+                                    <a href="{{ $package->invoice_doc }}" target="_blank" class="fas fa-eye">
+                                        {!! __('table.show_invoice_file') !!}
+                                    </a>
+
+                                    @elseif($package->invoice_status == 1)
+                                    <a href="{{route('get_package_update', ['locale' => App::getLocale(), $package->id])}}" class="fas fa-upload" style="color: red;">
+                                        {!! __('table.upload_invoice_file') !!}
+                                    </a>
+                                    @endif
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    {!! __('table.status') !!}
+                                </div>
+                                <div class="col-6">
+                                    @if($package->last_status_id == 38)
+                                    <span class="btn btn-sm btn-info"
+                                        data-toggle="collapse"
+                                        href="#duty_not_paid">i</span>
+                                    <div class="collapse" id="duty_not_paid">
+                                        <span class="card card-body">
+                                            {!! __('status.duty_not_paid') !!}
+                                        </span>
+                                    </div>
+                                    @elseif($package->last_status_id == 39)
+                                    <span class="btn btn-sm btn-info"
+                                        data-toggle="collapse"
+                                        href="#duty_paid">i</span>
+                                    <div class="collapse" id="duty_paid">
+                                        <span class="card card-body">
+                                            {!! __('status.duty_paid') !!}
+                                        </span>
+                                    </div>
+                                    @endif
+                                    <span class="order-status">
+                                        {{$package->status}}
+                                        <p class="order-status-changed"><span>{{$package->last_status_date ==null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row box-row">
+                                <div class="col-6">
+                                    {!! __('table.pay') !!}
+                                </div>
+                                <div class="col-6">
+                                    @if($package->paid_status == 1)
+                                    <button type="button" disabled class="btn btn-paid"
+                                        style="cursor: not-allowed !important;">{!! __('static.paid') !!}
+                                    </button>
+                                    @else
+                                    @if($package->amount > 0)
+                                    <button
+                                        type="button" class="btn btn-yellow"
+                                        data-has-courier="{{$package->has_courier}}"
+                                        data-has-courier-message="{!! __('static.packages_has_courier_message') !!}"
+                                        data-balance="{{Auth::user()->balance()}}"
+                                        data-balance-message="{!! __('static.packages_balance_message') !!}"
+                                        data-amount="{{sprintf('%0.2f', $package->amount_usd - $package->paid)}}"
+                                        data-confirm="{!! __('static.confirm_pay') !!}"
+                                        onclick="paid_package_new(this, '{{route("pay_order", ['locale' => App::getLocale(), $package->id])}}');">
+                                        {!! __('buttons.pay') !!}
+                                    </button>
+                                    @else
+                                    -
+                                    @endif
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="box-line"></div>
+                            @endforeach
+                            @else
+                            <div class="profile-information-block sp-padding">
+                                <div class="form-alert show-alert">
+                                    <p>{!! __('static.table_no_item') !!}</p>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -307,7 +498,55 @@
 @endsection
 @section('styles')
 <style>
-    .dropdown-menu{
+    input[type="checkbox"] {
+        accent-color: #f4cf41;
+    }
+
+    .box-line {
+        position: relative;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .box-line::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #f2c516;
+        margin: 0 auto;
+    }
+
+
+
+    .box-row {
+        padding: 12px 5px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .text-toggle {
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .text-toggle .full-text {
+        display: none;
+    }
+
+    .text-toggle.expanded .short-text {
+        display: none;
+    }
+
+    .text-toggle.expanded .full-text {
+        display: inline;
+        min-width: 150px;
+        max-width: 300px;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .dropdown-menu {
         width: 55%;
         left: 40%;
     }
@@ -325,7 +564,8 @@
         margin-top: -5px;
         margin-bottom: -5px;
     }
-    #dropdown-label{
+
+    #dropdown-label {
         width: 60%;
     }
 
@@ -348,7 +588,17 @@
 
 @section('scripts')
 <script>
-
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".text-toggle").forEach(function(el) {
+            el.addEventListener("click", function() {
+                el.classList.toggle("expanded");
+                el.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        });
+    });
     document.addEventListener("click", function(event) {
         let dropdown = document.querySelector(".dropdown-container");
         let checkbox = document.getElementById("dropdown-toggle");
@@ -430,7 +680,7 @@
 
             dropdownLabel.appendChild(document.querySelector('.dropdown-icon'));
 
-            
+
             dropdownLabel1.textContent = selectedText + ' ';
 
             dropdownLabel1.appendChild(document.querySelector('.dropdown-icon'));
@@ -438,7 +688,5 @@
             window.location.href = this.href;
         });
     });
-
-    
 </script>
 @endsection
