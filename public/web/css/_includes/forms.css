@@ -124,12 +124,12 @@ input[type="date"]{
 
 .form-checkbox__span:after{
     position: absolute;
-    top: 50%;
-    left: 9px;
-    width: 5px;
-    height: 10px;
-    border: solid var(--white);
-    border-width: 0 2px 2px 0;
+    top: 47%;
+    left: 8px;
+    width: 7px;
+    height: 12px;
+    border: solid #060606;
+    border-width: 0 3px 3px 0;
     transform: translateY(-50%) rotate(45deg);
 }
 

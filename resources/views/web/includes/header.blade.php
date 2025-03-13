@@ -75,10 +75,10 @@
                                         </a>
                                         <p class="media-profile__desc">ID: AS{{ Auth::user()->suite() }}</p>
 
-                                        <div class="logout-menu" style="display: none; position: absolute; top: 100%; left: 0; background-color: #FFCC00; padding: 5px; width: 100%; text-align: center; border-radius: 4px;">
+                                        <!-- <div class="logout-menu" style="display: none; position: absolute; top: 100%; left: 0; background-color: #FFCC00; padding: 5px; width: 100%; text-align: center; border-radius: 4px;">
                                             <a href="{{route("logout", ['locale' => App::getLocale()])}}" class="logout-link" style="color: black; font-weight: bold; text-decoration: none;">{!! __("labels.logout") !!}</a>
 
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="media-profile__right">
                                         <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
@@ -94,7 +94,7 @@
 
                 
 
-            <div class="col-auto language-col">
+            <div class="col-auto language-col ">
                 <ul class="nav nav-languages">
                     <li class="nav-languages__item">
                         <a href="#" class="nav-languages__link">
