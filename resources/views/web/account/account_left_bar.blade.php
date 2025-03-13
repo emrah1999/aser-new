@@ -1,5 +1,5 @@
 <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-5 left-bar-new-style">
-    <div class="d-block d-lg-none text-center mobile-menu-head">
+    <div class="d-none d-lg-none text-center mobile-menu-head">
         <div class="profile-info">
             <h4 style="text-transform: capitalize;">
                 {{Auth::user()->full_name()}}
