@@ -12,7 +12,7 @@
                             <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
                         </div>
                         <div class="dropdown-container d-none d-lg-block col-md-5 col-6">
-                            <label for="dropdown-toggle" class="dropdown-label float-right" id="dropdown-label">
+                            <label for="dropdown-toggle3" class="dropdown-label float-right" id="dropdown-label-package">
                                 @if($currentStatus==0)
                                 Bütün bağlamalarım
                                 @elseif($currentStatus==3)
@@ -27,8 +27,8 @@
                                 @endif
                                 <span class="dropdown-icon"></span>
                             </label>
-                            <input type="checkbox" id="dropdown-toggle" class="dropdown-checkbox" />
-                            <ul class="dropdown-menu">
+                            <input type="checkbox" id="dropdown-toggle3" class="dropdown-checkbox" />
+                            <ul class="dropdown-menu package-dropdown">
                                 <li class="bar-padding">
                                     <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">
                                         Xarici anbardadır
@@ -64,7 +64,7 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center d-block d-lg-none mb-10">
                         <div class="dropdown-container">
-                            <label for="dropdown-toggle1" class="dropdown-label" id="dropdown-label1">
+                            <label for="dropdown-toggle2" class="dropdown-label" id="dropdown-label-package1">
                                 @if($currentStatus==0)
                                 Bütün bağlamalarım
                                 @elseif($currentStatus==3)
@@ -79,8 +79,8 @@
                                 @endif
                                 <span class="dropdown-icon"></span>
                             </label>
-                            <input type="checkbox" id="dropdown-toggle1" class="dropdown-checkbox" />
-                            <ul class="dropdown-menu">
+                            <input type="checkbox" id="dropdown-toggle2" class="dropdown-checkbox" />
+                            <ul class="dropdown-menu package-dropdown">
                                 <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">Xarici anbardadır</a></li>
                                 <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">Anbardan göndərilib</a></li>
                                 <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">Bakı ofisindədir</a></li>
@@ -502,20 +502,7 @@
         accent-color: #f4cf41;
     }
 
-    .box-line {
-        position: relative;
-        padding: 20px;
-        text-align: center;
-    }
-
-    .box-line::after {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 2px;
-        background-color: #f2c516;
-        margin: 0 auto;
-    }
+    
 
 
 
@@ -565,7 +552,7 @@
         margin-bottom: -5px;
     }
 
-    #dropdown-label {
+    #dropdown-label-package {
         width: 60%;
     }
 
@@ -668,9 +655,9 @@
 </script>
 
 <script>
-    const dropdownLinks = document.querySelectorAll('.dropdown-menu a');
-    const dropdownLabel = document.getElementById('dropdown-label');
-    const dropdownLabel1 = document.getElementById('dropdown-label1');
+    const dropdownLinks = document.querySelectorAll('.package-dropdown a');
+    const dropdownLabel = document.getElementById('dropdown-label-package');
+    const dropdownLabel1 = document.getElementById('dropdown-label-package1');
 
     dropdownLinks.forEach(link => {
         link.addEventListener('click', function(event) {
