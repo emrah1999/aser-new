@@ -197,7 +197,7 @@
 }
 
 .nav-profile-menu{
-    margin-top: 20px;
+    padding-top: 20px;
     display: block;
     background: var(--yellow2);
     padding-bottom: 20px;
