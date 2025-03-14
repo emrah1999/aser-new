@@ -75,7 +75,7 @@
                                 </ul>
                             </div>
                             @if(count($footerBlogs)>0)
-                            <div class="col-xl-2 col-lg-2 col-md-4 footer-tab-menu">
+                            <div class="col-xl-3 col-lg-2 col-md-4 footer-tab-menu">
                                 <p class="footer__text font-n-b">Faydalı məqalələr</p>
                                 <ul class="nav nav-menu-2 flex-column">
                                     @foreach($footerBlogs as $footerBlog)
