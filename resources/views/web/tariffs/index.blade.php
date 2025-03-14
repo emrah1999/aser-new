@@ -42,12 +42,14 @@
             </div>
         </section>
 
+        @if($text->name1!=null && $text->name1!='')
+
         <section class="section section-tarifs-country">
             <div class="container-lg">
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title align-text-custom">{{$text->name1}}</h4>
+                            <h4 class="media-tarif-country__title align-text-custom">A{{$text->name1}}</h4>
                             <p class="media-tarif-country__desc">
                                 {{$text->content1}}
                             </p>
@@ -56,22 +58,26 @@
                 </div>
             </div>
         </section>
+        @endif
 
 
-        <section class="section section-tarifs-country">
-            <div class="container-lg">
-                <div class="media media-tarif-country">
-                    <div class="row">
-                        <div class="media-tarif-country__body">
-                            <h4 class="media-tarif-country__title align-text-custom">{{$text->name2}}</h4>
-                            <p class="media-tarif-country__desc">
-                                {{$text->content2}}
-                            </p>
+        @if($text->name2!=null && $text->name2!='')
+
+            <section class="section section-tarifs-country">
+                <div class="container-lg">
+                    <div class="media media-tarif-country">
+                        <div class="row">
+                            <div class="media-tarif-country__body">
+                                <h4 class="media-tarif-country__title align-text-custom">{{$text->name1}}</h4>
+                                <p class="media-tarif-country__desc">
+                                    {{$text->content1}}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
 
 
