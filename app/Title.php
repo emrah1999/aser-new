@@ -36,7 +36,12 @@ class Title extends Model
         'contacts_ru',
         'tracking_search_az',
         'tracking_search_en',
-        'tracking_search_ru'
+        'tracking_search_ru',
+
+
+        'branch_az',
+        'branch_en',
+        'branch_ru'
 
     ];
 }

@@ -17,6 +17,7 @@
 
 @section('content')
     <div class="content" id="content">
+        <h1 class="form-contact__title text-center font-n-b">{{$title->branch}}</h1>
         <section class="section section-branches">
             <div class="container-lg">
                 <div class="media media-branches">

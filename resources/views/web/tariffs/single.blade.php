@@ -68,7 +68,7 @@
                 </div>
             </div>
         </section>
-        <section class="seller-section-unique section seller-section-tarifs-order-how">
+        <section class="seller-section-unique section seller-section-tarifs-order-how section-margin-top">
             <div class="seller-section-unique container-lg">
                 <h4 class="seller-section-unique section-title text-center font-n-b">Sifarişləri hardan edək?</h4>
                 <p class="seller-section-unique section-desc text-center">
@@ -106,7 +106,7 @@
         </section>
 
 
-        <section class="section section-tarifs-calculator">
+        <section class="section section-tarifs-calculator section-margin-top section-margin-bottom ">
             <div class="container-lg">
                 <div class="media media-tarifs-country">
                     <div class="row justify-content-center align-items-center">
@@ -204,7 +204,8 @@
                 </div>
             </div>
         </section>
-        <section class="section section-blogs">
+        @if(count($blogs)>0)
+        <section class="section section-blogs section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
@@ -223,6 +224,9 @@
                 </div>
             </div>
         </section>
+        @endif
+
+        @if(count($faqs)>0)
         <section class="section section-questions">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->feedback}}</h2>
@@ -250,6 +254,7 @@
                 </div>
             </div>
         </section>
+        @endif
 
     </div>
 @endsection

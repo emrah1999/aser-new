@@ -38,11 +38,11 @@
                 </div>
             </div>
         </section>
-        <section class="section section-contact">
+        <section class="section section-contact section-margin-bottom">
             <div class="container-lg">
                 <div class="section-contact__block center-block">
-                    <form class="form form-contact" name="formContact" id="formContact" method="post" action="/" novalidate="novalidate">
-                        <h3 class="form-contact__title text-center font-n-b">{{$title->feedback}}</h3>
+                    <form  class="form form-contact" name="formContact" id="formContact" method="post" action="{{route('send_feedback',['locale' => App::getLocale()])}}" novalidate="novalidate">
+                    <h3 class="form-contact__title text-center font-n-b">{{$title->feedback}}</h3>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form__group">
@@ -87,7 +87,8 @@
                 </div>
             </div>
         </section>
-        <section class="section section-blogs">
+        @if(count($blogs)>0)
+        <section class="section section-blogs section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
@@ -106,7 +107,9 @@
                 </div>
             </div>
         </section>
-        <section class="section section-questions">
+        @endif
+        @if(count($faqs)>0)
+        <section class="section section-questions section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
@@ -133,5 +136,6 @@
                 </div>
             </div>
         </section>
+        @endif
     </div>
 @endsection

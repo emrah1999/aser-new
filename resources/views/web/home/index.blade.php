@@ -77,7 +77,7 @@
                 </div>
             </div>
         </section>
-        <section class="section section-tarifs">
+        <section class="section section-tarifs section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
                 <div class="container">
@@ -295,7 +295,8 @@
                 </form>
             </div>
         </section>
-        <section class="section section-blogs">
+        @if(count($blogs)>0)
+        <section class="section section-blogs section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
@@ -317,6 +318,8 @@
                 </div>
             </div>
         </section>
+        @endif
+        @if(count($faqs)>0)
         <section class="section section-questions">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
@@ -346,6 +349,7 @@
                 </div>
             </div>
         </section>
+        @endif
     </div>
 @endsection
 @section('styles')

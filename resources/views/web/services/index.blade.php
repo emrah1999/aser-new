@@ -39,7 +39,7 @@
                 </div>
             </div>
         </section>
-        <section class="section section-tarifs-country">
+        <section class="section section-tarifs-country section-margin-top" >
             <div class="container-lg">
                 <div class="media media-tarif-country">
                     <div class="row">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </section>
-        <section class="section section-contact">
+        <section class="section section-contact section-margin-top">
             <div class="container-lg">
                 <div class="section-contact__block center-block">
                     <form class="form form-contact" name="formContact" id="formContact" method="post" action="/" novalidate="novalidate">
@@ -102,7 +102,9 @@
                 </div>
             </div>
         </section>
-        <section class="section section-blogs">
+
+        @if(count($blogs)>0)
+        <section class="section section-blogs section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
@@ -121,7 +123,10 @@
                 </div>
             </div>
         </section>
-        <section class="section section-questions">
+        @endif
+
+        @if(count($faqs)>0)
+        <section class="section section-questions section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
                 <div class="accordion accordion-questions" id="accordionQuestions">
@@ -148,6 +153,7 @@
                 </div>
             </div>
         </section>
+        @endif
     </div>
 @endsection
 @section('styles')

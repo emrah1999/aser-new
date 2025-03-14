@@ -73,8 +73,17 @@ class OurServicesController extends Controller
         try {
             $branches = DB::table('filial')->where('is_active', 1)->get();
             $breadcrumbs=1;
+            $fields = [
+                'branch'
+            ];
 
-            return view("web.services.branches", compact('branches','breadcrumbs'));
+            $title = Title::query()
+                ->select(array_map(function($field) {
+                    return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+                }, $fields))
+                ->first();
+
+            return view("web.services.branches", compact('branches','breadcrumbs','title'));
         }catch (\Exception $exception){
             return view("front.error");
         }

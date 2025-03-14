@@ -68,9 +68,9 @@
                     <div class="media media-tarif-country">
                         <div class="row">
                             <div class="media-tarif-country__body">
-                                <h4 class="media-tarif-country__title align-text-custom">{{$text->name1}}</h4>
+                                <h4 class="media-tarif-country__title align-text-custom">{{$text->name2}}</h4>
                                 <p class="media-tarif-country__desc">
-                                    {{$text->content1}}
+                                    {{$text->content2}}
                                 </p>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                             <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
                                 <div class="thumbnail-partners__img-block">
                                     <img class="thumbnail-partners__img img-responsive"
-                                         src="{{$partner->img}}" alt="Partner">
+                                         src="{{$partner->icon}}" alt="Partner">
                                 </div>
                             </div>
                         </div>
@@ -99,12 +99,13 @@
             </div>
         </section>
 
+        @if($text->name3!=null && $text->name3!='')
         <section class="section section-tarifs-country">
             <div class="container-lg">
                 <div class="media media-tarif-country">
                     <div class="row">
                         <div class="media-tarif-country__body">
-                            <h2 class="media-tarif-country__title font-n-b">{{$text->name3}}</h2>
+                            <h4 class="media-tarif-country__title align-text-custom">{{$text->name3}}</h4>
                             <p class="media-tarif-country__desc">
                                 {{$text->content3}}
                             </p>
@@ -113,6 +114,7 @@
                 </div>
             </div>
         </section>
+        @endif
 
         <section class="section section-calculator">
             <div class="container-lg">
@@ -209,8 +211,8 @@
             </div>
         </section>
 
-
-        <section class="section section-blogs">
+        @if(count($blogs)>0)
+        <section class="section section-blogs section-margin-top">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
                 <div class="row">
@@ -229,7 +231,8 @@
                 </div>
             </div>
         </section>
-
+        @endif
+        @if(count($faqs)>0)
         <section class="section section-questions">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->faqs}}</h2>
@@ -257,6 +260,7 @@
                 </div>
             </div>
         </section>
+        @endif
 
     </div>
 @endsection
