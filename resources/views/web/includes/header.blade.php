@@ -9,7 +9,7 @@
                     </a>
                 </div>
                 <div class="col-auto d-none d-xl-block">
-                    <ul class="nav nav-menu">
+                    <ul class="nav nav-menu mr-40">
                         <li class="nav-menu__item">
                             <a href="{{ route('menuIndex', ['locale' => App::getLocale(), optional($menu['tariff'])->{'slug_' . App::getLocale()}]) }}" class="nav-menu__link">
                                 {{ optional($menu['tariff'])->{'name_' . App::getLocale()} }}
@@ -335,6 +335,9 @@
 
 
 <script>
+    document.querySelector('.dropdown-container').addEventListener('click', function() {
+        document.querySelector('.menu-mobile-block').classList.add('d-none');
+    });
     document.querySelector('.nav-languages__link').addEventListener('click', function(e) {
         e.preventDefault();
         const languageDropdown = this.nextElementSibling;
@@ -346,7 +349,7 @@
             languageDropdown.classList.add('d-none');
         }
     });
-
+    
     document.addEventListener('click', function(e) {
         const languageMenu = document.querySelector('.nav-languages');
         const isClickInside = languageMenu.contains(e.target);
@@ -356,6 +359,14 @@
             if (!languageDropdown.classList.contains('d-none')) {
                 languageDropdown.classList.add('d-none');
             }
+        }
+    });
+    document.addEventListener("click", function(event) {
+        let dropdown = document.querySelector(".dropdown-container");
+        let checkbox = document.getElementById("dropdown-toggle1");
+
+        if (!dropdown.contains(event.target)) {
+            checkbox.checked = false;
         }
     });
 </script>

@@ -159,7 +159,7 @@ class AccountController extends Controller
     public function get_account()
     {
         try {
-            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('rank', 'asc')->orderBy('id')->get();
+            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 
             $countr = Country::where('id', 2)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
 
@@ -476,7 +476,7 @@ class AccountController extends Controller
                     ->whereNull('canceled_by')
                     ->count();
             if($country_id == 'special'){
-                $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('rank', 'asc')->orderBy('id')->get();
+                $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
                
 
     

@@ -90,7 +90,7 @@
 
                         <div class="d-flex justify-content-center align-items-center">
                             <button
-                                type="button" class="btn btn-yellow thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" id="payBtn" disabled
+                                type="button" class="btn btn-yellow thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" id="payBtn2" disabled
                                 data-balance-message="{!! __('static.packages_balance_message') !!}"
                                 data-confirm="{!! __('static.confirm_pay') !!}"
                                 onclick="bulk_paid_package_new(this, '{{route("bulk_pay", ['locale' => App::getLocale()])}}')">{!! __('buttons.pay_all') !!}
@@ -109,6 +109,7 @@
                                                 <input class="form-checkbox__input" type="checkbox" id="selectRowsCheckbox">
                                                 <span class="form-checkbox__span"></span>
                                                 <span class="form-checkbox__text"></span>
+                                                
                                             </label>
                                         </th>
                                         @endif
@@ -300,6 +301,16 @@
 
                         </div>
                         <div class="d-block d-lg-none">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="form-checkbox form-checkbox-all d-flex justify-content-start align-items-center">
+                                        <input class="form-checkbox__input" type="checkbox" id="selectRowsCheckbox2">
+                                        <span class="form-checkbox__span"></span>
+                                        <span class="form-checkbox__text"></span>
+                                         Toplu seçim
+                                    </label>
+                                </div>
+                            </div>
                             @if(count($packages) > 0)
                             @foreach($packages as $index => $package)
                             @if($package->chargeable_weight == 1)
@@ -307,7 +318,8 @@
                             @else
                             @php($package_weight = $package->volume_weight)
                             @endif
-                            <div class="row box-row ">
+                            <div class="row box-row checkbox-box order_package_{{$package->id}}" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
+
                                 <div class="col-6">
                                     <label class="form-checkbox d-flex justify-content-start align-items-center" for="checkbox-{{$package->id}}"
                                         style="position: relative; z-index: 1; cursor: pointer; display: flex; align-items: center;">
@@ -502,7 +514,7 @@
         accent-color: #f4cf41;
     }
 
-    
+
 
 
 
@@ -595,12 +607,23 @@
         }
     });
     document.addEventListener('DOMContentLoaded', function() {
-        var tableRows = document.querySelectorAll('tbody tr');
+        if($(window).width()<992){
+            var tableRows = document.querySelectorAll('.checkbox-box');
+        }else{
+            var tableRows = document.querySelectorAll('tbody tr');
+        }
+        
         var packageIds = [];
         var packageIdsInput = document.getElementById('package_ids');
-        var selectRowsCheckbox = document.getElementById('selectRowsCheckbox');
-        var payBtn = document.getElementById('payBtn');
-
+        if($(window).width()<992){
+            var selectRowsCheckbox = document.getElementById('selectRowsCheckbox2');
+            var payBtn = document.getElementById('payBtn2');
+        }else{
+            var selectRowsCheckbox = document.getElementById('selectRowsCheckbox');
+            var payBtn = document.getElementById('payBtn');
+        }
+        
+       
         tableRows.forEach(function(row) {
             var checkbox = row.querySelector('input[type="checkbox"]');
 
@@ -644,6 +667,7 @@
         }
 
         function updatePayButtonState() {
+            console.log('fdf');
             payBtn.disabled = packageIds.length === 0;
         }
     });
