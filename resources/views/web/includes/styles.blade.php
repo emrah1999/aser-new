@@ -2,13 +2,19 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/owl.carousel.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{asset("frontend/css/sweetalert2.min.css")}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('web/css/style.css?ver=9.7') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('web/css/style.css?ver=9.10') }}">
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
 
     .section-margin-top{
         margin-top: 30px;
+    }
+    .footer-new {
+        margin-top: 20px;
+    }
+    .nav-padding{
+        padding-bottom: 7px;
     }
     .section-margin-bottom{
         margin-bottom: 10px;

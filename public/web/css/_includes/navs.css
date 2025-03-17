@@ -338,4 +338,7 @@
     .nav-breadcrumbs{
         margin-top: 15px;
     }
+    .nav-profile-menu__link{
+        margin-bottom: -10px;
+    }
 }

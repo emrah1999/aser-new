@@ -39,11 +39,10 @@
                         </div>
                     </div>
                     <div class="nav nav-tab-categories">
-                        @foreach($countries as $index => $country)
-                            <a href="{{ route('sellers_page', array_merge(request()->query(), ['locale' => App::getLocale(), 'location' => $country->id])) }}"
-                            class="nav-tab-categories__link nav-tab-categories__link--{{ request('location') == $country->id ? 'active' : '' }} flex-fill d-flex justify-content-center align-items-center mr-10">
-                                <img class="nav-tab-categories__link-img" src="{{ $country->flag }}" alt="{{ $country->name }}" style="height: 15px; margin: 6px 8px; top: 0;">
-                                <span class="nav-tab-categories__link-title d-none d-sm-block">{{ $country->name }}</span>
+                        @foreach($countries as $country)
+                            <a href="{{ route('sellers_page', array_merge(request()->query(), ['locale' => App::getLocale(), 'location' => $country->id])) }}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-5">
+                                <img class="nav-tab-categories__link-img" src="{{$country->new_flag}}" alt="Turkey">
+                                <span class="nav-tab-categories__link-title d-none d-md-block"> {{$country->name}}</span>
                             </a>
                         @endforeach
                     </div>

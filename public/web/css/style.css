@@ -1,17 +1,17 @@
-@import "_includes/fonts.css?v=2.3";
-@import "_includes/ui.css?v=3.19";
-@import "_includes/buttons.css?v=3.19";
-@import "_includes/navs.css?v=4.20";
-@import "_includes/forms.css?v=2.4";
-@import "_includes/thumbnails.css?v=3.16";
-@import "_includes/media.css?v=3.20";
-@import "_includes/modals.css?v=3.30";
-@import "_includes/accordions.css?v=2.30";
-@import "_includes/tables.css?v=2.3";
-@import "_includes/paginations.css?v=5.15";
-@import "_includes/owl.css?v=2.1.2";
-@import "_includes/header.css?v=3.1";
-@import "_includes/footer.css?v=5.15";
+@import "_includes/fonts.css?v=2.4";
+@import "_includes/ui.css?v=3.20";
+@import "_includes/buttons.css?v=3.20";
+@import "_includes/navs.css?v=4.23";
+@import "_includes/forms.css?v=2.5";
+@import "_includes/thumbnails.css?v=3.17";
+@import "_includes/media.css?v=3.21";
+@import "_includes/modals.css?v=3.31";
+@import "_includes/accordions.css?v=2.31";
+@import "_includes/tables.css?v=2.4";
+@import "_includes/paginations.css?v=5.16";
+@import "_includes/owl.css?v=2.1.3";
+@import "_includes/header.css?v=3.2";
+@import "_includes/footer.css?v=5.16";
 
 /*SECTIONS*/
 /* Dropdown container */
@@ -275,6 +275,9 @@
 }
 .mr-10{
     margin-right: 10px;
+}
+.mr-5{
+    margin-right: 5px;
 }
 .mobile-menu,.mobile-account-menu{
     padding: 10px;

@@ -74,7 +74,7 @@
                                 <img class="thumbnail-profile-settings__img" src="/web/images/content/profile-settings-chevron-right.png" alt="Settings">
                             </div>
                         </a>
-                    </div>
+                    </div>--}}
                     <div class="thumbnail thumbnail-profile-settings">
                         <a href="{{route("change_notification_settings", ['locale' => App::getLocale()])}}" class="thumbnail-profile-settings__link d-flex justify-content-between align-items-center">
                             <div class="thumbnail-profile-settings__caption-block">
@@ -92,7 +92,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="thumbnail thumbnail-profile-settings">
+                   {{-- <div class="thumbnail thumbnail-profile-settings">
                         <a class="thumbnail-profile-settings__link d-flex justify-content-between align-items-center" data-bs-toggle="modal" data-bs-target="#modalProfileLogout">
                             <div class="thumbnail-profile-settings__caption-block">
                                 <div class="d-flex justify-content-center align-items-center">

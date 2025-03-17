@@ -28,7 +28,7 @@
                             </div>
                             <div class="thumbnail-contact__caption">
                                 <h6 class="thumbnail-contact__title font-n-b">Bizə zəng edin</h6>
-                                <p class="thumbnail-contact__desc">(+994) 12 310 39 39</p>
+                                <p class="thumbnail-contact__desc">(+994) 12 310 07 09</p>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                                 <h6 class="thumbnail-contact__title font-n-b">Sosial media</h6>
                                 <ul class="nav nav-socials thumbnail-contact__nav-socials justify-content-center align-items-center">
                                     <li class="nav-socials__item thumbnail-contact__nav-socials-item d-flex justify-content-center align-items-center">
-                                        <a href="https://www.facebook.com/people/Aser-Cargo/pfbid04EgswBfoXuLYbR94GVm8h8zuJ3PCocFT5bweeUA1aRtyGiGDgZXXhR3TwcDGPkZLl/"  class="nav-socials__link thumbnail-contact__nav-socials-link">
+                                        <a href="https://www.facebook.com/share/1Dkj88UQxV/"  class="nav-socials__link thumbnail-contact__nav-socials-link">
                                             <img class="nav-socials__img thumbnail-contact__nav-socials-img" src="{{asset('web/images/content/social-facebook.png')}}" alt="Facebook">
                                         </a>
                                     </li>
