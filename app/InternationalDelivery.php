@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class İnternationalDelivery extends Model
+class InternationalDelivery extends Model
 {
-    protected $table = 'i̇nternational_deliveries';
+    protected $table = 'international_deliveries';
 
     protected $fillable = [
         'name_az',

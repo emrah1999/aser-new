@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Blog;
 use App\CorporativeLogistic;
-use App\İnternationalDelivery;
+use App\InternationalDelivery;
 use App\Menu;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -37,7 +37,7 @@ class NavMenuServiceProvider extends ServiceProvider
         $menu['trackingSearch']=Menu::query()->where('id',6)->first();
         $menu['blog']=Menu::query()->where('id',7)->first();
 
-        $tariffs=İnternationalDelivery::all();
+        $tariffs=InternationalDelivery::all();
         $logistics=CorporativeLogistic::all();
 
         $footerBlogs=Blog::query()->where('show',1)->get();
