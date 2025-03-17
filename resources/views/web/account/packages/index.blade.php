@@ -305,7 +305,7 @@
                                 <div class="col-12">
                                     <label class="form-checkbox form-checkbox-all d-flex justify-content-start align-items-center">
                                         <input class="form-checkbox__input" type="checkbox" id="selectRowsCheckbox2">
-                                        <span class="form-checkbox__span"></span>
+                                        <span class="form-checkbox__span mr-5"></span>
                                         <span class="form-checkbox__text"></span>
                                          Toplu seçim
                                     </label>
