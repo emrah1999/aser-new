@@ -51,13 +51,13 @@ class SellerController extends HomeController
 			
 			$sellers = $query->where('has_site', 1)
 				->select('id', 'title as name', 'url', 'img')
-				->paginate(50)
+				->paginate(50)->onEachSide(0)
 				->appends($request->query());
 	
 			$locations = Country::whereNull('deleted_by')->whereNotIn('id', [1, 4, 13, 10])->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
 			$categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
-			$countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
-	
+			$countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'new_flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+
 			return view("web.sellers.index", compact(
 				'sellers',
 				'search_arr',
@@ -66,6 +66,7 @@ class SellerController extends HomeController
 				'countries'
 			));
 		} catch (\Exception $exception) {
+            return $exception->getMessage();
 			return view("front.error");
 		}
 	}	

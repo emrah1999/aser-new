@@ -197,7 +197,7 @@
 }
 
 .nav-profile-menu{
-    margin-top: 20px;
+    padding-top: 20px;
     display: block;
     background: var(--yellow2);
     padding-bottom: 20px;
@@ -337,5 +337,8 @@
     }
     .nav-breadcrumbs{
         margin-top: 15px;
+    }
+    .nav-profile-menu__link{
+        margin-bottom: -10px;
     }
 }

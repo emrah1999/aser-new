@@ -14,36 +14,36 @@
                         <div class="row">
                             <div class="col-xl-3 col-lg-3 col-md-3 footer-tab-menu">
                                 <p class="footer__text font-n-b">Şirkət</p>
-                                <ul class="nav nav-menu-2 flex-column">
-                                    <li class="nav-menu-2__item">
-                                        <a href="{{route('about_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Haqqımızda</a>
+                                <ul class="nav nav-menu-2  flex-column">
+                                    <li class="nav-menu-2__item ">
+                                        <a href="{{route('about_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Haqqımızda</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('faq_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Suallar və cavablar</a>
+                                        <a href="{{route('faq_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Suallar və cavablar</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('terms_and_conditions', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('menu.terms_new') !!}</a>
+                                        <a href="{{route('terms_and_conditions', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('menu.terms_new') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('news_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Xəbərlər</a>
+                                        <a href="{{route('news_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Xəbərlər</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('video_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Video təlimatlar</a>
+                                        <a href="{{route('video_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Video təlimatlar</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('prohibited_items', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Qadağan olunmuş məhsullar</a>
+                                        <a href="{{route('prohibited_items', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Qadağan olunmuş məhsullar</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Mağazalar</a>
+                                        <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Mağazalar</a>
                                     </li>
                                     <li class="nav-menu-2__item">
                                         <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
-                                            class="nav-menu-2__link">{{ optional($menu['contact'])->{'name_' . App::getLocale()} }}</a>
+                                            class="nav-menu-2__link nav-padding">{{ optional($menu['contact'])->{'name_' . App::getLocale()} }}</a>
                                     </li>
                                     
                                     <li class="nav-menu-2__item">
                                       <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['blog'])->{'slug_' . App::getLocale()}]) }}"
-                                   class="nav-menu-2__link">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</a>
+                                   class="nav-menu-2__link nav-padding">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</a>
                             </li>
                                     
               
@@ -54,7 +54,7 @@
                                 <ul class="nav nav-menu-2 flex-column">
                                     @foreach ($tariffs as $tariff)
                                     <li class="nav-menu-2__item">
-                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$tariff['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link">
+                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$tariff['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link nav-padding">
                                             {{ $tariff['name_'. \Illuminate\Support\Facades\App::getLocale()] }}
                                         </a>
                                     </li>
@@ -66,7 +66,7 @@
                                 <ul class="nav nav-menu-2 flex-column">
                                     @foreach ($logistics as $logistic)
                                     <li class="nav-menu-2__item">
-                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$logistic['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link">
+                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$logistic['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link nav-padding">
                                             {{ $logistic['name_'. \Illuminate\Support\Facades\App::getLocale()] }}
                                         </a>
                                     </li>
@@ -81,7 +81,8 @@
                                     @foreach($footerBlogs as $footerBlog)
                                     <li class="nav-menu-2__item">
 
-                                        <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $footerBlog['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link">{{$footerBlog['name_'. \Illuminate\Support\Facades\App::getLocale()]}}</a>
+                                        <a href="{{ route('menuIndex', ['locale' => App::getLocale(), 'slug' => $footerBlog['slug_'. \Illuminate\Support\Facades\App::getLocale()]]) }}" class="nav-menu-2__link nav-padding">
+                                            {{$footerBlog['name_'. \Illuminate\Support\Facades\App::getLocale()]}}</a>
                                     </li>
                                     @endforeach
 

@@ -159,7 +159,7 @@ class AccountController extends Controller
     public function get_account()
     {
         try {
-            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('rank', 'asc')->orderBy('id')->get();
 
             $countr = Country::where('id', 2)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
 
@@ -476,7 +476,7 @@ class AccountController extends Controller
                     ->whereNull('canceled_by')
                     ->count();
             if($country_id == 'special'){
-                $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+                $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('rank', 'asc')->orderBy('id')->get();
                
 
     
@@ -1408,8 +1408,8 @@ class AccountController extends Controller
     {
         try 
         {
-            $countries = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
-            $countr = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::whereIn('id', [7,2,9,12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [7,2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'client_id' => $this->userID])
                     ->whereNull('placed_by')
                     ->whereNull('canceled_by')
