@@ -10,7 +10,7 @@ use App\ExchangeRate;
 use App\Faq;
 use App\Faq2;
 use App\HomePageText;
-use App\İnternationalDelivery;
+use App\InternationalDelivery;
 use App\Partner;
 use App\Seller;
 use App\TariffText;
@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Request;
 class TariffController extends HomeController
 {
     public function index(){
-//        $countries =İnternationalDelivery::query()
+//        $countries =InternationalDelivery::query()
 //            ->select([
 //                'id','icon',
 //                DB::raw("name_" . App::getLocale() . " as name"),
@@ -76,7 +76,7 @@ class TariffController extends HomeController
             ])
             ->get();
 
-        $countries =İnternationalDelivery::query()
+        $countries =InternationalDelivery::query()
             ->select([
                 'id','icon','rank','internal_images',
                 DB::raw("name_" . App::getLocale() . " as name"),
@@ -119,7 +119,7 @@ class TariffController extends HomeController
 
 
 
-            $country = İnternationalDelivery::query()
+            $country = InternationalDelivery::query()
                     ->select(['id','icon','internal_images',
                         DB::raw("name_" . App::getLocale() . " as name"),
                         DB::raw("content_" . App::getLocale() . " as content"),
@@ -133,7 +133,7 @@ class TariffController extends HomeController
 
 //            return $country;
 
-            $countries = İnternationalDelivery::query()
+            $countries = InternationalDelivery::query()
                 ->select([
                     'id','internal_images',
                     DB::raw("name_" . App::getLocale() . " as name"),

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use App\CorporativeLogistic;
-use App\İnternationalDelivery;
+use App\InternationalDelivery;
 use App\Menu;
 use App\Service;
 
@@ -15,7 +15,7 @@ class MenuController extends Controller
         $data=['locale'=>$locale,'slug'=>$slug];
 
 
-        $country=İnternationalDelivery::query()->where('slug_az',$slug)
+        $country=InternationalDelivery::query()->where('slug_az',$slug)
             ->orWhere('slug_en',$slug)
             ->orWhere('slug_ru',$slug)
             ->first();

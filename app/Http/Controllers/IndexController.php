@@ -16,7 +16,7 @@ use App\{Blog,
     TariffType,
     Title,
     Seller,
-    İnternationalDelivery,
+    InternationalDelivery,
     CorporativeLogistic};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class IndexController extends HomeController
             $countries = Country::where('url_permission', 1)->select('name_' . App::getLocale(), 'id', 'screen_image')->orderBy('id')->get();
 
 
-            $countries =İnternationalDelivery::query()
+            $countries =InternationalDelivery::query()
                 ->select([
                     'id','icon','rank',
                     DB::raw("name_" . App::getLocale() . " as name"),
@@ -132,7 +132,7 @@ class IndexController extends HomeController
                     }, $fields)
                 ))
                 ->first();
-//            $tariffs=İnternationalDelivery::query()
+//            $tariffs=InternationalDelivery::query()
 //                ->select([
 //                    'id',
 //                    DB::raw("name_" . App::getLocale() . " as name"),
