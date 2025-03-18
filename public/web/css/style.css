@@ -453,6 +453,9 @@
     .modal-otp__title{
         margin-bottom: 20px;
     }
+    .nav-profile-menu__link-title{
+        font-family: "Poppins", sans-serif;
+    }
     .modal-otp__desc{
         margin-bottom: 20px;
     }
