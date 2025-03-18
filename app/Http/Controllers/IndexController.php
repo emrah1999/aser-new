@@ -363,9 +363,8 @@ class IndexController extends HomeController
             'title' => 'Aser Cargo user Feedback'
         ];
 
-        Mail::to('info@asercargo.az')->send(new FeedbackMail($details));
-        return redirect()->back();
-
+        Mail::to('muradnesrullayev19@gmail.com')->send(new FeedbackMail($details));
+        return redirect()->back()->with('success', 'Müraciətiniz qeydə alındı');
     }
 
     public function get_seller_by_type($locale,$type)

@@ -18,6 +18,17 @@
 @endsection
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success">
+            <div class="alert-content">
+                <i class="fas fa-check-circle"></i>
+                <span>{{ session('success') }}</span>
+            </div>
+        </div>
+    @endif
+
+
+
     <div class="content" id="content">
         <section class="section section-offers">
             <div class="container-lg">
@@ -160,4 +171,36 @@
         </section>
         @endif
     </div>
+@endsection
+
+@section('styles')
+    <style>
+        .alert {
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .alert .fas {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .alert span {
+            font-size: 16px;
+        }
+
+    </style>
 @endsection
