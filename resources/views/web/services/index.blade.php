@@ -165,5 +165,15 @@
             border-radius: 10px;
             height: 320px;
         }
+        @media only screen and (max-width: 767px) {
+            .thumbnail-services__img{
+                width: 75%;
+                height: 75%;
+            }
+
+            .thumbnail-services__img-block{
+                text-align: center;
+            }
+        }
     </style>
 @endsection

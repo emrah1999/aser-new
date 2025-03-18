@@ -311,6 +311,22 @@
             font-weight: 600;
             color: #343a40;
         }
+        @media only screen and (max-width: 767px) {
+            .thumbnail-tarifs__img{
+                width: 75%;
+            }
+            .titles-content p{
+                width: 90%;
+            }
+            .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
+                width: 90%;
+                text-align: center;
+                margin: 0 auto;
+            }
+            .thumbnail-tarifs__img-block{
+                text-align: center;
+            }
+        }
 
     </style>
 @endsection

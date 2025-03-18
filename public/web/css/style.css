@@ -106,6 +106,8 @@
 }
 .mobile-dropdown-menu li {
     padding: 5px 15px !important;
+    font-family: unset !important;
+
 }
 .dropdown-menu li a {
     color: #333;
@@ -113,6 +115,7 @@
     display: block;
     font-weight: bold;
     font-size: 12px;
+    font-family: unset !important;
 }
 .mobile-user-name{
     text-transform: capitalize;
@@ -452,6 +455,9 @@
     }
     .modal-otp__title{
         margin-bottom: 20px;
+    }
+    .nav-profile-menu__link-title{
+        font-family: "Poppins", sans-serif;
     }
     .modal-otp__desc{
         margin-bottom: 20px;

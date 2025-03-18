@@ -102,7 +102,7 @@
 
                             <div class="col-sm-12">
                                 <div class="form__group">
-                                    <label class="form__label" for="userSex">{!! __('inputs.seller_name') !!}</label>
+                                    <label class="form__label" for="userSex">{!! __('inputs.category') !!}</label>
                                     <div class="form__select-wrapper">
                                         <select class="form__select" id="category_id"  name="category_id" required {{$disable_input}}>
                                             <option value="">{!! __('inputs.select_category') !!}</option>

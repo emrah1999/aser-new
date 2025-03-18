@@ -81,11 +81,20 @@
                             </label>
                             <input type="checkbox" id="dropdown-toggle2" class="dropdown-checkbox" />
                             <ul class="dropdown-menu package-dropdown">
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">Xarici anbardadır</a></li>
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">Anbardan göndərilib</a></li>
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">Bakı ofisindədir</a></li>
-                                <li class="bar-padding"><a class="bar-margin href=" {{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">Arxiv</a></li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=3' }}" data-status="3">Xarici anbardadır</a>
+                                </li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=4' }}" data-status="4">Anbardan göndərilib</a>
+                                </li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=5' }}" data-status="5">Bakı ofisindədir</a>
+                                </li>
+                                <li class="bar-padding">
+                                    <a class="bar-margin" href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=6' }}" data-status="6">Arxiv</a>
+                                </li>
                             </ul>
+
                         </div>
 
                         <div class="d-flex justify-content-center align-items-center">
@@ -587,61 +596,71 @@
 
 @section('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".text-toggle").forEach(function(el) {
-            el.addEventListener("click", function() {
-                el.classList.toggle("expanded");
-                el.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownContainer = document.querySelector(".dropdown-container");
+        const dropdownToggle = document.getElementById("dropdown-toggle2");
+
+        // Kenara tıklanınca dropdown'ı kapatma
+        document.addEventListener("click", function (event) {
+            if (dropdownToggle && dropdownContainer && !dropdownContainer.contains(event.target)) {
+                dropdownToggle.checked = false;
+            }
+        });
+
+        // Dropdown seçim işlemi
+        const dropdownLinks = document.querySelectorAll('.package-dropdown a');
+        const dropdownLabel1 = document.getElementById('dropdown-label-package1');
+
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const selectedText = this.textContent;
+                dropdownLabel1.textContent = selectedText + ' ';
+                dropdownLabel1.appendChild(document.querySelector('.dropdown-icon'));
+
+                dropdownToggle.checked = false; // Seçim yapınca dropdown kapanır
+
+                window.location.href = this.href;
             });
         });
-    });
-    document.addEventListener("click", function(event) {
-        let dropdown = document.querySelector(".dropdown-container");
-        let checkbox = document.getElementById("dropdown-toggle");
 
-        if (!dropdown.contains(event.target)) {
-            checkbox.checked = false;
-        }
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-        if($(window).width()<992){
+        // Checkbox ile satır seçme işlemi
+        if ($(window).width() < 992) {
             var tableRows = document.querySelectorAll('.checkbox-box');
-        }else{
+        } else {
             var tableRows = document.querySelectorAll('tbody tr');
         }
-        
+
         var packageIds = [];
         var packageIdsInput = document.getElementById('package_ids');
-        if($(window).width()<992){
+
+        if ($(window).width() < 992) {
             var selectRowsCheckbox = document.getElementById('selectRowsCheckbox2');
             var payBtn = document.getElementById('payBtn2');
-        }else{
+        } else {
             var selectRowsCheckbox = document.getElementById('selectRowsCheckbox');
             var payBtn = document.getElementById('payBtn');
         }
-        
-       
-        tableRows.forEach(function(row) {
+
+        tableRows.forEach(function (row) {
             var checkbox = row.querySelector('input[type="checkbox"]');
 
-            row.addEventListener('click', function(event) {
+            row.addEventListener('click', function (event) {
                 if (!event.target.closest('input[type="checkbox"]')) {
                     checkbox.checked = !checkbox.checked;
                     handleCheckboxSelection(checkbox, row);
                 }
             });
 
-            checkbox.addEventListener('click', function(event) {
+            checkbox.addEventListener('click', function (event) {
                 event.stopPropagation();
                 handleCheckboxSelection(checkbox, row);
             });
         });
 
-        selectRowsCheckbox.addEventListener('change', function() {
-            tableRows.forEach(function(row) {
+        selectRowsCheckbox.addEventListener('change', function () {
+            tableRows.forEach(function (row) {
                 var checkbox = row.querySelector('input[type="checkbox"]');
                 checkbox.checked = selectRowsCheckbox.checked;
                 handleCheckboxSelection(checkbox, row);
@@ -667,37 +686,17 @@
         }
 
         function updatePayButtonState() {
-            console.log('fdf');
             payBtn.disabled = packageIds.length === 0;
         }
-    });
-    document.querySelectorAll('.form-checkbox__input').forEach(function(checkbox) {
-        checkbox.addEventListener('click', function(event) {
-            event.stopPropagation(); // Satır tıklama olayını engelle
+
+        document.querySelectorAll('.form-checkbox__input').forEach(function (checkbox) {
+            checkbox.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
         });
     });
+
 </script>
 
-<script>
-    const dropdownLinks = document.querySelectorAll('.package-dropdown a');
-    const dropdownLabel = document.getElementById('dropdown-label-package');
-    const dropdownLabel1 = document.getElementById('dropdown-label-package1');
 
-    dropdownLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-
-            const selectedText = this.textContent;
-            dropdownLabel.textContent = selectedText + ' ';
-
-            dropdownLabel.appendChild(document.querySelector('.dropdown-icon'));
-
-
-            dropdownLabel1.textContent = selectedText + ' ';
-
-            dropdownLabel1.appendChild(document.querySelector('.dropdown-icon'));
-
-            window.location.href = this.href;
-        });
-    });
-</script>
 @endsection

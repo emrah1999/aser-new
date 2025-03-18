@@ -1,7 +1,7 @@
 @extends('web.layouts.web')
 @section('content')
-<section class="content-page-section">
-    <div class="page-content-block">
+<section class="content-page-section ">
+    <div class="page-content-block content-margin">
         <div class="container-fluid page_containers">
             <div class="container-lg">
                 <div class="page-content-part campaign-content-part">
@@ -97,6 +97,9 @@
 
     .n-order-table table tr:hover {
         background: #e9ecef;
+    }
+    .content-margin{
+        margin-top:100px;
     }
 
    
