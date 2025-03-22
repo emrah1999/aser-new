@@ -181,6 +181,8 @@ class TariffController extends HomeController
                 $country_id = 9;
             }elseif ($country_id==4) {
                 $country_id = 12;
+            }elseif ($country_id==5) {
+                $country_id = 14;
             }
 
             $tariffAll = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')

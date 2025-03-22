@@ -176,11 +176,9 @@
                                     @php($referrals_packages_class = 'class="referrals_packages_class"')
                                 @endif
                                 <tr class="table-orders-2__tr orderBlock">
-
                                     <td class="table-orders-2__td">
                                         <label class="form-checkbox d-flex justify-content-start align-items-center" for="package_{{$package->id}}">
                                             <input class="form-checkbox__input checks_region courier-check-box" checked name="packages" type="checkbox" id="package_{{$package->id}}"
-                                                   for="package_{{$package->id}}"
                                                    amount="{{$package->amount}}"
                                                    external_w_debt="{{$package->external_w_debt}}"
                                                    internal_w_debt="{{$package->internal_w_debt}}"
@@ -197,12 +195,12 @@
                                     <td class="table-orders-2__td orderPrice3">{{$package->internal_w_debt}} AZN</td>
                                     <td class="table-orders-2__td orderType">{{$package->payment_type}}</td>
                                     <td class="table-orders-2__td orderName">{{$package->client_name}} {{$package->client_surname}}</td>
-
-
                                 </tr>
                             @endforeach
                         </table>
-                        <div class="d-flex justify-content-end">
+
+                        <div class="d-flex buttons-section justify-content-end">
+                            <button class="btn btn-secondary btnOrderSelect font-n-b" style="margin-right: 5px" type="button" data-bs-dismiss="modal">Bağla</button>
                             <button class="btn btn-yellow btnOrderSelect font-n-b" type="button" data-bs-dismiss="modal" onclick="check_packages_region();">{!! __('courier.choose_button') !!}</button>
                         </div>
                     </div>
@@ -242,4 +240,11 @@
             });
         });
     </script>
+@endsection
+@section('styles')
+    <style>
+        .buttons-section{
+            text-align: right;
+        }
+    </style>
 @endsection
