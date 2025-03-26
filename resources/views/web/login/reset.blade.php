@@ -14,11 +14,12 @@
                 </div>
             </div>
             <form class="form form-registration-otp center-block" name="formRegistrationOTP" id="formRegistrationOTP" method="post" action="{{route('reset_email', ['locale' => App::getLocale()])}}" novalidate="novalidate">
+                @csrf
                 <div class="form__group">
                     <label class="form__label" for="userEmail">Email</label>
                     <input class="form__input" name="user_email" type="email" id="userEmail" placeholder="Emailiniz daxil edin" required>
                 </div>
-                <button class="btn btn-yellow btn-block form__btn form-registration-otp__btn font-n-b" type="submit" data-bs-toggle="modal" data-bs-target="#modalOTP">OTP kodu əldə et</button>
+                <button class="btn btn-yellow btn-block form__btn form-registration-otp__btn font-n-b" type="submit" data-bs-toggle="modal" data-bs-target="">OTP kodu əldə et</button>
             </form>
         </div>
     </section>
@@ -51,5 +52,36 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function () {
+            $("#formRegistrationOTP").on("submit", function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr("action"),
+                    type: "POST",
+                    data: $(this).serialize(),
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success === true) {
+                            $("#modalOTP").modal("show");
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

@@ -213,5 +213,29 @@ class OTPController extends Controller
         ]);
     }
 
+    public function reset(Request $request)
+    {
+        $validatedData = $request->validate([
+            'user_email' => 'required|email',
+        ]);
 
+        $user=User::where('email',$request->user_email)->first();
+//        return $user;
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Daxil etdiyiniz email ilə istifadəçi tapılmadı'
+            ]);
+        }
+        $otp = OTP::where('client_id', $user->id)->where('is_verify', 0)->first();
+
+        $otp_session = $this->generateRandomCode();
+        $sendOtp = new SendOTPCode();
+        $sendOtp->send_mail($otp->client_id, $request->phone1, $otp_session);
+        return response()->json([
+            'success' => true,
+            'message'=>'otp gonderildi',
+        ]);
+    }
 }
