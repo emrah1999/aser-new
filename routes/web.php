@@ -35,7 +35,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
 
 
-    Route::get('/reset-password', 'IndexController@reset')->name('reset_email');
+    Route::post('/reset-password', 'OTPController@reset')->name('reset_email');
 
 //    Route::get('/tracking-search', 'TrackingSearchController@get_tracking_search')->name("get_tracking_search");
     Route::get('/local-tracking-search', 'TrackingSearchController@local_tracking_search')->name("local_tracking_search");
