@@ -3794,42 +3794,43 @@ class AccountController extends Controller
         }
     }
 
-
     public function courier_create_order(Request $request)
     {
+
+//        $lastChar = substr($request->courier_payment_type_id, -1);
+//        return $lastChar;  // '2'
+//
+//        return $request;
         $validator = Validator::make($request->all(), [
             'packages_list' => ['required', 'string', 'max:1000'],
-            //'zone_id' => ['required', 'integer'],
             'area_id' => ['required', 'integer'],
             'metro_station_id' => ['nullable', 'integer'],
             'address' => ['required', 'string'],
             'phone' => ['required', 'string', 'max:30'],
             'date' => ['required', 'date'],
-            //'remark' => ['nullable', 'string', 'max:1000'],
             'courier_payment_type_id' => ['required', 'string'],
             'delivery_payment_type_id' => ['required', 'string'],
             'urgent_order' => ['required', 'integer'],
-            // 'delivery_longitude' =>['required'],
-            // 'delivery_longitude' => ['required'],
-            // 'delivery_latitude' => ['required']
+        ], [
+            // Özel hata mesajlarını buraya ekleyebilirsiniz
+            'packages_list.required' => 'Bağlama seçmek mütləqdir.',
+
+            'area_id.required' => 'Metro stansiya seçmək mütləqdir.',
+
+            'address.required' => 'Adres mütləq olmalıdır',
+
+            'phone.required' => 'Telefon mütləqdir.',
+            'courier_payment_type_id.required' => 'Kuryer çatdırılma növü mütləq seçilməlidir .',
+            'delivery_payment_type_id.required' => 'Xaricdən çatdırılma növü mütləq seçilməlidir .',
         ]);
+
         if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
             return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.incomplete_information')]);
+
         }
-        // return 'ok';
+
         try {
-
-            if ($request->courier_payment_type_id=='courier_pay_button_1'){
-                $courier_payment_type_id=1;
-            }else{
-                $courier_payment_type_id=2;
-            }
-
-            if ($request->delivery_payment_type_id=='delivery_pay_button_1'){
-                $delivery_payment_type_id=1;
-            }else {
-                $delivery_payment_type_id = 2;
-            }
             DB::beginTransaction();
 
             $courier_settings = CourierSettings::first();
@@ -3874,9 +3875,9 @@ class AccountController extends Controller
                 $has_limit = true;
             }
 
-            if ($limit_residue <= 0) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
-            }
+            // if ($limit_residue <= 0) {
+            //     return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
+            // }
 
             $area_id = $request->area_id;
             $area = CourierAreas::where('id', $area_id)->select('zone_id', 'tariff')->first();
@@ -3884,8 +3885,8 @@ class AccountController extends Controller
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
             }
             $zone_id = $area->zone_id;
-//            $courier_payment_type_id = $request->courier_payment_type_id;
-//            $delivery_payment_type_id = $request->delivery_payment_type_id;
+            $courier_payment_type_id = substr($request->courier_payment_type_id, -1);
+            $delivery_payment_type_id = substr($request->delivery_payment_type_id, -1);
             $old_packages_str = $request->packages_list;
             $old_packages_arr = explode(',', $old_packages_str);
             unset($request['packages_list']);
@@ -3976,44 +3977,14 @@ class AccountController extends Controller
                 $result = $this->CourierCalculatePaid($package);
                 $pay = $result['paid_azn'];
 
-                //britaniya baglamalari ucun kampaniya. start
-                $package_country = $package->country_id;
-                if (in_array($package_country , [7,9,12]) && $zone_id==1 && $tariff==2) {
-                    $amount = 0;
-                    $courier_payment_type_id = 2;
 
-                }else{
-                    $amount = $amount;
-                }
-                //britaniya baglamalari ucun kampaniya. end
-
-                //dd($courier_payment_type_id);
                 $new_packages_str .= $package->id . ',';
 
                 $currency_id = $package->currency_id;
 
-                // $package_external_w_debt = $package->external_w_debt_azn;
-                // $package_internal_w_debt = $package->internal_w_debt;
 
-                /*$rate = $this->GetExchangeRate(1, 3);
-                $package_external_w_debt_to_azn = $package_external_w_debt * $rate;*/
-                /*if ($has_rate) {
-                    $rate_to_azn = $this->calculate_exchange_rate($rates, $currency_id, 3);
-                } else {
-                    $rate_to_azn = 1;
-                }*/
-                //$package_amount_azn = $package->amount * $rate_to_azn;
-                //$package_amount_azn = sprintf('%0.2f', $package_amount_azn);
-
-                //$package_paid_azn = $package->paid * $rate_to_azn;
-                //$package_paid_azn = sprintf('%0.2f', $package_paid_azn);
-
-                //$package_amount_sum = ($package_amount_azn  + $package_external_w_debt + $package_internal_w_debt) - $package_paid_azn;
-
-                //$delivery_amount += $package_amount_sum;
                 $delivery_amount += $pay;
 
-                //dd($package->internal_id, $package_amount_sum, $delivery_amount, $package_internal_w_debt, $package_external_w_debt);
                 if (($delivery_payment_type_id != 1 || $package->paid_status == 1) && $courier_payment_type_id != 1) {
                     array_push($packages_arr_for_update, $package->id);
                 }
@@ -4032,29 +4003,15 @@ class AccountController extends Controller
 
             $new_packages_str = substr($new_packages_str, 0, -1);
             //dd($courier_payment_type_id);
-            //if silinecek else qalacaq, britaniya filteri
-            if($courier_payment_type_id != 1){
-                $request->merge([
-                    'packages' => $new_packages_str,
-                    'created_by' => $this->userID,
-                    'client_id' => $this->userID,
-                    'amount' => $amount,
-                    'delivery_amount' => $delivery_amount,
-                    'total_amount' => $summary_amount,
-                    'courier_payment_type_id' => 2,
-                    'order_type' => 1
-                ]);
-            }else{
-                $request->merge([
-                    'packages' => $new_packages_str,
-                    'created_by' => $this->userID,
-                    'client_id' => $this->userID,
-                    'amount' => $amount,
-                    'delivery_amount' => $delivery_amount,
-                    'total_amount' => $summary_amount,
-                    'order_type' => 1
-                ]);
-            }
+            $request->merge([
+                'packages' => $new_packages_str,
+                'created_by' => $this->userID,
+                'client_id' => $this->userID,
+                'amount' => $amount,
+                'delivery_amount' => $delivery_amount,
+                'total_amount' => $summary_amount,
+                'order_type' => 1
+            ]);
 
 
             //dd($request->all());
@@ -4098,110 +4055,9 @@ class AccountController extends Controller
                 //$response = $this->pay_to_millikart($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
                 $response = $this->pay_to_pashaBank($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
                 $payResponse = response(['case' => $response[0], 'title' => $response[1], 'content' => $response[2], 'pay' => true]);
-            }else{
-                //else silinmelidi/britaniya elavesi
-                $payResponse = response(['case' => 'success', 'title' => 'Uğurlu!', 'pay' => false]);
             }
 
             //dd($payResponse);
-            // ------------- 189 post request start------------------
-
-            date_default_timezone_set('Asia/Baku');
-            $api_date = $request->date. 'T16:00:00.494Z';
-
-
-
-            $pick_up_date = Carbon::now();
-            $internalOrderId = 'CLBR' .$order->id;
-
-            $api_user = User::where('id', $this->userID)->select('name', 'surname')->first();
-
-            $client_name = $api_user->name. ' ' .$api_user->surname;
-
-            if ($request->urgent_order == 1) {
-                $api_for_urgent = true;
-            }else{
-                $api_for_urgent = false;
-            }
-
-            $total_amount = $amount + $delivery_amount;
-
-            $data = [
-                'asap' => $api_for_urgent,
-                'client_id' => $this->userID,
-                'internalOrderId' => $internalOrderId,
-                'items' => $packages->map(function($package) {
-                    $newPackageData = (object)[
-                        "height" => $package->height != null ? $package->height : 1,
-                        "length" => $package->length != null ? $package->length : 1,
-                        "packageType" => "NORMAL",
-                        "title" => $package->title,
-                        "width" => $package->width != null ? $package->width : 1,
-                        'weight' => $package->gross_weight*1000,
-                        'internalItemId' => $package->internal_id
-                    ];
-                    return $newPackageData;
-                }),
-                "paid" => false,
-                "pickupEndDateTime" => $pick_up_date,
-                "pickupStartDateTime" => $pick_up_date,
-                "deliveryEndDateTime" => $api_date,
-                "deliveryStartDateTime" => $api_date,
-                "promoCode" => null,
-                "recipientAddress" => $request->address,
-                "recipientComment" => '',
-                'recipientLatitude' => $request->delivery_latitude,
-                'recipientLongitude' => $request->delivery_longitude,
-                "recipientName" => $client_name,
-                "recipientNumber" => $request->phone,
-                "senderAddress" => "251 Dilare Eliyeva Küçesi, Baki 1014",
-                "senderComment" => "aser Express bas ofis",
-                "senderLatitude" => 40.380411,
-                "senderLongitude" => 49.856303,
-                "senderName" => "aser Express",
-                "senderNumber" => "+994123103939",
-                'created_by' => $this->userID,
-                "totalAmount" => 2,
-                // 'delivery_amount' => $delivery_amount,
-                // 'delivery_payment_type' => $request->delivery_payment_type_id,
-                // 'courier_amount' => $amount,
-                // 'courier_payment_type' => $request->courier_payment_type_id
-            ];
-
-            // dd($data);
-            // if($data){
-
-            //     $data = json_encode($data);
-
-            //     $curl = curl_init();
-
-            //     curl_setopt_array($curl, array(
-            //     CURLOPT_URL => 'http://94.130.27.14:8062/services/189couriermsorders/api/partner/orders',
-            //     CURLOPT_RETURNTRANSFER => true,
-            //     CURLOPT_ENCODING => '',
-            //     CURLOPT_MAXREDIRS => 10,
-            //     CURLOPT_TIMEOUT => 0,
-            //     CURLOPT_FOLLOWLOCATION => true,
-            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            //     CURLOPT_CUSTOMREQUEST => 'POST',
-            //     CURLOPT_POSTFIELDS =>$data,
-            //     CURLOPT_HTTPHEADER => array(
-            //         'X-Username: aserexpress',
-            //         'X-Access-token: d75d75e57i75e75ed',
-            //         'Content-Type: application/json'
-            //     ),
-            //     ));
-            //     $response = curl_exec($curl);
-
-            //     // dd($response);
-            //     if (curl_errno($curl)) {
-            //         return [false, "189 connection error. err:" . curl_error($curl)];
-            //     }
-
-            //     curl_close($curl);
-
-            // }
-            // ------------- 189 post request end------------------
 
 
             DB::commit();
@@ -4210,17 +4066,27 @@ class AccountController extends Controller
                 if (isset($payResponse)) {
                     return $payResponse;
                 } else {
-                    return response(['case' => 'success', 'title' => 'Uğurlu!', 'pay' => false]);
+                    return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
                 }
-                return response(['case' => 'success', 'title' => 'Uğurlu!', 'pay' => false]);
             }
 
             if (isset($payResponse)) {
-                return $payResponse;
-            } else {
-                return response(['case' => 'success', 'title' => 'Uğurlu!', 'pay' => false]);
+                // Success mesajını session'a ekle
+                $content = $payResponse->getContent();
+                $data = json_decode($content, true);
+                // return back()->with('success', 'Success')->withInput();
+                if(!empty($data['content'])){
+                    if (filter_var($data['content'], FILTER_VALIDATE_URL)) {
+                        return redirect($data['content']);
+                    }
+                }
+                return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
             }
-            return response(['case' => 'success', 'title' => 'Uğurlu!', 'pay' => false]);
+            else {
+                return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
+
+            }
+            return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
         } catch (\Exception $exception) {
             //dd($exception);
             DB::rollback();
@@ -4230,7 +4096,6 @@ class AccountController extends Controller
             return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
         }
     }
-
 
     // private functions
     private function calculate_exchange_rate($rates, $from, $to)
@@ -5208,7 +5073,6 @@ class AccountController extends Controller
         }
     }
 
-
     private function pay_to_pashaBank($input_amount, $user_id, $return_type, $ip_address, $payment_type = 'balance', $order_id = 0, $packages_str = null)
     {
         try {
@@ -5305,7 +5169,7 @@ class AccountController extends Controller
 
 
             if(!empty($result)){
-dd('bbb');
+
                 if (curl_error($ch)) array_push($errors, 'Payment error!');
 
                 curl_close($ch);
@@ -5316,8 +5180,6 @@ dd('bbb');
                 $trans_ref = urlencode($trans_ref);
                 $client_url = $client_handler . "?trans_id=" . $trans_ref;
             }
-            dd('aaa');
-
             if ($return_type == 1) {
                 if ($this->api) {
                     return $client_url;
@@ -5329,7 +5191,12 @@ dd('bbb');
                 }
                 return redirect($client_url);
             }
-            else {
+            else if($return_type == 2) {
+                if ($this->api) {
+                    return $client_url;
+                }
+                return redirect($client_url);
+            }else {
                 return ['success', 'Uğurlu', $client_url];
             }
         } catch (\Exception $exception) {

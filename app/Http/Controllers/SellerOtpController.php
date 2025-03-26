@@ -5,6 +5,7 @@
     use App\Seller;
     use App\SellerOtp;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Auth;
 
     class SellerOtpController extends Controller
@@ -16,7 +17,7 @@
          */
         public function index()
         {
-            $sellerOtps = SellerOtp::paginate(50);
+            $sellerOtps = SellerOtp::orderBy('id','desc')->paginate(15);
             return view('front.account.seller_otp', compact('sellerOtps'));
         }
         
@@ -35,7 +36,7 @@
          * Store a newly created resource in storage.
          *
          * @param  \Illuminate\Http\Request  $request
-         * @return \Illuminate\Http\Response
+         * @return \Illuminate\Http\RedirectResponse
          */
         public function store(Request $request)
         {
@@ -52,7 +53,7 @@
             ]);
             
             SellerOtp::create($request->all());
-            return response(['case' => 'success', 'title' => __('static.success'), 'content' => __('static.success')]);
+            return redirect()->route('get_seller_otp', ['locale'=>App::getLocale()])->with(['case' => 'success', 'title' => __('static.success'), 'content' => __('static.success')]);
         }
         
         /**
