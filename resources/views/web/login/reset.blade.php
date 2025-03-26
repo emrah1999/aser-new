@@ -18,7 +18,7 @@
                     <label class="form__label" for="userEmail">Email</label>
                     <input class="form__input" name="user_email" type="email" id="userEmail" placeholder="Emailiniz daxil edin" required>
                 </div>
-                <button class="btn btn-yellow btn-block form__btn form-registration-otp__btn font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalOTP">OTP kodu əldə et</button>
+                <button class="btn btn-yellow btn-block form__btn form-registration-otp__btn font-n-b" type="submit" data-bs-toggle="modal" data-bs-target="#modalOTP">OTP kodu əldə et</button>
             </form>
         </div>
     </section>

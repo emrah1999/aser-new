@@ -11,23 +11,22 @@ class RegisterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $customer_name;
+    public $otp;
+
+    public function __construct($customer_name, $otp)
     {
-        //
+        $this->customer_name = $customer_name;
+        $this->otp = $otp;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        return $this->view('vendor.notifications.email');
+        return $this->subject('Your OTP Code')
+            ->view('emails.register')
+            ->with([
+                'customer_name' => $this->customer_name,
+                'otp' => $this->otp,
+            ]);
     }
 }

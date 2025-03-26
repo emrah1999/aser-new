@@ -613,7 +613,7 @@ class RegisterController extends Controller
                         }
                         elseif ( $request->verification=='email'){
                             $sendOtp = new SendOTPCode();
-                            $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                            $sendOtp->send_mail($userId, $request->email, $otp_session);
                         }
 
 						Auth::logout();

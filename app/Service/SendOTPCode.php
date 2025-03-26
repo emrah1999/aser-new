@@ -3,6 +3,7 @@
     namespace App\Service;
     
     use App\Http\Controllers\Classes\SMS;
+    use App\Mail\RegisterMail;
     use App\OTP;
     use App\SmsTask;
     use App\User;
@@ -116,6 +117,88 @@
         
         
         }
+
+
+        public function send_mail($client_id, $email, $otp_session)
+        {
+            $date = Carbon::now();
+            $phone_arr_az = array();
+            $text = '';
+            $client_id_for_sms = 0;
+
+            $otp = rand(100000, 999999);
+
+            $email = 'Sizin OTP: '. $otp;
+
+
+            $package = User::where('id', $client_id)->first();
+            // dd($package);
+            if ($package->id != 0 && $package->id != null && $package != null
+                && $package->phone1 != null
+            ) {
+                if ($package->id != $client_id_for_sms) {
+                    // new client
+                    $language_for_sms = strtoupper($package->language);
+                    switch ($language_for_sms) {
+                        case 'AZ':
+                            {
+                                array_push($phone_arr_az,  $package->email);
+                            }
+                            break;
+                        case 'EN':
+                            {
+                                array_push($phone_arr_az, $package->email);
+                            }
+                            break;
+                        case 'RU':
+                            {
+                                array_push($phone_arr_az, $package->email);
+                            }
+                            break;
+                    }
+
+                    $client_id_for_sms = $package->id;
+                }
+            }
+
+            if ($package) {
+                $text = $email;
+
+                $control_id = time() . 'az';
+                $phone_arr_az = array_unique($phone_arr_az);
+                $userFullName = $package->name. ' '. $package->surname;
+                Mail::to('muradnesrullayev19@gmail.com')->send(new RegisterMail($userFullName,$otp));
+
+                    $package_arr_for_sms = array();
+
+                    array_push($package_arr_for_sms, $package->id);
+
+                    OTP::create([
+                        'otp_session' => $otp_session,
+                        'otp' => $otp,
+                        'client_id' => $package->id,
+                        'phone' => $package->phone1,
+                        'is_verify' => 0,
+                        'created_by' => $package->id
+                    ]);
+
+                    SmsTask::create([
+                        'type' => 'otp',
+                        'code' => 1111111111,
+                        'task_id' => 11111111111,
+                        'control_id' => $control_id,
+                        'package_id' => $package->id,
+                        'client_id' => $package->id,
+                        'number' => $package->phone1,
+                        'message' => $text,
+                        'created_by' => $package->id
+                    ]);
+
+
+                }
+            }
+
+
     
         
     }
