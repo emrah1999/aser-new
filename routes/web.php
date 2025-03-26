@@ -17,6 +17,8 @@ Route::get('/', function () {
 Route::get('/language/{locale}', 'LanguageController@set_locale_language')->name("set_locale_language");
 Route::get('/r', 'RedirectController@redirect')->name('redirect_seller');
 Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () {
+    Route::post('change-password',[\App\Http\Controllers\Auth\ResetPasswordController::class,'resetPasswordPage'])->name('resetPasswordPage');
+
     Route::get('/', 'IndexController@index')->name("home_page");
     Route::get('/home', 'IndexController@index');
     Route::get('/login-test', 'LoginClientController@index');
@@ -213,6 +215,8 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     });
     Route::get('/{slug?}','MenuController@index')->name("menuIndex");
 });
+//Route::get('change-password','ResetPasswordController@resetPasswordPage')->name('resetPasswordPage');
+Route::post('verifyResetOtp','OTPController@verifyForgetOtp')->name('verifyForgetOtp');
 Route::post('/change-notification', 'AccountController@edit_notification')->name("edit-notification");
 
 Route::get('/secret/backend/cache-clear', 'ApiController@cache_clear');
