@@ -37,14 +37,16 @@
                     <span class="modal-otp__title-time">02:00</span>
                 </h3>
                 <p class="modal-otp__desc font-n-b">OTP Kodu daxil et</p>
-                <form class="form form-confirmation-otp center-block" id="formConfirmationOTP" name="formConfirmationOTP" method="post" action="/" novalidate="novalidate">
+                <form class="form form-confirmation-otp center-block" id="formConfirmationOTP" name="formConfirmationOTP" method="post" action="{{route('verifyForgetOtp')}}" novalidate="novalidate">
+                    @csrf
                     <div class="form__group form-confirmation-otp__group d-flex justify-content-evenly align-items-center">
                         <input class="form__otp-field" type="text" name="otp_field[]" maxlength="1">
                         <input class="form__otp-field" type="text" name="otp_field[]" maxlength="1">
                         <input class="form__otp-field" type="text" name="otp_field[]" maxlength="1">
                         <input class="form__otp-field" type="text" name="otp_field[]" maxlength="1">
-                        <!-- Store OTP Value -->
-                        <input class="form__otp-value" type="hidden" name="otp_value">
+                        <input class="form__otp-field" type="text" name="otp_field[]" maxlength="1">
+                        <input class="form__otp-field" type="text" name="otp_field[]" maxlength="1">
+                        <input class="form__otp-value" type="hidden" name="full_otp">
                     </div>
                     <button class="btn btn-yellow btn-yellow--disabled btn-block form__btn form-confirmation-otp__btn font-n-b" name="formConfirmationOTPSubmit" type="submit" disabled="disabled">OTP kodu daxil et</button>
                 </form>
@@ -77,7 +79,7 @@
                     },
                     error: function (xhr) {
                         console.log(xhr.responseText);
-                        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+                        alert("Xəta baş verdi");
                     }
                 });
             });

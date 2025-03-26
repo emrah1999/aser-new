@@ -238,4 +238,37 @@ class OTPController extends Controller
             'message'=>'otp gonderildi',
         ]);
     }
+
+    public function verifyForgetOtp(Request $request)
+    {
+//        return $request;
+        $validator = Validator::make($request->all(), [
+            'full_otp' => ['required', 'string', 'max:6']
+        ]);
+        if ($validator->fails()) {
+            return response(['case' => 'warning', 'title' => 'OTP kodunda səhvlik var yenidən cəhd edin' . '!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
+        }
+        $otp = OTP::where('otp', $request->full_otp)->where('is_verify', 0)->first();
+        //dd($otp);
+//        return $otp;
+        if(is_null($otp)){
+            return redirect()->back()->with('error', 'OTP kodunda səhvlik var yenidən cəhd edin');
+        }
+
+        $user = User::where('id', $otp->client_id)->first();
+
+
+        $otp->update([
+            'is_verify' => 1,
+        ]);
+
+        $user->update([
+            'email_verified_at' => Carbon::now()
+        ]);
+//        return 'aaa';
+
+        return view('auth.passwords.resetPassoword',compact('user'));
+    }
+
+
 }

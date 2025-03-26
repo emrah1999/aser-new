@@ -7,11 +7,15 @@ use App\ExchangeRate;
 use App\Http\Controllers\Controller;
 use App\Notifications\Emails;
 use App\Settings;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
 {
@@ -90,5 +94,32 @@ class ResetPasswordController extends Controller
         } else {
             return $this->sendResetFailedResponse($request, $response);
         }
+    }
+
+    public function resetPasswordPage(Request $request)
+    {
+//        return $request;
+
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string',
+            'password_confirmation'=>'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validasyon hatası',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        if ($request->password != $request->password_confirmation){
+            return redirect()->back()->with(['error'=>'Şifrə və təkrar şifrə uyğunlaşmır']);
+        }
+
+        $user = User::where('email',$request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route("login", ['locale' => App::getLocale()]);
     }
 }
