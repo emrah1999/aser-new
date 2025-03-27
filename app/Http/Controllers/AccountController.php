@@ -536,13 +536,14 @@ class AccountController extends Controller
 
             //counts for status
             $counts = array();
-
+            $totalCount=0;
             $counts['is_warehouse'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
                 ->where('package.is_warehouse', 1)
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
+            $totalCount +=$counts['is_warehouse'];
             // $counts['sent'] = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
             //     ->where('package.client_id', $this->userID)
             //     ->where('package.is_warehouse', 2)
@@ -555,18 +556,25 @@ class AccountController extends Controller
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
+            $totalCount +=$counts['sent'];
+
             $counts['in_office'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
                 ->where('package.is_warehouse', 3)
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
+            $totalCount +=$counts['in_office'];
+
 
             $counts['delivered'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
                 ->whereNotNull('package.delivered_by')
                 ->whereNull('package.deleted_by')
                 ->count();
+            $totalCount +=$counts['delivered'];
+            $counts['total']=$totalCount;
+
             $query = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
                 ->leftJoin('container', 'package.last_container_id', '=', 'container.id')
                 ->leftJoin('flight', 'container.flight_id', '=', 'flight.id')

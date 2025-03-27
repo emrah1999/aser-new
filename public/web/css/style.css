@@ -156,6 +156,10 @@
     .media-profile{
         margin-top: -42px;
     }
+    .dropdown-menu {
+        width: 150px;
+        margin-left : -60px ;
+    }
     
 }
 @media (max-width: 768px) {
@@ -171,6 +175,7 @@
 
     .dropdown-menu {
         width: 150px;
+        margin-left : -60px ;
     }
     .footer-menu{
         text-align: center
@@ -192,6 +197,7 @@
 
     .dropdown-menu {
         width: 100%;
+        margin-left : -60px ;
     }
 }
 

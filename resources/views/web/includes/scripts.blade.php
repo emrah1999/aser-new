@@ -6,7 +6,7 @@
 <script src="{{asset('web/js/validator.js')}}"></script>
 <script src="{{asset('web/js/calculator.js')}}"></script>
 <script src="{{asset('web/js/app.js')}}"></script>
-<script src="{{asset('web/js/ajax.js?ver=1.1.7')}}"></script>
+<script src="{{asset('web/js/ajax.js?ver=1.1.8')}}"></script>
 <script src="{{asset('web/js/courier.js')}}"></script>
 <script src="{{asset('web/js/main.js')}}"></script>
 <script>

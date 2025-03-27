@@ -21,5 +21,6 @@
 @include('web.includes.scripts')
 @yield('scripts')
 @yield('scripts1')
+@yield('content1')
 </body>
 </html>
