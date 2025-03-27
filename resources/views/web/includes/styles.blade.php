@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/bootstrap.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/owl.carousel.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{asset("frontend/css/sweetalert2.min.css")}}">
-<link rel="stylesheet" type="text/css" href="{{ asset('web/css/style.css?ver=9.16') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('web/css/style.css?ver=9.17') }}">
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
@@ -62,7 +62,7 @@
         border-radius: 4px;
         list-style: none;
         padding: 0;
-        margin: 0;
+        /*margin: 0;*/
         display: none;
         /*min-width: 250px;*/
 

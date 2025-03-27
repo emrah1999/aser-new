@@ -854,45 +854,36 @@ function show_package_items(id, track, url) {
         success: function (response) {
             swal.close();
             if (response.case === 'success') {
-                $("#item_track_number").html(track);
+                $("#item_track_number").html(response.track);
+
                 let items = response.items;
+                let body = '';
 
                 if (items.length === 0) {
-                    swal(
-                        'Oops',
-                        'No items!',
-                        'warning'
-                    );
+                    swal('Oops', 'No items!', 'warning');
                     return false;
                 }
 
-                let item;
-                let tr;
-                let body = '';
-
                 for (let i = 0; i < items.length; i++) {
-                    item = items[i];
-                    tr = '<tr>';
-                    tr += '<td>' + item['seller_name'] + '</td>';
-                    tr += '<td>' + item['category'] + '</td>';
-                    tr += '<td>' + item['price'] + ' ' + item['currency'] + '</td>';
-                    //tr += '<td>' + item['quantity'] + '</td>';
-                    tr += '</tr>';
-
-                    body += tr;
+                    let item = items[i];
+                    body += `<tr>
+                        <td>${item.seller_name}</td>
+                        <td>${item.category}</td>
+                        <td>${item.price} ${item.currency}</td>
+                    </tr>`;
                 }
 
                 $("#items_list").html(body);
 
-                $("#item-modal").css({"display": "block", "opacity": "1"});
+                // ✅ Bootstrap modalı aç
+                var modalElement = document.getElementById('item-modal');
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
             } else {
-                swal(
-                    response.title,
-                    response.content,
-                    response.case
-                );
+                swal(response.title, response.content, response.case);
             }
         }
+
     });
 }
 

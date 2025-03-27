@@ -31,4 +31,16 @@
     </div>
 
 @endsection
+@section('styles')
+    <style>
+        @media (max-width: 575.98px) {
+            .footer{
+                padding: 10px 0;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+    </style>
+@endsection
 
