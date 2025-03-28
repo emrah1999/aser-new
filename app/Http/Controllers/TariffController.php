@@ -169,7 +169,6 @@ class TariffController extends HomeController
                 )
                 ->get();
 
-            return $tariffs;
 
 
 

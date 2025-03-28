@@ -623,6 +623,7 @@
             margin-bottom: -5px;
         }
 
+
         #dropdown-label-package {
             width: 60%;
         }
