@@ -89,10 +89,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
                 <div class="row">
                     @foreach($countries as $country)
                         <div class="col-md-3 col-sm-6">

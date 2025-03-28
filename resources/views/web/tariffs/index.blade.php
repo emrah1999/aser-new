@@ -19,25 +19,31 @@
         <section class="section section-tarifs">
             <div class="container-lg">
                 <h1 class="section-title text-center font-n-b">{{$title->international_delivery}}</h1>
-                <div class="row">
-                    @foreach($countries as $country)
-                        <div class="col-md-3 col-sm-6">
-                            <div class="thumbnail thumbnail-tarifs">
-                                <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}
-                                    " class="thumbnail-tarifs__link">
-                                    <div class="thumbnail-tarifs__img-block">
-                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
+
+                <div class="country-carousel-container">
+                    <div class="country-carousel">
+                        <div class="country-carousel-track">
+                            @foreach($countries as $country)
+                                <div class="country-carousel-item">
+                                    <div class="thumbnail thumbnail-tarifs">
+                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
+                                            <div class="thumbnail-tarifs__img-block">
+                                                <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
+                                            </div>
+                                            <div class="thumbnail-tarifs__caption text-center">
+                                                <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
+                                                <p class="thumbnail-tarifs__desc">
+                                                    {{$country->cover_description}}
+                                                </p>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div class="thumbnail-tarifs__caption text-center">
-                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
-                                        <p class="thumbnail-tarifs__desc">
-                                            {{$country->cover_description}}
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    </div>
+                    <button class="country-carousel-nav country-carousel-prev">&lt;</button>
+                    <button class="country-carousel-nav country-carousel-next">&gt;</button>
                 </div>
             </div>
         </section>
@@ -328,6 +334,89 @@
             }
         }
 
+        .country-carousel-container {
+            position: relative;
+            margin: 0 auto;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .country-carousel {
+            position: relative;
+            overflow: hidden;
+            margin: 0 40px;
+        }
+
+        .country-carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .country-carousel-item {
+            flex: 0 0 25%; /* 4 items per slide */
+            max-width: 25%;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .country-carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .country-carousel-nav:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .country-carousel-prev {
+            left: 0;
+        }
+
+        .country-carousel-next {
+            right: 0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .country-carousel-item {
+                flex: 0 0 33.333%;
+                max-width: 33.333%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .country-carousel-item {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .country-carousel-item {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .country-carousel {
+                margin: 0 30px;
+            }
+        }
+
+
     </style>
 @endsection
 
@@ -357,6 +446,136 @@
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.querySelector('.country-carousel-track');
+        const items = document.querySelectorAll('.country-carousel-item');
+        const prevButton = document.querySelector('.country-carousel-prev');
+        const nextButton = document.querySelector('.country-carousel-next');
+
+        if (!track || items.length === 0) return;
+
+        // Calculate how many items to show per slide based on screen width
+        const getItemsPerSlide = () => {
+            if (window.innerWidth <= 575) return 1;
+            if (window.innerWidth <= 767) return 2;
+            if (window.innerWidth <= 991) return 3;
+            return 4; // Default: 4 items per slide
+        };
+
+        let itemsPerSlide = getItemsPerSlide();
+        let currentIndex = 0;
+        const totalItems = items.length;
+
+        // Clone first and last items for infinite loop effect
+        function setupCarousel() {
+            // Remove any existing clones
+            const clones = document.querySelectorAll('.country-carousel-clone');
+            clones.forEach(clone => clone.remove());
+
+            // Clone first items and append to end
+            for (let i = 0; i < itemsPerSlide; i++) {
+                const clone = items[i].cloneNode(true);
+                clone.classList.add('country-carousel-clone');
+                track.appendChild(clone);
+            }
+
+            // Clone last items and prepend to beginning
+            for (let i = totalItems - 1; i >= totalItems - itemsPerSlide; i--) {
+                if (i >= 0) {
+                    const clone = items[i].cloneNode(true);
+                    clone.classList.add('country-carousel-clone');
+                    track.insertBefore(clone, track.firstChild);
+                }
+            }
+
+            // Set initial position to show first real slide
+            currentIndex = 0;
+            updateCarouselPosition(false);
+        }
+
+        // Update carousel position based on currentIndex
+        function updateCarouselPosition(animate = true) {
+            const itemWidth = items[0].offsetWidth;
+            const offset = -((currentIndex + itemsPerSlide) * itemWidth);
+
+            if (!animate) {
+                track.style.transition = 'none';
+            } else {
+                track.style.transition = 'transform 0.5s ease-in-out';
+            }
+
+            track.style.transform = `translateX(${offset}px)`;
+
+            if (!animate) {
+                // Force a reflow to make the transition removal take effect immediately
+                track.offsetHeight;
+                track.style.transition = 'transform 0.5s ease-in-out';
+            }
+        }
+
+        // Handle next button click
+        function moveNext() {
+            currentIndex++;
+            updateCarouselPosition();
+
+            // If we've moved past the last original item
+            if (currentIndex >= totalItems) {
+                // Wait for transition to complete then reset to first item without animation
+                setTimeout(() => {
+                    currentIndex = 0;
+                    updateCarouselPosition(false);
+                }, 500);
+            }
+        }
+
+        // Handle previous button click
+        function movePrev() {
+            currentIndex--;
+            updateCarouselPosition();
+
+            // If we've moved before the first original item
+            if (currentIndex < 0) {
+                // Wait for transition to complete then reset to last item without animation
+                setTimeout(() => {
+                    currentIndex = totalItems - 1;
+                    updateCarouselPosition(false);
+                }, 500);
+            }
+        }
+
+        // Add event listeners
+        nextButton.addEventListener('click', moveNext);
+        prevButton.addEventListener('click', movePrev);
+
+        // Handle resize events
+        window.addEventListener('resize', function() {
+            const newItemsPerSlide = getItemsPerSlide();
+            if (newItemsPerSlide !== itemsPerSlide) {
+                itemsPerSlide = newItemsPerSlide;
+                setupCarousel();
+            } else {
+                updateCarouselPosition(false);
+            }
+        });
+
+        // Initialize carousel
+        setupCarousel();
+
+        // Auto-advance the carousel every 5 seconds
+        let autoplayInterval = setInterval(moveNext, 5000);
+
+        // Pause autoplay on hover
+        const carouselContainer = document.querySelector('.country-carousel-container');
+        carouselContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoplayInterval);
+        });
+
+        carouselContainer.addEventListener('mouseleave', () => {
+            autoplayInterval = setInterval(moveNext, 5000);
+        });
+    });
+
 
 </script>
 
