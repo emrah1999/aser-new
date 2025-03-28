@@ -42,8 +42,18 @@
                             @endforeach
                         </div>
                     </div>
-                    <button class="country-carousel-nav country-carousel-prev">&lt;</button>
-                    <button class="country-carousel-nav country-carousel-next">&gt;</button>
+                    <button class="country-carousel-nav country-carousel-prev carousel-button-color">
+                        <img src="/web/images/content/slider-chevron-left.png" alt="Previous" class="carousel-button-img">
+                    </button>
+                    <button class="country-carousel-nav country-carousel-next carousel-button-color">
+                        <img src="/web/images/content/slider-chevron-right.png" alt="Next" class="carousel-button-img">
+                    </button>
+                    <div class="country-carousel-navigation">
+                        @foreach($countries as $index => $country)
+                            <button class="country-carousel-dot" data-index="{{ $index }}"></button>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -273,6 +283,9 @@
 
 @section('styles')
     <style>
+        .carousel-button-color{
+            color: grey;
+        }
         .breadcrumb-nav {
             background-color: #f8f9fa;
             padding: 10px 15px;
@@ -317,6 +330,26 @@
             font-weight: 600;
             color: #343a40;
         }
+        .country-carousel-navigation {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .country-carousel-dot {
+            width: 10px;
+            height: 10px;
+            margin: 5px;
+            border-radius: 50%;
+            border: none;
+            background-color: grey;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .country-carousel-dot.active {
+            background-color: #333;
+        }
+
         @media only screen and (max-width: 767px) {
             .thumbnail-tarifs__img{
                 width: 75%;
@@ -353,7 +386,7 @@
         }
 
         .country-carousel-item {
-            flex: 0 0 25%; /* 4 items per slide */
+            flex: 0 0 25%;
             max-width: 25%;
             padding: 0 15px;
             box-sizing: border-box;
@@ -366,7 +399,7 @@
             width: 40px;
             height: 40px;
             background-color: rgba(0, 0, 0, 0.5);
-            color: white;
+            color: gray;
             border: none;
             border-radius: 50%;
             font-size: 18px;
@@ -390,7 +423,6 @@
             right: 0;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 991px) {
             .country-carousel-item {
                 flex: 0 0 33.333%;
@@ -415,6 +447,98 @@
                 margin: 0 30px;
             }
         }
+
+        /* Country Carousel Styles */
+        .country-carousel-container {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 40px; /* Space for navigation arrows */
+            overflow: hidden;
+        }
+
+        .country-carousel {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .country-carousel-track {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .country-carousel-item {
+            flex: 0 0 auto;
+            width: calc(100% / 3); /* Show 3 items on desktop */
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        /* Navigation Arrows */
+        .country-carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .country-carousel-prev {
+            left: 0;
+        }
+
+        .country-carousel-next {
+            right: 0;
+        }
+
+        /* Dot Navigation */
+        .country-carousel-navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .country-carousel-dot {
+            width: 12px;
+            height: 12px;
+            background: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+        }
+
+        .country-carousel-dot.active {
+            background: #007bff; /* Active dot color */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .country-carousel-item {
+                width: calc(100% / 2); /* Show 2 items on tablets */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .country-carousel-item {
+                width: 100%; /* Show 1 item on mobile */
+            }
+
+            .country-carousel-container {
+                padding: 0 30px;
+            }
+        }
+
 
 
     </style>
@@ -447,134 +571,149 @@
         });
     });
 
+
     document.addEventListener('DOMContentLoaded', function() {
+        const container = document.querySelector('.country-carousel');
         const track = document.querySelector('.country-carousel-track');
-        const items = document.querySelectorAll('.country-carousel-item');
+        const items = Array.from(document.querySelectorAll('.country-carousel-item'));
         const prevButton = document.querySelector('.country-carousel-prev');
         const nextButton = document.querySelector('.country-carousel-next');
+        const dots = Array.from(document.querySelectorAll('.country-carousel-dot'));
 
         if (!track || items.length === 0) return;
 
-        // Calculate how many items to show per slide based on screen width
-        const getItemsPerSlide = () => {
-            if (window.innerWidth <= 575) return 1;
-            if (window.innerWidth <= 767) return 2;
-            if (window.innerWidth <= 991) return 3;
-            return 4; // Default: 4 items per slide
-        };
-
-        let itemsPerSlide = getItemsPerSlide();
         let currentIndex = 0;
-        const totalItems = items.length;
+        let itemWidth = items[0].offsetWidth;
+        let itemsPerView = getItemsPerView();
+        let totalItems = items.length;
+        let isAnimating = false;
 
-        // Clone first and last items for infinite loop effect
-        function setupCarousel() {
-            // Remove any existing clones
-            const clones = document.querySelectorAll('.country-carousel-clone');
-            clones.forEach(clone => clone.remove());
+        function getItemsPerView() {
+            if (window.innerWidth <= 576) return 1;
+            if (window.innerWidth <= 992) return 2;
+            return 4;
+        }
 
-            // Clone first items and append to end
-            for (let i = 0; i < itemsPerSlide; i++) {
-                const clone = items[i].cloneNode(true);
-                clone.classList.add('country-carousel-clone');
-                track.appendChild(clone);
-            }
+        function setupContinuousCarousel() {
+            Array.from(track.querySelectorAll('[data-clone]')).forEach(clone => {
+                track.removeChild(clone);
+            });
 
-            // Clone last items and prepend to beginning
-            for (let i = totalItems - 1; i >= totalItems - itemsPerSlide; i--) {
-                if (i >= 0) {
-                    const clone = items[i].cloneNode(true);
-                    clone.classList.add('country-carousel-clone');
+            for (let i = 0; i < itemsPerView; i++) {
+                const lastIdx = totalItems - 1 - i;
+                if (lastIdx >= 0) {
+                    const clone = items[lastIdx].cloneNode(true);
+                    clone.setAttribute('data-clone', 'prepend');
                     track.insertBefore(clone, track.firstChild);
+                }
+
+                if (i < totalItems) {
+                    const clone = items[i].cloneNode(true);
+                    clone.setAttribute('data-clone', 'append');
+                    track.appendChild(clone);
                 }
             }
 
-            // Set initial position to show first real slide
-            currentIndex = 0;
-            updateCarouselPosition(false);
+            setPosition(itemsPerView * itemWidth, false);
         }
 
-        // Update carousel position based on currentIndex
-        function updateCarouselPosition(animate = true) {
-            const itemWidth = items[0].offsetWidth;
-            const offset = -((currentIndex + itemsPerSlide) * itemWidth);
+        function initCarousel() {
+            setupContinuousCarousel();
 
-            if (!animate) {
+            updateActiveDot(0);
+
+            window.addEventListener('resize', function() {
+                // Recalculate dimensions
+                itemWidth = items[0].offsetWidth;
+                const oldItemsPerView = itemsPerView;
+                itemsPerView = getItemsPerView();
+
+                if (oldItemsPerView !== itemsPerView) {
+                    setupContinuousCarousel();
+                } else {
+                    setPosition((currentIndex + itemsPerView) * itemWidth, false);
+                }
+            });
+        }
+
+        function setPosition(position, withAnimation = true) {
+            if (withAnimation) {
+                track.style.transition = 'transform 0.3s ease-in-out';
+            } else {
                 track.style.transition = 'none';
-            } else {
-                track.style.transition = 'transform 0.5s ease-in-out';
             }
 
-            track.style.transform = `translateX(${offset}px)`;
+            track.style.transform = `translateX(-${position}px)`;
+        }
 
-            if (!animate) {
-                // Force a reflow to make the transition removal take effect immediately
-                track.offsetHeight;
-                track.style.transition = 'transform 0.5s ease-in-out';
+        function moveToIndex(index, withAnimation = true) {
+            if (isAnimating && withAnimation) return;
+
+            if (index < 0) {
+                index = totalItems - 1;
+            } else if (index >= totalItems) {
+                index = 0;
+            }
+
+            currentIndex = index;
+
+            const position = (index + itemsPerView) * itemWidth;
+
+            if (withAnimation) {
+                isAnimating = true;
+            }
+
+            setPosition(position, withAnimation);
+
+            updateActiveDot(currentIndex);
+        }
+
+        function updateActiveDot(index) {
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function handleTransitionEnd() {
+            isAnimating = false;
+
+            if (currentIndex === -1) {
+                currentIndex = totalItems - 1;
+                setPosition((currentIndex + itemsPerView) * itemWidth, false);
+                updateActiveDot(currentIndex);
+            }
+            else if (currentIndex === totalItems) {
+                currentIndex = 0;
+                setPosition(itemsPerView * itemWidth, false);
+                updateActiveDot(currentIndex);
             }
         }
 
-        // Handle next button click
-        function moveNext() {
-            currentIndex++;
-            updateCarouselPosition();
-
-            // If we've moved past the last original item
-            if (currentIndex >= totalItems) {
-                // Wait for transition to complete then reset to first item without animation
-                setTimeout(() => {
-                    currentIndex = 0;
-                    updateCarouselPosition(false);
-                }, 500);
-            }
-        }
-
-        // Handle previous button click
-        function movePrev() {
-            currentIndex--;
-            updateCarouselPosition();
-
-            // If we've moved before the first original item
-            if (currentIndex < 0) {
-                // Wait for transition to complete then reset to last item without animation
-                setTimeout(() => {
-                    currentIndex = totalItems - 1;
-                    updateCarouselPosition(false);
-                }, 500);
-            }
-        }
-
-        // Add event listeners
-        nextButton.addEventListener('click', moveNext);
-        prevButton.addEventListener('click', movePrev);
-
-        // Handle resize events
-        window.addEventListener('resize', function() {
-            const newItemsPerSlide = getItemsPerSlide();
-            if (newItemsPerSlide !== itemsPerSlide) {
-                itemsPerSlide = newItemsPerSlide;
-                setupCarousel();
-            } else {
-                updateCarouselPosition(false);
-            }
+        prevButton.addEventListener('click', function() {
+            moveToIndex(currentIndex - 1);
         });
 
-        // Initialize carousel
-        setupCarousel();
-
-        // Auto-advance the carousel every 5 seconds
-        let autoplayInterval = setInterval(moveNext, 5000);
-
-        // Pause autoplay on hover
-        const carouselContainer = document.querySelector('.country-carousel-container');
-        carouselContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoplayInterval);
+        nextButton.addEventListener('click', function() {
+            moveToIndex(currentIndex + 1);
         });
 
-        carouselContainer.addEventListener('mouseleave', () => {
-            autoplayInterval = setInterval(moveNext, 5000);
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                moveToIndex(index);
+            });
         });
+
+        track.addEventListener('transitionend', handleTransitionEnd);
+
+        initCarousel();
     });
+
+
+
 
 
 </script>
