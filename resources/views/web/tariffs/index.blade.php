@@ -16,35 +16,32 @@
 @endsection
 @section('content')
     <div class="content" id="content">
-        <section class="section section-tarifs">
+        <section class="section section-partners">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->international_delivery}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
+                <div class="owl-carousel owl-partners-2 owlPartners">
+                    @foreach($countries as $country)
 
-                <div class="country-carousel-container">
-                    <div class="country-carousel">
-                        <div class="country-carousel-track">
-                            @foreach($countries as $country)
-                                <div class="country-carousel-item">
-                                    <div class="thumbnail thumbnail-tarifs">
-                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
-                                            <div class="thumbnail-tarifs__img-block">
-                                                <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
-                                            </div>
-                                            <div class="thumbnail-tarifs__caption text-center">
-                                                <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
-                                                <p class="thumbnail-tarifs__desc">
-                                                    {{$country->cover_description}}
-                                                </p>
-                                            </div>
-                                        </a>
+                            <div class="thumbnail thumbnail-tarifs">
+                                <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
+                                    <div class="thumbnail-tarifs__img-block">
+                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <button class="country-carousel-nav country-carousel-prev">&lt;</button>
-                    <button class="country-carousel-nav country-carousel-next">&gt;</button>
+                                    <div class="thumbnail-tarifs__caption text-center">
+                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
+                                        <p class="thumbnail-tarifs__desc">
+                                            {{$country->cover_description}}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                    @endforeach
                 </div>
+            </div>
+            <div class="owl-carousel-navigation">
+                @foreach($countries as $index => $country)
+                    <button class="owl-carousel-dot" data-index="{{ $index }}"></button>
+                @endforeach
             </div>
         </section>
 
@@ -92,7 +89,7 @@
                 <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>
                 <div class="owl-carousel owl-partners owlPartners">
                     @foreach($partners as $partner)
-                        <div class="owl-partners__item">
+                        <div class="owl-partners__item-2">
                             <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
                                 <div class="thumbnail-partners__img-block">
                                     <img class="thumbnail-partners__img img-responsive"
@@ -273,6 +270,15 @@
 
 @section('styles')
     <style>
+        .owl-carousel-navigation{
+            text-align: center;
+        }
+        .carousel-button-img{
+            color: var(--white3);;
+        }
+        .carousel-button-color{
+            color: grey;
+        }
         .breadcrumb-nav {
             background-color: #f8f9fa;
             padding: 10px 15px;
@@ -317,6 +323,18 @@
             font-weight: 600;
             color: #343a40;
         }
+
+        .owl-carousel-dot {
+            width: 10px;
+            height: 10px;
+            margin: 5px;
+            border-radius: 50%;
+            border: none;
+            background-color: grey;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
         @media only screen and (max-width: 767px) {
             .thumbnail-tarifs__img{
                 width: 75%;
@@ -325,94 +343,73 @@
                 width: 90%;
             }
             .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
-                width: 90%;
+                width: 85%;
                 text-align: center;
                 margin: 0 auto;
             }
             .thumbnail-tarifs__img-block{
                 text-align: center;
             }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+        }
+        .owl-carousel-dot.active {
+            background: #007bff;
         }
 
-        .country-carousel-container {
-            position: relative;
-            margin: 0 auto;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .country-carousel {
-            position: relative;
-            overflow: hidden;
-            margin: 0 40px;
-        }
-
-        .country-carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .country-carousel-item {
-            flex: 0 0 25%; /* 4 items per slide */
-            max-width: 25%;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-
-        .country-carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .country-carousel-nav:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .country-carousel-prev {
-            left: 0;
-        }
-
-        .country-carousel-next {
-            right: 0;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 991px) {
-            .country-carousel-item {
-                flex: 0 0 33.333%;
-                max-width: 33.333%;
+        @media only screen and (max-width: 480px) {
+            .breadcrumb-nav {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .breadcrumb-item {
+                font-size: 12px;
+            }
+            .breadcrumb-link {
+                font-size: 12px;
+            }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+            .thumbnail-tarifs__img {
+                width: 70%;
+            }
+            .thumbnail-tarifs__desc {
+                width: 90%;
+            }
+            .owl-carousel-navigation {
+                margin-top: 10px;
+            }
+            .img-responsive{
+                height: 75%;
+                width: 75%;
+            }
+            .thumbnail-partners__img{
+              width: 100%;
             }
         }
 
-        @media (max-width: 767px) {
-            .country-carousel-item {
-                flex: 0 0 50%;
-                max-width: 50%;
+        @media only screen and (max-width: 1024px) {
+            .breadcrumb-nav {
+                padding: 12px;
             }
-        }
-
-        @media (max-width: 575px) {
-            .country-carousel-item {
-                flex: 0 0 100%;
-                max-width: 100%;
+            .thumbnail-tarifs__desc {
+                width: 80%;
             }
-
-            .country-carousel {
-                margin: 0 30px;
+            .thumbnail-tarifs__img {
+                width: 80%;
+            }
+            .owl-carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .breadcrumb-item {
+                font-size: 14px;
             }
         }
 
@@ -422,6 +419,38 @@
 
 @section('scripts')
 <script>
+
+    $(document).ready(function () {
+        const owl = $(".owl-partners-2");
+
+        owl.owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: false
+        });
+
+        const dots = $(".owl-carousel-navigation .owl-carousel-dot");
+
+        dots.eq(0).addClass("active");
+
+        owl.on('changed.owl.carousel', function (event) {
+            const currentIndex = event.item.index - event.relatedTarget._clones.length / 2; // Gerçek aktif öğe indeksini bul
+            const totalItems = event.item.count;
+            let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems; // Döngüyü doğru yönet
+
+            dots.removeClass("active");
+
+            dots.eq(normalizedIndex).addClass("active");
+        });
+
+        dots.click(function () {
+            const dotIndex = $(this).data('index');
+            owl.trigger('to.owl.carousel', [dotIndex, 300]);
+        });
+    });
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -446,138 +475,5 @@
             }
         });
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const track = document.querySelector('.country-carousel-track');
-        const items = document.querySelectorAll('.country-carousel-item');
-        const prevButton = document.querySelector('.country-carousel-prev');
-        const nextButton = document.querySelector('.country-carousel-next');
-
-        if (!track || items.length === 0) return;
-
-        // Calculate how many items to show per slide based on screen width
-        const getItemsPerSlide = () => {
-            if (window.innerWidth <= 575) return 1;
-            if (window.innerWidth <= 767) return 2;
-            if (window.innerWidth <= 991) return 3;
-            return 4; // Default: 4 items per slide
-        };
-
-        let itemsPerSlide = getItemsPerSlide();
-        let currentIndex = 0;
-        const totalItems = items.length;
-
-        // Clone first and last items for infinite loop effect
-        function setupCarousel() {
-            // Remove any existing clones
-            const clones = document.querySelectorAll('.country-carousel-clone');
-            clones.forEach(clone => clone.remove());
-
-            // Clone first items and append to end
-            for (let i = 0; i < itemsPerSlide; i++) {
-                const clone = items[i].cloneNode(true);
-                clone.classList.add('country-carousel-clone');
-                track.appendChild(clone);
-            }
-
-            // Clone last items and prepend to beginning
-            for (let i = totalItems - 1; i >= totalItems - itemsPerSlide; i--) {
-                if (i >= 0) {
-                    const clone = items[i].cloneNode(true);
-                    clone.classList.add('country-carousel-clone');
-                    track.insertBefore(clone, track.firstChild);
-                }
-            }
-
-            // Set initial position to show first real slide
-            currentIndex = 0;
-            updateCarouselPosition(false);
-        }
-
-        // Update carousel position based on currentIndex
-        function updateCarouselPosition(animate = true) {
-            const itemWidth = items[0].offsetWidth;
-            const offset = -((currentIndex + itemsPerSlide) * itemWidth);
-
-            if (!animate) {
-                track.style.transition = 'none';
-            } else {
-                track.style.transition = 'transform 0.5s ease-in-out';
-            }
-
-            track.style.transform = `translateX(${offset}px)`;
-
-            if (!animate) {
-                // Force a reflow to make the transition removal take effect immediately
-                track.offsetHeight;
-                track.style.transition = 'transform 0.5s ease-in-out';
-            }
-        }
-
-        // Handle next button click
-        function moveNext() {
-            currentIndex++;
-            updateCarouselPosition();
-
-            // If we've moved past the last original item
-            if (currentIndex >= totalItems) {
-                // Wait for transition to complete then reset to first item without animation
-                setTimeout(() => {
-                    currentIndex = 0;
-                    updateCarouselPosition(false);
-                }, 500);
-            }
-        }
-
-        // Handle previous button click
-        function movePrev() {
-            currentIndex--;
-            updateCarouselPosition();
-
-            // If we've moved before the first original item
-            if (currentIndex < 0) {
-                // Wait for transition to complete then reset to last item without animation
-                setTimeout(() => {
-                    currentIndex = totalItems - 1;
-                    updateCarouselPosition(false);
-                }, 500);
-            }
-        }
-
-        // Add event listeners
-        nextButton.addEventListener('click', moveNext);
-        prevButton.addEventListener('click', movePrev);
-
-        // Handle resize events
-        window.addEventListener('resize', function() {
-            const newItemsPerSlide = getItemsPerSlide();
-            if (newItemsPerSlide !== itemsPerSlide) {
-                itemsPerSlide = newItemsPerSlide;
-                setupCarousel();
-            } else {
-                updateCarouselPosition(false);
-            }
-        });
-
-        // Initialize carousel
-        setupCarousel();
-
-        // Auto-advance the carousel every 5 seconds
-        let autoplayInterval = setInterval(moveNext, 5000);
-
-        // Pause autoplay on hover
-        const carouselContainer = document.querySelector('.country-carousel-container');
-        carouselContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoplayInterval);
-        });
-
-        carouselContainer.addEventListener('mouseleave', () => {
-            autoplayInterval = setInterval(moveNext, 5000);
-        });
-    });
-
-
 </script>
-
-
 @endsection

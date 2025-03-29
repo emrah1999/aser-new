@@ -1,6 +1,6 @@
 <link rel="icon" type="text/css" href="{{ asset('web/images/logo/tab_icon.png') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/bootstrap.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/owl.carousel.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('web/css/library/owl.carousel.min.css?ber=1.0') }}">
 <link rel="stylesheet" type="text/css" href="{{asset("frontend/css/sweetalert2.min.css")}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('web/css/style.css?ver=9.17') }}">
 
