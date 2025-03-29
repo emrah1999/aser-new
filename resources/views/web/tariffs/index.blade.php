@@ -16,45 +16,32 @@
 @endsection
 @section('content')
     <div class="content" id="content">
-        <section class="section section-tarifs">
+        <section class="section section-partners">
             <div class="container-lg">
-                <h1 class="section-title text-center font-n-b">{{$title->international_delivery}}</h1>
+                <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
+                <div class="owl-carousel owl-partners-2 owlPartners">
+                    @foreach($countries as $country)
 
-                <div class="country-carousel-container">
-                    <div class="country-carousel">
-                        <div class="country-carousel-track">
-                            @foreach($countries as $country)
-                                <div class="country-carousel-item">
-                                    <div class="thumbnail thumbnail-tarifs">
-                                        <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
-                                            <div class="thumbnail-tarifs__img-block">
-                                                <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
-                                            </div>
-                                            <div class="thumbnail-tarifs__caption text-center">
-                                                <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
-                                                <p class="thumbnail-tarifs__desc">
-                                                    {{$country->cover_description}}
-                                                </p>
-                                            </div>
-                                        </a>
+                            <div class="thumbnail thumbnail-tarifs">
+                                <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
+                                    <div class="thumbnail-tarifs__img-block">
+                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <button class="country-carousel-nav country-carousel-prev carousel-button-color">
-                        <img src="/web/images/content/slider-chevron-left.png" alt="Previous" class="carousel-button-img">
-                    </button>
-                    <button class="country-carousel-nav country-carousel-next carousel-button-color">
-                        <img src="/web/images/content/slider-chevron-right.png" alt="Next" class="carousel-button-img">
-                    </button>
-                    <div class="country-carousel-navigation">
-                        @foreach($countries as $index => $country)
-                            <button class="country-carousel-dot" data-index="{{ $index }}"></button>
-                        @endforeach
-                    </div>
-
+                                    <div class="thumbnail-tarifs__caption text-center">
+                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
+                                        <p class="thumbnail-tarifs__desc">
+                                            {{$country->cover_description}}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                    @endforeach
                 </div>
+            </div>
+            <div class="owl-carousel-navigation">
+                @foreach($countries as $index => $country)
+                    <button class="owl-carousel-dot" data-index="{{ $index }}"></button>
+                @endforeach
             </div>
         </section>
 
@@ -102,7 +89,7 @@
                 <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>
                 <div class="owl-carousel owl-partners owlPartners">
                     @foreach($partners as $partner)
-                        <div class="owl-partners__item">
+                        <div class="owl-partners__item-2">
                             <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
                                 <div class="thumbnail-partners__img-block">
                                     <img class="thumbnail-partners__img img-responsive"
@@ -283,6 +270,12 @@
 
 @section('styles')
     <style>
+        .owl-carousel-navigation{
+            text-align: center;
+        }
+        .carousel-button-img{
+            color: var(--white3);;
+        }
         .carousel-button-color{
             color: grey;
         }
@@ -330,12 +323,8 @@
             font-weight: 600;
             color: #343a40;
         }
-        .country-carousel-navigation {
-            text-align: center;
-            margin-top: 15px;
-        }
 
-        .country-carousel-dot {
+        .owl-carousel-dot {
             width: 10px;
             height: 10px;
             margin: 5px;
@@ -346,10 +335,6 @@
             transition: background 0.3s;
         }
 
-        .country-carousel-dot.active {
-            background-color: #333;
-        }
-
         @media only screen and (max-width: 767px) {
             .thumbnail-tarifs__img{
                 width: 75%;
@@ -358,187 +343,75 @@
                 width: 90%;
             }
             .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
-                width: 90%;
+                width: 85%;
                 text-align: center;
                 margin: 0 auto;
             }
             .thumbnail-tarifs__img-block{
                 text-align: center;
             }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+        }
+        .owl-carousel-dot.active {
+            background: #007bff;
         }
 
-        .country-carousel-container {
-            position: relative;
-            margin: 0 auto;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .country-carousel {
-            position: relative;
-            overflow: hidden;
-            margin: 0 40px;
-        }
-
-        .country-carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .country-carousel-item {
-            flex: 0 0 25%;
-            max-width: 25%;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-
-        .country-carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: gray;
-            border: none;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .country-carousel-nav:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .country-carousel-prev {
-            left: 0;
-        }
-
-        .country-carousel-next {
-            right: 0;
-        }
-
-        @media (max-width: 991px) {
-            .country-carousel-item {
-                flex: 0 0 33.333%;
-                max-width: 33.333%;
+        @media only screen and (max-width: 480px) {
+            .breadcrumb-nav {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .breadcrumb-item {
+                font-size: 12px;
+            }
+            .breadcrumb-link {
+                font-size: 12px;
+            }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+            .thumbnail-tarifs__img {
+                width: 70%;
+            }
+            .thumbnail-tarifs__desc {
+                width: 90%;
+            }
+            .owl-carousel-navigation {
+                margin-top: 10px;
+            }
+            .img-responsive{
+                height: 75%;
+                width: 75%;
+            }
+            .thumbnail-partners__img{
+              width: 100%;
             }
         }
 
-        @media (max-width: 767px) {
-            .country-carousel-item {
-                flex: 0 0 50%;
-                max-width: 50%;
+        @media only screen and (max-width: 1024px) {
+            .breadcrumb-nav {
+                padding: 12px;
+            }
+            .thumbnail-tarifs__desc {
+                width: 80%;
+            }
+            .thumbnail-tarifs__img {
+                width: 80%;
+            }
+            .owl-carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .breadcrumb-item {
+                font-size: 14px;
             }
         }
-
-        @media (max-width: 575px) {
-            .country-carousel-item {
-                flex: 0 0 100%;
-                max-width: 100%;
-            }
-
-            .country-carousel {
-                margin: 0 30px;
-            }
-        }
-
-        /* Country Carousel Styles */
-        .country-carousel-container {
-            position: relative;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 40px; /* Space for navigation arrows */
-            overflow: hidden;
-        }
-
-        .country-carousel {
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .country-carousel-track {
-            display: flex;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .country-carousel-item {
-            flex: 0 0 auto;
-            width: calc(100% / 3); /* Show 3 items on desktop */
-            padding: 0 10px;
-            box-sizing: border-box;
-        }
-
-        /* Navigation Arrows */
-        .country-carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid #ddd;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-
-        .country-carousel-prev {
-            left: 0;
-        }
-
-        .country-carousel-next {
-            right: 0;
-        }
-
-        /* Dot Navigation */
-        .country-carousel-navigation {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .country-carousel-dot {
-            width: 12px;
-            height: 12px;
-            background: #ccc;
-            border-radius: 50%;
-            margin: 0 5px;
-            padding: 0;
-            border: none;
-            cursor: pointer;
-        }
-
-        .country-carousel-dot.active {
-            background: #007bff; /* Active dot color */
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .country-carousel-item {
-                width: calc(100% / 2); /* Show 2 items on tablets */
-            }
-        }
-
-        @media (max-width: 576px) {
-            .country-carousel-item {
-                width: 100%; /* Show 1 item on mobile */
-            }
-
-            .country-carousel-container {
-                padding: 0 30px;
-            }
-        }
-
 
 
     </style>
@@ -546,6 +419,38 @@
 
 @section('scripts')
 <script>
+
+    $(document).ready(function () {
+        const owl = $(".owl-partners-2");
+
+        owl.owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: false
+        });
+
+        const dots = $(".owl-carousel-navigation .owl-carousel-dot");
+
+        dots.eq(0).addClass("active");
+
+        owl.on('changed.owl.carousel', function (event) {
+            const currentIndex = event.item.index - event.relatedTarget._clones.length / 2; // Gerçek aktif öğe indeksini bul
+            const totalItems = event.item.count;
+            let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems; // Döngüyü doğru yönet
+
+            dots.removeClass("active");
+
+            dots.eq(normalizedIndex).addClass("active");
+        });
+
+        dots.click(function () {
+            const dotIndex = $(this).data('index');
+            owl.trigger('to.owl.carousel', [dotIndex, 300]);
+        });
+    });
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -570,153 +475,5 @@
             }
         });
     });
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.querySelector('.country-carousel');
-        const track = document.querySelector('.country-carousel-track');
-        const items = Array.from(document.querySelectorAll('.country-carousel-item'));
-        const prevButton = document.querySelector('.country-carousel-prev');
-        const nextButton = document.querySelector('.country-carousel-next');
-        const dots = Array.from(document.querySelectorAll('.country-carousel-dot'));
-
-        if (!track || items.length === 0) return;
-
-        let currentIndex = 0;
-        let itemWidth = items[0].offsetWidth;
-        let itemsPerView = getItemsPerView();
-        let totalItems = items.length;
-        let isAnimating = false;
-
-        function getItemsPerView() {
-            if (window.innerWidth <= 576) return 1;
-            if (window.innerWidth <= 992) return 2;
-            return 4;
-        }
-
-        function setupContinuousCarousel() {
-            Array.from(track.querySelectorAll('[data-clone]')).forEach(clone => {
-                track.removeChild(clone);
-            });
-
-            for (let i = 0; i < itemsPerView; i++) {
-                const lastIdx = totalItems - 1 - i;
-                if (lastIdx >= 0) {
-                    const clone = items[lastIdx].cloneNode(true);
-                    clone.setAttribute('data-clone', 'prepend');
-                    track.insertBefore(clone, track.firstChild);
-                }
-
-                if (i < totalItems) {
-                    const clone = items[i].cloneNode(true);
-                    clone.setAttribute('data-clone', 'append');
-                    track.appendChild(clone);
-                }
-            }
-
-            setPosition(itemsPerView * itemWidth, false);
-        }
-
-        function initCarousel() {
-            setupContinuousCarousel();
-
-            updateActiveDot(0);
-
-            window.addEventListener('resize', function() {
-                // Recalculate dimensions
-                itemWidth = items[0].offsetWidth;
-                const oldItemsPerView = itemsPerView;
-                itemsPerView = getItemsPerView();
-
-                if (oldItemsPerView !== itemsPerView) {
-                    setupContinuousCarousel();
-                } else {
-                    setPosition((currentIndex + itemsPerView) * itemWidth, false);
-                }
-            });
-        }
-
-        function setPosition(position, withAnimation = true) {
-            if (withAnimation) {
-                track.style.transition = 'transform 0.3s ease-in-out';
-            } else {
-                track.style.transition = 'none';
-            }
-
-            track.style.transform = `translateX(-${position}px)`;
-        }
-
-        function moveToIndex(index, withAnimation = true) {
-            if (isAnimating && withAnimation) return;
-
-            if (index < 0) {
-                index = totalItems - 1;
-            } else if (index >= totalItems) {
-                index = 0;
-            }
-
-            currentIndex = index;
-
-            const position = (index + itemsPerView) * itemWidth;
-
-            if (withAnimation) {
-                isAnimating = true;
-            }
-
-            setPosition(position, withAnimation);
-
-            updateActiveDot(currentIndex);
-        }
-
-        function updateActiveDot(index) {
-            dots.forEach((dot, i) => {
-                if (i === index) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-
-        function handleTransitionEnd() {
-            isAnimating = false;
-
-            if (currentIndex === -1) {
-                currentIndex = totalItems - 1;
-                setPosition((currentIndex + itemsPerView) * itemWidth, false);
-                updateActiveDot(currentIndex);
-            }
-            else if (currentIndex === totalItems) {
-                currentIndex = 0;
-                setPosition(itemsPerView * itemWidth, false);
-                updateActiveDot(currentIndex);
-            }
-        }
-
-        prevButton.addEventListener('click', function() {
-            moveToIndex(currentIndex - 1);
-        });
-
-        nextButton.addEventListener('click', function() {
-            moveToIndex(currentIndex + 1);
-        });
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', function() {
-                moveToIndex(index);
-            });
-        });
-
-        track.addEventListener('transitionend', handleTransitionEnd);
-
-        initCarousel();
-    });
-
-
-
-
-
 </script>
-
-
 @endsection
