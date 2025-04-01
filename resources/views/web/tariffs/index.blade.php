@@ -436,9 +436,9 @@
         dots.eq(0).addClass("active");
 
         owl.on('changed.owl.carousel', function (event) {
-            const currentIndex = event.item.index - event.relatedTarget._clones.length / 2; // Gerçek aktif öğe indeksini bul
+            const currentIndex = event.item.index - event.relatedTarget._clones.length / 2;
             const totalItems = event.item.count;
-            let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems; // Döngüyü doğru yönet
+            let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems;
 
             dots.removeClass("active");
 
