@@ -509,6 +509,8 @@ class AccountController extends Controller
                     'details_local'
                 );
             }
+            $currentCountry = $country_id;
+
             return view('web.account.Warehouses.country_details', compact(
                 'countries',
                 'details',
@@ -516,7 +518,8 @@ class AccountController extends Controller
                 'selected_country',
                 'details_local',
                 'countr',
-                'not_paid_orders_count'
+                'not_paid_orders_count',
+                'currentCountry'
             ));
         } catch (\Exception $exception) {
             //dd($exception);
