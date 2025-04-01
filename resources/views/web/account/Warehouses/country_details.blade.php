@@ -1,6 +1,13 @@
 @extends('web.layouts.web')
 @section('styles')
     <style>
+        .information{
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .information-div{
+            max-width: 15px;
+        }
         .nav-tab-categories__link{
             margin-right: 10px;
         }
@@ -74,6 +81,15 @@
                         </div>
                         <div class="tab-content tab-content-categories">
                             <div class="tab-pane fade show active" id="turkey">
+                                @if($currentCountry==9)
+                                    <div class="row">
+                                        <div class=" information-div col-md-1">
+                                             <img src="{{asset('uploads/static/info.png')}}"  height="15px" width="15px" data-toggle="tooltip" data-placement="right" >
+                                        </div>
+
+                                        <p class="information col-md-11 ">{!! __('static.germany_info') !!}</p>
+                                    </div>
+                                @endif
                                 @foreach($details as $detail)
                                     @php($information = $detail->information)
                                     @php($information = str_replace('{name_surname}', Auth::user()->full_name(), $information))
