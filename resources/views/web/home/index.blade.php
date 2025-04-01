@@ -77,39 +77,32 @@
                 </div>
             </div>
         </section>
-        <section class="section section-tarifs section-margin-top">
+        <section class="section section-partners">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
-                <div class="container">
-                    <div class="row centered-row">
-                            <div class="titles-content">
-                                <p class="media-titles-content">
-                                   {{$contents->international_delivery}}
-                                </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                <div class="owl-carousel owl-partners-2 owlPartners">
                     @foreach($countries as $country)
-                        <div class="col-md-3 col-sm-6">
-                            <div class="thumbnail thumbnail-tarifs">
-                                <a href="{{ route('menuIndex',
-                                        ['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
-                                    <div class="thumbnail-tarifs__img-block text-center">
-                                        <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
-                                    </div>
-                                    <div class="thumbnail-tarifs__caption text-center">
-                                        <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
-                                        <p class="thumbnail-tarifs__desc">
-                                            {{$country->cover_description}}
 
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
+                        <div class="thumbnail thumbnail-tarifs">
+                            <a href="{{ route('menuIndex',['locale' => App::getLocale(),$country->slug]) }}" class="thumbnail-tarifs__link">
+                                <div class="thumbnail-tarifs__img-block">
+                                    <img class="thumbnail-tarifs__img img-responsive" src="{{$country->icon}}" alt="Tarif">
+                                </div>
+                                <div class="thumbnail-tarifs__caption text-center">
+                                    <h4 class="thumbnail-tarifs__title font-n-b">{{$country->name}}</h4>
+                                    <p class="thumbnail-tarifs__desc">
+                                        {{$country->cover_description}}
+                                    </p>
+                                </div>
+                            </a>
                         </div>
                     @endforeach
                 </div>
+            </div>
+            <div class="owl-carousel-navigation">
+                @foreach($countries as $index => $country)
+                    <button class="owl-carousel-dot" data-index="{{ $index }}"></button>
+                @endforeach
             </div>
         </section>
         <section class="section section-offers">
@@ -350,6 +343,105 @@
 @endsection
 @section('styles')
     <style>
+
+        .owl-carousel-dot {
+            width: 10px;
+            height: 10px;
+            margin: 5px;
+            border-radius: 50%;
+            border: none;
+            background-color: grey;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .thumbnail-tarifs__img{
+                width: 75%;
+            }
+            .titles-content p{
+                width: 90%;
+            }
+            .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
+                width: 85%;
+                text-align: center;
+                margin: 0 auto;
+            }
+            .thumbnail-tarifs__img-block{
+                text-align: center;
+            }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+        }
+        .owl-carousel-dot.active {
+            background: #007bff;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .breadcrumb-nav {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .breadcrumb-item {
+                font-size: 12px;
+            }
+            .breadcrumb-link {
+                font-size: 12px;
+            }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+            .thumbnail-tarifs__img {
+                width: 70%;
+            }
+            .thumbnail-tarifs__desc {
+                width: 90%;
+            }
+            .owl-carousel-navigation {
+                margin-top: 10px;
+            }
+            .img-responsive{
+                height: 75%;
+                width: 75%;
+            }
+            .thumbnail-partners__img{
+                width: 100%;
+            }
+        }
+
+        @media only screen and (max-width: 1024px) {
+            .breadcrumb-nav {
+                padding: 12px;
+            }
+            .thumbnail-tarifs__desc {
+                width: 80%;
+            }
+            .thumbnail-tarifs__img {
+                width: 80%;
+            }
+            .owl-carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .breadcrumb-item {
+                font-size: 14px;
+            }
+        }
+
+        .owl-carousel-navigation{
+            text-align: center;
+        }
+        .carousel-button-img{
+            color: var(--white3);;
+        }
+        .carousel-button-color{
+            color: grey;
+        }
         .thumbnail-blog-2__title{
             margin-top: 10px;
             color: black;
@@ -437,6 +529,39 @@
                 }
             });
         });
+
+
+        $(document).ready(function () {
+            const owl = $(".owl-partners-2");
+
+            owl.owlCarousel({
+                items: 3,
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: false
+            });
+
+            const dots = $(".owl-carousel-navigation .owl-carousel-dot");
+
+            dots.eq(0).addClass("active");
+
+            owl.on('changed.owl.carousel', function (event) {
+                const currentIndex = event.item.index - event.relatedTarget._clones.length / 2;
+                const totalItems = event.item.count;
+                let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems;
+
+                dots.removeClass("active");
+
+                dots.eq(normalizedIndex).addClass("active");
+            });
+
+            dots.click(function () {
+                const dotIndex = $(this).data('index');
+                owl.trigger('to.owl.carousel', [dotIndex, 300]);
+            });
+        });
+
 
     </script>
 
