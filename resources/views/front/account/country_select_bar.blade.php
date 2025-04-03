@@ -219,7 +219,7 @@
         background-color: #ffa500;
         color: #fff;
         border: none;
-        padding: 14px 20px;
+        padding: 14px 16px;
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;        
@@ -240,9 +240,14 @@
         top: -10px;
         right: -10px;
     }
-
+    .btn .badge{
+        top: -4px;
+    }
 
     @media (max-width: 768px) {
+        .country-list{
+            margin-left: 0;
+        }
         .mobile-order-d{
             width: 100%;
         }
