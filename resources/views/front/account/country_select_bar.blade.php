@@ -1,54 +1,62 @@
 <div class="order-side-bar">
     <div class="tariff-select special-order-country">
         <label>{!! __('labels.select_country_for_make_order') !!}</label>
-        <div class="country-select">
-            <div class="country-active flex align-items-center">
-                @foreach($countr as $key => $country)
-                @if($country->id == $country_id)
-                <span class="country-flag">
-                    <img src="{{$countr[$key]->flag}}" alt="{{$countr[$key]->name}}">
-                </span>
-                <span class="country-name">{{$countr[$key]->name }}</span>
-                <div class="check-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                    </svg>
+        <div class="row mobile-order-d">
+            <div class="col-md-8 col-7">
+                <div class="country-select">
+                    <div class="country-active flex align-items-center">
+                        @foreach($countr as $key => $country)
+                        @if($country->id == $country_id)
+                        <span class="country-flag">
+                            <img src="{{$countr[$key]->flag}}" alt="{{$countr[$key]->name}}">
+                        </span>
+                        <span class="country-name">{{$countr[$key]->name }}</span>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                            </svg>
+                        </div>
+                        @endif
+                        @endforeach
+                    </div>
+
+                    <div class="country-list list-tab no-reload" style="display: none;">
+                        <ul>
+                            @foreach($countr as $country)
+                            <li>
+                                <a href="{{route('special_order', ['locale' => App::getLocale(), $country->id])}}"
+                                    class="flex align-items-center">
+                                    <span class="country-flag">
+                                        <img alt="{{$country->name}}" src="{{$country->flag}}" height="19px" width="19px">
+                                    </span>
+                                    {{$country->name}}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-                @endif
-                @endforeach
             </div>
-
-            <div class="country-list list-tab no-reload" style="display: none;">
-                <ul>
-                    @foreach($countr as $country)
-                    <li>
-                        <a href="{{route('special_order', ['locale' => App::getLocale(), $country->id])}}"
-                            class="flex align-items-center">
-                            <span class="country-flag">
-                                <img alt="{{$country->name}}" src="{{$country->flag}}" height="19px" width="19px">
-                            </span>
-                            {{$country->name}}
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
+            <div class="col-md-4 col-5">
+                <div class="order-btn-group">
+                    @if(isset($country_id))
+                    @php($selected_country_id = $country_id)
+                    @else
+                    @php($selected_country_id = $countr[0]->id)
+                    @endif
+                    <a href="{{ route('special_order', ['locale' => App::getLocale(), 'country_id' => $selected_country_id]) . '?paid=no' }}"
+                        class="btn btn-orange" id="basket_special_order_button">
+                        <i class="fa" style="font-size:24px">&#xf07a;</i>
+                        @if($not_paid_orders_count > 0)
+                        <span class='badge badge-warning' id='lblCartCount'> {{$not_paid_orders_count}} </span>
+                        @endif
+                    </a>
+                </div>
             </div>
         </div>
+        
 
-        <div class="order-btn-group">
-            @if(isset($country_id))
-            @php($selected_country_id = $country_id)
-            @else
-            @php($selected_country_id = $countr[0]->id)
-            @endif
-            <a href="{{ route('special_order', ['locale' => App::getLocale(), 'country_id' => $selected_country_id]) . '?paid=no' }}"
-                class="btn btn-orange" id="basket_special_order_button">
-                <i class="fa" style="font-size:24px">&#xf07a;</i>
-                @if($not_paid_orders_count > 0)
-                <span class='badge badge-warning' id='lblCartCount'> {{$not_paid_orders_count}} </span>
-                @endif
-            </a>
-        </div>
+        
     </div>
 </div>
 
@@ -100,7 +108,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
         margin-left: auto;
         margin-right: 0;
         margin-bottom: -85px;
@@ -133,7 +141,7 @@
         display: flex;
         align-items: center;
         transition: background-color 0.3s ease, transform 0.3s ease;
-        overflow: hidden;
+        /* overflow: hidden; */
         text-overflow: ellipsis;
         white-space: nowrap;
     }
@@ -211,10 +219,11 @@
         background-color: #ffa500;
         color: #fff;
         border: none;
-        padding: 10px 20px;
+        padding: 14px 20px;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease;        
+        height: 50px;
     }
 
     .btn-orange:hover {
@@ -234,6 +243,9 @@
 
 
     @media (max-width: 768px) {
+        .mobile-order-d{
+            width: 100%;
+        }
         .tariff-select {
             flex-direction: column;
             align-items: end;
@@ -245,7 +257,7 @@
 
         .order-btn-group {
             flex-direction: column;
-            margin-top: 10px;
+            /* margin-top: 10px; */
             justify-content: center;
             margin-left: auto;
             margin-right: 0;
@@ -258,6 +270,7 @@
 
         .country-active {
             width: 100%;
+            margin-left: 5px;
         }
     }
 </style>
