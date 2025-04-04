@@ -329,7 +329,9 @@
         color: #333;
         white-space: nowrap;
         text-overflow: ellipsis;
+
         /*overflow: hidden;*/
+
         max-width: 150px;
         margin-right: -3px;
     }

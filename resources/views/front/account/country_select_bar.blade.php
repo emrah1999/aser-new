@@ -6,6 +6,7 @@
                 <div class="country-select">
                     <div class="country-active flex align-items-center">
                         @foreach($countr as $key => $country)
+
                             @if($country->id == $country_id)
                                 <span class="country-flag">
                             <img src="{{$countr[$key]->flag}}" alt="{{$countr[$key]->name}}">
@@ -17,12 +18,14 @@
                                     </svg>
                                 </div>
                             @endif
+
                         @endforeach
                     </div>
 
                     <div class="country-list list-tab no-reload" style="display: none;">
                         <ul>
                             @foreach($countr as $country)
+
                                 <li>
                                     <a href="{{route('special_order', ['locale' => App::getLocale(), $country->id])}}"
                                        class="flex align-items-center">
@@ -32,6 +35,7 @@
                                         {{$country->name}}
                                     </a>
                                 </li>
+
                             @endforeach
                         </ul>
                     </div>
@@ -40,6 +44,7 @@
             <div class="col-md-4 col-5">
                 <div class="order-btn-group">
                     @if(isset($country_id))
+
                         @php($selected_country_id = $country_id)
                     @else
                         @php($selected_country_id = $countr[0]->id)
@@ -49,14 +54,12 @@
                         <i class="fa" style="font-size:24px">&#xf07a;</i>
                         @if($not_paid_orders_count > 0)
                             <span class='badge badge-warning' id='lblCartCount'> {{$not_paid_orders_count}} </span>
+
                         @endif
                     </a>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 </div>
 
@@ -100,7 +103,6 @@
         }
 
 
-
         .tariff-select {
             background-color: #fff7e6;
             padding: 20px;
@@ -113,6 +115,7 @@
             margin-right: 0;
             margin-bottom: -85px;
         }
+
 
         .tariff-select label {
             display: block;
@@ -211,6 +214,7 @@
             gap: 10px;
             align-items: center;
             justify-content: flex-end;
+
             margin-left: auto;
             margin-right: 0;
         }
@@ -225,6 +229,7 @@
             transition: background-color 0.3s ease;
             height: 50px;
         }
+
 
         .btn-orange:hover {
             background-color: #e59400;
@@ -277,6 +282,7 @@
                 width: 100%;
                 margin-left: 5px;
             }
+
         }
     </style>
 @endsection
