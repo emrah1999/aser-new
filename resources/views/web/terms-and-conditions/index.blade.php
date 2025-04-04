@@ -1,7 +1,7 @@
 @extends('web.layouts.web')
 @section('content')
     <section class="section section-rules">
-        <div class="container-lg">
+        <div class="container-lg terms">
             <h1 class="section-title text-center font-n-b">Şərtlər və qaydalar</h1>
             <p class="section__desc">MALLARIN DAŞINMASI XİDMƏTİNƏ DAİR ŞƏRTLƏR TOPLUSU:</p>
             <ol class="nav nav-rules">
@@ -45,4 +45,24 @@
             </ol>
         </div>
     </section>
+@endsection
+@section('styles')
+    <style>
+        .terms{
+            margin-top : 100px;
+        }#header{
+             margin-bottom: 15px;
+         }
+
+        @media (max-width: 768px) {
+            .terms {
+                margin-top: 0;
+            }
+            .section-rules{
+                padding-top: 100px;
+            }
+        }
+
+    </style>
+
 @endsection

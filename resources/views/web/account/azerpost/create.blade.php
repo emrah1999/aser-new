@@ -3,6 +3,24 @@
 
     <div class="content" id="content">
         <section class="section section-profile-balances">
+            @if (session()->has('case') && session('case') === 'error')
+                <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
+                    </svg>
+                    <div>
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
             <div class="container-lg">
                 <div class="row">
                     @include("web.account.account_left_bar")
@@ -11,23 +29,23 @@
                             <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('courier.azerpost_title') !!}</h4>
                             
                         </div>
-                        <form class="form form-profile-azerpoct" name="formProfileAzerpoct" id="formProfileAzerpoct" method="post" action="{{route("courier_create_order_region", ['locale' => App::getLocale()])}}" novalidate="novalidate">
+                        <form class="form form-profile-azerpoct" name="formProfileAzerpoct" id="formProfileAzerpoct" method="post" action="{{route('courier_create_order_region', ['locale' => App::getLocale()])}}" novalidate="novalidate">
                             @csrf
-                            <input type="hidden" required name="packages_list" id="checked_packages_region">
+                            <input type="hidden" required name="packages_list" id="checked_packages_region" value="{{ old('packages_list') }}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form__group">
                                         <label class="form__label" for="userSendLocation">{!! __('courier.region') !!}</label>
                                         <div class="form__select-wrapper">
-                                            <select class="form__select region_id" id="area_id"
-                                                    name="region_id"
-                                                    required>
+                                            <select class="form__select region_id" id="area_id" name="region_id" required>
                                                 <option value="">{!! __('courier.region') !!}</option>
                                                 @foreach($regions as $area)
-                                                    <option value="{{$area->id}}">{{$area->name}}</option>
-                                                    >
+                                                    <option value="{{$area->id}}" {{ old('region_id') == $area->id ? 'selected' : '' }}>{{$area->name}}</option>
                                                 @endforeach
                                             </select>
+                                            @error('region_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -35,40 +53,52 @@
                                     <div class="form__group">
                                         <label class="form__label" for="userSendPostIndex">{!! __('courier.zip') !!}</label>
                                         <div class="form__select-wrapper">
-                                            <select class="form__select" id="post_index"
-                                                    name="post_zip"
-                                                    required disabled>
-                                                <option value="0" selected="selected" disabled="disabled">{!! __('courier.zip') !!}</option>
+                                            <select class="form__select" id="post_index" name="post_zip" required {{ old('post_zip') ? '' : 'disabled' }}>
+                                                <option value="0" selected disabled>{!! __('courier.zip') !!}</option>
+                                                @if(old('post_zip'))
+                                                    <option value="{{ old('post_zip') }}" selected>{{ old('post_zip') }}</option>
+                                                @endif
                                             </select>
+                                            @error('post_zip')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form__group">
                                         <label class="form__label" for="userSendAddress">{!! __('courier.address') !!}</label>
-                                        <input class="form__input" name="address" type="text" id="address" placeholder="{!! __('courier.address') !!}" required="required">
+                                        <input class="form__input" name="address" type="text" id="address" placeholder="{!! __('courier.address') !!}" value="{{ old('address') }}" required>
+                                        @error('address')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form__group">
                                         <label class="form__label" for="userSendPhone">{!! __('courier.phone') !!}</label>
-                                        <input class="form__input" name="phone" id="phone"
-                                               placeholder="{!! __('courier.phone') !!}"
-                                               value="{{Auth::user()->phone()}}"
-                                               maxlength="30" required>
+                                        <input class="form__input" name="phone" id="phone" placeholder="{!! __('courier.phone') !!}" value="{{ old('phone', Auth::user()->phone()) }}" maxlength="30" required>
+                                        @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form__group">
                                         <label class="form__label" for="date">{!! __('courier.date') !!}</label>
-                                        <input class="form__input" name="date" type="date" id="date" required="required" min="{{ $min_date }}" max="{{ $max_date }}">
+                                        <input class="form__input" name="date" type="date" id="date" value="{{ old('date') }}" required min="{{ $min_date }}" max="{{ $max_date }}">
+                                        @error('date')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row align-items-center">
                                         <div class="col-md-6">
                                             <div class="form__group">
-                                                <button class="btn btn-trns-black btn-block form-profile-curier__btn btnProfileAzerpoctOrders font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileAzerpoctOrders">{!! __('courier.choose_packages_button') !!}</button>
+                                                <button class="btn btn-trns-black btn-block form-profile-curier__btn btnProfileAzerpoctOrders font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileAzerpoctOrders">
+                                                    {!! __('courier.choose_packages_button') !!}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -84,9 +114,7 @@
                                                 <th class="table-orders-result-preview__th font-n-b">{!! __('table.internal_w_debt') !!}</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -95,7 +123,7 @@
                                         <table class="table table-striped table-orders-result font-n-r">
                                             <tr class="table-orders-result__tr">
                                                 <td class="table-orders-result__td font-n-b">{!! __('courier.delivery_amount') !!}</td>
-                                                <td class="table-orders-result__td"  id="delivery_price_region"></td>
+                                                <td class="table-orders-result__td" id="delivery_price_region"></td>
                                             </tr>
                                             <tr class="table-orders-result__tr">
                                                 <td class="table-orders-result__td font-n-b">{!! __('courier.courier_amount') !!}</td>

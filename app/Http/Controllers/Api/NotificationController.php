@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\TokensForLogin;
+use App\Notifications;
 use App\User;
-use Carbon\Carbon;
+use App\NotificationUser;
+use App\TokensForLogin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
@@ -187,4 +188,96 @@ class NotificationController extends Controller
         }
     }
 
+    public function index(Request $request)
+    {
+        $user=Auth::user();
+        $response=[];
+        $groupedData = [
+            'weekend' => [],
+            'today' => [],
+            'others' => [],
+        ];
+        $notuser=NotificationUser::where('user_id',$user->id)->orderBy('id','desc')->whereIn('status',[0,1])->get();
+        foreach($notuser as $not)
+        {
+            $n=Notifications::where('id',$not->notification_id)->first();
+            $text = preg_replace("/^<p.*?>/", "",$n->text);
+            $text = preg_replace("|</p>$|", "",$text);
+            $notification = [
+                "id" => $n->id,
+                "title" => $n->title,
+                "description"=>$text,
+                "status"=>$not->status,
+                "date" => date('d.m.Y H:i',strtotime($not->created_at)),
+            ];
+            $date=date('Y-m-d',strtotime($not->created_at));
+            if($date==date('Y-m-d')){
+                $groupedData['today'][] = $notification;
+            }else if($date<date('Y-m-d', strtotime('yesterday')) && $date>date('Y-m-d', strtotime('yesterday -7 days'))){
+                $groupedData['weekend'][]= $notification;
+            }else if($date<date('Y-m-d', strtotime('yesterday'))){
+                $groupedData['others'][]=$notification;
+            }
+        }
+        return response()->json($groupedData, 200);
+    }
+
+    public function readnotification(Request $request)
+    {
+        $user=Auth::user();
+        $response = [];
+        $notuser=NotificationUser::where('user_id',$user->id)->where('notification_id',$request['id'])->where('status',0)->first();
+        if($notuser)
+        {
+            NotificationUser::where('id',$notuser->id)->update(['status'=>1]);
+            return response(['case' => 'success', 'title' => __('static.success'), 'content' => __('static.success')]);
+
+        }else
+        {
+            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Notfication not found!'],422);
+        }
+    }
+
+    public function deletenotification(Request $request)
+    {
+        $user=Auth::user();
+        $notuser=NotificationUser::where('user_id',$user->id)->where('notification_id',$request['id'])->first();
+        if($notuser)
+        {
+            NotificationUser::where('id',$notuser->id)->update(['status'=>2]);
+            return response(['case' => 'success', 'title' => __('static.success'), 'content' => __('static.success')]);
+
+        }else
+        {
+            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Notfication not found!'],422);
+        }
+    }
+    public function readallnotifications(Request $request)
+    {
+        $user=Auth::user();
+        $notuser=NotificationUser::where('user_id',$user->id)->where('status',0)->first();
+        if($notuser)
+        {
+            NotificationUser::where('user_id',$user->id)->where('status',0)->update(['status'=>1]);
+            return response(['case' => 'success', 'title' => __('static.success'), 'content' => __('static.success')]);
+
+        }else
+        {
+            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Notfication not found!'],422);
+        }
+    }
+    public function deleteallnotification(Request $request)
+    {
+        $user=Auth::user();
+        $notuser=NotificationUser::where('user_id',$user->id)->where('status','!=',2)->first();
+        if($notuser)
+        {
+            NotificationUser::where('user_id',$user->id)->update(['status'=>2]);
+            return response(['case' => 'success', 'title' => __('static.success'), 'content' => __('static.success')]);
+
+        }else
+        {
+            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Notfication not found!'],422);
+        }
+    }
 }

@@ -647,6 +647,16 @@
         /*th:nth-child(6), td:nth-child(6) {*/
         /*    display: none;*/
         /*}*/
+        @if(count($packages)==0)
+        @media (max-width: 575.98px) {
+            .footer{
+                padding: 10px 0;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+       @endif
     </style>
 @endsection
 

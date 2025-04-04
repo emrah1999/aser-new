@@ -61,6 +61,81 @@ class CourierController extends Controller
 
         View::share(['exchange_rates_for_header' => $rates, 'general_settings' => $general_settings]);
     }
+    public function get_azerpost_courier_page(Request $request){
+        $courier_settings = CourierSettings::first();
+
+        if (!$courier_settings) {
+            return redirect()->route("get_account");
+        }
+
+        $closing_time = Carbon::parse($courier_settings->closing_time);
+        $now = Carbon::parse(Carbon::now()->toTimeString());
+
+        $diff_time = $now->diffInSeconds($closing_time, false);
+
+        if ($diff_time < 0) {
+            // not today
+            $min_date = date("Y-m-d", strtotime(date("Y-m-d") . "+1 day"));
+            $max_date = date("Y-m-d", strtotime(date("Y-m-d") . "+3 day"));
+        } else {
+            $min_date = date('Y-m-d');
+            $max_date = date("Y-m-d", strtotime(date("Y-m-d") . "+2 day"));
+        }
+
+        $query = CourierOrders::leftJoin('courier_areas', 'courier_orders.area_id', '=', 'courier_areas.id')
+            ->leftJoin('courier_metro_stations', 'courier_orders.metro_station_id', '=', 'courier_metro_stations.id')
+            ->leftJoin('courier_payment_types', 'courier_orders.courier_payment_type_id', '=', 'courier_payment_types.id')
+            ->leftJoin('lb_status as status', 'courier_orders.last_status_id', '=', 'status.id')
+            ->leftJoin('courier_regions', 'courier_orders.region_id', '=', 'courier_regions.id')
+            ->where(['courier_orders.client_id' => $this->userID])
+            ->where('order_type', 2)
+            ->whereRaw('(
+                (courier_orders.courier_payment_type_id = 1 and courier_orders.is_paid = 1) or
+                (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1) or
+                (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_amount = 0) or
+                (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
+                )');
+
+        $where_archive_status = $request->input("archive");
+        if (!isset($where_archive_status) || $where_archive_status != 'yes') {
+            $query->whereNull('courier_orders.delivered_at');
+            $query->whereNull('courier_orders.canceled_at');
+        } else {
+            $query->whereRaw('(courier_orders.delivered_at is not null or courier_orders.canceled_at is not null)');
+        }
+
+        $orders = $query->select(
+            'courier_orders.id',
+            'courier_areas.name_' . App::getLocale() . ' as area',
+            'courier_metro_stations.name_' . App::getLocale() . ' as metro_station',
+            'courier_orders.address',
+            'courier_orders.date',
+            'courier_payment_types.name_' . App::getLocale() . ' as payment_type',
+            'courier_orders.amount',
+            'courier_orders.delivery_amount',
+            'courier_orders.total_amount',
+            'courier_orders.amount',
+            'status.status_' . App::getLocale() . ' as status',
+            'courier_orders.last_status_id',
+            'courier_orders.last_status_date',
+            'courier_orders.azerpost_track',
+            'courier_orders.is_send_azerpost',
+            'courier_orders.post_zip',
+            'courier_orders.phone',
+            'courier_regions.name_' . App::getLocale() . ' as region'
+
+        )
+            ->orderBy('id', 'desc')
+            ->paginate(15);
+
+
+        return response()->json([
+            'orders' => $orders,
+            'min_date' => $min_date,
+            'max_date' => $max_date,
+        ]);
+
+    }
 
     private function calculate_exchange_rate($rates, $from, $to)
     {

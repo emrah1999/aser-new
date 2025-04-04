@@ -162,7 +162,7 @@
                                                                         </a>
 
                                                                     @elseif($package->invoice_status == 1)
-                                                                        <a href="{{route('get_package_update', $package->id)}}" class="fas fa-upload" style="color: red;">
+                                                                        <a href="{{route('get_package_update',['locale'=>\Illuminate\Support\Facades\App::getLocale(),'package_id'=>$package->id] )}}" class="fas fa-upload" style="color: red;">
                                                                             {!! __('table.upload_invoice_file') !!}
                                                                         </a>
                                                                     @endif

@@ -5,7 +5,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
                     <a href="{{ route('home_page', ['locale' => App::getLocale()]) }}" class="logo">
-                        <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px" width=162px" alt="Logo">
+                        <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px" width=178px" alt="Logo">
                     </a>
                 </div>
                 <div class="col-auto d-none d-xl-block">
@@ -80,9 +80,9 @@
 
                                         </div> -->
                                     </div>
-                                    <div class="media-profile__right">
+                                    <!-- <div class="media-profile__right">
                                         <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             @endif
@@ -201,7 +201,7 @@
 
 
 
-                                        <li class="nav-profile-menu__item">
+                                        <li class="nav-profile-menu__item logout-button">
                                             <a class="nav-profile-menu__link d-flex justify-content-start align-items-center" data-bs-toggle="modal" data-bs-target="#modalProfileLogout">
                                                 <span class="nav-profile-menu__link-title">Çıxış</span>
                                             </a>
@@ -209,13 +209,13 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="media-profile__right">
+                            <!-- <div class="media-profile__right">
                                 <div class="media-profile__img" style="background-image: url('{{Auth::user()->image}}')"></div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     @endif
-                    <button class="btn btn-yellow mobile-menu" type="button">
+                    <button class="btn btn-yellow mobile-menu @if(!Auth::check()) mobile-menu-top-0 @endif" type="button">
                         <span class="mobile-menu__item"></span>
                         <span class="mobile-menu__item"></span>
                         <span class="mobile-menu__item"></span>
@@ -335,6 +335,17 @@
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.querySelector(".logout-button");
+        const dropdownToggle = document.getElementById("dropdown-toggle1");
+
+        if (logoutButton && dropdownToggle) {
+            logoutButton.addEventListener("click", function () {
+                dropdownToggle.checked = false;
+            });
+        }
+    });
+
     document.querySelector('.dropdown-container').addEventListener('click', function() {
         document.querySelector('.menu-mobile-block').classList.add('d-none');
     });
@@ -369,4 +380,17 @@
             checkbox.checked = false;
         }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        const menu = document.querySelector(".menu-mobile-block");
+        const toggleButton = document.querySelector(".mobile-menu");
+
+        
+
+        document.addEventListener("click", function (event) {
+            if (!menu.contains(event.target) && !toggleButton.contains(event.target)) {
+                menu.classList.add("d-none");
+            }
+        });
+    });
+
 </script>

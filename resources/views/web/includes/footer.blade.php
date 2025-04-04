@@ -5,7 +5,7 @@
                 <div class="row footer-menu">
                     <div class="col-xl-2 col-lg-2 col-md-2">
                         <a href="#" class="logo">
-                            <img class="logo__img" src="{{asset('web/images/logo/logo-footer.png')}}" alt="Logo">
+                            <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px" width=178px" alt="Logo">
                         </a>
                     </div>
 

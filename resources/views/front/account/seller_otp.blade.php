@@ -13,8 +13,22 @@
                     </div>
                 </div>
             @endif
+                @if (session()->has('case') && session('case') === 'error')
+                    <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
+                        </svg>
+                        <div>
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endif
 
-            <div class="container-fluid page_containers">
+
+                <div class="container-fluid page_containers">
                 <div class="row">
                     <div class="page-content-part campaign-content-part d-flex">
                         @include('web.account.account_left_bar')
@@ -191,6 +205,19 @@
             }
         }
     </style>
+
+    @if(count($sellerOtps)==0)
+            <style>
+                @media (max-width: 575.98px) {
+                    .footer{
+                        padding: 10px 0;
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                    }
+                }
+            </style>
+    @endif
 @endsection
 @section('scripts')
     <script>

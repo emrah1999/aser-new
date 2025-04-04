@@ -65,50 +65,51 @@
                                 <div class="sub-account-main active">
                                     <div class="sub-panel for-subaccount">
                                         @if(count($sub_accounts) > 0)
-                                        <div class="sub-table desktop-show">
-                                            <table>
-                                                <thead>
+                                            <div class="sub-table desktop-show">
+                                                <table>
+                                                    <thead>
                                                     <tr>
-                                                        <th>{!! __('table.customer_code') !!} </th>
-                                                        <th>{!! __('table.name_surname') !!} </th>
+                                                        <th>{!! __('table.customer_code') !!}</th>
+                                                        <th>{!! __('table.name_surname') !!}</th>
                                                         @if($general_settings->referral_secret == 1)
-                                                        <th>{!! __('table.balance') !!}</th>
-                                                        <th>{!! __('table.debt') !!}</th>
-                                                        <th>{!! __('table.add_balance') !!}</th>
-                                                        <th>{!! __('table.login_account') !!}</th>
+                                                            <th>{!! __('table.balance') !!}</th>
+                                                            <th>{!! __('table.debt') !!}</th>
+                                                            <th>{!! __('table.add_balance') !!}</th>
+                                                            <th>{!! __('table.login_account') !!}</th>
                                                         @endif
                                                     </tr>
-                                                </thead>
-                                                <tbody>
+                                                    </thead>
+                                                    <tbody>
                                                     @foreach($sub_accounts as $sub_account)
-                                                    <tr>
-                                                        <td> {{$sub_account->id}}</td>
-                                                        <td> {{$sub_account->name}} {{$sub_account->surname}} </td>
-                                                        @if($general_settings->referral_secret == 1)
-                                                        <td> ${{$sub_account->balance}} </td>
-                                                        <td> ${{$sub_account->debt}} </td>
-                                                        <td>
-                                                            <span class="btn orange-button sub-account-order-btn"
-                                                                onclick="add_referal_balance({{$sub_account->id}});"><i
-                                                                    class="fas fa-credit-card"></i> {!! __('buttons.add_balance_for_referral') !!}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span data-confirm="{!! __('static.confirm_change_account') !!}"
-                                                                class="btn orange-button sub-account-order-btn"
-                                                                onclick="login_to_sub_account(this, '{{route("login_referal_account")}}', '{{$sub_account->id}}');">{!! __('buttons.login_referral_account') !!}</span>
-                                                        </td>
-                                                        @endif
-                                                    </tr>
+                                                        <tr>
+                                                            <td>{{$sub_account->id}}</td>
+                                                            <td>{{$sub_account->name}} {{$sub_account->surname}}</td>
+                                                            @if($general_settings->referral_secret == 1)
+                                                                <td>${{$sub_account->balance}}</td>
+                                                                <td>${{$sub_account->debt}}</td>
+                                                                <td>
+                            <span class="btn orange-button sub-account-order-btn" onclick="add_referal_balance({{$sub_account->id}});">
+                                <i class="fas fa-credit-card"></i> {!! __('buttons.add_balance_for_referral') !!}
+                            </span>
+                                                                </td>
+                                                                <td>
+                            <span data-confirm="{!! __('static.confirm_change_account') !!}" class="btn orange-button sub-account-order-btn" onclick="login_to_sub_account(this, '{{route("login_referal_account")}}', '{{$sub_account->id}}');">
+                                {!! __('buttons.login_referral_account') !!}
+                            </span>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
                                                     @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-
+                                                    </tbody>
+                                                </table>
+                                                <div class="pagination-wrapper mt-4">
+                                                    {{ $sub_accounts->links() }}
+                                                </div>
+                                            </div>
                                         @else
-                                        <div class="form-alert show-alert">
-                                            <p>{!! __('static.table_no_item') !!}</p>
-                                        </div>
+                                            <div class="form-alert show-alert">
+                                                <p>{!! __('static.table_no_item') !!}</p>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -197,6 +198,37 @@
         padding-right: 90px;
         /* height: calc(100vh - 20px); */
         box-sizing: border-box;
+    }
+    .pagination-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+    }
+    .pagination li {
+        margin: 0 5px;
+    }
+    .pagination li a,
+    .pagination li span {
+        display: block;
+        padding: 8px 15px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    .pagination li.active span {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    .pagination li.disabled span {
+        color: #6c757d;
+        pointer-events: none;
     }
 
     .page-content-right {

@@ -9,6 +9,8 @@ use App\TokensForLogin;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
+use App\OTP;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -70,6 +72,79 @@ class AuthController extends Controller
 		$user = User::where('id', $request->get('user_id'))->get();
 		return $user;
 	}
+    public function new_password(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'new_password' => ['required','min:8'],
+            'confirm_password' => ['required','min:8','same:new_password']
+        ]);
+        if ($validator->fails()) {
+            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()],422);
+        }
+        $user = User::find($request->user_id);
+
+        if(!$user){
+            return response()->json([ 'status'=>false,'message'=>'Müştəri tapılmadı'],400);
+        }
+        if (!($request->new_password==$request->confirm_password)){
+            return response()->json([ 'status'=>false,'message'=>'New password and confirm password is incorrect'],400);
+        }
+        User::where('id', $user->id)->update(['password' => Hash::make($request->new_password)]);
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Password changed successfully'
+        ]);
+    }
+
+
+    public function checkOTP(Request $request){
+        $validatedData = Validator::make($request->all(),[
+            'email' => 'required',
+            'otp' => 'required',
+        ]);
+        if($validatedData->fails()){
+            $messages = $validatedData->messages();
+            return response()->json(['status'=>false,"errors" => $messages],422);
+        }
+
+        $user=User::where('email',$request['email'])->first();
+        if(!$user){
+            return response()->json([
+                'status' => false,
+                'message' => 'Müştəri tapılmadı'
+            ],400);
+        }
+
+        $otp = OTP::query()
+            ->where('client_id', $user->id)
+            ->select('otp')
+            ->orderByDesc('id')
+            ->first();
+
+        if (!$otp) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No OTP found for this user'
+            ],400);
+        }
+
+
+        if ($request['otp'] != $otp->otp) {
+            return response()->json([
+                'status' => false,
+                'message' => 'OTP code is wrong'
+            ],400);
+        }
+
+        return response()->json([
+            'status' => true,
+            'user_id'=> $user->id,
+            'message' => 'OTP code is true'
+        ],200);
+
+    }
+
 
     public function sendResetLinkEmail(Request $request)
     {

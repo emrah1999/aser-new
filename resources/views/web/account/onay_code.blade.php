@@ -102,6 +102,16 @@
         margin-top:100px;
     }
 
+
+    @media (max-width: 575.98px) {
+        .footer{
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    }
+
    
     
 </style>

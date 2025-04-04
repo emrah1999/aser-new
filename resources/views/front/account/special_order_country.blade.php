@@ -329,8 +329,9 @@
         color: #333;
         white-space: nowrap;
         text-overflow: ellipsis;
-        overflow: hidden;
+        /*overflow: hidden;*/
         max-width: 150px;
+        margin-right: -3px;
     }
 
     .alert {
@@ -366,6 +367,9 @@
     }
 
     @media (max-width: 768px) {
+        .country-list{
+            margin-left: 0;
+        }
         .page-content-part {
             flex-direction: column;
         }
