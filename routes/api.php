@@ -29,8 +29,8 @@ Route::post('/user/update', [\App\Http\Controllers\AccountController::class, 'po
 Route::get('/packages', [\App\Http\Controllers\AccountController::class, 'get_packages'])->middleware('myApi')->name('api_get_packages');
 Route::get('/statuses', [\App\Http\Controllers\AccountController::class, 'get_statuses'])->middleware('myApi')->name('api_get_statuses');
 Route::post('/add_preliminary_declaration', [\App\Http\Controllers\AccountController::class, 'post_preliminary_declaration'])->middleware('myApi')->name('api_add_preliminary_declaration');
-Route::get('/package/update/{package_id}', [\App\Http\Controllers\AccountController::class, 'get_package_update'])->middleware('myApi')->name('api_get_package_update');
-Route::post('/package/update/{package_id}', [\App\Http\Controllers\AccountController::class, 'post_package_update'])->middleware('myApi')->name('api_post_package_update');
+Route::get('/package/update/{locale}/{package_id}', [\App\Http\Controllers\AccountController::class, 'get_package_update'])->middleware('myApi')->name('api_get_package_update');
+Route::post('/package/update/{locale}/{package_id}', [\App\Http\Controllers\AccountController::class, 'post_package_update'])->middleware('myApi')->name('api_post_package_update');
 Route::delete('/package/delete/{package_id}', [\App\Http\Controllers\AccountController::class, 'delete_package'])->middleware('myApi')->name('api_delete_package');
 Route::get('/currencies', [\App\Http\Controllers\AccountController::class, 'get_currencies'])->middleware('myApi')->name('api_get_currency');
 Route::get('/categories', [\App\Http\Controllers\AccountController::class, 'get_categories'])->middleware('myApi')->name('api_get_categories');
@@ -54,7 +54,7 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
 
 
     //special order api
-    Route::group(['prefix' => '/special-order/{country_id}'], function () {
+    Route::group(['prefix' => '/special-order/{locale}/{country_id}'], function () {
         Route::get('/get/orders', [\App\Http\Controllers\AccountController::class, 'get_special_orders'])->name('api_get_add_special_order');
         Route::post('/add', [\App\Http\Controllers\AccountController::class, 'add_special_order'])->name('api_add_special_order');
         Route::post('/pay/{order_id}', [\App\Http\Controllers\AccountController::class, 'pay_to_special_order'])->name("api_pay_to_special_order");
@@ -100,6 +100,11 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
 
         Route::post('/bulk-pay', [\App\Http\Controllers\Api\PackageController::class, 'bulk_pay']);
     });
+    Route::group(['prefix' => '/seller-otp'], function () {
+        Route::get('/', [\App\Http\Controllers\SellerOtpController::class , 'index']);
+        Route::post('/store', [\App\Http\Controllers\SellerOtpController::class, 'store'])->middleware('myApi');
+
+    });
 
     Route::group(['prefix' => '/courier'], function () {
         Route::get('/settings', [\App\Http\Controllers\Api\CourierController::class, 'courier_settings'])->name("courier_settings");
@@ -141,13 +146,30 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
             Route::post('/update/{package_id}', [\App\Http\Controllers\Api\ReferalController::class, 'post_package_update_by_sub_accounts']);
         });
     });
+    Route::prefix('/notifications')->group(function (){
+        Route::get('/',[\App\Http\Controllers\Api\NotificationController::class,'index']);
+        Route::post('/read',[\App\Http\Controllers\Api\NotificationController::class,'readnotification']);
+        Route::post('/delete',[\App\Http\Controllers\Api\NotificationController::class,'deletenotification']);
+        Route::get('/readall', [\App\Http\Controllers\Api\NotificationController::class,'readallnotifications']);
+        Route::get('/deleteall', [\App\Http\Controllers\Api\NotificationController::class,'deleteallnotification']);
+    });
 
     Route::post('/send-token', [\App\Http\Controllers\Api\NotificationController::class, 'CreatOrUpdateUserDevice']);
     Route::get('/get-notifications', [\App\Http\Controllers\Api\NotificationController::class, 'GetNotifications']);
     Route::get('/read-single-notification/{client}/{notification}', [\App\Http\Controllers\Api\NotificationController::class, 'ReadSingleNotification']);
     Route::post('/read-all', [\App\Http\Controllers\Api\NotificationController::class, 'ReadAllNotification']);
+    Route::get('/search-tracking', [\App\Http\Controllers\Api\PackageController::class, 'SearchTracking']);
+    Route::get('/special-orders/countries', [\App\Http\Controllers\AccountController::class,'special_orders_country']);
+    Route::get('/trendyol-onay-kodu', [\App\Http\Controllers\SellerOtpController::class,'getTrendyolOtp']);
+    Route::post('/change-password',[\App\Http\Controllers\Api\UserDetailsController::class,'change_password'])->name('change_password');
+    Route::group(['prefix' => '/azerpost'], function () {
+        Route::get('/orders', [\App\Http\Controllers\Api\CourierController::class,'get_azerpost_courier_page']);
+    });
 });
-
+Route::post('/check-forgot-password-otp', [\App\Http\Controllers\Api\AuthController::class, 'checkOTP']);
+Route::post('resend-otp', [\App\Http\Controllers\Auth\RegisterController::class,'resendOTP']);
+Route::post('check-otp', [\App\Http\Controllers\Auth\RegisterController::class,'checkOTP']);
+Route::post('/new-password',[\App\Http\Controllers\Api\AuthController::class,'new_password']);
 
 Route::get('/cities', [\App\Http\Controllers\Api\CityController::class, 'get_cities'])->name('api_get_cities');
 Route::get('/countries', [\App\Http\Controllers\Api\CountryController::class, 'get_countries'])->name('api_get_countries');

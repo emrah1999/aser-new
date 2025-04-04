@@ -179,9 +179,9 @@
                 <div class="owl-carousel owl-partners owlPartners">
                     @foreach($partners as $partner)
                     <div class="owl-partners__item">
-                        <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
+                        <div class="thumbnail thumbnail-partners d-flex text-center justify-content-center align-items-center">
                             <div class="thumbnail-partners__img-block">
-                                <img class="thumbnail-partners__img img-responsive"
+                                <img class="thumbnail-partners__img img-responsive-2"
                                      src="{{$partner->icon}}" alt="Partner">
                             </div>
                         </div>
@@ -343,7 +343,9 @@
 @endsection
 @section('styles')
     <style>
-
+        .img-responsive-2{
+            width: 65%;
+        }
         .owl-carousel-dot {
             width: 10px;
             height: 10px;
@@ -407,11 +409,19 @@
             }
             .img-responsive{
                 height: 75%;
-                width: 75%;
+                width: 100%;
             }
             .thumbnail-partners__img{
                 width: 100%;
             }
+            .img-responsive-2 {
+                text-align: center;
+                width: 70%;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+
         }
 
         @media only screen and (max-width: 1024px) {

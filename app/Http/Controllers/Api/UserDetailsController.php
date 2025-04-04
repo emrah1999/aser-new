@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserDetailsController extends Controller
 {
@@ -33,7 +35,35 @@ class UserDetailsController extends Controller
         });
     }
 
+    public function change_password(Request $request){
+        $validator = Validator::make($request->all(), [
+            'old_password' => ['required'],
+            'new_password' => ['required','min:8'],
+            'confirm_password' => ['required','min:8','same:new_password']
+        ]);
+        if ($validator->fails()) {
+            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()],422);
+        }
+        $user = User::find($this->userID);
 
+
+
+        if (!Hash::check($request->old_password , $user->password)){
+            return response()->json([
+                'status'=>false,
+                'message' => 'Old password is incorrect'
+            ],400);
+        }
+        if (!($request->new_password==$request->confirm_password)){
+            return response()->json([ 'status'=>false,'message'=>'New password and confirm password is incorrect'],400);
+        }
+        User::where('id', $user->id)->update(['password' => Hash::make($request->new_password)]);
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Password changed successfully'
+        ]);
+    }
     public function user_details(Request $request){
         $user = User::where('id', $this->userID)
             ->whereNull('deleted_at')

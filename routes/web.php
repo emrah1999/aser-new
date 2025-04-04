@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return redirect('/' . app()->getLocale());
 });
+Route::get('/muradTest', function () {
+    return view('muradTest');
+});
 Route::get('/language/{locale}', 'LanguageController@set_locale_language')->name("set_locale_language");
 Route::get('/r', 'RedirectController@redirect')->name('redirect_seller');
 Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () {

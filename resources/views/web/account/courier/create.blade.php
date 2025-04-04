@@ -11,13 +11,27 @@
                             <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('courier.title') !!}</h4>
                         </div>
 
-                    @if(session('success'))
+                        @if(session('success'))
                             <div class="alert alert-success">
                                 {{ session('success') }}
                             </div>
                         @endif
+                        @if (session()->has('case') && session('case') === 'error')
+                            <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
+                                </svg>
+                                <div>
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
 
-                        <form class="form form-profile-curier" name="formProfileCurier" id="formProfileCurier" method="post" action="{{route("courier_create_order", ['locale' => App::getLocale()])}}" novalidate="novalidate">
+
+                        <form class="form form-profile-curier" name="formProfileCurier" id="formProfileCurier" method="post" action="{{route('courier_create_order', ['locale' => App::getLocale()])}}" novalidate="novalidate">
                             @csrf
                             <input type="hidden" required name="packages_list" id="checked_packages">
                             <h3 class="form-profile-curier__title text-center font-n-b">{!! __('courier.title') !!}</h3>
@@ -27,15 +41,15 @@
                                         <label class="form__label" for="area_id">{!! __('courier.area') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="area_id" id="area_id" oninput="courier_change_area(this, '{{route("courier_get_courier_payment_types", ['locale' => App::getLocale()])}}');" required="required">
-                                                <option value="0" selected="">{!! __('courier.area') !!}</option>
+                                                <option value="" selected>{!! __('courier.area') !!}</option>
                                                 @foreach($areas as $area)
-                                                    <option value="{{$area->id}}">{{$area->name}}</option>
-                                                    >
+                                                    <option value="{{$area->id}}" {{ old('area_id') == $area->id ? 'selected' : '' }}>{{$area->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('area_id')
                                             <span class="text-danger">{{ $message }}</span>
-                                            @enderror                                        </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -43,9 +57,9 @@
                                         <label class="form__label" for="metro_station_id">{!! __('courier.metro_station') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="metro_station_id" id="metro_station_id" required="required">
-                                                <option value="0" selected="">{!! __('courier.metro_station') !!}</option>
+                                                <option value="0" selected>{!! __('courier.metro_station') !!}</option>
                                                 @foreach($metro_stations as $metro_station)
-                                                    <option value="{{$metro_station->id}}">{{$metro_station->name}}</option>
+                                                    <option value="{{$metro_station->id}}" {{ old('metro_station_id') == $metro_station->id ? 'selected' : '' }}>{{$metro_station->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('metro_station_id')
@@ -57,8 +71,8 @@
                                 <div class="col-md-12">
                                     <div class="form__group">
                                         <label class="form__label" for="address">{!! __('courier.address') !!}</label>
-                                        <input class="form__input" name="address" type="text" id="address" placeholder="{!! __('courier.address') !!}" required="required">
-                                        @error('addres')
+                                        <input class="form__input" name="address" type="text" id="address" value="{{ old('address') }}" placeholder="{!! __('courier.address') !!}" required="required">
+                                        @error('address')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
@@ -66,14 +80,16 @@
                                 <div class="col-md-6">
                                     <div class="form__group">
                                         <label class="form__label" for="phone">{!! __('courier.phone') !!}</label>
-                                        <input class="form__input" name="phone" type="text" id="phone" placeholder="{!! __('courier.phone') !!}"  value="{{Auth::user()->phone()}}"
-                                               maxlength="30" required="required">
+                                        <input class="form__input" name="phone" type="text" id="phone" placeholder="{!! __('courier.phone') !!}" value="{{ old('phone', Auth::user()->phone()) }}" maxlength="30" required="required">
+                                        @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form__group">
                                         <label class="form__label" for="date">{!! __('courier.date') !!}</label>
-                                        <input class="form__input" name="date" type="date" id="date" required="required" min="{{ $min_date }}" max="{{ $max_date }}">
+                                        <input class="form__input" name="date" type="date" id="date" value="{{ old('date') }}" required="required" min="{{ $min_date }}" max="{{ $max_date }}">
                                         @error('date')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -85,19 +101,18 @@
                                         @error('courier_payment_type_id')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                        <input type="hidden" name="courier_payment_type_id" id="courier_payment_type_id" value="">
+                                        <input type="hidden" name="courier_payment_type_id" id="courier_payment_type_id" value="{{ old('courier_payment_type_id') }}">
                                         <div class="row">
                                             <div class="col-sm-4 col-6">
-                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label internalLocation w-100 text-center"
+                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label internalLocation w-100 text-center {{ old('courier_payment_type_id') == '1' ? 'active' : '' }}"
                                                        id="courier_pay_button_1"
                                                        onclick="choosePayment('courier_payment_type_id', 'courier_pay_button_1', ['courier_pay_button_2']);">
                                                     <img class="form-profile-curier__img" src="/web/images/content/online-payment.png" alt="{!! __('courier.online') !!}">
                                                     <span>{!! __('courier.online') !!}</span>
                                                 </label>
-
                                             </div>
                                             <div class="col-sm-4 col-6">
-                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label internalLocation w-100 text-center"
+                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label internalLocation w-100 text-center {{ old('courier_payment_type_id') == '2' ? 'active' : '' }}"
                                                        id="courier_pay_button_2"
                                                        onclick="choosePayment('courier_payment_type_id', 'courier_pay_button_2', ['courier_pay_button_1']);">
                                                     <img class="form-profile-curier__img" src="/web/images/content/cash-payment.png" alt="{!! __('courier.cash') !!}">
@@ -106,19 +121,17 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form__group">
                                         <label class="form__label" for="userSendExternalPaymentType">{!! __('courier.delivery_payment_type_title') !!}</label> <br>
                                         @error('delivery_payment_type_id')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                        <input type="hidden" name="delivery_payment_type_id" id="delivery_payment_type_id" value="">
+                                        <input type="hidden" name="delivery_payment_type_id" id="delivery_payment_type_id" value="{{ old('delivery_payment_type_id') }}">
                                         <div class="row">
                                             <div class="col-sm-4 col-6">
-                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label externalLocation w-100 text-center"
+                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label externalLocation w-100 text-center {{ old('delivery_payment_type_id') == '1' ? 'active' : '' }}"
                                                        id="delivery_pay_button_1"
                                                        onclick="choosePayment('delivery_payment_type_id', 'delivery_pay_button_1', ['delivery_pay_button_2']);">
                                                     <img class="form-profile-curier__img" src="/web/images/content/online-payment.png" alt="OnlinePayment">
@@ -126,7 +139,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-sm-4 col-6">
-                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label externalLocation w-100 text-center"
+                                                <label class="form-profile-curier__label form-profile-curier__label--no-active form__label externalLocation w-100 text-center {{ old('delivery_payment_type_id') == '2' ? 'active' : '' }}"
                                                        id="delivery_pay_button_2"
                                                        onclick="choosePayment('delivery_payment_type_id', 'delivery_pay_button_2', ['delivery_pay_button_1']);">
                                                     <img class="form-profile-curier__img" src="/web/images/content/cash-payment.png" alt="CashPayment">
@@ -140,23 +153,22 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-6">
                                             <div class="form__group">
-                                                <button class="btn btn-trns-black btn-block form-profile-curier__btn btnProfileCurierOrders font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileCurierOrders"
-                                                       >{!! __('courier.choose_packages_button') !!}</button>
+                                                <button class="btn btn-trns-black btn-block form-profile-curier__btn btnProfileCurierOrders font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileCurierOrders">
+                                                    {!! __('courier.choose_packages_button') !!}
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form__group">
-                                                <input type="hidden" id="urgent_order_input"
-                                                       name="urgent_order" required value="0">
+                                                <input type="hidden" id="urgent_order_input" name="urgent_order" required value="{{ old('urgent_order', 0) }}">
                                                 <label class="form-checkbox d-flex justify-content-start align-items-center" for="userSendUrgent">
-                                                    <input class="form-checkbox__input" type="checkbox" id="userSendUrgent" onclick="set_urgent_order(this, {{$amount_for_urgent}});">
+                                                    <input class="form-checkbox__input" type="checkbox" id="userSendUrgent" onclick="set_urgent_order(this, {{$amount_for_urgent}});" {{ old('urgent_order') == 1 ? 'checked' : '' }}>
                                                     <span class="form-checkbox__span"></span>
                                                     <span class="form-checkbox__text">{!! __('courier.urgent_order_button') !!}</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -169,9 +181,7 @@
                                                 <th class="table-orders-result-preview__th font-n-b">{!! __('table.internal_w_debt') !!}</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>

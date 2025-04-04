@@ -55,12 +55,14 @@
 
 
                         </div>
+                        @if(count($logs)>0)
                         <div class="d-flex justify-content-center align-items-center">
                             <a href="#" class="profile-more-btn d-flex justify-content-center align-items-center">
                                 <span class="profile-more-btn__title font-n-b">Daha çox</span>
                                 <img class="profile-more-btn__img" src="/web/images/content/profile-more.png" alt="More">
                             </a>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -120,3 +122,17 @@
 });
 </script>
 @endsection
+@if(count($logs)==0)
+    @section('styles')
+        <style>
+            @media (max-width: 575.98px) {
+                .footer{
+                    padding: 10px 0;
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                }
+            }
+        </style>
+    @endsection
+@endif

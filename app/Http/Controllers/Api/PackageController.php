@@ -64,6 +64,46 @@ class PackageController extends Controller
             return 0;
         }
     }
+    public function SearchTracking(Request $request){
+        $validator = Validator::make($request->all(), [
+            'track_number' => ['required'],
+            'status' => ['required','in:1,2']
+        ]);
+        if ($validator->fails()) {
+            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Tracking is reuqired'],422);
+        }
+        if($request->status==1){
+            $url='http://parcelsapp.com/az/tracking/'.$request['track_number'];
+            return response(['case' => 'success', 'title' => 'Oops!', 'url' => $url]);
+        }else{
+            $package = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
+                ->leftJoin('container', 'package.last_container_id', '=', 'container.id')
+                ->leftJoin('flight', 'container.flight_id', '=', 'flight.id')
+                ->leftJoin('lb_status as s', 'package.last_status_id', '=', 's.id')
+                ->leftJoin('currency as cur', 'item.currency_id', '=', 'cur.id')
+                ->leftJoin('currency as cur_package', 'package.currency_id', '=', 'cur_package.id')
+                ->leftJoin('seller', 'package.seller_id', '=', 'seller.id')
+                ->leftJoin('filial as f', 'package.branch_id', '=', 'f.id')
+                ->whereNull('package.deleted_by')
+                ->where('package.number',$request->input('track_number'))
+                ->select(
+                    'package.id',
+                    'package.internal_id',
+                    'package.number as track',
+                    'package.last_status_date',
+                    'package.last_status_id',
+                    's.status_' . App::getLocale() . ' as status',
+                    's.color as status_color'
+                )
+                ->orderBy('package.id', 'desc')
+                ->first();
+            if($package){
+                return response(['case' => 'success', 'title' => 'Oops!', 'package' => $package]);
+            }else{
+                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Tracking not found'],422);
+            }
+        }
+    }
  
     public function get_sent(Request $request){
         $header = $request->header('Accept-Language');
