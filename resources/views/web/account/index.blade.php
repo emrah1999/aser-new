@@ -23,8 +23,7 @@
                                     <span class="nav-tab-categories__link-title d-none d-md-block"> {{$country->name}}</span>
                                 </a>
                             @endforeach
-
-                                    <a href="{{route('get_country_details', ['locale' => App::getLocale(), 'special'])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-5">
+                            <a href="{{route('get_country_details', ['locale' => App::getLocale(), 'special'])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-5">
                                         <img  class="nav-tab-categories__link-img" src="https://asercargo.az/web/images/content/flag-usa.png" alt="">
                                         <span class="nav-tab-categories__link-title d-none d-md-block">New York</span>
 
@@ -41,6 +40,7 @@
 @section('styles')
     <style>
         @media (max-width: 575.98px) {
+            
             .footer{
                 padding: 10px 0;
                 position: absolute;
@@ -48,6 +48,14 @@
                 width: 100%;
             }
         }
+
+        @media (max-width: 800.98px) {
+            
+            .nav-tab-categories__link {
+                margin-right: 4px;
+            }
+        }
     </style>
 @endsection
+
 

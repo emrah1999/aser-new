@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\App;
 
 class Faq extends Model
 {
-    protected $table = 'faqs';
+    protected $table = 'faqs2';
 
     protected static function boot()
     {
         parent::boot();
 
-        static::addGlobalScope(new DeletedScope('faqs'));
+        static::addGlobalScope(new DeletedScope('faqs2'));
     }
 
     public function getQuestionAttribute($value) {

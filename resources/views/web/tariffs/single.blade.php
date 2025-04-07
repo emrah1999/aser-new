@@ -47,7 +47,12 @@
                                         @foreach($tariffAll->where('type_id', 1) as $tariff)
                                             <tr class="table-tarifs__tbody-tr">
                                                 @php($rate = $tariff->rate == 0 ? $tariff->charge : $tariff->rate)
-                                                <td class="table-tarifs__tbody-td font-n-b">{{$tariff->from_weight}} Kq - {{$tariff->to_weight}} Kq</td>
+                                                @if($tariff->to_weight > 1000)
+                                                <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight', ['from_weight' => $tariff->from_weight]) !!}</td>
+
+                                               @else
+                                               <td class="table-tarifs__tbody-td font-n-b">{{$tariff->from_weight}} Kq - {{$tariff->to_weight}} Kq</td>
+                                                @endif
                                                 <td class="table-tarifs__tbody-td text-right">{{$tariff->icon}}{{$rate}} / ₼{{ $tariff->amount_azn }}</td>
                                             </tr>
                                         @endforeach

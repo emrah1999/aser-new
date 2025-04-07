@@ -46,24 +46,6 @@ class PackageController extends Controller
         });
     }
 
-    private function calculate_exchange_rate($rates, $from, $to)
-    {
-        try {
-            if ($from == $to) {
-                return 1;
-            }
-
-            foreach ($rates as $rate) {
-                if ($rate->from_currency_id == $from && $rate->to_currency_id == $to) {
-                    return $rate->rate;
-                }
-            }
-
-            return 0;
-        } catch (\Exception $exception) {
-            return 0;
-        }
-    }
     public function SearchTracking(Request $request){
         $validator = Validator::make($request->all(), [
             'track_number' => ['required'],
@@ -102,6 +84,25 @@ class PackageController extends Controller
             }else{
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Tracking not found'],422);
             }
+        }
+    }
+
+    private function calculate_exchange_rate($rates, $from, $to)
+    {
+        try {
+            if ($from == $to) {
+                return 1;
+            }
+
+            foreach ($rates as $rate) {
+                if ($rate->from_currency_id == $from && $rate->to_currency_id == $to) {
+                    return $rate->rate;
+                }
+            }
+
+            return 0;
+        } catch (\Exception $exception) {
+            return 0;
         }
     }
  

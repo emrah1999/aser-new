@@ -48,9 +48,9 @@ function change_price_for_special_product (number) {
   }
 
   total = total.toFixed(2)
-
+  var currency_name=$("#currency_name").val();
   $('#total_price_' + number)
-    .html(' ' + total + ' TL ')
+    .html(' ' + total +' '+ currency_name)
     .attr('price', total)
 
   let total_price = 0

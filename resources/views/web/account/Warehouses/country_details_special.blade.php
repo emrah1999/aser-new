@@ -49,6 +49,14 @@
             height: 100%;
         }
 
+        
+        @media (max-width: 800.98px) {
+            
+            .nav-tab-categories__link {
+                margin-right: 4px;
+            }
+        }
+
 
     </style>
 @endsection

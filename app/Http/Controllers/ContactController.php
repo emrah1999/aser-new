@@ -25,7 +25,7 @@ class ContactController extends HomeController
             ->first();
         $breadcrumbs=1;
 
-        return view('web.contact.header-contact',compact('title', 'breadcrumbs'));
+        return view('web.contact.footer-contact',compact('title', 'breadcrumbs'));
     }
 
     public function message(Request $request)

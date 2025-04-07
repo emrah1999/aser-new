@@ -14,9 +14,9 @@ class CityController extends Controller
 
     public function get_cities(Request $request){
 
-        $header = $request->header('Accept-Language');
+        $header = $request->header('Language');
         $cities = Cities::whereNull('deleted_at')
-        ->select('id','name_' . $header, 'created_at')
+        ->select('id','name_' . $header.' as title' , 'created_at')
         ->get();
         
         return response($cities);

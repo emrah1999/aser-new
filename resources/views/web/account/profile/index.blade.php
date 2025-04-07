@@ -117,7 +117,6 @@
 
 @endsection
 
-
 @section('styles')
     <style>
         @media (max-width: 575.98px) {

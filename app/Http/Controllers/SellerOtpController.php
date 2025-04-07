@@ -4,11 +4,11 @@
     
     use App\Seller;
     use App\SellerOtp;
-    use http\Message;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Validator;
+
 
     class SellerOtpController extends Controller
     {
@@ -29,12 +29,6 @@
 
             return view('front.account.seller_otp', compact('sellerOtps'));
         }
-        
-        /**
-         * Show the form for creating a new resource.
-         *
-         * @return \Illuminate\Http\Response
-         */
 
         public function getTrendyolOtp(){
             $data=[];
@@ -87,6 +81,12 @@
                 ]);
             }
         }
+        
+        /**
+         * Show the form for creating a new resource.
+         *
+         * @return \Illuminate\Http\Response
+         */
         public function create()
         {
             $sellers = Seller::get();
@@ -97,7 +97,7 @@
          * Store a newly created resource in storage.
          *
          * @param  \Illuminate\Http\Request  $request
-         * @return \Illuminate\Contracts\Auth\Authenticatable
+         * @return \Illuminate\Http\RedirectResponse
          */
         public function store(Request $request)
         {
@@ -112,7 +112,7 @@
                 'otp_code' => 'Otp kod',
                 'otp_text' => 'Track Id',
             ]);
-
+        
             if ($validator->fails()) {
                 if ($request->is('api/*')) {
                     return response()->json([
@@ -121,22 +121,22 @@
                         'message' => 'Məlumatlar düzgün deyil'
                     ], 422);
                 }
-
+        
                 return redirect()->back()
                     ->withInput()
                     ->withErrors($validator)
                     ->with(['case' => 'error']);
             }
-
+        
             if ($request->filled('otp_code') && $request->filled('otp_text')) {
                 $request->merge([
                     'is_active' => 0,
                     'created_by' => Auth::id(),
                     'seller_id' => 2,
                 ]);
-
+        
                 SellerOtp::create($request->all());
-
+        
                 if ($request->is('api/*')) {
                     return response()->json([
                         'case' => 'success',
@@ -144,7 +144,7 @@
                         'content' => __('static.success')
                     ]);
                 }
-
+        
                 return redirect()->route('get_seller_otp', ['locale' => App::getLocale()])
                     ->with([
                         'case' => 'success',
@@ -152,7 +152,7 @@
                         'content' => __('static.success')
                     ]);
             }
-
+        
             // Bu hissəyə düşərsə, valid input yoxdur
             if ($request->is('api/*')) {
                 return response()->json([
@@ -160,14 +160,13 @@
                     'content' => 'Məlumatları düzgün daxil edin'
                 ], 422);
             }
-
+        
             return redirect()->back()->with([
                 'case' => 'error',
                 'content' => 'Məlumatları düzgün daxil edin'
             ]);
         }
-
-
+        
         /**
          * Display the specified resource.
          *

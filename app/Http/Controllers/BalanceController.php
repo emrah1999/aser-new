@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
 class BalanceController extends Controller
@@ -817,6 +818,7 @@ class BalanceController extends Controller
                         'url' => $url
                     ]);
                 }
+				return redirect("https://asercargo.az/".App::getLocale()."/account/special-order");
                 return redirect()->route("special_order_select");
 				
 			} 
@@ -828,6 +830,7 @@ class BalanceController extends Controller
 			Session::flash('class', "page-failed");
 			Session::flash('description', "Ödəniş edilərkən səhv baş verdi!");
 			Session::flash('display', 'block');
+			return redirect("https://asercargo.az/".App::getLocale()."/account/special-order");
 			return redirect()->route("special_order_select");
 		}
 	
@@ -978,7 +981,7 @@ class BalanceController extends Controller
                                         'url' => $url
                                     ]);
                                 }
-								return redirect()->route("get_courier_page");
+								return redirect("/az/account/courier");
 							} else if($payment_type == 'payment'){
                                 if($payment_task->is_api){
                                     $url = $baseUrl . '?status=' . 'page-failed' . '&trans_id=' . $trans_id;
@@ -986,7 +989,16 @@ class BalanceController extends Controller
                                         'url' => $url
                                     ]);
                                 }
-								return redirect()->route("get_payment_page");
+								return redirect("/az/account/balance");
+							}
+							else if($payment_type == 'packages'){
+                                if($payment_task->is_api){
+                                    $url = $baseUrl . '?status=' . 'page-failed' . '&trans_id=' . $trans_id;
+                                    return response()->json([
+                                        'url' => $url
+                                    ]);
+                                }
+								return redirect("/az/account/orders");
 							}
 							else {
                                 if($payment_task->is_api){
@@ -995,21 +1007,22 @@ class BalanceController extends Controller
                                         'url' => $url
                                     ]);
                                 }
-								return redirect()->route("get_balance_page");
+								return redirect("/az/account/balance");
 							}
 						}
-	
+						$user=User::find($user_id);
 						$date = Carbon::today();
 						$rate = ExchangeRate::where(['from_currency_id' => 1, 'to_currency_id' => 3]) // usd -> azn
+						
 						->whereDate('from_date', '<=', $date)->whereDate('to_date', '>=', $date)
 							->select('rate')
 							->first();
 						if (!$rate) {
 							// rate note found
-							Session::flash('message', "Zəhmət olmasa operatorla əlaqə saxlayın.");
-							Session::flash('class', "page-failed");
-							Session::flash('description', "Ödəniş balansa əlavə edilərkən xəta baş verdi. Ödəniş kodu: " . $trans_id);
-							Session::flash('display', 'block');
+							// Session::flash('message', "Zəhmət olmasa operatorla əlaqə saxlayın.");
+							// Session::flash('class', "page-failed");
+							// Session::flash('description', "Ödəniş balansa əlavə edilərkən xəta baş verdi. Ödəniş kodu: " . $trans_id);
+							// Session::flash('display', 'block');
 							if ($payment_type == 'courier') {
                                 if($payment_task->is_api){
                                     $url = $baseUrl . '?status=' . 'page-failed' . '&trans_id=' . $trans_id;
@@ -1017,7 +1030,8 @@ class BalanceController extends Controller
                                         'url' => $url
                                     ]);
                                 }
-								return redirect()->route("get_courier_page");
+								return redirect("https://asercargo.az/".strtolower($user->language)."/account/courier");
+								return redirect()->route("get_courier_page", ['locale' => $user->language]);
 							} else if($payment_type == 'payment'){
                                 if($payment_task->is_api){
                                     $url = $baseUrl . '?status=' . 'page-failed' . '&trans_id=' . $trans_id;
@@ -1025,7 +1039,18 @@ class BalanceController extends Controller
                                         'url' => $url
                                     ]);
                                 }
-								return redirect()->route("get_payment_page");
+								return redirect("https://asercargo.az/".strtolower($user->language)."/account/balance");
+								return redirect()->route("get_payment_page", ['locale' => $user->language]);
+							}
+							else if($payment_type == 'packages'){
+                                if($payment_task->is_api){
+                                    $url = $baseUrl . '?status=' . 'page-failed' . '&trans_id=' . $trans_id;
+                                    return response()->json([
+                                        'url' => $url
+                                    ]);
+                                }
+								return redirect("https://asercargo.az/".strtolower($user->language)."/account/orders");
+								return redirect()->route("get_payment_page", ['locale' => $user->language]);
 							}
 							else {
                                 if($payment_task->is_api){
@@ -1034,7 +1059,8 @@ class BalanceController extends Controller
                                         'url' => $url
                                     ]);
                                 }
-								return redirect()->route("get_balance_page");
+								return redirect("https://asercargo.az/".strtolower($user->language)."/account/balance");
+								return redirect()->route("get_balance_page", ['locale' => $user->language]);
 							}
 						}
 						$rate_to_azn = $rate->rate;
@@ -1139,6 +1165,60 @@ class BalanceController extends Controller
 								'type' => 'courier'
 							]);
 						}
+						else if ($payment_type == 'packages') {
+							if ($courier_packages != null && strlen($courier_packages) > 0) {
+								$packages_arr = explode(',', $courier_packages);
+	
+								$packages = Package::whereIn('id', $packages_arr)
+									->where('paid_status', 0)
+									//->select('id', 'total_charge_value as amount', 'paid', 'currency_id')
+									->get();
+                                
+                                $pay_for_currency = 0;
+                                $pay_azn = 0;
+                                $pay_usd = 0;
+								foreach ($packages as $package) {
+									//$package_amount = $package->amount - $package->paid;
+	                               
+                                    $result = $this->CalculatePaid($package);
+
+                                    $pay_azn = $result['total_paid_azn'];
+                                    $pay_usd = $result['total_paid_usd'];
+                                    $pay_for_currency = $result['total_paid'];
+            
+                                    $total_pay = $result['pay'];
+									PaymentLog::create([
+										'payment' => $total_pay,
+										'currency_id' => $package->currency_id,
+										'client_id' => $user_id,
+										'package_id' => $package->id,
+                                        'is_courier_order' => 0,
+										'type' => 3, // balance
+										'created_by' => $user_id
+									]);
+								}
+	                            // dd($packages);
+								Package::whereIn('id', $packages_arr)
+									->update([
+                                        'paid' => $pay_for_currency,
+                                        'paid_sum' => $pay_usd,
+                                        'paid_azn' => $pay_azn,
+										'paid_status' => 1,
+										'payment_type_id' => 1
+									]);
+							}
+							$payment_code = Str::random(20);
+							BalanceLog::create([
+								'payment_code' => $payment_code,
+								'amount' => $new_amount,
+								'amount_azn' => $new_amount_azn,
+								'client_id' => $user_id,
+								'status' => 'out',
+								'type' => 'package'
+							]);
+	
+							
+						}
 						else if ($payment_type == 'payment') {
 	
 							PartnerPaymentLog::create([
@@ -1170,11 +1250,12 @@ class BalanceController extends Controller
 
 
                 $status = $class;
-
-				Session::flash('message', $message);
-				Session::flash('class', $class);
-				Session::flash('description', $code_description);
-				Session::flash('display', 'block');
+				$user=User::find($payment_user_id);
+				$lang=$user?$user->language:'az';
+				// Session::flash('message', $message);
+				// Session::flash('class', $class);
+				// Session::flash('description', $code_description);
+				// Session::flash('display', 'block');
 				if ($payment_type == 'courier') {
                     if($payment_task->is_api){
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
@@ -1182,7 +1263,8 @@ class BalanceController extends Controller
                             'url' => $url
                         ]);
                     }
-					return redirect()->route("get_courier_page");
+					return redirect("https://asercargo.az/".strtolower($lang)."/account/courier");
+					return redirect()->route("get_courier_page", ['locale' => $lang]);
 				} else if($payment_type == 'payment'){
                     if($payment_task->is_api){
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
@@ -1190,7 +1272,18 @@ class BalanceController extends Controller
                             'url' => $url
                         ]);
                     }
-					return redirect()->route("get_payment_page");
+					return redirect("https://asercargo.az/".strtolower($lang)."/account/balance");
+					return redirect()->route("get_payment_page", ['locale' => $lang]);
+				}
+				else if($payment_type == 'packages'){
+                    if($payment_task->is_api){
+                        $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
+                        return response()->json([
+                            'url' => $url
+                        ]);
+                    }
+					return redirect("https://asercargo.az/".strtolower($lang)."/account/orders");
+					return redirect()->route("get_payment_page", ['locale' => $lang]);
 				}
 				else {
                     if($payment_task->is_api){
@@ -1199,27 +1292,33 @@ class BalanceController extends Controller
                             'url' => $url
                         ]);
                     }
-					return redirect()->route("get_balance_page");
+					return redirect("https://asercargo.az/".strtolower($lang)."/account/balance");
+					return redirect("/$lang/account/balance");
+					return redirect()->route("get_balance_page", ['locale' => $lang]);
 				}
 			}
 			else
 			{
 				Log::channel('balance_log')->emergency('error', ['payment_key' => $trans_id, 'place' => 'if ($payment_task)else{} ', 'error text' => '$payment_task = false']);
-				Session::flash('message', "Zəhmət olmasa yenidən cəhd edin!");
-				Session::flash('class', "page-failed");
-				Session::flash('description', "Ödəniş edilərkən səhv baş verdi!");
-				Session::flash('display', 'block');
+				// Session::flash('message', "Zəhmət olmasa yenidən cəhd edin!");
+				// Session::flash('class', "page-failed");
+				// Session::flash('description', "Ödəniş edilərkən səhv baş verdi!");
+				// Session::flash('display', 'block');
                 if($payment_task->is_api){
                     $url = $baseUrl . '?status=' . 'page-failed' . '&trans_id=' . $trans_id;
                     return response()->json([
                         'url' => $url
                     ]);
                 }
-				return redirect()->route("get_balance_page");
+				return redirect("https://asercargo.az/az/account/balance");
+				return redirect()->route("get_balance_page", ['locale' => 'az']);
 			}
 	
+			
 		}catch(Exception $exception){
-			//dd($exception);
+			return redirect("https://asercargo.az/az/account/balance");
+			return redirect("/az/account/balance");
+			dd($exception);
 		}
     }
 

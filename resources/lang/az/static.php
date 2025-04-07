@@ -109,4 +109,5 @@ return [
     'selectItem'=>'Zəhmət olmasa, sifariş etmək istədiyiniz ölkəni seçin',
     'germany_info'=>'Diqqət!Anbar ünvanı ilə bərabər şirkətin adını qeyd etməyiniz mütləqdir. Bağlamanın üzərində şirkətin adı qeyd edilmədikdə DHL kuryer şirkəti bağlamanı çatdırmaqdan imtina edir.'
 
+
 ];

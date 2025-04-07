@@ -6,9 +6,17 @@
 <script src="{{asset('web/js/validator.js')}}"></script>
 <script src="{{asset('web/js/calculator.js')}}"></script>
 <script src="{{asset('web/js/app.js')}}"></script>
-<script src="{{asset('web/js/ajax.js?ver=1.1.8')}}"></script>
+@if(strpos(request()->fullUrl(), "special-order")!== false)
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+@endif
+@if(strpos(request()->fullUrl(), "courier")!== false)
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+@endif
+<script src="{{asset('web/js/ajax.js?ver=1.3.5')}}"></script>
 <script src="{{asset('web/js/courier.js')}}"></script>
-<script src="{{asset('web/js/main.js')}}"></script>
+<script src="{{asset('web/js/main.js?v=1.3')}}"></script>
 <script>
 
     

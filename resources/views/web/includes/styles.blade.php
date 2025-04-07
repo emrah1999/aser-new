@@ -6,7 +6,12 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
-
+    .language-col{
+        display: none;
+    }
+    .language-col-mob{
+        display: none !important;
+    }
     .section-margin-top{
         margin-top: 30px;
     }
@@ -62,7 +67,7 @@
         border-radius: 4px;
         list-style: none;
         padding: 0;
-        /*margin: 0;*/
+        /* margin: 0; */
         display: none;
         /*min-width: 250px;*/
 

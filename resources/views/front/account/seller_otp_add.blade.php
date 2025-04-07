@@ -10,7 +10,7 @@
                         @include('web.account.account_left_bar')
 
                         <div class="page-content-right">
-                            @if (session()->has('case') && session('case') === 'error')
+                        @if (session()->has('case') && session('case') === 'error')
                                 <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
                                     </svg>

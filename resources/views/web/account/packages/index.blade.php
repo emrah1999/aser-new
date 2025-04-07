@@ -12,7 +12,7 @@
                                 <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
                             </div>
                             <div class="dropdown-container dropdown-container3 d-none d-lg-block col-md-5 col-6">
-                                <label for="dropdown-toggle3" class="dropdown-label  dropdown-label-1 float-right" id="dropdown-label-package">
+                                <label for="dropdown-toggle3" class="dropdown-label dropdown-label-1 float-right" id="dropdown-label-package">
                                     @if($currentStatus==0)
                                         Bütün bağlamalarım
                                     @elseif($currentStatus==3)
@@ -31,7 +31,7 @@
                                 <ul class="dropdown-menu package-dropdown">
                                     @php
                                         $statuses = [
-                                            ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
+                                         //   ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
                                             ['key' => 'is_warehouse', 'text' => 'Xarici anbardadır', 'status' => 3],
                                             ['key' => 'sent', 'text' => 'Anbardan göndərilib', 'status' => 4],
                                             ['key' => 'in_office', 'text' => 'Bakı ofisindədir', 'status' => 5],
@@ -84,7 +84,7 @@
                                 <ul class="dropdown-menu package-dropdown">
                                     @php
                                         $statuses = [
-                                            ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
+                                           // ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
                                             ['key' => 'is_warehouse', 'text' => 'Xarici anbardadır', 'status' => 3],
                                             ['key' => 'sent', 'text' => 'Anbardan göndərilib', 'status' => 4],
                                             ['key' => 'in_office', 'text' => 'Bakı ofisindədir', 'status' => 5],
@@ -547,7 +547,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
                 </div>
             </div>
         </div>
@@ -591,6 +591,13 @@
             word-break: break-word;
             white-space: normal;
         }
+        @media (max-width: 480px) {
+            .dropdown-label-1 {
+                width: 180px;
+                font-size: 12px;
+                padding: 13px 18px;
+            }
+        }
 
         .dropdown-menu {
             width: 55%;
@@ -623,30 +630,16 @@
             margin-bottom: -5px;
         }
 
-
         #dropdown-label-package {
             width: 60%;
         }
-        @media (max-width: 480px) {
-            .dropdown-label-1 {
-                width: 153px;
-                font-size: 12px;
-                padding: 13px 18px;
-            }
-        }
+
         .th-new {
             padding: 7px 0 !important;
             margin-top: 20px;
             width: 25px;
         }
 
-        /*.table-data__thead-th{*/
-        /*    vertical-align: top;*/
-        /*    width: auto;*/
-        /*}*/
-        /*th:nth-child(6), td:nth-child(6) {*/
-        /*    display: none;*/
-        /*}*/
         @if(count($packages)==0)
         @media (max-width: 575.98px) {
             .footer{
@@ -657,6 +650,14 @@
             }
         }
        @endif
+
+        /*.table-data__thead-th{*/
+        /*    vertical-align: top;*/
+        /*    width: auto;*/
+        /*}*/
+        /*th:nth-child(6), td:nth-child(6) {*/
+        /*    display: none;*/
+        /*}*/
     </style>
 @endsection
 

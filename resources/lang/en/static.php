@@ -181,4 +181,5 @@ return [
     'using_way_delivery_home_title' => 'Your order is being delivered to Baku',
     'germany_info'=>'Attention!It is mandatory to indicate the company name along with the warehouse address. If the company name is not indicated on the package, DHL courier company will refuse to deliver the package.',
 
+
 ];

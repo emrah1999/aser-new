@@ -13,7 +13,6 @@ function show_package_items(id, track, url) {
             '_token': CSRF_TOKEN,
         },
         success: function (response) {
-            console.log(response);
             swal.close();
             if (response.case === 'success') {
                 $("#item_track_number").html(track);
@@ -46,8 +45,7 @@ function show_package_items(id, track, url) {
 
                 $("#items_list").html(body);
 
-                // $("#item-modal").css({"display": "block", "opacity": "1"});
-                $("#item-modal").show();
+                $("#item-modal").css({"display": "block", "opacity": "1"});
             } else {
                 swal(
                     response.title,

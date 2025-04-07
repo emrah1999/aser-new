@@ -44,6 +44,52 @@
                 font-size: 12px;
                 display: none;
             }
+            .custom-tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: normal;
+    word-wrap: break-word;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-tooltip-container:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+            
+
+            @media (max-width: 768px) {
+                .custom-tooltip {
+                    max-width: 90%; 
+                    left: 5%;
+                }
+            }
+
+            .info-icon {
+                display: inline-block;
+                cursor: pointer;
+                position: relative;
+            }
+
+
 
             @keyframes blink {
                 0% {
@@ -216,9 +262,12 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form__group">
-                                <img src="{{asset('uploads/static/info.png')}}" height="15px" width="15px" data-toggle="tooltip" data-placement="right" title="" style="display: inline-block;" data-original-title="Bu bölmə “Dostunu gətir daha çox qazan” kampaniyası üçün nəzərdə tutulmuşdur. Burada, sizi xidmətimizdən istifadə etmək üçün dəvət edən dostunuzun Aser şəxsi nömrəsi yazılmalı və yaxud xidmətimizdən istifadə üçün sizin dəvət linkinizlə gələn dostlarınız qeydiyyat zamanı linkdə sizə məxsus olan Aser şəxsi nömrənizi qeyd etməlidilər.">
-                                <label class="form__label" for="userRefer">{!! __('auth.ParentCode') !!}</label>
-                                <input class="form__input" name="parent_code" value="{{ old('parent_code')}}" type="text" id="userRefer">
+                                <div class="custom-tooltip-container">
+                                    <img src="{{ asset('uploads/static/info.png') }}" height="15px" width="15px">
+                                    <span class="custom-tooltip-text">{!! nl2br(e(__('auth.ParentCode2'))) !!}</span>
+                                </div>
+                                  <label class="form__label" for="userRefer">{!! __('auth.ParentCode') !!}</label>
+                                     <input class="form__input" name="parent_code" value="{{ old('parent_code')}}" type="text" id="userRefer">
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -254,7 +303,7 @@
                                        required>
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'passport_number')
-                                        <strong>{{__('register.passport_number_exists')}}</strong>
+                                        <strong>{!! __('register.passport_number_exists') !!}</strong>
                                     @endif
                                 </div>
                             </div>
@@ -399,5 +448,25 @@
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');
         });
+        document.addEventListener("DOMContentLoaded", function () {
+            let infoIcon = document.getElementById("infoIcon");
+            let tooltip = document.getElementById("customTooltip");
+
+            
+
+            infoIcon.addEventListener("click", function (event) {
+                if (window.innerWidth <= 768) {
+                    event.stopPropagation();
+                    tooltip.style.display = tooltip.style.display === "block" ? "none" : "block";
+                }
+            });
+
+            document.addEventListener("click", function () {
+                if (window.innerWidth <= 768) {
+                    tooltip.style.display = "none";
+                }
+            });
+            });
+
     </script>
 @endsection

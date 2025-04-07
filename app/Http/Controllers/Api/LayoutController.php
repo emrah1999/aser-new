@@ -76,16 +76,14 @@ class LayoutController extends Controller
     public function faq(Request $request)
     {
         try {
-            $header = $request->header('Accept-Language');
+            $header = $request->header('Language');
             $faqs = Faq::select("question_$header", "answer_$header")->get();
 
             foreach ($faqs as $faq) {
-                $faq->{"question_$header"} = strip_tags($faq->{"question_$header"});
-                $faq->{"answer_$header"} = strip_tags($faq->{"answer_$header"});
-                //$faq->{"question_$header"} = str_replace(["\r", "\n", "\t"], '', $faq->{"question_$header"});
-                //$faq->{"answer_$header"} = str_replace(["\r", "\n", "\t"], '', $faq->{"answer_$header"});
-                $faq->{"question_$header"} = html_entity_decode($faq->{"question_$header"});
-                $faq->{"answer_$header"} = html_entity_decode($faq->{"answer_$header"});
+                $faq->{"question"} = strip_tags($faq->{"question_$header"});
+                $faq->{"answer"} = strip_tags($faq->{"answer_$header"});
+                
+                
             }
 
 

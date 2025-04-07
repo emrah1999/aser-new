@@ -115,10 +115,10 @@
 //         title: confirm_message,
 //         type: 'warning',
 //         showCancelButton: true,
-//         cancelButtonText: 'No',
+//         cancelButtonText: 'Xeyr',
 //         confirmButtonColor: '#3085d6',
 //         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes!'
+//         confirmButtonText: 'Bəli!'
 //     }).then(function (result) {
 //         if (result.value) {
 //             swal({
@@ -203,10 +203,10 @@
 //         title: confirm_message,
 //         type: 'warning',
 //         showCancelButton: true,
-//         cancelButtonText: 'No',
+//         cancelButtonText: 'Xeyr',
 //         confirmButtonColor: '#3085d6',
 //         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes!'
+//         confirmButtonText: 'Bəli!'
 //     }).then(function (result) {
 //         if (result.value) {
 //             swal({
@@ -382,10 +382,10 @@
 //                 title: confirm_message,
 //                 type: 'warning',
 //                 showCancelButton: true,
-//                 cancelButtonText: 'No',
+//                 cancelButtonText: 'Xeyr',
 //                 confirmButtonColor: '#3085d6',
 //                 cancelButtonColor: '#d33',
-//                 confirmButtonText: 'Yes!'
+//                 confirmButtonText: 'Bəli!'
 //             }).then(function (result) {
 //                 if (result.value) {
 //                     swal({
@@ -444,10 +444,10 @@
 //         title: confirm_message,
 //         type: 'warning',
 //         showCancelButton: true,
-//         cancelButtonText: 'No',
+//         cancelButtonText: 'Xeyr',
 //         confirmButtonColor: '#3085d6',
 //         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes!'
+//         confirmButtonText: 'Bəli!'
 //     }).then(function (result) {
 //         if (result.value) {
 //             swal({
@@ -780,7 +780,7 @@
 //                 cancelButtonText: 'No',
 //                 confirmButtonColor: '#3085d6',
 //                 cancelButtonColor: '#d33',
-//                 confirmButtonText: 'Yes!'
+//                 confirmButtonText: 'Bəli!'
 //             }).then(function (result) {
 //                 if (result.value) {
 //                     swal({
@@ -899,8 +899,8 @@ $(document).ready(function () {
         },
         success: function (response) {
             if (response.case === 'success') {
-                let token = response['token'];
-                location.href = "https://www.paytr.com/odeme/guvenli/" + token;
+                let url = response[0];
+                location.href = url;
             } else {
                 form_submit_message(response, false, false);
             }
@@ -915,10 +915,10 @@ function delete_special_order(e, url) {
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'No',
+        cancelButtonText: 'Xeyr',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        confirmButtonText: 'Bəli!'
     }).then(function (result) {
         if (result.value) {
             swal({
@@ -1003,10 +1003,10 @@ function delete_order(e, url) {
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'No',
+        cancelButtonText: 'Xeyr',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        confirmButtonText: 'Bəli!'
     }).then(function (result) {
         if (result.value) {
             swal({
@@ -1062,8 +1062,9 @@ function pay_special_order(url, e) {
         },
         success: function (response) {
             if (response.case === 'success') {
-                let token = response['token'];
-                location.href = "https://www.paytr.com/odeme/guvenli/" + token;
+                let url = response[0];
+                //location.href = "https://www.paytr.com/odeme/guvenli/" + token;
+                location.href = url;
                 // $(e).attr("disabled", true).removeAttr("onclick").text("Ödənilib");
                 // swal({
                 //     position: 'top-end',
@@ -1136,7 +1137,7 @@ function calculate_amount(url) {
 }
 
 function paid_package_new(e, locale, url) {
-    console.log('here');
+    // console.log('here');
     let confirm_message = $(e).attr("data-confirm");
     let balance = $(e).attr("data-balance");
     let balance_message = $(e).attr("data-balance-message");
@@ -1155,65 +1156,147 @@ function paid_package_new(e, locale, url) {
         return false;
     }
 
-    if (balance == 0 || balance < amount) {
-        swal(
-            'Oops!',
-            balance_message,
-            'warning'
-        );
-        return false;
-    }
+    // if (balance == 0 || balance < amount) {
+    //     swal(
+    //         'Oops!',
+    //         balance_message,
+    //         'warning'
+    //     );
+    //     return false;
+    // }
 
     swal({
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'No',
+        showCloseButton: true,
         confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        cancelButtonColor: '#d33',       
+        cancelButtonText: 'Kartla ödə',
+        confirmButtonText: 'Balansdan ödə'
+        
     }).then(function (result) {
-        if (result.value) {
+        if (result.dismiss === swal.DismissReason.cancel) {
             swal({
-                title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
-                text: 'Loading, please wait...',
-                showConfirmButton: false
-            });
-            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
-            $.ajax({
-                type: "post",
-                url: url,
-                data: {
-                    '_token': CSRF_TOKEN,
-                },
-                success: function (response) {
-                    swal.close();
-                    if (response.case === 'success') {
-                        let title;
-                        if (response.residue === 0) {
-                            title = response.title
-                        } else {
-                            title = response.title + "(Qalıq borcunuz: " + response.residue + ")";
+                title: confirm_message,
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Xeyr',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli!'
+            }).then(function (result) {
+                if (result.value) {
+                    swal({
+                        title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
+                        text: 'Loading, please wait...',
+                        showConfirmButton: false
+                    });
+                    let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
+                    $.ajax({
+                        type: "post",
+                        url: url+'?type=2',
+                        data: {
+                            '_token': CSRF_TOKEN,
+                        },
+                        success: function (response) {
+                            swal.close();
+                            if (response.case === 'success') {
+                                if(response.pay){
+                                    window.location.href = response.content;
+                                }else{
+                                    swal(
+                                        "Diqqət",
+                                        "Yenidən cəhd edin!",
+                                        "warning"
+                                    ) 
+                                }
+                            }else if(response.case === 'warning'){
+                                swal(
+                                    response.title,
+                                    //response.content + ' ' + response.action,
+                                    response.content,
+                                    response.case,
+                                ).then(function() {
+                                    var amount = response.debt === 0 ? response.amount_paid : response.debt;
+                                    window.location.href = 'balance?amount='+amount;
+                                });
+                            } else {
+                                swal(
+                                    response.title,
+                                    response.content,
+                                    response.case
+                                );
+                            }
                         }
-                        swal({
-                            position: 'top-end',
-                            type: response.case,
-                            title: title,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        location.reload();
-                    } else {
-                        swal(
-                            response.title,
-                            response.content,
-                            response.case
-                        );
-                    }
+                    });
+                } else {
+                    return false;
                 }
             });
-        } else {
-            return false;
+        } else if (result.value) {
+            swal({
+                title: confirm_message,
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Xeyr',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli!'
+            }).then(function (result) {
+                if (result.value) {
+                    swal({
+                        title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
+                        text: 'Loading, please wait...',
+                        showConfirmButton: false
+                    });
+                    let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
+                    $.ajax({
+                        type: "post",
+                        url: url+'?type=1',
+                        data: {
+                            '_token': CSRF_TOKEN,
+                        },
+                        success: function (response) {
+                            swal.close();
+                            if (response.case === 'success') {
+                                let title;
+                                if (response.residue === 0) {
+                                    title = response.title
+                                } else {
+                                    title = response.title + "(Qalıq borcunuz: " + response.residue + ")";
+                                }
+                                swal({
+                                    position: 'top-end',
+                                    type: response.case,
+                                    title: title,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                location.reload();
+                            }else if(response.case === 'warning'){
+                                swal(
+                                    response.title,
+                                    //response.content + ' ' + response.action,
+                                    response.content,
+                                    response.case,
+                                ).then(function() {
+                                    var amount = response.debt === 0 ? response.amount_paid : response.debt;
+                                    window.location.href = 'balance?amount='+amount;
+                                });
+                            } else {
+                                swal(
+                                    response.title,
+                                    response.content,
+                                    response.case
+                                );
+                            }
+                        }
+                    });
+                } else {
+                    return false;
+                }
+            });
         }
     });
 }
@@ -1225,10 +1308,10 @@ function login_to_sub_account(e, url, referal_id) {
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'No',
+        cancelButtonText: 'Xeyr',
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        confirmButtonText: 'Bəli!'
     }).then(function (result) {
         if (result.value) {
             swal({
@@ -1537,71 +1620,211 @@ function uploadInvoice(event, url) {
     });
 }
 
+// function bulk_paid_package_new(e, url) {
+//     let packageIdsInputHidden = document.getElementById('package_ids');
+//     let packageIds = JSON.parse(packageIdsInputHidden.value);
+//     let confirm_message = $(e).attr("data-confirm");
+//     swal({
+//         title: confirm_message,
+//         type: 'warning',
+//         showCancelButton: true,
+//         cancelButtonText: 'Xeyr',
+//         confirmButtonColor: '#3085d6',
+//         cancelButtonColor: '#d33',
+//         confirmButtonText: 'Bəli!'
+//     }).then(function (result) {
+//         if (result.value) {
+//             swal({
+//                 title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
+//                 text: 'Loading, please wait...',
+//                 showConfirmButton: false
+//             });
+//             let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
+//             // console.log(CSRF_TOKEN);
+//             $.ajax({
+//                 type: "post",
+//                 url: url,
+//                 data: {
+//                     '_token': CSRF_TOKEN,
+//                     'package_ids': packageIds
+//                 },
+//                 success: function (response) {
+//                     swal.close();
+//                     if (response.case === 'success') {
+//                         let title;
+
+//                         title = response.title
+//                         swal({
+//                             position: 'top-end',
+//                             type: response.case,
+//                             title: title,
+//                             showConfirmButton: false,
+//                             timer: 1500
+//                         });
+//                         location.reload();
+//                     }else if(response.case === 'warning'){
+//                         swal(
+//                             response.title,
+//                             //response.content + ' ' + response.action,
+//                             response.content,
+//                             response.case,
+//                         ).then(function() {
+//                             var amount = response.debt === 0 ? response.amount_paid : response.debt;
+//                             window.location.href = 'balance?amount='+amount;
+//                         });
+//                     }
+//                     else {
+//                         swal(
+//                             response.title,
+//                             //response.content + ' ' + response.action,
+//                             response.content,
+//                             response.case,
+//                         );
+//                     }
+//                 }
+//             });
+//         } else {
+//             return false;
+//         }
+//     });
+// }
+
 function bulk_paid_package_new(e, url) {
     let packageIdsInputHidden = document.getElementById('package_ids');
     let packageIds = JSON.parse(packageIdsInputHidden.value);
     let confirm_message = $(e).attr("data-confirm");
+
     swal({
-        title: confirm_message,
+        title: 'Ödəniş üsulunu seçin',
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'No',
-        confirmButtonColor: '#3085d6',
+        showCloseButton: true,
+        cancelButtonText: 'Kartla ödə',
+        confirmButtonText: 'Balansdan ödə',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
+        confirmButtonColor: '#3085d6'
     }).then(function (result) {
-        if (result.value) {
+        if (result.dismiss === swal.DismissReason.cancel) {
             swal({
-                title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
-                text: 'Loading, please wait...',
-                showConfirmButton: false
-            });
-            let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
-            console.log(CSRF_TOKEN);
-            $.ajax({
-                type: "post",
-                url: url,
-                data: {
-                    '_token': CSRF_TOKEN,
-                    'package_ids': packageIds
-                },
-                success: function (response) {
-                    swal.close();
-                    if (response.case === 'success') {
-                        let title;
+                title: confirm_message,
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Xeyr',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli!'
+            }).then(function (result) {
+                if (result.value) {
+                    swal({
+                        title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
+                        text: 'Loading, please wait...',
+                        showConfirmButton: false
+                    });
 
-                        title = response.title
-                        swal({
-                            position: 'top-end',
-                            type: response.case,
-                            title: title,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        location.reload();
-                    }else if(response.case === 'warning'){
-                        swal(
-                            response.title,
-                            //response.content + ' ' + response.action,
-                            response.content,
-                            response.case,
-                        ).then(function() {
-                            var amount = response.debt === 0 ? response.amount_paid : response.debt;
-                            window.location.href = 'balance?amount='+amount;
-                        });
-                    }
-                    else {
-                        swal(
-                            response.title,
-                            //response.content + ' ' + response.action,
-                            response.content,
-                            response.case,
-                        );
-                    }
+                    let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
+
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        data: {
+                            '_token': CSRF_TOKEN,
+                            'package_ids': packageIds,
+                            'type':2
+                        },
+                        success: function (response) {
+                            swal.close();
+                            if (response.case === 'success') {
+                                // let title = response.title;
+                                if(response.pay){
+                                    window.location.href = response.content;
+                                }else{
+                                    swal(
+                                        "Diqqət",
+                                        "Yenidən cəhd edin!",
+                                        "warning"
+                                    ) 
+                                }
+                                
+                            } else if (response.case === 'warning') {
+                                swal(
+                                    response.title,
+                                    response.content,
+                                    response.case
+                                )
+                            } else {
+                                swal(
+                                    response.title,
+                                    response.content,
+                                    response.case
+                                );
+                            }
+                        }
+                    });
+                } else {
+                    return false;
                 }
             });
-        } else {
-            return false;
+        } else if (result.value) {
+            swal({
+                title: confirm_message,
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Xeyr',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli!'
+            }).then(function (result) {
+                if (result.value) {
+                    swal({
+                        title: '<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><span class="sr-only">Please wait...</span>',
+                        text: 'Loading, please wait...',
+                        showConfirmButton: false
+                    });
+
+                    let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('secret');
+
+                    $.ajax({
+                        type: "post",
+                        url: url,
+                        data: {
+                            '_token': CSRF_TOKEN,
+                            'package_ids': packageIds,
+                            'type':1
+                        },
+                        success: function (response) {
+                            swal.close();
+                            if (response.case === 'success') {
+                                let title = response.title;
+                                swal({
+                                    position: 'top-end',
+                                    type: response.case,
+                                    title: title,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                location.reload();
+                            } else if (response.case === 'warning') {
+                                swal(
+                                    response.title,
+                                    response.content,
+                                    response.case
+                                ).then(function () {
+                                    var amount = response.debt === 0 ? response.amount_paid : response.debt;
+                                    window.location.href = 'balance?amount=' + amount;
+                                });
+                            } else {
+                                swal(
+                                    response.title,
+                                    response.content,
+                                    response.case
+                                );
+                            }
+                        }
+                    });
+                } else {
+                    return false;
+                }
+            });
         }
     });
 }

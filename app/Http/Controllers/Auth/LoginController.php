@@ -60,7 +60,8 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        try {
+            $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -88,7 +89,10 @@ class LoginController extends Controller
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+            return $this->sendFailedLoginResponse($request);
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
     }
 
     public function showLoginForm()

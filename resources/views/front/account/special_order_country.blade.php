@@ -318,10 +318,10 @@
     }
 
     .country-flag img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 50%;
-        margin-right: 15px;
+        width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
     }
 
     .country-name {
@@ -329,9 +329,7 @@
         color: #333;
         white-space: nowrap;
         text-overflow: ellipsis;
-
-        /*overflow: hidden;*/
-
+        /* overflow: hidden; */
         max-width: 150px;
         margin-right: -3px;
     }
@@ -550,6 +548,16 @@
             display: block;
         }
     }
+    @if(count($orders)==0)
+        @media (max-width: 575.98px) {
+            .footer{
+                padding: 10px 0;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+       @endif
 </style>
 
 @endsection

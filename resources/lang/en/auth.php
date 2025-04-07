@@ -27,7 +27,7 @@ return [
     'got_to_registr' => 'Go to register',
     'otp' => 'Your OTP code has been sent to your mobile number',
     'otp_button' => 'Confirm',
-
+    'ParentCode2' => 'This section is designed for the "Bring a friend, earn more" campaign. Here, you should enter the Aser customer code of your friend who invited you to use our service, or the friends you invited to use our service should enter your Aser customer code during registration.',
     'Name' => 'Name',
     'Surname' => 'Surname',
     'Email' => 'Email',

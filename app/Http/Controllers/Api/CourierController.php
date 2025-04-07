@@ -61,6 +61,7 @@ class CourierController extends Controller
 
         View::share(['exchange_rates_for_header' => $rates, 'general_settings' => $general_settings]);
     }
+
     public function get_azerpost_courier_page(Request $request){
         $courier_settings = CourierSettings::first();
 

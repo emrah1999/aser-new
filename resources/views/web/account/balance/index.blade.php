@@ -36,6 +36,9 @@
                                                     @case('courier')
                                                         Kuriyer
                                                         @break
+                                                    @case('package')
+                                                        Bağlama
+                                                        @break
                                                     @case('cash')
                                                         Nağd
                                                         @break
@@ -47,7 +50,7 @@
                                         </div>
                                         <p class="thumbnail-balances-transactions__price font-n-b
                                             {{ $log->status === 'in' ? 'thumbnail-balances-transactions__price--green' : 'thumbnail-balances-transactions__price--red' }}">
-                                            {{ $log->status === 'in' ? '+' : '-' }}{{$log->amount}} {{ strtoupper($log->currency ?? 'AZN') }}
+                                            {{ $log->status === 'in' ? '+' : '-' }}{{$log->amount}} USD
                                         </p>
                                     </div>
                                 </div>
@@ -122,17 +125,3 @@
 });
 </script>
 @endsection
-@if(count($logs)==0)
-    @section('styles')
-        <style>
-            @media (max-width: 575.98px) {
-                .footer{
-                    padding: 10px 0;
-                    position: absolute;
-                    bottom: 0;
-                    width: 100%;
-                }
-            }
-        </style>
-    @endsection
-@endif

@@ -10,13 +10,12 @@
 |
 */
 
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', function () {
     return redirect('/' . app()->getLocale());
 });
-Route::get('/muradTest', function () {
-    return view('muradTest');
-});
+Route::get('/testMurad', [RegisterController::class, 'testMurad']);
 Route::get('/language/{locale}', 'LanguageController@set_locale_language')->name("set_locale_language");
 Route::get('/r', 'RedirectController@redirect')->name('redirect_seller');
 Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () {
@@ -41,7 +40,6 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
 
     Route::post('/reset-password', 'OTPController@reset')->name('reset_email');
-
 //    Route::get('/tracking-search', 'TrackingSearchController@get_tracking_search')->name("get_tracking_search");
     Route::get('/local-tracking-search', 'TrackingSearchController@local_tracking_search')->name("local_tracking_search");
 //    Route::get('/tracking-search-in-ASER', 'TrackingSearchController@tracking_search_in_aser')->name('tracking_search_in_aser');
@@ -218,11 +216,12 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     });
     Route::get('/{slug?}','MenuController@index')->name("menuIndex");
 });
-//Route::get('change-password','ResetPasswordController@resetPasswordPage')->name('resetPasswordPage');
-Route::post('verifyResetOtp','OTPController@verifyForgetOtp')->name('verifyForgetOtp');
 Route::post('/change-notification', 'AccountController@edit_notification')->name("edit-notification");
 
 Route::get('/secret/backend/cache-clear', 'ApiController@cache_clear');
+
+//Route::get('change-password','ResetPasswordController@resetPasswordPage')->name('resetPasswordPage');
+Route::post('verifyResetOtp','OTPController@verifyForgetOtp')->name('verifyForgetOtp');
 
 Route::get('/balance/callback/millikart', 'BalanceController@callback_millikart')->name("callback_millikart");
 Route::post('/secret/payment/callback/paytr', 'BalanceController@callback_paytr')->name("callback_paytr");

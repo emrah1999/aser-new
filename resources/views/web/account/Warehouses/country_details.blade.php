@@ -49,6 +49,13 @@
             height: 100%;
         }
 
+        
+        @media (max-width: 800.98px) {
+            
+            .nav-tab-categories__link {
+                margin-right: 4px;
+            }
+        }
 
     </style>
 @endsection
@@ -86,7 +93,7 @@
                         </div>
                         <div class="tab-content tab-content-categories">
                             <div class="tab-pane fade show active" id="turkey">
-                                @if($currentCountry==9)
+                            @if($currentCountry==9)
                                     <div class="row">
                                         <div class=" information-div col-md-1">
                                              <img src="{{asset('uploads/static/info.png')}}"  height="15px" width="15px" data-toggle="tooltip" data-placement="right" >
