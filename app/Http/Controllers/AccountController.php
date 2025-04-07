@@ -726,17 +726,30 @@ class AccountController extends Controller
                     'package.internal_w_debt',
                     'f.name as branch_name',
                     'countries.name_az as country_name',
-                    'countries.new_flag as country_flag'
+                    'countries.new_flag as country_flag',
+                    'countries.currency_id as payment_button'
                 )
                 ->orderBy('package.id', 'desc')
                 ->get()
-                ->map(function ($package) {
+                ->transform(function ($package) {
                     $package->country_flag = $package->country_flag
                         ? 'https://www.asercargo.az/' . ltrim($package->country_flag, '/')
                         : null;
+
+                    $package->invoice_doc = $package->invoice_doc
+                        ? 'https://www.asercargo.az/' . ltrim($package->invoice_doc, '/')
+                        : null;
+
+                    if ($package->paid_status == 1) {
+                        $package->payment_button = __('static.paid');
+                    } elseif ($package->amount > 0) {
+                        $package->payment_button = __('buttons.pay');
+                    } else {
+                        $package->payment_button = null;
+                    }
+
                     return $package;
                 });
-
 
 
             $has_rate = true;
