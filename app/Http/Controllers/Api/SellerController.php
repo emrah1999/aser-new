@@ -14,7 +14,7 @@ class SellerController extends Controller
     public function get_sellers()
     {
         try {
-            $sellers = Seller::whereNull('deleted_by')->select('id', 'title')->get();
+            $sellers = Seller::whereNull('deleted_by')->select('id', 'title')->orderBy('name','asc')->get();
             return compact('sellers');
         } catch (\Exception $e) {
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!']);
