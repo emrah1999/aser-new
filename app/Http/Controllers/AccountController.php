@@ -586,6 +586,7 @@ class AccountController extends Controller
 
             $query = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
                 ->leftJoin('container', 'package.last_container_id', '=', 'container.id')
+                ->leftJoin('countries', 'package.country_id', '=', 'countries.id')
                 ->leftJoin('flight', 'container.flight_id', '=', 'flight.id')
                 ->leftJoin('lb_status as s', 'package.last_status_id', '=', 's.id')
                 ->leftJoin('currency as cur', 'item.currency_id', '=', 'cur.id')
@@ -707,7 +708,6 @@ class AccountController extends Controller
                     'package.chargeable_weight',
                     'package.unit',
                     'package.total_charge_value as amount',
-                    //'package.amount_usd',
                     'package.paid_status',
                     'package.paid',
                     'package.paid_sum as paid_usd',
@@ -720,14 +720,23 @@ class AccountController extends Controller
                     'flight.name as flight',
                     's.status_' . App::getLocale() . ' as status',
                     's.color as status_color',
-                    'package.issued_to_courier_date', // has courier (null -> false, not null -> true)
+                    'package.issued_to_courier_date',
                     'package.amount_azn',
                     'package.external_w_debt',
                     'package.internal_w_debt',
-                    'f.name as branch_name'
+                    'f.name as branch_name',
+                    'countries.name_az as country_name',
+                    'countries.new_flag as country_flag'
                 )
                 ->orderBy('package.id', 'desc')
-                ->get();
+                ->get()
+                ->map(function ($package) {
+                    $package->country_flag = $package->country_flag
+                        ? 'https://www.asercargo.az/' . ltrim($package->country_flag, '/')
+                        : null;
+                    return $package;
+                });
+
 
 
             $has_rate = true;
