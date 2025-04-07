@@ -343,9 +343,10 @@
 @endsection
 @section('styles')
     <style>
-        .img-responsive-2{
+         .img-responsive-2{
             width: 65%;
         }
+
         .owl-carousel-dot {
             width: 10px;
             height: 10px;
@@ -408,12 +409,10 @@
                 margin-top: 10px;
             }
             .img-responsive{
-                height: 75%;
+                height: 100%;
                 width: 100%;
             }
-            .thumbnail-partners__img{
-                width: 100%;
-            }
+
             .img-responsive-2 {
                 text-align: center;
                 width: 70%;
@@ -422,6 +421,9 @@
                 display: block;
             }
 
+            .thumbnail-partners__img{
+                width: 100%;
+            }
         }
 
         @media only screen and (max-width: 1024px) {

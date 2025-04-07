@@ -26,9 +26,10 @@
 
 								<div class="n-order-top flex space-between">
 									<h1 class="n-order-title"><img src="{{$countrFlag->flag}}" alt=""> {!! __('static.order_title') !!}</h1>
+									<input type="hidden" id="currency_name" value="{{ $currency_name }}">
 								</div>
 								<div class="last-30-day-notf" style="line-height: 20px; margin-top: 0px !important; margin-bottom: 0!important;">
-									Mobil telefonların sifarişi “Sifariş et” xidməti ilə qəbul olunmur.
+									Mobil telefonların sifarişi “Sifariş et” xidməti ilə qəbul olunmur. 
 								</div>
 								<div class="last-30-day-notf" style="line-height: 20px; margin-top: 0px !important; margin-bottom: 0!important;">
 									Bir məhsulun dəyəri 700 ABŞ dollarından yuxarı olan sifarişlər qəbul olunmur.
@@ -854,6 +855,8 @@
 	}
 </style>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 
 @section('scripts')
 @php($gender_id = Auth::user()->gender())
@@ -864,31 +867,18 @@
 @endif
 
 <script>
-	special_orders_percent = {
-		{
-			$percent
-		}
-	};
+	special_orders_percent = parseFloat('{{$percent}}');
 
 	$(document)
 		.ready(function() {
-			let not_paid_count = {
-				{
-					$not_paid_count
-				}
-			};
+			let not_paid_count = parseFloat('{{$not_paid_count}}');
 
 			if (not_paid_count > 0) {
 				swal(
-					'{!! __('
-					static.attention ') !!}!',
-					'{!! __('
-					static.special_order_not_paid_orders_attention ', ['
-					client ' => Auth::user()->name(), '
-					gender ' => $gender, '
-					count ' => $not_paid_count]) !!}',
-					'warning'
-				)
+            '{!! __('static.attention') !!}!',
+            '{!! __('static.special_order_not_paid_orders_attention', ['client' => Auth::user()->name(), 'gender' => $gender, 'count' => $not_paid_count]) !!}',
+            'warning'
+          )
 			}
 		})
 </script>

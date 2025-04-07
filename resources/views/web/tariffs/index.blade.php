@@ -16,7 +16,7 @@
 @endsection
 @section('content')
     <div class="content" id="content">
-        <section class="section section-partners">
+    <section class="section section-partners">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
                 <div class="owl-carousel owl-partners-2 owlPartners">
@@ -43,7 +43,7 @@
                     <button class="owl-carousel-dot" data-index="{{ $index }}"></button>
                 @endforeach
             </div>
-        </section>
+    
 
         @if($text->name1!=null && $text->name1!='')
 
@@ -89,7 +89,7 @@
                 <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>
                 <div class="owl-carousel owl-partners owlPartners">
                     @foreach($partners as $partner)
-                        <div class="owl-partners__item-2">
+                        <div class="owl-partners__item">
                             <div class="thumbnail thumbnail-partners d-flex justify-content-center align-items-center">
                                 <div class="thumbnail-partners__img-block text-center">
                                     <img class="thumbnail-partners__img img-responsive-2"
@@ -270,130 +270,33 @@
 
 @section('styles')
     <style>
-        .owl-carousel-navigation {
-            text-align: center;
-        }
-        .carousel-button-img {
-            color: var(--white3);
-        }
-        .carousel-button-color {
-            color: grey;
-        }
-        .breadcrumb-nav {
-            background-color: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-        .breadcrumb-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .breadcrumb-item {
-            font-size: 14px;
-            color: #6c757d;
-            display: flex;
-            align-items: center;
-        }
         .img-responsive-2{
             width: 65%;
         }
-        .breadcrumb-link {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: 500;
-            transition: color 0.3s ease-in-out;
-        }
-        .breadcrumb-link:hover {
-            color: #0056b3;
-        }
-        .breadcrumb-item:not(:last-child)::after {
-            content: "›";
-            margin-left: 8px;
-            color: #6c757d;
-            font-weight: bold;
-        }
-        .breadcrumb-item[aria-current] {
-            font-weight: 600;
-            color: #343a40;
-        }
-        .owl-carousel-dot {
-            width: 10px !important;
-            height: 10px !important;
-            /*margin: 150px;*/
+         .owl-carousel-dot {
+            width: 10px;
+            height: 10px;
+            margin: 5px;
             border-radius: 50%;
-            /*border: 20px ;*/
+            border: none;
             background-color: grey;
             cursor: pointer;
             transition: background 0.3s;
         }
-        .owl-carousel-dot.active {
-            background: #007bff;
-        }
-        @media only screen and (max-width: 320px) {
-            .breadcrumb-nav {
-                padding: 5px;
-            }
-            .breadcrumb-item {
-                font-size: 11px;
-            }
-            .thumbnail-tarifs__img {
-                width: 65%;
-            }
-        }
-        @media only screen and (max-width: 480px) {
-            .breadcrumb-nav {
-                padding: 8px 10px;
-                font-size: 12px;
-            }
-            .breadcrumb-item, .breadcrumb-link {
-                font-size: 12px;
-            }
-            .thumbnail-tarifs__img {
-                width: 70%;
-            }
-            .thumbnail-tarifs__desc {
-                width: 90%;
-            }
-            .img-responsive {
-                height: 75%;
-                width: 75%;
-            }
-            .owl-carousel-navigation {
-                margin-top: 10px;
-            }
-            .thumbnail-partners__img {
-                width: 100%;
-            }
-            .owl-carousel-dot {
-                width: 10px !important;
-                height: 10px !important;
-                margin: 3px;
-            }
-            .img-responsive-2 {
-                text-align: center;
-                width: 70%;
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-            }
-        }
+
         @media only screen and (max-width: 767px) {
-            .thumbnail-tarifs__img {
+            .thumbnail-tarifs__img{
                 width: 75%;
             }
-            .titles-content p {
+            .titles-content p{
                 width: 90%;
             }
-            .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc {
+            .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
                 width: 85%;
                 text-align: center;
                 margin: 0 auto;
             }
-            .thumbnail-tarifs__img-block {
+            .thumbnail-tarifs__img-block{
                 text-align: center;
             }
             .owl-carousel-dot {
@@ -402,6 +305,44 @@
                 margin: 3px;
             }
         }
+        .owl-carousel-dot.active {
+            background: #007bff;
+        }
+
+        @media only screen and (max-width: 480px) {
+            .breadcrumb-nav {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            .breadcrumb-item {
+                font-size: 12px;
+            }
+            .breadcrumb-link {
+                font-size: 12px;
+            }
+            .owl-carousel-dot {
+                width: 8px;
+                height: 8px;
+                margin: 3px;
+            }
+            .thumbnail-tarifs__img {
+                width: 70%;
+            }
+            .thumbnail-tarifs__desc {
+                width: 90%;
+            }
+            .owl-carousel-navigation {
+                margin-top: 10px;
+            }
+            .img-responsive{
+                height: 75%;
+                width: 75%;
+            }
+            .thumbnail-partners__img{
+              width: 100%;
+            }
+        }
+
         @media only screen and (max-width: 1024px) {
             .breadcrumb-nav {
                 padding: 12px;
@@ -437,13 +378,84 @@
                 width: 60%;
             }
         }
+
+        .owl-carousel-navigation{
+            text-align: center;
+        }
+        .carousel-button-img{
+            color: var(--white3);;
+        }
+        .carousel-button-color{
+            color: grey;
+        }
+        .breadcrumb-nav {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .breadcrumb-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb-item {
+            font-size: 14px;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .breadcrumb-link:hover {
+            color: #0056b3;
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: "›";
+            margin-left: 8px;
+            color: #6c757d;
+            font-weight: bold;
+        }
+
+        .breadcrumb-item[aria-current] {
+            font-weight: 600;
+            color: #343a40;
+        }
+        @media only screen and (max-width: 767px) {
+            .thumbnail-tarifs__img{
+                width: 75%;
+            }
+            .titles-content p{
+                width: 90%;
+            }
+            .thumbnail-tarifs__desc, .thumbnail-works__desc, .thumbnail-cargo__desc{
+                width: 90%;
+                text-align: center;
+                margin: 0 auto;
+            }
+            .thumbnail-tarifs__img-block{
+                text-align: center;
+            }
+        }
+
     </style>
 @endsection
 
 @section('scripts')
 <script>
 
-    $(document).ready(function () {
+$(document).ready(function () {
         const owl = $(".owl-partners-2");
 
         owl.owlCarousel({
@@ -461,7 +473,7 @@
         owl.on('changed.owl.carousel', function (event) {
             const currentIndex = event.item.index - event.relatedTarget._clones.length / 2;
             const totalItems = event.item.count;
-            let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems;
+            let normalizedIndex = (currentIndex % totalItems + totalItems) % totalItems; 
 
             dots.removeClass("active");
 
@@ -473,7 +485,6 @@
             owl.trigger('to.owl.carousel', [dotIndex, 300]);
         });
     });
-
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -481,6 +492,7 @@
     });
 
     $(".form-calculator__btn").click(function(e) {
+    
         e.preventDefault();
         var formData = $('#formCalculator').serializeArray();
         $.ajax({
@@ -498,5 +510,8 @@
             }
         });
     });
+
 </script>
+
+
 @endsection

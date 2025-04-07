@@ -49,11 +49,14 @@ class UserDetailsController extends Controller
 
 
         if (!Hash::check($request->old_password , $user->password)){
+
             return response()->json([
                 'status'=>false,
                 'message' => 'Old password is incorrect'
             ],400);
+            
         }
+
         if (!($request->new_password==$request->confirm_password)){
             return response()->json([ 'status'=>false,'message'=>'New password and confirm password is incorrect'],400);
         }

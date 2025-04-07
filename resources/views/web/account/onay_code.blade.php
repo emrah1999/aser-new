@@ -1,6 +1,6 @@
 @extends('web.layouts.web')
 @section('content')
-<section class="content-page-section ">
+<section class="content-page-section">
     <div class="page-content-block content-margin">
         <div class="container-fluid page_containers">
             <div class="container-lg">
@@ -99,9 +99,8 @@
         background: #e9ecef;
     }
     .content-margin{
-        margin-top:100px;
+        margin-top: 100px;
     }
-
 
     @media (max-width: 575.98px) {
         .footer{

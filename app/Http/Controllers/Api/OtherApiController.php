@@ -22,22 +22,61 @@ use Illuminate\Support\Facades\Validator;
 
 class OtherApiController extends Controller
 {
-    public function seller(){
+    public function seller()
+    {
         $seller = Seller::whereNull('deleted_by')->select('id', 'name', 'title', 'url', 'img')->orderBy('title')->get();
-
-        return $seller;
+        $data = [];
+        foreach ($seller as $s) {
+            array_push($data, [
+                'id' => $s->id,
+                'name' => $s->name,
+                'title' => $s->title,
+                'url' => $s->url,
+                'img' => $s->img ? 'https://manager.asercargo.az' . $s->img : null
+            ]);
+        }
+        return $data;
     }
 
     public function categories(Request $request){
-        $header = $request->header('Accept-Language');
+        $header = $request->header('Language');
         $categories = Category::orderBy('name_' . $header)
-            ->select('id', 'name_' . $header, 'country_id')
+            ->select('id', 'name_' . $header.' as title', 'country_id')
             ->whereNull('deleted_by')
             ->get();
 
         return $categories;
     }
+    public function prohibitedItems(Request $request)
+    {
+        $header = $request->header('Language');
+        try {
+            
+            $items = DB::table('prohibited_items')
+                ->leftJoin('countries', 'countries.id', '=', 'prohibited_items.country_id')
+                ->select('countries.name_' . $header . ' as title', 'prohibited_items.item_' . $header . ' as text')
+                ->where('prohibited_items.country_id', '=', $request->country_id)
+                ->first();
 
+            if (!$items) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cannot find item'
+                ]);
+            }
+
+
+            return response()->json([
+                'status' => true,
+                'data' => $items
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something went wrong'
+            ]);
+        }
+    }
     public function currency(){
         $currencies = Currency::whereNull('deleted_by')->select('id', 'name', 'icon')->orderBy('id')->get();
         return $currencies;

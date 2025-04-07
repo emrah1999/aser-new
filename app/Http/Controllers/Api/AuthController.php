@@ -8,9 +8,9 @@ use App\Notifications\Emails;
 use App\TokensForLogin;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use App\OTP;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -67,11 +67,6 @@ class AuthController extends Controller
 		], Response::HTTP_OK);
 	}
 
-	public function test(Request $request)
-	{
-		$user = User::where('id', $request->get('user_id'))->get();
-		return $user;
-	}
     public function new_password(Request $request){
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
@@ -145,6 +140,12 @@ class AuthController extends Controller
 
     }
 
+
+	public function test(Request $request)
+	{
+		$user = User::where('id', $request->get('user_id'))->get();
+		return $user;
+	}
 
     public function sendResetLinkEmail(Request $request)
     {

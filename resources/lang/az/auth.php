@@ -42,6 +42,7 @@ return [
     'PassportFIN' => 'Pasport FIN',
     'Gender' => 'Cins',
     'ParentCode' => 'Referal Kodu',
+    'ParentCode2' => 'Bu bölmə “Dostunu gətir daha çox qazan” kampaniyası üçün nəzərdə tutulmuşdur. Burada, Sizi xidmətimizdən istifadə etmək üçün dəvət edən dostunuzun Aser müştəri kodu yazılmalı və yaxud xidmətimizdən istifadə üçün Sizin dəvət etdiyiniz dostlarınız qeydiyyat zamanı Sizin Aser müştəri kodunuzu qeyd etməlidilər.',
     'Password' => 'Şifrə',
     'agreement' => 'Üzvlük haqqında müqaviləni oxudum və razılaşdım.*',
     'agreement_terms' =>'Müqavilə şərtləri ilə tanışlıq məcburidir',

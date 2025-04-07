@@ -8,8 +8,7 @@
     use App\SmsTask;
     use App\User;
     use Carbon\Carbon;
-    use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\{App, DB, Mail, Validator};
     class SendOTPCode
     {
         public function send_sms($client_id, $phone, $otp_session)
@@ -168,7 +167,7 @@
                 $control_id = time() . 'az';
                 $phone_arr_az = array_unique($phone_arr_az);
                 $userFullName = $package->name. ' '. $package->surname;
-                Mail::to('muradnesrullayev19@gmail.com')->send(new RegisterMail($userFullName,$otp));
+                Mail::to($package->email)->send(new RegisterMail($userFullName,$otp));
 
                     $package_arr_for_sms = array();
 

@@ -80,21 +80,18 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="seller_id">{!! __('inputs.seller_name') !!}</label>
+                                    <label class="form__label" for="userSex">{!! __('inputs.seller_name') !!}</label>
                                     <div class="form__select-wrapper">
                                         <select class="form__select select2" id="seller_id" name="seller_id" {{$disable_input}} {{$seller_id_required}} onchange="show_other_seller_input(this);">
                                             <option value="">{!! __('inputs.seller_name') !!}</option>
                                             @foreach($sellers as $seller)
-                                                <option value="{{$seller->id}}" {{$package->seller_id == $seller->id ? 'selected' : ''}}>
-                                                    {{$seller->title}}
-                                                </option>
+                                                <option value="{{$seller->id}}" {{$package->seller_id == $seller->id ? 'selected' : ''}}>{{$seller->title}}</option>
                                             @endforeach
                                             <option value="0" {{$package->seller_id == 0 ? 'selected' : ''}}>{!! __('static.other') !!}...</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="col-sm-12">
                                 <div class="form__group" id="other_seller_area">
@@ -105,21 +102,22 @@
 
                             <div class="col-sm-12">
                                 <div class="form__group">
-                                    <label class="form__label" for="category_id">{!! __('inputs.category') !!}</label>
+                                    <label class="form__label" for="userSex">{!! __('inputs.category') !!}</label>
                                     <div class="form__select-wrapper">
-                                        <select class="form__select select2" id="category_id" name="category_id" required {{$disable_input}}>
+                                        <select class="form__select" id="category_id"  name="category_id" required {{$disable_input}}>
                                             <option value="">{!! __('inputs.select_category') !!}</option>
                                             @foreach($categories as $category)
-                                                <option value="{{$category->id}}" {{ $category->id == $package->category_id ? 'selected' : '' }}>
-                                                    {{$category->name}}
-                                                </option>
+                                                @if($category->id == $package->category_id)
+                                                    <option selected value="{{$category->id}}">{{$category->name}}</option>
+                                                @else
+                                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                             </div>
-
-
+                            
                             <div class="col-sm-12">
                                 <div class="form__group">
                                     <label class="form__label" for="title">{!! __('labels.product_name') !!}</label>
@@ -211,13 +209,24 @@
 @endsection
 
 @section('styles')
-
+<style>
+    .select2-container--default .select2-selection--single {
+        height: 52px !important;
+        padding-top: 10px;
+    }
+    .select2-selection__arrow{
+        display: none;
+    }
+</style>
 @endsection
 
 
 @section('scripts')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-
+    $('#seller_id').select2();
+    $('#category_id').select2();
     function handleFileSelect(event) {
         var input = event.target;
         var fileName = input.files[0].name;
@@ -225,28 +234,4 @@
     }
 
 </script>
-<script>
-    $(document).ready(function() {
-        $('#category_id').select2({
-            placeholder: "{{ __('inputs.select_category') }}",
-            allowClear: true,
-            width: '100%'
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        if ($.fn.select2) {
-            $('#category_id, #seller_id').select2({
-                placeholder: "{{ __('inputs.select_category') }}",
-                allowClear: true,
-                width: '100%'
-            });
-        } else {
-            console.error("Select2 yüklenemedi!");
-        }
-    });
-</script>
-
-
 @endsection

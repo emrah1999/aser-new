@@ -18,9 +18,9 @@ class CalculateController extends Controller
     public function index(Request $request)
     {
         try {
-            $header = $request->header('Accept-Language');
-            $countries = Country::where('is_active', 1)->select('name_' . $header, 'id')->orderBy('name_' . App::getLocale())->get();
-            $types = TariffType::select('id', 'name_'. $header)->where('is_active', 1)->get();
+            $header = $request->header('Language');
+            $countries = Country::where('is_active', 1)->select('name_' . $header.' as title', 'id')->orderBy('name_' . App::getLocale())->get();
+            $types = TariffType::select('id', 'name_'. $header.' as title')->get();
 
             return with([
                 'countries' => $countries,

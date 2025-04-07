@@ -168,7 +168,6 @@
             }
         }
 
-
     </style>
 @endsection
 @section('scripts')

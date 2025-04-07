@@ -116,59 +116,6 @@ class TariffController extends HomeController
             }
 
             $default_contract = $contract->id;
-            $tariffs = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
-                ->leftJoin('currency', 'contract_detail.currency_id', '=', 'currency.id')
-                ->leftJoin('tariff_types', 'contract_detail.type_id', '=', 'tariff_types.id')
-                ->leftJoin('exchange_rate', function($join) {
-                    $join->on('exchange_rate.from_currency_id', '=', 'contract_detail.currency_id')
-                        ->whereDate('exchange_rate.from_date', '<=', Carbon::today())
-                        ->whereDate('exchange_rate.to_date', '>=', Carbon::today())
-                        ->where('exchange_rate.to_currency_id', '=', 3); // to azn
-                })
-                ->where('contract_detail.contract_id', $default_contract)
-                ->orderBy('countries.sort', 'desc')
-                ->orderBy('contract_detail.country_id')
-                ->orderBy('contract_detail.type_id')
-                ->orderBy('contract_detail.from_weight')
-                ->whereNotIn('contract_detail.departure_id', [14])
-                ->whereNotIn('country_id', [1, 4, 10, 13])
-                ->where('country_id',$country_id)
-                ->where('contract_detail.type_id', 1)
-                ->select(
-                    'contract_detail.title_' . 'az',
-                    'contract_detail.country_id',
-                    'contract_detail.from_weight',
-                    'contract_detail.to_weight',
-                    DB::raw('FORMAT(contract_detail.to_weight, 3) AS to_weight'),
-                    'contract_detail.rate',
-                    'contract_detail.charge',
-                    'contract_detail.sales_rate',
-                    'contract_detail.sales_charge',
-                    'contract_detail.type_id',
-                    'countries.flag',
-                    'contract_detail.currency_id as currency',
-                    'currency.icon',
-                    'tariff_types.name_'. 'az' . ' as tariff_type_name',
-                    'contract_detail.description_' . 'az' . ' as description',
-                    DB::raw('CASE 
-                    WHEN exchange_rate.rate IS NOT NULL THEN 
-                        CEIL((exchange_rate.rate * 
-                        CASE WHEN contract_detail.rate = 0 THEN contract_detail.charge ELSE contract_detail.rate END) * 100) / 100
-                    ELSE 0 
-                 END AS amount_azn'),
-                    DB::raw('CASE
-                        WHEN exchange_rate.rate IS NOT NULL
-                            AND (contract_detail.sales_rate > 0 OR contract_detail.sales_charge > 0) THEN
-                            CEIL((exchange_rate.rate *
-                            CASE
-                                WHEN contract_detail.sales_rate > 0 THEN contract_detail.sales_rate
-                                ELSE contract_detail.sales_charge
-                            END) * 100) / 100
-                        ELSE 0
-                     END AS sales_amount_azn')
-                )
-                ->get();
-
 
 
 
@@ -183,6 +130,11 @@ class TariffController extends HomeController
                     ])
                 ->where('id', $country_id)
                     ->first();
+
+            $newText = str_replace("http://asercargo.az", "https://manager.asercargo.az", $country->internal_images);
+           
+            $country->internal_images=$newText;
+            $country->save();
 
 //            return $country;
 
@@ -234,7 +186,7 @@ class TariffController extends HomeController
                 $country_id = 9;
             }elseif ($country_id==4) {
                 $country_id = 12;
-            }elseif ($country_id==5) {
+            }else {
                 $country_id = 14;
             }
 

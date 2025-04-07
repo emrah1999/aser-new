@@ -106,8 +106,6 @@
 }
 .mobile-dropdown-menu li {
     padding: 5px 15px !important;
-    font-family: unset !important;
-
 }
 .dropdown-menu li a {
     color: #333;
@@ -115,7 +113,6 @@
     display: block;
     font-weight: bold;
     font-size: 12px;
-    font-family: unset !important;
 }
 .mobile-user-name{
     text-transform: capitalize;
@@ -135,7 +132,7 @@
     display: block;
 }
 .mobile-dropdown-menu li a {
-    font-weight: 500;
+    font-weight: unset;
 }
 .media-profile{
     margin-top: -12px;
@@ -156,7 +153,7 @@
     .media-profile{
         margin-top: -42px;
     }
-    .dropdown-menu {
+.dropdown-menu {
         width: 150px;
         margin-left : -60px ;
     }
@@ -176,6 +173,7 @@
     .dropdown-menu {
         width: 150px;
         margin-left : -60px ;
+
     }
     .footer-menu{
         text-align: center
@@ -197,7 +195,7 @@
 
     .dropdown-menu {
         width: 100%;
-        margin-left : -60px ;
+ 	margin-left : -60px ;
     }
 }
 
@@ -296,8 +294,11 @@
 } 
 .mobile-menu,.mobile-account-menu{
     padding: 10px;
+    margin-top: 41px;
 }
-
+.mobile-menu-top-0{
+    margin-top: 0px;
+}
 /*PROFILE*/
 .profile-title-block{
     margin-bottom: 40px;
@@ -461,9 +462,6 @@
     }
     .modal-otp__title{
         margin-bottom: 20px;
-    }
-    .nav-profile-menu__link-title{
-        font-family: "Poppins", sans-serif;
     }
     .modal-otp__desc{
         margin-bottom: 20px;

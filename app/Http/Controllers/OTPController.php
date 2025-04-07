@@ -232,7 +232,7 @@ class OTPController extends Controller
 
         $otp_session = $this->generateRandomCode();
         $sendOtp = new SendOTPCode();
-        $sendOtp->send_mail($otp->client_id, $request->phone1, $otp_session);
+        $sendOtp->send_mail($user->id, $request->email, $otp_session);
         return response()->json([
             'success' => true,
             'message'=>'otp gonderildi',

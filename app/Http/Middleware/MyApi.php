@@ -30,7 +30,7 @@ class MyApi
 
 			$user = TokensForLogin::leftJoin('users as user', 'tokens_for_login.client_id', '=', 'user.id')
 					->where(['tokens_for_login.token' => $token])
-					->where('tokens_for_login.created_at', '>', $current_time - 2 * 30 * 24 * 60 * 60)
+					->where('tokens_for_login.created_at', '>', date('Y-m-d H:i:s',$current_time - 2 * 30 * 24 * 60 * 60))
 					->whereNull('user.deleted_by')
 					->select('user.id', 'user.language')
 					->orderBy('id', 'desc')
