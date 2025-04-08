@@ -29,8 +29,8 @@ Route::post('/user/update', [\App\Http\Controllers\AccountController::class, 'po
 Route::get('/packages', [\App\Http\Controllers\AccountController::class, 'get_packages'])->middleware('myApi')->name('api_get_packages');
 Route::get('/statuses', [\App\Http\Controllers\AccountController::class, 'get_statuses'])->middleware('myApi')->name('api_get_statuses');Route::get('/branches', [\App\Http\Controllers\AccountController::class, 'get_branches'])->name('get_branches');
 Route::post('/add_preliminary_declaration', [\App\Http\Controllers\AccountController::class, 'post_preliminary_declaration'])->middleware('myApi')->name('api_add_preliminary_declaration');
-Route::get('/package/update/{package_id}', [\App\Http\Controllers\AccountController::class, 'get_package_update'])->middleware('myApi')->name('api_get_package_update');
-Route::post('/package/update/{package_id}', [\App\Http\Controllers\AccountController::class, 'post_package_update'])->middleware('myApi')->name('api_post_package_update');
+Route::get('/package/update/{locale}/{package_id}', [\App\Http\Controllers\AccountController::class, 'get_package_update'])->middleware('myApi')->name('api_get_package_update');
+Route::post('/package/update/{locale}/{package_id}', [\App\Http\Controllers\AccountController::class, 'post_package_update'])->middleware('myApi')->name('api_post_package_update');
 Route::delete('/package/delete/{package_id}', [\App\Http\Controllers\AccountController::class, 'delete_package'])->middleware('myApi')->name('api_delete_package');
 Route::get('/currencies', [\App\Http\Controllers\AccountController::class, 'get_currencies'])->middleware('myApi')->name('api_get_currency');
 Route::get('/categories', [\App\Http\Controllers\AccountController::class, 'get_categories'])->middleware('myApi')->name('api_get_categories');

@@ -24,7 +24,19 @@ class OtherApiController extends Controller
 {
     public function seller()
     {
-        $seller = Seller::whereNull('deleted_by')->select('id', 'name', 'title', 'url', 'img')->orderBy('title')->get();
+        $first = Seller::where('id', 2824)
+            ->whereNull('deleted_by')
+            ->select('id', 'name', 'title', 'url', 'img')
+            ->get();
+
+        $rest = Seller::whereNull('deleted_by')
+            ->where('id', '!=', 2824)
+            ->select('id', 'name', 'title', 'url', 'img')
+            ->orderBy('title')
+            ->get();
+
+        $seller = $first->merge($rest);
+
         $data = [];
         foreach ($seller as $s) {
             array_push($data, [
@@ -35,8 +47,10 @@ class OtherApiController extends Controller
                 'img' => $s->img ? 'https://manager.asercargo.az' . $s->img : null
             ]);
         }
+
         return $data;
     }
+
 
     public function categories(Request $request){
         $header = $request->header('Language');

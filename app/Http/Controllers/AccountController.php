@@ -736,9 +736,9 @@ class AccountController extends Controller
                         ? 'https://www.asercargo.az/' . ltrim($package->country_flag, '/')
                         : null;
 
-                    $package->invoice_doc = $package->invoice_doc
-                        ? 'https://www.asercargo.az/' . ltrim($package->invoice_doc, '/')
-                        : null;
+//                    $package->invoice_doc = $package->invoice_doc
+//                        ? 'https://www.asercargo.az/' . ltrim($package->invoice_doc, '/')
+//                        : null;
 
                     if ($package->paid_status == 1) {
                         $package->payment_button = __('static.paid');
@@ -760,6 +760,28 @@ class AccountController extends Controller
             if (!$rates) {
                 // rate note found
                 $has_rate = false;
+            }
+            foreach ($packages as $package) {
+                if ($this->api) {
+                    if ($package->invoice_doc) {
+                        $package->invoice_doc = 'https://asercargo.az' . $package->invoice_doc;
+                    }
+                    $package->paid_status_text = $package->paid_status == 1 ? __('static.paid') : __('buttons.pay');
+
+                    if ($package->last_status_id == 7) {
+                        $package->invoice_status_text = "Qadağan edilən bağlamalara invoys yüklənə bilməz";
+                    } else {
+                        if ($package->invoice_status == 1) {
+                            $package->invoice_status_text = __('status.no_invoice');
+                        } else if ($package->invoice_status == 2) {
+                            $package->invoice_status_text = __('status.incorrect_invoice');
+                        } else if ($package->invoice_status == 3) {
+                            $package->invoice_status_text = __('status.correct_invoice');
+                        } else if ($package->invoice_status == 4) {
+                            $package->invoice_status_text = __('status.invoice_uploaded');
+                        }
+                    }
+                }
             }
 
             foreach ($packages as $package) {
@@ -1204,6 +1226,11 @@ class AccountController extends Controller
             if($package->last_status_id == 7){
                 return 'Qadağan olunan məhsullarda düzəliş edilə bilməz.';
             }
+            if ($this->api) {
+                return compact(
+                    'package'
+                );
+            }
 
             if ($package) {
                 $sellers = Seller::orderBy('title')->select('id', 'title')->get();
@@ -1245,7 +1272,7 @@ class AccountController extends Controller
 
     public function post_package_update(Request $request, $locale, $package_id)
     {
-        //dd($request->all());
+//        dd($request->all());
         $validator = Validator::make($request->all(), [
             'currency_id' => ['required', 'integer'],
             'seller_id' => ['nullable', 'integer'],
@@ -1258,6 +1285,15 @@ class AccountController extends Controller
             'remark' => ['nullable', 'string', 'max:5000'],
         ]);
         if ($validator->fails()) {
+            if($this->api){
+                return response([
+                    'case' => 'warning',
+                    'title' => 'Oops!',
+                    'type' => 'validation',
+                    'content' => $validator->errors()->toArray()
+                ]);
+            }
+
             return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                 'case' => 'warning',
                 'title' => 'Oops!',
@@ -1267,6 +1303,15 @@ class AccountController extends Controller
             //return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
         }
         if ($request->get('price') < 1) {
+            if($this->api){
+                return response([
+                    'case' => 'warning',
+                    'title' => 'Warning!',
+                    'type' => 'validation',
+                    'content' => 'Invoice price cannot be 0'
+                ]);
+            }
+
             return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                 'case' => 'warning',
                 'title' => 'Warning!',
@@ -1276,6 +1321,14 @@ class AccountController extends Controller
         }
         try {
             if (empty($request->seller_id) && empty($request->other_seller)) {
+                if($this->api){
+                    return response([
+                        'case' => 'warning',
+                        'title' => 'Oops!',
+                        'type' => 'validation',
+                        'content' => 'Seller cannot be empty!'
+                    ]);
+                }
                 return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                     'case' => 'warning',
                     'title' => 'Oops!',
@@ -1287,7 +1340,15 @@ class AccountController extends Controller
             $item_exist = Item::where('package_id', $package_id)->select('id', 'invoice_doc', 'invoice_status')->orderBy('id', 'desc')->first();
 
             if (!$item_exist) {
-                return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
+
+                if($this->api){
+                    return response([
+                        'case' => 'warning',
+                        'title' => 'Oops!',
+                        'type' => 'validation',
+                        'content' => 'Item not found!'
+                    ]);
+                }return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                     'case' => 'warning',
                     'title' => 'Oops!',
                     'type' => 'validation',
@@ -1296,6 +1357,14 @@ class AccountController extends Controller
             }
 
             if ($item_exist->invoice_status == 3) {
+                if($this->api){
+                    return response([
+                        'case' => 'warning',
+                        'title' => 'Oops!',
+                        'type' => 'validation',
+                        'content' => 'Cannot update on Invoice Available status'
+                    ]);
+                }
                 return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                     'case' => 'warning',
                     'title' => 'Oops!',
@@ -1324,6 +1393,14 @@ class AccountController extends Controller
                 ->whereNotIn('package.carrier_status_id', [7, 8])
                 ->select('package.client_id', 'package.country_id', 'package.internal_id', 'last_status_id', 'carrier_status_id')->first();
             if (!$package_exist) {
+                if($this->api){
+                    return response([
+                        'case' => 'warning',
+                        'title' => 'Oops!',
+                        'type' => 'validation',
+                        'content' => 'Package not found or package cannot be updated by customs reason!'
+                    ]);
+                }
                 return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                     'case' => 'warning',
                     'title' => 'Oops!',
@@ -1335,6 +1412,14 @@ class AccountController extends Controller
 
             $client_id = $package_exist->client_id;
             if ($client_id != null && $client_id != $this->userID) {
+                if($this->api){
+                    return response([
+                        'case' => 'warning',
+                        'title' => 'Oops!',
+                        'type' => 'validation',
+                        'content' => 'Access denied!'
+                    ]);
+                }
                 return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                     'case' => 'warning',
                     'title' => 'Oops!',
@@ -1404,7 +1489,7 @@ class AccountController extends Controller
                         ]);
                 }
             }
-            
+
             Item::where('id', $item_exist->id)->update($item_arr);
 
             InvoiceLog::create([
@@ -4242,10 +4327,10 @@ class AccountController extends Controller
         try {
             if($this->api){
                 $statuses=array(
-                [
-                    'id'=>null,
-                    'title'=>__('static.all_orders_status')
-                ],
+//                [
+//                    'id'=>null,
+//                    'title'=>__('static.all_orders_status')
+//                ],
                 [
                     'id'=>3,
                     'title'=>__('static.in_warehouse_status')
