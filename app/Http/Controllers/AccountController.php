@@ -3869,9 +3869,14 @@ class AccountController extends Controller
             $zone_id = $area->zone_id;
 
             $payment_types = CourierZonePaymentTypes::where('courier_zone_payment_type.zone_id', $zone_id)
-                ->select('courier_zone_payment_type.courier_payment_type_id as id')
+                ->where('courier_payment_type_id','<',3)
+                ->select('courier_zone_payment_type.courier_payment_type_id')
                 ->distinct()
                 ->get();
+            foreach ($payment_types as $payment_type) {
+                $payment_type->courier_payment_type_id = 'courier_pay_button_' . $payment_type->courier_payment_type_id;
+            }
+
 
             if($this->api){
                 return response([
@@ -3909,11 +3914,16 @@ class AccountController extends Controller
             $zone_id = $area->zone_id;
 
             $payment_types = CourierZonePaymentTypes::where('courier_zone_payment_type.zone_id', $zone_id)
+                ->where('delivery_payment_type_id','<',3)
                 ->where('courier_zone_payment_type.courier_payment_type_id', $courier_payment_type)
-                ->select('courier_zone_payment_type.delivery_payment_type_id as id')
+                ->select('courier_zone_payment_type.delivery_payment_type_id' )
                 ->distinct()
                 ->get();
-                
+
+            foreach ($payment_types as $payment_type) {
+                $payment_type->delivery_payment_type_id = 'delivery_pay_button_' . $payment_type->delivery_payment_type_id;
+            }
+//
             if($this->api){
                 return response([
                     'case' => 'success', 
@@ -3974,7 +3984,7 @@ class AccountController extends Controller
             'delivery_payment_type_id' => ['required', 'string'],
             'urgent_order' => ['required', 'integer'],
         ], [
-            // Özel hata mesajlarını buraya ekleyebilirsiniz
+
             'packages_list.required' => 'Bağlama seçmək mütləqdir.',
                 'date.required' => 'Tarix seçimi mütləqdir',
             'area_id.required' => 'Metro stansiya seçmək mütləqdir.',
@@ -3987,6 +3997,14 @@ class AccountController extends Controller
         ]);
 
         if ($validator->fails()) {
+            if($this->api){
+                return response([
+                    'title'=> 'error',
+                    'case' => 'error',
+                    'content'=> $validator,
+
+                ]);
+            }
             return redirect()->back()
                 ->withInput()
                 ->withErrors($validator)
@@ -4270,8 +4288,22 @@ class AccountController extends Controller
                 return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
             }
             else {
+                if($this->api){
+                    return response([
+                        'title'=> 'error',
+                        'case' => 'error',
+
+                    ]);
+                }
                 return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
     
+            }
+            if($this->api){
+                return response([
+                    'title'=> 'success',
+                    'case' => 'success',
+                    'content'=> 'Kuryer sifarişi əlavə olundu'
+                ]);
             }
             return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
         } catch (\Exception $exception) {
@@ -4280,6 +4312,14 @@ class AccountController extends Controller
             Log::error('courier_error', [
                 'error' =>$exception
                 ]);
+            if($this->api){
+                return response([
+                    'title'=> 'error',
+                    'case' => 'error',
+                    'content'=> 'Kuryer sifarişi tamamlanmadı',
+
+                ]);
+            }
             return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
         }
     }

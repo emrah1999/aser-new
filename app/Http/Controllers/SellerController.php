@@ -14,6 +14,7 @@ class SellerController extends HomeController
 {
 	public function show_sellers(Request $request)
 	{
+//        return $request;
 		try {
 			$take = 30;
 			$search_arr = array(
@@ -57,6 +58,12 @@ class SellerController extends HomeController
 			$locations = Country::whereNull('deleted_by')->whereNotIn('id', [1, 4, 13, 10])->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
 			$categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
 			$countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'new_flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'sellers' => $sellers,
+                ]);
+            }
 
 			return view("web.sellers.index", compact(
 				'sellers',

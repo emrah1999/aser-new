@@ -10,6 +10,7 @@ use App\Package;
 use App\PackageStatus;
 use App\Seller;
 use App\SmsTask;
+use App\StoreCategory;
 use App\User;
 use Carbon\Carbon;
 use Exception;
@@ -32,8 +33,11 @@ class OtherApiController extends Controller
         $rest = Seller::whereNull('deleted_by')
             ->where('id', '!=', 2824)
             ->select('id', 'name', 'title', 'url', 'img')
-            ->orderBy('title')
-            ->get();
+            ->orderBy('title');
+//        if ($shopId > 2824) {
+//            $rest->where('id', $shopId);
+//        }
+         $rest = $rest->get();
 
         $seller = $first->merge($rest);
 
@@ -49,6 +53,14 @@ class OtherApiController extends Controller
         }
 
         return $data;
+    }
+
+    public function sellerCategories(Request $request)
+    {
+        $header = $request->header('Language');
+        $categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . $header)->orderBy('name_' . App::getLocale())->get();
+        return response()->json($categories);
+
     }
     public function news(Request $request)
     {

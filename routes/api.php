@@ -42,6 +42,7 @@ Route::get('/faq', [\App\Http\Controllers\Api\LayoutController::class, 'faq'])->
 Route::get('/dangerous-goods', [\App\Http\Controllers\Api\LayoutController::class, 'dangerousGoods']);
 Route::get('/calculate-index', [\App\Http\Controllers\Api\CalculateController::class, 'index']);
 Route::post('/calculate-amount', [\App\Http\Controllers\Api\CalculateController::class, 'calculate_amount'])->name("calculate_amount");
+Route::get('/seller-categories', [\App\Http\Controllers\Api\OtherApiController::class, 'sellerCategories']);
 
 Route::get('/news', [\App\Http\Controllers\Api\OtherApiController::class, 'news'])->name('api_news');
 Route::get('/news/{slug}', [\App\Http\Controllers\Api\OtherApiController::class, 'newsSlug']);
@@ -185,7 +186,7 @@ Route::get('/prohibited-items', [\App\Http\Controllers\Api\OtherApiController::c
 
 Route::get('/cities', [\App\Http\Controllers\Api\CityController::class, 'get_cities'])->name('api_get_cities');
 Route::get('/countries', [\App\Http\Controllers\Api\CountryController::class, 'get_countries'])->name('api_get_countries');
-Route::get('/seller', [\App\Http\Controllers\Api\OtherApiController::class, 'seller'])->name('api_seller');
+Route::get('/seller', [\App\Http\Controllers\SellerController::class, 'show_sellers'])->name('api_seller');
 Route::get('/categories', [\App\Http\Controllers\Api\OtherApiController::class, 'categories'])->name('api_categories');
 Route::get('/currency', [\App\Http\Controllers\Api\OtherApiController::class, 'currency'])->name('api_currency');
 Route::get('/tariffs', [\App\Http\Controllers\Api\TariffController::class, 'tariffs'])->name("tariffs");
