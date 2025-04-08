@@ -436,7 +436,7 @@ class AccountController extends Controller
                     'case' => 'success', 
                     'title' => __('static.success'), 
                     'content' => __('static.success'),
-                    'url' => $url
+                    'url' => 'https://www.asercargo.az' . $url
                 ]);
             }
 

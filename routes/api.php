@@ -43,6 +43,9 @@ Route::get('/dangerous-goods', [\App\Http\Controllers\Api\LayoutController::clas
 Route::get('/calculate-index', [\App\Http\Controllers\Api\CalculateController::class, 'index']);
 Route::post('/calculate-amount', [\App\Http\Controllers\Api\CalculateController::class, 'calculate_amount'])->name("calculate_amount");
 
+Route::get('/news', [\App\Http\Controllers\Api\OtherApiController::class, 'news'])->name('api_news');
+Route::get('/news/{slug}', [\App\Http\Controllers\Api\OtherApiController::class, 'newsSlug']);
+
 
 Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
     Route::get('/country-details/{country_id}', [\App\Http\Controllers\Api\CountryDetailsController::class, 'get_country_details'])->name('api_country_details');
