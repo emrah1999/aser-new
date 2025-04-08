@@ -70,7 +70,7 @@ class UserDetailsController extends Controller
     public function user_details(Request $request){
         $user = User::where('id', $this->userID)
             ->whereNull('deleted_at')
-            ->select('id', 'name', 'surname', 'email', 'passport_series','passport_number', 'passport_fin', 'language', 'birthday', 'address1', 'phone1', 'phone2', 'city', 'gender', 'balance', 'is_legality', 'is_partner', 'image', 'read_notification_count')
+            ->select('id', 'name', 'surname', 'email', 'passport_series','passport_number', 'passport_fin', 'language', 'birthday', 'address1', 'phone1', 'phone2', 'city', 'gender', 'balance', 'is_legality', 'is_partner', 'image', 'read_notification_count','branch_id')
             ->first();
 
         return response([

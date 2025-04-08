@@ -4,6 +4,7 @@
     
     use App\Seller;
     use App\SellerOtp;
+    use App\User;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,25 @@
 
     class SellerOtpController extends Controller
     {
+        public function __construct(Request $request)
+        {
+            //		$this->middleware(['auth', 'verified']);
+            $this->middleware(function ($request, $next) {
+
+                if ($request->get('api')) {
+                    App::setlocale($request->get('apiLang') ?? 'en');
+                    $this->userID = $request->get('user_id');
+
+                    if (Auth::guest()) {
+                        $user = User::find($this->userID);
+                        Auth::login($user);
+                    }
+                } else {
+                    $this->userID = Auth::id();
+                }
+                return $next($request);
+                });
+            }
         /**
          * Display a listing of the resource.
          *
