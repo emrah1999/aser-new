@@ -50,6 +50,59 @@ class OtherApiController extends Controller
 
         return $data;
     }
+    public function news(Request $request)
+    {
+        $header = $request->header('Language');
+        $news = DB::table('blogs')->orderBy('name_' . $header)
+            ->select('id', 'name_' . $header . ' as title', 'content_' . $header . ' as content', 'icon', 'slug_'. $header . ' as slug' , 'created_at')
+            ->get();
+        $data = [];
+        foreach ($news as $n) {
+            array_push($data, [
+                'id' => $n->id,
+                'content' => $n->content,
+                'title' => $n->title,
+                'slug' => $n->slug,
+                'date' => date('d.m.Y', strtotime($n->created_at)),
+                'img' => $n->icon ?  $n->icon : null
+            ]);
+        }
+        return $data;
+    }
+    public function newsSlug(Request $request, $slug)
+    {
+
+        $header = $request->header('Language');
+
+        $news = DB::table('blogs')
+            ->where('slug_az', $slug)
+            ->orWhere('slug_en', $slug)
+            ->orWhere('slug_ru', $slug)
+            ->orderBy('name_' . $header)
+            ->select(
+                'id',
+                'name_' . $header . ' as title',
+                'content_' . $header . ' as content',
+                'icon',
+                'slug_' . $header . ' as slug',
+                'created_at'
+            )
+            ->first();
+
+        if (!$news) {
+            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => 'News not found!'], 422);
+        }
+        $data = [
+            'id' => $news->id,
+            'content' => $news->content,
+            'title' => $news->title,
+            'slug' => $news->slug,
+            'date' => date('d.m.Y', strtotime($news->created_at)),
+            'img' => $news->icon ?  $news->icon : null
+        ];
+
+        return response()->json($data);
+    }
 
 
     public function categories(Request $request){
