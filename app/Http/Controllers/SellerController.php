@@ -22,7 +22,7 @@ class SellerController extends HomeController
 				'location' => ''
 			);
 	
-			$query = Seller::orderBy('id');
+			$query = Seller::orderBy('title');
 	
 
 			if ($request->has('shop_categories') && is_array($request->get('shop_categories'))) {
@@ -48,18 +48,24 @@ class SellerController extends HomeController
 				});
 				$search_arr['location'] = $where_location_id;
 			}
-	
-			
-			$sellers = $query->where('has_site', 1)
-				->select('id', 'title as name', 'url', 'img')
-				->paginate(50)->onEachSide(0)
-				->appends($request->query());
+
+
+            $sellers = $query->where('has_site', 1)
+                ->select('id', 'title as name','title', 'url', 'img')
+                ->orderBy('id', 'desc')
+                ->paginate(50)
+                ->onEachSide(0)
+                ->appends($request->query());
 	
 			$locations = Country::whereNull('deleted_by')->whereNotIn('id', [1, 4, 13, 10])->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
 			$categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
 			$countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'new_flag')->orderBy('sort', 'desc')->orderBy('id')->get();
 
             if ($request->is('api/*')) {
+                $sellers->getCollection()->transform(function ($seller) {
+                    $seller->img = 'https://manager.asercargo.az/' . ltrim($seller->img, '/');
+                    return $seller;
+                });
                 return response()->json([
                     'sellers' => $sellers,
                 ]);

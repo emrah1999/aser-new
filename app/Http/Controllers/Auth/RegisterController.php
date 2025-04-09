@@ -500,7 +500,6 @@ class RegisterController extends Controller
 						 "content" => $messages
 					 ],422);
 				 }
- 
 				 return redirect()->back()->withErrors($validator)->withInput();
 			 }
  
@@ -523,13 +522,14 @@ class RegisterController extends Controller
  
 			 // Check for existing user conflicts
 			 if (!User::where('email', $request->email)->select('id')->first() && User::withoutGlobalScope(DeletedScope::class)->where('email', $request->email)->select('id')->first()) {
-				 if($request->is('api/*')){
-					$errorType = 'email';
+                 $errorType = 'email';
+                 if($request->is('api/*')){
 					//  return $errorType;
 					 return response()->json([
 						 'case' => 'warning',
 						 'title' => __('static.attention') . '!',
-						 'content' => __('register.user_deleted')
+						 'content' => __('register.user_deleted'),
+                         'errorType' => $errorType,
  
 					 ],422);
 				 }
