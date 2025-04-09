@@ -58,7 +58,9 @@ class OtherApiController extends Controller
     public function sellerCategories(Request $request)
     {
         $header = $request->header('Language');
-        $categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . $header)->orderBy('name_' . App::getLocale())->get();
+        $categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . $header . ' as title')
+//            ->orderBy('title' . App::getLocale())
+            ->get();
         return response()->json($categories);
 
     }
@@ -331,7 +333,21 @@ class OtherApiController extends Controller
                 
             }
         }
-        
-        
+    }
+
+    public function muradTest()
+    {
+//        $packaes = Package::where('client_id', 222578)->orderBy('id', 'desc')->limit(10)->get();
+//
+//        return $packaes;
+        $users = Seller::where('img', 'like', '%//%')->get();
+
+        foreach ($users as $user) {
+            $user->img = str_replace('//', '/', $user->img);
+            $user->save();
+        }
+
+        return 'Güncelleme tamamlandı.';
+
     }
 }

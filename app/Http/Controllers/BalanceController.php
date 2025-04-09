@@ -813,6 +813,11 @@ class BalanceController extends Controller
                 Session::flash('description', $code_description);
                 Session::flash('display', 'block');
                 if($payment_task->is_api){
+                    if($status=="page-success"){
+                        return redirect("asercargo://app/payment/success");
+                    }else{
+                        return redirect("asercargo://app/payment/error");
+                    }
                     $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                     return response()->json([
                         'url' => $url
@@ -1258,6 +1263,11 @@ class BalanceController extends Controller
 				// Session::flash('display', 'block');
 				if ($payment_type == 'courier') {
                     if($payment_task->is_api){
+                        if($status=="page-success"){
+                            return redirect("asercargo://app/payment/success");
+                        }else{
+                            return redirect("asercargo://app/payment/error");
+                        }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
                             'url' => $url
@@ -1267,6 +1277,11 @@ class BalanceController extends Controller
 					return redirect()->route("get_courier_page", ['locale' => $lang]);
 				} else if($payment_type == 'payment'){
                     if($payment_task->is_api){
+                        if($status=="page-success"){
+                            return redirect("asercargo://app/payment/success");
+                        }else{
+                            return redirect("asercargo://app/payment/error");
+                        }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
                             'url' => $url
@@ -1277,6 +1292,11 @@ class BalanceController extends Controller
 				}
 				else if($payment_type == 'packages'){
                     if($payment_task->is_api){
+                        if($status=="page-success"){
+                            return redirect("asercargo://app/payment/success");
+                        }else{
+                            return redirect("asercargo://app/payment/error");
+                        }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
                             'url' => $url
@@ -1287,6 +1307,11 @@ class BalanceController extends Controller
 				}
 				else {
                     if($payment_task->is_api){
+                        if($status=="page-success"){
+                            return redirect("asercargo://app/payment/success");
+                        }else{
+                            return redirect("asercargo://app/payment/error");
+                        }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
                             'url' => $url

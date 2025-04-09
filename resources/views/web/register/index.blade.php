@@ -74,11 +74,11 @@
     opacity: 1;
 }
 
-            
+
 
             @media (max-width: 768px) {
                 .custom-tooltip {
-                    max-width: 90%; 
+                    max-width: 90%;
                     left: 5%;
                 }
             }
@@ -114,6 +114,12 @@
             <strong>{{ session('title') }}</strong> {{ session('content') }}
         </div>
     @endif
+    @php
+        $showSecondPart = false;
+        if (session('errorType') && in_array(session('errorType'), ['passport_number', 'fin'])) {
+            $showSecondPart = true;
+        }
+    @endphp
 
     <div class="content" id="content">
     <section class="section section-registration d-flex justify-content-center align-items-center">
@@ -131,7 +137,7 @@
                         <a href="{{route("register", ['locale' => App::getLocale(), 'type' => 'juridical'])}}" class="btn btn-trns-yellow btn-block form-registration__btn-type font-n-b">Hüquqi şəxs</a>
                     </div>
                 </div>
-                <div class="form-registration__content form-registration__content--1">
+                <div class="form-registration__content form-registration__content--1 {{ $showSecondPart ?  'd-none': '' }}">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form__group">
@@ -273,7 +279,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-registration__content form-registration__content--2 d-none">
+                <div class="form-registration__content form-registration__content--2 {{ $showSecondPart ? '' : 'd-none' }}">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form__group">
@@ -387,12 +393,12 @@
 
                     </div>
                 </div>
-                <div class="form-registration__btn-actions form-registration__btn-actions--1">
+                <div class="form-registration__btn-actions form-registration__btn-actions--1 {{ $showSecondPart ?  'd-none': '' }}">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form-checkbox d-flex justify-content-start align-items-center" for="userAgree">
-                                    <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree">
+                                    <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree"{{old('agreement') ? 'checked' : ''}}>
                                     <span class="form-checkbox__span" style="border-radius: 50px;width: 25px"></span>
                                     <a href="https://asercargo.az/uploads/static/terms.pdf" target="_blank">
                                         <span class="form-checkbox__text" style="animation: blink 1s infinite;">{!! __('auth.agreement') !!}</span>
@@ -406,7 +412,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-registration__btn-actions form-registration__btn-actions--2 d-none">
+                <div class="form-registration__btn-actions form-registration__btn-actions--2 {{ $showSecondPart ? '' : 'd-none' }}">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-sm-6">
                             <button class="btn btn-black btn-block form__btn form-registration__btn-action form-registration__btn-action--prev font-n-b" type="button">Geriyə qayıt</button>
@@ -452,7 +458,7 @@
             let infoIcon = document.getElementById("infoIcon");
             let tooltip = document.getElementById("customTooltip");
 
-            
+
 
             infoIcon.addEventListener("click", function (event) {
                 if (window.innerWidth <= 768) {

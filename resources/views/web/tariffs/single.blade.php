@@ -159,7 +159,7 @@
                                                     <div class="form__select-wrapper">
                                                         <select class="form__select" name="unit" id="calc_weight_type" required>
                                                             <option value="kq">kg</option>
-                                                            <option value="gm">g</option>
+                                                            <option value="gm">gr</option>
                                                         </select>
                                                     </div>
                                                 </div>

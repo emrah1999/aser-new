@@ -15,6 +15,8 @@
 
 use App\Http\Controllers\OTPController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/muradTest',[\App\Http\Controllers\Api\OtherApiController::class,'muradTest']);
 Route::get('/get-api-token', [\App\Http\Controllers\Api\OtherApiController::class, 'getFcmToken']);
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
@@ -43,6 +45,7 @@ Route::get('/dangerous-goods', [\App\Http\Controllers\Api\LayoutController::clas
 Route::get('/calculate-index', [\App\Http\Controllers\Api\CalculateController::class, 'index']);
 Route::post('/calculate-amount', [\App\Http\Controllers\Api\CalculateController::class, 'calculate_amount'])->name("calculate_amount");
 Route::get('/seller-categories', [\App\Http\Controllers\Api\OtherApiController::class, 'sellerCategories']);
+Route::get('/seller-for-courier',[\App\Http\Controllers\Api\OtherApiController::class, 'seller']);
 
 Route::get('/news', [\App\Http\Controllers\Api\OtherApiController::class, 'news'])->name('api_news');
 Route::get('/news/{slug}', [\App\Http\Controllers\Api\OtherApiController::class, 'newsSlug']);

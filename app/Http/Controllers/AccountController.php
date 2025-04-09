@@ -763,10 +763,17 @@ class AccountController extends Controller
             }
             foreach ($packages as $package) {
                 if ($this->api) {
+                    if ($package->paid_status == 1) {
+                        $package->payment_button = __('static.paid');
+                    } elseif ($package->amount > 0) {
+                        $package->payment_button = __('buttons.not_paid');
+                    } else {
+                        $package->payment_button = null;
+                    }
                     if ($package->invoice_doc) {
                         $package->invoice_doc = 'https://asercargo.az' . $package->invoice_doc;
                     }
-                    $package->paid_status_text = $package->paid_status == 1 ? __('static.paid') : __('buttons.pay');
+                    $package->paid_status_text = $package->paid_status == 1 ? __('static.paid') :  __('buttons.not_paid');
 
                     if ($package->last_status_id == 7) {
                         $package->invoice_status_text = "Qadağan edilən bağlamalara invoys yüklənə bilməz";
@@ -3896,14 +3903,16 @@ class AccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'area_id' => ['required', 'integer'],
-            'courier_payment_type' => ['required', 'integer'],
+            'courier_payment_type' => ['required', 'string'],
         ]);
+        $courier_payment_type_id = substr((string) $request->courier_payment_type, -1);
+
         if ($validator->fails()) {
             return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_selected')]);
         }
         try {
             $area_id = $request->area_id;
-            $courier_payment_type = $request->courier_payment_type;
+            $courier_payment_type = $courier_payment_type_id;
 
             $area = CourierAreas::where('id', $area_id)->select('zone_id')->first();
 
@@ -4267,19 +4276,18 @@ class AccountController extends Controller
 
             DB::commit();
 
-            if($this->api){
-                if (isset($payResponse)) {
-                    return $payResponse;
-                } else {
-                    return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
-                }
-            }
 
             if (isset($payResponse)) {
-                // Success mesajını session'a ekle
                 $content = $payResponse->getContent();
                 $data = json_decode($content, true);
                 // return back()->with('success', 'Success')->withInput();
+                if($this->api){
+                    if (isset($payResponse)) {
+                        return $payResponse;
+                    } else {
+                        return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
+                    }
+                }
                 if(!empty($data['content'])){
                     if (filter_var($data['content'], FILTER_VALIDATE_URL)) {
                         return redirect($data['content']);
@@ -4287,17 +4295,7 @@ class AccountController extends Controller
                 }
                 return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
             }
-            else {
-                if($this->api){
-                    return response([
-                        'title'=> 'error',
-                        'case' => 'error',
 
-                    ]);
-                }
-                return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
-    
-            }
             if($this->api){
                 return response([
                     'title'=> 'success',

@@ -273,6 +273,8 @@ class IndexController extends HomeController
                 $country_id = 9;
             }elseif ($request->country==4) {
                 $country_id = 12;
+            }else{
+                $country_id = 14;
             }
 
 //            $country_id = $request->country;
