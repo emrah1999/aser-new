@@ -42,6 +42,11 @@
                     çeşidinin və s. səhv gəlməsinə görə “Daşıyıcı” heç bir məsuliyyət daşımır. Bu kimi hallarda
                     sifarişçi problemin aradan qaldırması üçün iradını ancaq satıcı mağazaya bildirə bilər.
                 </li>
+                <li class="nav-rules__item">
+                    ABŞ, KANADA, ALMANİYA VƏ İNGİLTƏRƏ dən ölçüsü 100sm-dən böyük olan bağlamaların daşınma haqqı həm həcm həm də fiziki çəki əsasında hesablanır və alınan göstəricilərdən böyük olanı daşınma haqqının hesablanması üçün əsas çəki kimi qəbul edilir.
+                    TÜRKİYƏ dən isə ölçüsü 60sm-dən böyük olan bağlamaların daşınma haqqı həm həcm həm də fiziki çəki əsasında hesablanır və alınan göstəricilərdən böyük olanı daşınma haqqının hesablanması üçün əsas çəki kimi qəbul edilir.
+                    Həcmindən asılı olmayaraq, salafan torbalarda çatdırılan bağlamaların daşınma haqqı yalnız FİZİKİ ÇƏKİ əsasında hesablanır.
+                </li>
             </ol>
         </div>
     </section>

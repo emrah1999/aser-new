@@ -26,8 +26,7 @@
                             <a href="{{route('get_country_details', ['locale' => App::getLocale(), 'special'])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-5">
                                         <img  class="nav-tab-categories__link-img" src="https://asercargo.az/web/images/content/flag-usa.png" alt="">
                                         <span class="nav-tab-categories__link-title d-none d-md-block">New York</span>
-
-                                    </a>
+                            </a>
                                 </div>
                         </div>
                     </div>

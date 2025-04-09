@@ -73,7 +73,7 @@ class UserDetailsController extends Controller
             ->select('id', 'name', 'surname', 'email', 'passport_series','passport_number', 'passport_fin', 'language', 'birthday', 'address1', 'phone1', 'phone2', 'city', 'gender', 'balance', 'is_legality', 'is_partner', 'image', 'read_notification_count','branch_id')
             ->first();
 
-        $user->image = 'https://www.asercargo.az' . $user->image;
+        $user->image = $user->image ? 'https://www.asercargo.az' . $user->image : null;
 
         return response([
             'user' => $user, 
