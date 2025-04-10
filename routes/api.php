@@ -20,7 +20,7 @@ Route::get('/muradTest',[\App\Http\Controllers\Api\OtherApiController::class,'mu
 Route::get('/get-api-token', [\App\Http\Controllers\Api\OtherApiController::class, 'getFcmToken']);
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
-Route::post('/forgot-password', [\App\Http\Controllers\Api\AuthController::class, 'sendResetLinkEmail']);
+Route::post('/forgot-password', [\App\Http\Controllers\OTPController::class, 'reset']);
 //Route::post('/reset-password', [\App\Http\Controllers\Api\AuthController::class, 'reset_password']);
 //Route::get('/get', [\App\Http\Controllers\Api\AuthController::class, 'test'])->middleware('myApi');
 Route::get('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout'])->middleware('myApi');
@@ -188,7 +188,7 @@ Route::post('/new-password',[\App\Http\Controllers\Api\AuthController::class,'ne
 Route::get('/prohibited-items', [\App\Http\Controllers\Api\OtherApiController::class, 'prohibitedItems'])->name("prohibitedItems");
 
 Route::get('/cities', [\App\Http\Controllers\Api\CityController::class, 'get_cities'])->name('api_get_cities');
-Route::get('/countries', [\App\Http\Controllers\Api\CountryController::class, 'get_countries'])->name('api_get_countries');
+Route::get('/countries/{status?}', [\App\Http\Controllers\Api\CountryController::class, 'get_countries'])->name('api_get_countries');
 Route::get('/seller', [\App\Http\Controllers\SellerController::class, 'show_sellers'])->name('api_seller');
 Route::get('/categories', [\App\Http\Controllers\Api\OtherApiController::class, 'categories'])->name('api_categories');
 Route::get('/currency', [\App\Http\Controllers\Api\OtherApiController::class, 'currency'])->name('api_currency');

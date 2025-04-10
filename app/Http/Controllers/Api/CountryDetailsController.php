@@ -35,6 +35,60 @@ class CountryDetailsController extends Controller
     }
 
     public function get_country_details(Request $request, $country_id){
+        $user = User::where('id', $this->userID)
+            ->select(\DB::raw("CONCAT(name, ' ', surname) AS name_surname, id AS colibri_id"))
+            ->first();
+        if ($country_id == 'special') {
+            $staticCountries = [
+                [
+                    [
+                        "id" => 12,
+                        "country_id" => 'special',
+                        "title" => "Address Line1:",
+                        "information" => "1923 McDonald Ave Brooklyn, NY11223"
+                    ],
+                    [
+                        "id" => 13,
+                        "country_id" => 'special',
+                        "title" => "Address Line2:",
+                        "information" => $user->colibri_id . ", Aser Cargo Express"
+                    ],
+                    [
+                        "id" => 14,
+                        "country_id" => 'special',
+                        "title" => "City:",
+                        "information" => "New York"
+                    ],
+                    [
+                        "id" => 15,
+                        "country_id" => 'special',
+                        "title" => "State:",
+                        "information" => "NY (New York)"
+                    ],
+                    [
+                        "id" => 16,
+                        "country_id" => 'special',
+                        "title" => "Phone Number:",
+                        "information" => "+1 (718) 872-7577"
+                    ],
+                    [
+                        "id" => 17,
+                        "country_id" => 'special',
+                        "title" => "ZIP postal code:",
+                        "information" => 11223
+                    ],
+                ],
+                [
+                    "name_surname" => $user->name_surname,
+                    "colibri_id" => $user->colibri_id,
+
+                ],
+                [
+                    'text'=>' Diqqət!!! Bu ünvan yalnız Amerikada yaşayan həmyerlilərimiz tərəfindən şəxsi göndərişlər üçün nəzərdə tutulmuşdur. Nyu York vergi ştatı olduğu üçün onlayn sifarişlərinizə vergi hesablanacaqdır. Bu səbəbdən onlayn sifarişləriniz üçün mütləq Delaware ştatındakı anbar ünvanımızı istifadə edin.', ]
+            ];
+
+            return $staticCountries;
+        }
         $countries = CountryDetails::where('country_id', $country_id)
             ->select('id', 'country_id', 'title', 'information')
             ->whereNull('deleted_at')
@@ -59,7 +113,12 @@ class CountryDetailsController extends Controller
             $country->information = $information;
         }
 
-        return [$countries, $user];
+        return [
+            $countries,
+            $user,
+            $country_id == 9 ? ['text' => __('static.germany_info')] : ""
+        ];
+
     }
 
 }

@@ -820,6 +820,7 @@ class BalanceController extends Controller
                     }
                     $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                     return response()->json([
+                        'class'=>$class,
                         'url' => $url
                     ]);
                 }
@@ -1270,6 +1271,8 @@ class BalanceController extends Controller
                         }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
+                            'class'=>$class,
+
                             'url' => $url
                         ]);
                     }
@@ -1284,6 +1287,8 @@ class BalanceController extends Controller
                         }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
+                            'class'=>$class,
+
                             'url' => $url
                         ]);
                     }
@@ -1299,6 +1304,8 @@ class BalanceController extends Controller
                         }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
+                            'class'=>$class,
+
                             'url' => $url
                         ]);
                     }
@@ -1314,6 +1321,8 @@ class BalanceController extends Controller
                         }
                         $url = $baseUrl . '?status=' . $status . '&trans_id=' . $trans_id;
                         return response()->json([
+                            'class'=>$class,
+
                             'url' => $url
                         ]);
                     }
