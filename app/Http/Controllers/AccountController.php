@@ -1726,6 +1726,11 @@ class AccountController extends Controller
                 ->whereNull('canceled_by')
                 ->count();
 
+            $query = SpecialOrderGroups::leftJoin('currency as cur', 'special_order_groups.currency_id', '=', 'cur.id')
+                ->leftJoin('lb_status as s', 'special_order_groups.last_status_id', '=', 's.id')
+                ->where(['special_order_groups.client_id' => $this->userID])
+                ->where('special_order_groups.country_id', $country_id);
+
             $orders = $query->orderBy('special_order_groups.id', 'desc')
                 ->select(
                     'special_order_groups.id',
@@ -1742,6 +1747,15 @@ class AccountController extends Controller
                     'special_order_groups.waiting_for_payment'
                 )
                 ->get();
+
+            foreach ($orders as $order) {
+                //$order->price_azn = sprintf('%0.2f', $order->price * $rate_azn);
+                //$order->cargo_debt_azn = sprintf('%0.2f', $order->cargo_debt * $rate_azn);
+                //$order->common_debt_azn = sprintf('%0.2f', $order->common_debt * $rate_azn);
+                $total_amount = ($order->price - $order->paid) + $order->cargo_debt + $order->common_debt;
+                $order->total_amount = sprintf('%0.2f', $total_amount);
+                //$order->total_amount_azn = sprintf('%0.2f', $total_amount * $rate_azn);
+            }
 
             foreach ($orders as $order) {
                 //$order->price_azn = sprintf('%0.2f', $order->price * $rate_azn);

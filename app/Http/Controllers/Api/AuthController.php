@@ -76,7 +76,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()],422);
         }
-        $user = User::find($request->user_id);
+        $user = User::where('id',$request->user_id)->first();
 
         if(!$user){
             return response()->json([ 'status'=>false,'message'=>'Müştəri tapılmadı'],400);
@@ -84,7 +84,9 @@ class AuthController extends Controller
         if (!($request->new_password==$request->confirm_password)){
             return response()->json([ 'status'=>false,'message'=>'New password and confirm password is incorrect'],400);
         }
-        User::where('id', $user->id)->update(['password' => Hash::make($request->new_password)]);
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
 
         return response()->json([
             'status'=>true,

@@ -20,7 +20,7 @@ Route::get('/muradTest',[\App\Http\Controllers\Api\OtherApiController::class,'mu
 Route::get('/get-api-token', [\App\Http\Controllers\Api\OtherApiController::class, 'getFcmToken']);
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
-Route::post('/forgot-password', [\App\Http\Controllers\Api\AuthController::class, 'sendResetLinkEmail']);
+Route::post('/forgot-password', [\App\Http\Controllers\OTPController::class, 'reset']);
 //Route::post('/reset-password', [\App\Http\Controllers\Api\AuthController::class, 'reset_password']);
 //Route::get('/get', [\App\Http\Controllers\Api\AuthController::class, 'test'])->middleware('myApi');
 Route::get('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout'])->middleware('myApi');

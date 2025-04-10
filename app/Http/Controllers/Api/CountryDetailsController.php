@@ -84,12 +84,7 @@ class CountryDetailsController extends Controller
 
                 ],
                 [
-                    'text'=>' Diqqət!!!
-                                        Bu ünvan yalnız Amerikada yaşayan həmyerlilərimiz tərəfindən şəxsi göndərişlər üçün nəzərdə tutulmuşdur.
-                                        Nyu York vergi ştatı olduğu üçün onlayn sifarişlərinizə vergi hesablanacaqdır.
-                                        Bu səbəbdən onlayn sifarişləriniz üçün mütləq Delaware ştatındakı anbar ünvanımızı istifadə edin.',
-
-                ]
+                    'text'=>' Diqqət!!! Bu ünvan yalnız Amerikada yaşayan həmyerlilərimiz tərəfindən şəxsi göndərişlər üçün nəzərdə tutulmuşdur. Nyu York vergi ştatı olduğu üçün onlayn sifarişlərinizə vergi hesablanacaqdır. Bu səbəbdən onlayn sifarişləriniz üçün mütləq Delaware ştatındakı anbar ünvanımızı istifadə edin.', ]
             ];
 
             return $staticCountries;

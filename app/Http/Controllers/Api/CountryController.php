@@ -17,8 +17,21 @@ class CountryController extends Controller
 
         $header = $request->header('Language');
         $countries = Country::whereNull('deleted_at')
-            ->where('url_permission', 1)->whereNotIn('id', [1, 4, 10, 13])
-            ->select('id', 'name_' . $header.' as title',DB::raw("CONCAT('".env('APP_URL')."', new_flag) as flag"), DB::raw("CONCAT('".env('APP_URL')."', image) as image"), 'currency_id', 'local_currency', 'currency_for_declaration', 'url_permission', 'currency_type', 'goods_fr', 'goods_to')
+            ->leftJoin('international_deliveries', 'countries.id', '=', 'international_deliveries.country_id')
+            ->where('url_permission', 1)->whereNotIn('countries.id', [1, 4, 10, 13])
+            ->select('countries.id',
+                'countries.name_' . $header.' as title',
+                DB::raw("CONCAT('".env('APP_URL')."', countries.new_flag) as flag"),
+                DB::raw("CONCAT('".env('APP_URL')."', countries.image) as image"),
+                'countries.currency_id',
+                'countries.local_currency',
+                'countries.currency_for_declaration',
+                'countries.url_permission',
+                'countries.currency_type',
+                'countries.goods_fr',
+                'countries.goods_to',
+                'international_deliveries.name_'.$header.' as country_title'
+            )
             ->orderBy('sort', 'desc')
             ->orderBy('id')
             ->get();

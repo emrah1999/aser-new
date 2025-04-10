@@ -215,6 +215,8 @@ class OTPController extends Controller
 
     public function reset(Request $request)
     {
+//        return $request;
+//        return '$otp';
         $validatedData = $request->validate([
             'user_email' => 'required|email',
         ]);

@@ -155,7 +155,6 @@
                         resendOtpBtn.removeClass("d-none");
                     }
 
-                    // Önceki click event'ini kaldır ve yeni bir tane ekle
                     resendOtpBtn.off("click").on("click", function() {
                         $.ajax({
                             url: $("#formRegistrationOTP").attr("action"),
@@ -170,7 +169,6 @@
                                     resendOtpBtn.addClass("d-none");
                                     $(".form__otp-field").val("");
 
-                                    // Yeni interval başlat
                                     if (window.otpTimerInterval) {
                                         clearInterval(window.otpTimerInterval);
                                     }
