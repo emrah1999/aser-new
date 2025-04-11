@@ -39,7 +39,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
 
 
-    Route::post('/reset-password', 'OTPController@reset')->name('reset_email');
+    Route::post('/reset-password/{type?}', 'OTPController@reset')->name('reset_email');
 //    Route::get('/tracking-search', 'TrackingSearchController@get_tracking_search')->name("get_tracking_search");
     Route::get('/local-tracking-search', 'TrackingSearchController@local_tracking_search')->name("local_tracking_search");
 //    Route::get('/tracking-search-in-ASER', 'TrackingSearchController@tracking_search_in_aser')->name('tracking_search_in_aser');
@@ -210,7 +210,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     Route::get('/logout-all', 'Auth\LoginController@logout_all_devices')->name("logout_all_devices");
 
     Route::group(['prefix' => '/otp'], function () {
-        Route::get('/{otp_session}', 'OTPController@index')->name("otp_page");
+        Route::get('/{otp_session}/{otpType?}', 'OTPController@index')->name("otp_page");
         Route::post('/', 'OTPController@verifyOtp')->name("otp_verify");
         Route::post('/resend', 'OTPController@resendOtp')->name("resend_otp");
     });

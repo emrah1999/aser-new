@@ -180,7 +180,10 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
 
 
 Route::post('/check-forgot-password-otp', [\App\Http\Controllers\Api\AuthController::class, 'checkOTP']);
-Route::post('resend-otp', [\App\Http\Controllers\Auth\RegisterController::class,'resendOTP']);
+
+    Route::post('resend-otp/{type?}', [\App\Http\Controllers\OTPController::class,'reset']);
+
+
 Route::post('check-otp', [\App\Http\Controllers\Auth\RegisterController::class,'checkOTP']);
 Route::post('/new-password',[\App\Http\Controllers\Api\AuthController::class,'new_password']);
 
