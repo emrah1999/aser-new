@@ -309,7 +309,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
-                'verification'=>['required'],
+                'verification'=>['required', 'string',  'min:2'],
             ]);
         }
         if ($request->is_legality ==1){
@@ -336,7 +336,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
-                'verification'=>['required'],
+                'verification'=>['required', 'string',  'min:2'],
             ]);
         }else{
             return Validator::make($request->all(), [
@@ -360,6 +360,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'string', 'min:8'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
+                'verification'=>['required', 'string',  'min:2'],
             ]);
         }
 		
@@ -453,17 +454,20 @@ class RegisterController extends Controller
 		}
 	}
 
-	/**
-	 * Handle a registration request for the application.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @return \Illuminate\Http\Response
-	 */
+//	/**
+//	 * Handle a registration request for the application.
+//	 *
+//	 * @param \Illuminate\Http\Request $request
+//	 * @return \Illuminate\Http\Response
+//	 */
   
 
 	 public function register(Request $request)
 	 {
 		 try {
+//             if($request->is('api/*')){
+//                 return $request;
+//             }
  //            return $request;
 			 $request->is_legality = $this->convert_to_ascii($request->is_legality);
 			 $request->voen = $this->convert_to_ascii($request->voen);
@@ -482,7 +486,7 @@ class RegisterController extends Controller
 			 $request->location_latitude1 = $this->convert_to_ascii($request->location_latitude);
  //            return $request;
  //            return $request->voen;
-			 if ($request->voen){
+			 if ($request->is_legality==1){
 				 $validator = $this->validator($request,1);
 			 }
 			 else{
@@ -502,6 +506,15 @@ class RegisterController extends Controller
 				 }
 				 return redirect()->back()->withErrors($validator)->withInput();
 			 }
+
+
+             if ($request->is_legality==0){
+                 if($request->is('api/*')){
+                     $request->birthday = \Carbon\Carbon::createFromFormat('d.m.Y', $request->birthday)->format('Y-m-d');
+                 }
+             }
+
+
  
 			 if (!$request->voen){
 				 $birthday = $request->input('birthday');
@@ -530,10 +543,10 @@ class RegisterController extends Controller
 						 'title' => __('static.attention') . '!',
 						 'content' => __('register.user_deleted'),
                          'errorType' => $errorType,
- 
+
 					 ],422);
 				 }
- 
+
 				 return redirect()->back()->with([
 					 'case' => 'warning',
 					 'title' => __('static.attention') . '!',
@@ -541,7 +554,7 @@ class RegisterController extends Controller
 					 'errorType' => $errorType,
 				 ])->withInput();
 			 }
- 
+
 			 if (User::where('email', $request->email)->select('id')->first()) {
 				$errorType = 'email';
 				// return $errorType; 
@@ -659,15 +672,17 @@ class RegisterController extends Controller
 			 }
  
 			 $response = $this->create($request);
- 
-			 switch ($response[0]) {
+
+             switch ($response[0]) {
 				 case 0:
-					 Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
-					 if($request->is('api/*')){
+                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+                     if($request->is('api/*')){
 						 return response()->json([
 							 'case' => 'error',
 							 'title' => __('static.error') . '!',
-							 'content' => __('static.error_text') . ' (1) - '
+							 'content' => __('static.error_text') . ' (1) - ',
+                             'error'=>2
+
  
 						 ],400);
 					 }
@@ -677,6 +692,8 @@ class RegisterController extends Controller
 						 'content' => __('static.error_text') . ' (1) - '
 					 ])->withInput();
 				 case 2:
+                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+
 					 if($request->is('api/*')){
 						 return response()->json([
 							 'case' => 'warning',
@@ -691,6 +708,8 @@ class RegisterController extends Controller
 						 'content' => __('register.agreement_not_chosen')
 					 ])->withInput();
 				 case 1:
+                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+
 					 try {
 						 $user = $response[1];
 						 $this->guard()->login($user);
@@ -702,33 +721,40 @@ class RegisterController extends Controller
 						 if ( $request->verification=='sms'){
 							 $sendOtp = new SendOTPCode();
 							 $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                             $otpType = 1;
+                             $credential = $request->phone1;
 						 }
 						 elseif ( $request->verification=='email'){
 							 $sendOtp = new SendOTPCode();
 							 $sendOtp->send_mail($userId, $request->email, $otp_session);
+                             $otpType = 2;
+                             $credential = $request->email;
 						 }
  
 						 Auth::logout();
- 
- 
+
 						 if($request->is('api/*')){
 							 return response()->json([
 								 'case' => 'success',
 								 'phone1'=> $request->phone1,
 								 'user_id'=>$userId,
+                                 'OTP_TYPE'=>$otpType,
+                                 'credential'=>$credential,
 								 'title' => __('static.success'),
  
 							 ],201);
 						 }
  
-						 return redirect()->route('otp_page', ['locale'=>App::getLocale(),'otp_session' => $otp_session])->with([
+						 return redirect()->route('otp_page', ['locale'=>App::getLocale(),'otp_session' => $otp_session,'otpType' => $otpType])->with([
 							 'case' => 'success',
 							 'title' => __('static.success'),
-							 'content' => __('register.success_message')
+							 'content' => __('register.success_message'),
+                             'otpType' => $otpType,
+                             'credential'=>$credential
 						 ]);
 						 
 					 } catch (\Exception $exception) {
-						 dd($exception);
+                            return $exception->getMessage();
 						 Log::channel('register_verification')->error('Failed to send mail.', [
 							 'id' => $response[1]->id,
 							 'message' => $exception
@@ -740,6 +766,9 @@ class RegisterController extends Controller
 						 ])->withInput();
 					 }
 				 default:
+
+                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+
 					 return redirect()->back()->with([
 						 'case' => 'error', 
 						 'title' => __('static.error'), 
@@ -747,12 +776,13 @@ class RegisterController extends Controller
 					 ])->withInput();
 			 }
 		 } catch (\Exception $exception) {
-			 dd($exception);
 			 if($request->is('api/*')){
 				 return response()->json([
 					 'case' => 'error',
 					 'title' => __('static.error') . '!',
-					 'content' => __('register.sent_email_error')
+					 'content' => __('register.sent_email_error'),
+                     'error'=>1
+
  
 				 ],400);
 			 }

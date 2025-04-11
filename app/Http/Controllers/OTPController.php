@@ -16,14 +16,15 @@ use Illuminate\Support\Facades\App;
 
 class OTPController extends Controller
 {
-    public function index($otp_session)
+    public function index( $locale,$otp_session,$otpType)
     {
         $otp_session = $otp_session;
-        return view('web.register.otp', compact('otp_session'));
+        return view('web.register.otp', compact('otp_session','otpType'));
     }
     
     public function verifyOtp(Request $request, $locale){
         //dd($request->otp_full);
+//        return $request;
         $validator = Validator::make($request->all(), [
             'otp_full' => ['required', 'string', 'max:6']
         ]);
@@ -213,16 +214,25 @@ class OTPController extends Controller
         ]);
     }
 
-    public function reset(Request $request)
+    public function reset(Request $request, $locale,$type=2)
     {
-//        return $request;
-//        return '$otp';
-        $validatedData = $request->validate([
-            'user_email' => 'required|email',
-        ]);
+        if($locale=='1' || $locale=='2'){
+            $type = (int) $locale;
+        }
 
-        $user=User::where('email',$request->user_email)->first();
-//        return $user;
+        if($type==2){
+             $request->validate([
+                'user_email' => 'required|email',
+            ]);
+            $user=User::where('email',$request->user_email)->first();
+
+        }else{
+            $user=User::where('phone1',$request->number)->first();
+        }
+
+
+
+
 
         if (!$user) {
             return response()->json([
@@ -233,8 +243,14 @@ class OTPController extends Controller
         $otp = OTP::where('client_id', $user->id)->where('is_verify', 0)->first();
 
         $otp_session = $this->generateRandomCode();
+//        return $otp_session;
         $sendOtp = new SendOTPCode();
-        $sendOtp->send_mail($user->id, $request->email, $otp_session);
+        if($type==2){
+            $sendOtp->send_mail($user->id, $request->email, $otp_session);
+        }else{
+            $sendOtp->send_sms($user->id, $request->phone1, $otp_session);
+        }
+
         return response()->json([
             'success' => true,
             'message'=>'otp gonderildi',

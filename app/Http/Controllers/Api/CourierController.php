@@ -297,11 +297,11 @@ class CourierController extends Controller
             ->leftJoin('lb_status as status', 'courier_orders.last_status_id', '=', 'status.id')
             ->where(['courier_orders.client_id' => $this->userID])
             ->whereRaw('(
-            (courier_orders.courier_payment_type_id = 1 and courier_orders.is_paid = 1) or
-            (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1) or
-            (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_amount = 0) or
-            (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
-            )');
+                (courier_orders.courier_payment_type_id = 1 and courier_orders.is_paid = 1) or
+                (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1) or
+                (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_amount = 0) or
+                (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
+                )');
 
         $where_archive_status = $request->input("archive");
         if (!isset($where_archive_status) || $where_archive_status != 'yes') {

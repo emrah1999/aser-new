@@ -106,8 +106,8 @@ class CountryDetailsController extends Controller
                 $information = str_replace('{name_surname}', $user->name_surname, $information);
             }
 
-            if (strpos($information, '{colibri_id}') !== false) {
-                $information = str_replace('{colibri_id}', $user->colibri_id, $information);
+            if (strpos($information, '{aser_id}') !== false) {
+                $information = str_replace('{aser_id}', $user->colibri_id, $information);
             }
 
             $country->information = $information;
