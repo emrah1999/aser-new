@@ -31,15 +31,23 @@
                             <div class="media-branches__right">
                                 @foreach($branches as $branch)
                                     <div class="thumbnail thumbnail-branches">
-                                        <h6 class="thumbnail-branches__title font-n-b">{{$branch->name}}</h6>
-                                        <p class="thumbnail-branches__title2 font-n-b">Ünvan</p>
-                                        <p class="thumbnail-branches__desc2 font-n-b">{{$branch->address}}</p>
-                                        <br>
-                                        <p class="thumbnail-branches__title2 font-n-b">Əlaqə nömrəsi</p>
-                                        <p class="thumbnail-branches__desc2 font-n-b">{{$branch->phone1}}</p>
-                                        <p class="thumbnail-branches__desc2 font-n-b">{{$branch->phone2}}</p>
-                                        <br>
-                                        <div class="d-flex justify-content-center align-items-center">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <h6 class="thumbnail-branches__title font-n-b">{{$branch->name}}</h6>
+                                                <p class="thumbnail-branches__title2 font-n-b">Ünvan</p>
+                                                <p class="thumbnail-branches__desc2 font-n-b">{{$branch->address}}</p>
+                                                <br>
+                                                <p class="thumbnail-branches__title2 font-n-b">Əlaqə nömrəsi</p>
+                                                <p class="thumbnail-branches__desc2 font-n-b">{{$branch->phone1}}</p>
+                                                <p class="thumbnail-branches__desc2 font-n-b">{{$branch->phone2}}</p>
+                                                <br>
+
+                                            </div>
+                                            <div class="col-md-5">
+                                                {!! $branch->work_hours !!}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center">
                                             <a href="#" class="btn btn-trns-blue thumbnail-branches__link font-n-b" data-map="{{$branch->map_location}}">Xəritədə bax</a>
                                         </div>
                                     </div>

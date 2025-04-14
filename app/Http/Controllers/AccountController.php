@@ -4369,7 +4369,7 @@ class AccountController extends Controller
     }
     public function get_branches(Request $request){
 
-        $branches = DB::table('filial')->select('id', 'name as title', 'address', 'phone1 as phone_number' ,'map_location')->get();
+        $branches = DB::table('filial')->select('id', 'name as title', 'address', 'phone1 as phone_number' ,'map_location','work_hours')->get();
 
         return response()->json($branches);
 
