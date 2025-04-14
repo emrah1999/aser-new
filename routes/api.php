@@ -29,7 +29,8 @@ Route::get('/packages_price_for_last_month', [\App\Http\Controllers\AccountContr
 Route::get('/get_user_data', [\App\Http\Controllers\AccountController::class, 'get_user_data'])->middleware('myApi')->name('api_get_user_data');
 Route::post('/user/update', [\App\Http\Controllers\AccountController::class, 'post_update_user_account'])->middleware('myApi')->name('api_update_user_data');
 Route::get('/packages', [\App\Http\Controllers\AccountController::class, 'get_packages'])->middleware('myApi')->name('api_get_packages');
-Route::get('/statuses', [\App\Http\Controllers\AccountController::class, 'get_statuses'])->middleware('myApi')->name('api_get_statuses');Route::get('/branches', [\App\Http\Controllers\AccountController::class, 'get_branches'])->name('get_branches');
+Route::get('/statuses', [\App\Http\Controllers\AccountController::class, 'get_statuses'])->middleware('myApi')->name('api_get_statuses');
+Route::get('/branches', [\App\Http\Controllers\AccountController::class, 'get_branches'])->name('get_branches');
 Route::post('/add_preliminary_declaration', [\App\Http\Controllers\AccountController::class, 'post_preliminary_declaration'])->middleware('myApi')->name('api_add_preliminary_declaration');
 Route::get('/package/update/{locale}/{package_id}', [\App\Http\Controllers\AccountController::class, 'get_package_update'])->middleware('myApi')->name('api_get_package_update');
 Route::post('/package/update/{locale}/{package_id}', [\App\Http\Controllers\AccountController::class, 'post_package_update'])->middleware('myApi')->name('api_post_package_update');

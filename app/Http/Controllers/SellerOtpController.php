@@ -40,6 +40,13 @@
         public function index(Request $request)
         {
             $sellerOtps = SellerOtp::orderBy('id','desc')->where('created_by',Auth::id())->paginate(15);
+
+
+            $sellerOtps->getCollection()->transform(function ($item) {
+                $item->created_at = \Carbon\Carbon::parse($item->created_at)->format('Y-m-d H:i');
+                return $item;
+            });
+
             if($request->is('api/*')){
                 return response()->json([
                     'message'=>'success',
@@ -81,18 +88,24 @@
                 $date=strtotime('-3 minutes');
                 $array=[];
                 $say=0;
-                foreach($data as $d){
-                    // if(strtotime($d->created)>$date){
-                    $array[]=[
-                        'id'=>++$say,
-                        'onay_code'=>$d->onaykodu,
-                        'date'=>$d->created
-                    ];
-                    // }
+                $threeMinutesAgo = now()->subMinutes(3);
+                $filtered = [];
+                $say = 0;
+
+                foreach ($response as $item) {
+                    $createdAt = \Carbon\Carbon::createFromFormat('d.m.Y H:i:s', $item->created);
+
+                    if ($createdAt >= $threeMinutesAgo) {
+                        $filtered[] = [
+                            'id' => ++$say,
+                            'onay_code' => $item->onaykodu,
+                            'date' => $createdAt->format('Y-m-d H:i')
+                        ];
+                    }
                 }
                 return  response()->json([
                     'success' => true,
-                    'data' => $array
+                    'data' => $filtered
                 ]);
             } catch (\Exception $exception) {
                 return response()->json([

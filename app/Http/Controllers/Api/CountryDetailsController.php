@@ -44,6 +44,12 @@ class CountryDetailsController extends Controller
                     [
                         "id" => 12,
                         "country_id" => 'special',
+                        "title" => "Full Name",
+                        "information" => $user->name_surname,
+                    ],
+                    [
+                        "id" => 12,
+                        "country_id" => 'special',
                         "title" => "Address Line1:",
                         "information" => "1923 McDonald Ave Brooklyn, NY11223"
                     ],
@@ -68,8 +74,8 @@ class CountryDetailsController extends Controller
                     [
                         "id" => 16,
                         "country_id" => 'special',
-                        "title" => "Phone Number:",
-                        "information" => "+1 (718) 872-7577"
+                        "title" => "Country:",
+                        "information" => "USA"
                     ],
                     [
                         "id" => 17,
@@ -77,6 +83,13 @@ class CountryDetailsController extends Controller
                         "title" => "ZIP postal code:",
                         "information" => 11223
                     ],
+                    [
+                        "id" => 16,
+                        "country_id" => 'special',
+                        "title" => "Phone Number:",
+                        "information" => "+1 (718) 872-7577"
+                    ],
+
                 ],
                 [
                     "name_surname" => $user->name_surname,
