@@ -95,13 +95,13 @@
                 foreach ($response as $item) {
                     $createdAt = \Carbon\Carbon::createFromFormat('d.m.Y H:i:s', $item->created);
 
-                    if ($createdAt >= $threeMinutesAgo) {
+//                    if ($createdAt >= $threeMinutesAgo) {
                         $filtered[] = [
                             'id' => ++$say,
                             'onay_code' => $item->onaykodu,
                             'date' => $createdAt->format('Y-m-d H:i')
                         ];
-                    }
+//                    }
                 }
                 return  response()->json([
                     'success' => true,
