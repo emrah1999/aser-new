@@ -47,7 +47,8 @@ Route::get('/calculate-index', [\App\Http\Controllers\Api\CalculateController::c
 Route::post('/calculate-amount', [\App\Http\Controllers\Api\CalculateController::class, 'calculate_amount'])->name("calculate_amount");
 Route::get('/seller-categories', [\App\Http\Controllers\Api\OtherApiController::class, 'sellerCategories']);
 Route::get('/seller-for-courier',[\App\Http\Controllers\Api\OtherApiController::class, 'seller']);
-
+Route::post('/feedback', [\App\Http\Controllers\IndexController::class, 'feedback']);
+Route::get('/app-version',[\App\Http\Controllers\IndexController::class, 'app_version']);
 Route::get('/news', [\App\Http\Controllers\Api\OtherApiController::class, 'news'])->name('api_news');
 Route::get('/news/{slug}', [\App\Http\Controllers\Api\OtherApiController::class, 'newsSlug']);
 
@@ -106,7 +107,7 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
         Route::get('/seller', [\App\Http\Controllers\Api\SellerController::class, 'get_sellers']);
         Route::get('/currency', [\App\Http\Controllers\Api\CurrencyController::class, 'get_currencies']);
 
-        Route::post('/bulk-pay', [\App\Http\Controllers\Api\PackageController::class, 'bulk_pay']);
+        Route::post('/bulk-pay', [\App\Http\Controllers\AccountController::class, 'bulk_pay']);
     });
 
 

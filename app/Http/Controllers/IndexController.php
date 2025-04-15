@@ -13,6 +13,7 @@ use App\{Blog,
     Partner,
     SellerCategory,
     Service,
+    Settings,
     TariffType,
     Title,
     Seller,
@@ -330,7 +331,15 @@ class IndexController extends HomeController
 
     public function feedback(Request $request)
     {
+        $validated = $request->validate([
 
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'message' => 'required|string',
+
+        ]);
         $name = $request->input('name');
         $surname = $request->input('surname');
         $email = $request->input('email');
@@ -346,15 +355,8 @@ class IndexController extends HomeController
             <p><strong>Mesaj:</strong> $message</p>
         ";
 
-        $validated = $request->validate([
 
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'email' => 'required|email',
-            'phone' => 'required|string',
-            'message' => 'required|string',
 
-        ]);
 
         $details = [
             'name' => $request->input('name'),
@@ -365,7 +367,11 @@ class IndexController extends HomeController
             'title' => 'Aser Cargo user Feedback'
         ];
 
+
         Mail::to('info@asercargo.az')->send(new FeedbackMail($details));
+        if ($request->is('api/*')) {
+            return response(['case' => 'success', 'message' => 'Müraciətiniz qeydə alındı']);
+        }
         return redirect()->back()->with('success', 'Müraciətiniz qeydə alındı');
 
     }
@@ -389,5 +395,24 @@ class IndexController extends HomeController
         $sellers =Seller::query()->whereIn('id',$seller_ids)->whereNotNull('img')->orderBy('id','desc')->limit(6)->get();
         return $sellers;
 
+    }
+
+    public function app_version(Request $request)
+    {
+//        return $request->all();
+        $validated = $request->validate([
+            'version' => 'required|string|max:20'
+        ]);
+        $version = Settings::query()->select('app_version')->first();
+        if($version->app_version == $request->version){
+            return response()->json([
+                'status' => true,
+                'message' => 'version is true',
+            ]);
+        }
+        return response()->json([
+            'status' => true,
+            'message' => 'Tətbiqin yeni versiyası mövcuddur'
+        ],400);
     }
 }
