@@ -3202,6 +3202,9 @@ class AccountController extends Controller
         }
         try {
             $return_type = 1;
+//            $exchangeRate = ExchangeRate::find(1);
+//            $amount = $request->amount * $exchangeRate->rate;
+//            return $amount;
             $ip_address = $request->ip();
             $response = $this->pay_to_pashaBank($request->amount, $this->userID, $return_type, $ip_address);
             //$response = $this->pay_to_millikart($request->amount, $this->userID, $return_type, $ip_address);
@@ -5378,6 +5381,7 @@ class AccountController extends Controller
     private function pay_to_pashaBank($input_amount, $user_id, $return_type, $ip_address, $payment_type = 'balance', $order_id = 0, $packages_str = null)
     {
         try {
+//            return $payment_type;
 
             if ($payment_type == 'balance') {
                 // usd
@@ -5401,7 +5405,7 @@ class AccountController extends Controller
                 }
                 $amount = sprintf('%0.2f', ($input_amount * $rate->rate)) * 100;
             }
-            if ($payment_type == 'packages') {
+            else if ($payment_type == 'packages') {
                 // usd
                 $date = Carbon::today();
                 $rate = ExchangeRate::where(['from_currency_id' => 1, 'to_currency_id' => 3]) // usd -> azn
@@ -5450,6 +5454,7 @@ class AccountController extends Controller
                 // azn
                 $amount = $input_amount * 100;
             }
+
 
             $client_url = "";
             $currency = 944;
@@ -5559,7 +5564,8 @@ class AccountController extends Controller
     }
 
     public function bulk_pay(Request $request){
-        //dd($request->all());
+//        dd($request->all());
+//        return $request;
         $validator = Validator::make($request->all(), [
             'package_ids' => ['required']
         ]);
