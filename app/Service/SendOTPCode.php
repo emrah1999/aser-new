@@ -184,8 +184,8 @@ use Illuminate\Support\Facades\{App, DB, Mail, Validator};
 
                     SmsTask::create([
                         'type' => 'otp',
-                        'code' => 1111111111,
-                        'task_id' => 11111111111,
+                        'code' => 111111,
+                        'task_id' => 1111,
                         'control_id' => $control_id,
                         'package_id' => $package->id,
                         'client_id' => $package->id,
