@@ -12,7 +12,6 @@ use App\CourierDailyLimits;
 use App\CourierMetroStations;
 use App\CourierOrders;
 use App\CourierOrderStatus;
-use App\CourierPaymentTypes;
 use App\CourierRegion;
 use App\CourierRegionTariff;
 use App\CourierSettings;
@@ -3629,10 +3628,10 @@ class AccountController extends Controller
                 if (strlen($package->track) > 7) {
                     $package->track = substr($package->track, strlen($package->track) - 7);
                 }
-//
-//                if ($package->paid_status == 0) {
-//                    $package->payment_type = 'Not paid';
-//                }
+
+                if ($package->paid_status == 0) {
+                    $package->payment_type = 'Not paid';
+                }
             }
 
             //dd($packages);
@@ -3776,9 +3775,9 @@ class AccountController extends Controller
                     $package->track = substr($package->track, strlen($package->track) - 7);
                 }
 
-//                if ($package->paid_status == 0) {
-//                    $package->payment_type = 'Not paid';
-//                }
+                if ($package->paid_status == 0) {
+                    $package->payment_type = 'Not paid';
+                }
             }
 
             return response(['case' => 'success', 'packages' => $packages]);
@@ -3799,14 +3798,8 @@ class AccountController extends Controller
             $order_id = $request->order_id;
 
             $courier_order = CourierOrders::where('id', $order_id)
-                ->select('packages','courier_payment_type_id')
+                ->select('packages')
                 ->first();
-
-            $courier_paymeny_trpe = CourierPaymentTypes::query()
-                ->where('id', $courier_order->courier_payment_type_id)
-                ->select('name_'.App::getLocale().' as type')
-                ->first()->type;
-//            return $courier_paymeny_trpe;
 
             if (!$courier_order) {
                 $packages = array();
@@ -3860,11 +3853,9 @@ class AccountController extends Controller
             if (count($rates) == 0) {
                 $has_rate = false;
             }
-//return $courier_paymeny_trpe;
+
             foreach ($packages as $package) {
                 $currency_id = $package->currency_id;
-                $package->payment_type = $courier_paymeny_trpe;
-//                return $package->payment_type;
 
                 if ($has_rate) {
                     $rate_to_azn = $this->calculate_exchange_rate($rates, $currency_id, 3);
@@ -3876,9 +3867,9 @@ class AccountController extends Controller
 
                 $package->amount = $amount_azn;
 
-//                if ($package->paid_status == 0) {
-//                    $package->payment_type = 'Not paid';
-//                }
+                if ($package->paid_status == 0) {
+                    $package->payment_type = 'Not paid';
+                }
             }
 
             return response(['case' => 'success', 'packages' => $packages]);
@@ -4805,9 +4796,9 @@ class AccountController extends Controller
                     $package->track = substr($package->track, strlen($package->track) - 7);
                 }
 
-//                if ($package->paid_status == 0) {
-//                    $package->payment_type = 'Not paid';
-//                }
+                if ($package->paid_status == 0) {
+                    $package->payment_type = 'Not paid';
+                }
             }
 
             //dd($packages);
@@ -5138,8 +5129,6 @@ class AccountController extends Controller
             $return_type = 2;
             $ip_address = $request->ip();
             // $online_pay_amount=0.01;
-//            return $online_pay_amount;
-//            $online_pay_amount = bcadd($online_pay_amount,0,2);
             //$response = $this->pay_to_millikart($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
             $response = $this->pay_to_pashaBank($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
 

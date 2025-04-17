@@ -281,7 +281,7 @@ class CourierController extends Controller
             }
 
             if ($package->paid_status == 0) {
-                $package->payment_type = 'Not paid';
+                $package->payment_type = __('buttons.pay');
             }
         }
 
@@ -296,12 +296,14 @@ class CourierController extends Controller
             ->leftJoin('courier_payment_types', 'courier_orders.courier_payment_type_id', '=', 'courier_payment_types.id')
             ->leftJoin('lb_status as status', 'courier_orders.last_status_id', '=', 'status.id')
             ->where(['courier_orders.client_id' => $this->userID])
+            ->where('order_type', 1)
             ->whereRaw('(
                 (courier_orders.courier_payment_type_id = 1 and courier_orders.is_paid = 1) or
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1) or
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_amount = 0) or
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
                 )');
+        //->whereRaw('(((courier_orders.courier_payment_type_id = 1 or courier_orders.delivery_payment_type_id = 1) and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 0))');
 
         $where_archive_status = $request->input("archive");
         if (!isset($where_archive_status) || $where_archive_status != 'yes') {
@@ -310,7 +312,6 @@ class CourierController extends Controller
         } else {
             $query->whereRaw('(courier_orders.delivered_at is not null or courier_orders.canceled_at is not null)');
         }
-
 
         $orders = $query->select(
             'courier_orders.id',
