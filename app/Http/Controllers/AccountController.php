@@ -120,7 +120,7 @@ class AccountController extends Controller
                 ->whereNotNull('p.on_the_way_date')
                 ->where('p.client_id', $this->userID)
                 ->whereMonth('p.on_the_way_date', date('m'))
-		        ->whereYear('p.on_the_way_date', date('Y'))
+                ->whereYear('p.on_the_way_date', date('Y'))
                 //->whereDate('p.on_the_way_date', '>=', $last_month_date)
                 ->select('item.price', 'item.currency_id as price_currency', 'p.total_charge_value as amount', 'p.currency_id as amount_currency')
                 ->get();
@@ -169,8 +169,8 @@ class AccountController extends Controller
                 ->whereNull('placed_by')
                 ->whereNull('canceled_by')
                 ->count();
-        
- 
+
+
             if ($this->api) {
                 return compact(
                     'countries',
@@ -237,7 +237,7 @@ class AccountController extends Controller
         }
         try {
             $id = $this->userID;
-	        $currentUserData = User::where('id', $id)->first();
+            $currentUserData = User::where('id', $id)->first();
             $phone2 = $request->phone2;
             if ($phone2 !== null) {
                 $phone2 = str_replace('(', '', $phone2);
@@ -251,7 +251,7 @@ class AccountController extends Controller
                         'case' => 'warning',
                         'title' => __('static.attention'),
                         'type' => 'exist',
-                         'input' => 'phone2',
+                        'input' => 'phone2',
                         'content' => __('static.phone_exists')
                     ]);
                     // return response(['case' => 'warning', 'type' => 'exist', 'input' => 'phone2', 'title' => __('static.attention') . '!', 'content' => __('register.phone_exists')]);
@@ -265,10 +265,10 @@ class AccountController extends Controller
             $user_arr['address1'] = $request->address;
             $user_arr['location_latitude1'] = $request->location_latitude;
             $user_arr['location_longitude1'] = $request->location_longitude;
-	        $user_arr['passport_series'] = $request->passport_prefix;
+            $user_arr['passport_series'] = $request->passport_prefix;
             $user_arr['passport_number'] = $request->get('passport_number');
-             $user_arr['branch_id'] = $request->branch_id;
-             $user_arr['birthday'] = $request->birthday;
+            $user_arr['branch_id'] = $request->branch_id;
+            $user_arr['birthday'] = $request->birthday;
 
             if (isset($request->password) && !empty($request->password)) {
                 $user_arr['password'] = Hash::make($request->password);
@@ -277,22 +277,22 @@ class AccountController extends Controller
             User::where(['id' => $id, 'role_id' => 2])->update($user_arr);
 
             $request_string = json_encode($request->all());
-	        $currentString = json_encode($currentUserData);
+            $currentString = json_encode($currentUserData);
 
             ClientsLog::create([
                 'type' => 'update',
                 'client_id' => $id,
                 'request' => $request_string,
-	   	        'current' => $currentString,
+                'current' => $currentString,
                 'role_id' => 2,
                 'created_by' => $id
             ]);
 
 
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'case' => 'success', 
-                    'title' => __('static.success'), 
+                    'case' => 'success',
+                    'title' => __('static.success'),
                     'content' => __('static.success')
                 ]);
             }
@@ -319,12 +319,13 @@ class AccountController extends Controller
         return view("web.account.profile.password");
     }
 
-    public function special_orders_country(Request $request){
-        $lang=$request->header('Language');
-        $countr = Country::whereIn('id', [2,7,9,12])->select('id', 'name_' . $lang.' as title', DB::raw("CONCAT('".env('APP_URL')."', flag) as flag"), DB::raw("CONCAT('".env('APP_URL')."', image) as image"))->orderBy('sort', 'desc')->orderBy('id')->get();
+    public function special_orders_country(Request $request)
+    {
+        $lang = $request->header('Language');
+        $countr = Country::whereIn('id', [2, 7, 9, 12])->select('id', 'name_' . $lang . ' as title', DB::raw("CONCAT('" . env('APP_URL') . "', flag) as flag"), DB::raw("CONCAT('" . env('APP_URL') . "', image) as image"))->orderBy('sort', 'desc')->orderBy('id')->get();
         return $countr;
     }
-    
+
     public function post_update_user_password(Request $request)
     {
         // dd($request->all());
@@ -356,7 +357,7 @@ class AccountController extends Controller
 
         try {
 
-            if($request->newPassword !== $request->confirmPassword){
+            if ($request->newPassword !== $request->confirmPassword) {
                 return back()->with(['case' => 'error1', 'content' => 'Şifrə və təkrar şifrə uyğun deyil.'])->withInput();
             }
 
@@ -369,7 +370,6 @@ class AccountController extends Controller
 //            return $currentUserData;
 
             $currentUserData->update(['password' => Hash::make($request->newPassword)]);
-
 
 
             $request_string = json_encode($request->all());
@@ -431,10 +431,10 @@ class AccountController extends Controller
                 'created_by' => $id
             ]);
 
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'case' => 'success', 
-                    'title' => __('static.success'), 
+                    'case' => 'success',
+                    'title' => __('static.success'),
                     'content' => __('static.success'),
                     'url' => 'https://www.asercargo.az' . $url
                 ]);
@@ -476,21 +476,21 @@ class AccountController extends Controller
     public function get_country_details(Request $request, $locale, $country_id)
     {
         try {
-            $countr = Country::whereIn('id', [2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'country_id' => $country_id, 'client_id' => $this->userID])
-                    ->whereNull('placed_by')
-                    ->whereNull('canceled_by')
-                    ->count();
-                    $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
-                    $currentCountry = $country_id;
-        
-                    if($country_id == 'special'){
-                        return view('web.account.Warehouses.country_details_special', compact(
-                            'countries',
-                            'countr',
-                                        'currentCountry'
-                        ));
-                    }
+                ->whereNull('placed_by')
+                ->whereNull('canceled_by')
+                ->count();
+            $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $currentCountry = $country_id;
+
+            if ($country_id == 'special') {
+                return view('web.account.Warehouses.country_details_special', compact(
+                    'countries',
+                    'countr',
+                    'currentCountry'
+                ));
+            }
             $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 
 
@@ -502,12 +502,12 @@ class AccountController extends Controller
                 ->where('title', 'not like', $selected_country->name_en . '_%')
                 ->select('title', 'information')
                 ->get();
-            
+
             $details_local = CountryDetails::where('country_id', $country_id)
                 ->where('title', 'like', $selected_country->name_en . '_%')
                 ->select('title', 'information')
                 ->get();
-            
+
             if ($this->api) {
                 return compact(
                     'details',
@@ -545,14 +545,14 @@ class AccountController extends Controller
 
             //counts for status
             $counts = array();
-            $totalCount=0;
+            $totalCount = 0;
             $counts['is_warehouse'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
                 ->where('package.is_warehouse', 1)
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
-            $totalCount +=$counts['is_warehouse'];
+            $totalCount += $counts['is_warehouse'];
             // $counts['sent'] = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
             //     ->where('package.client_id', $this->userID)
             //     ->where('package.is_warehouse', 2)
@@ -565,7 +565,7 @@ class AccountController extends Controller
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
-            $totalCount +=$counts['sent'];
+            $totalCount += $counts['sent'];
 
             $counts['in_office'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
@@ -573,7 +573,7 @@ class AccountController extends Controller
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
-            $totalCount +=$counts['in_office'];
+            $totalCount += $counts['in_office'];
 
 
             $counts['delivered'] = DB::table('package')
@@ -581,8 +581,8 @@ class AccountController extends Controller
                 ->whereNotNull('package.delivered_by')
                 ->whereNull('package.deleted_by')
                 ->count();
-            $totalCount +=$counts['delivered'];
-            $counts['total']=$totalCount;
+            $totalCount += $counts['delivered'];
+            $counts['total'] = $totalCount;
 
             $query = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
                 ->leftJoin('container', 'package.last_container_id', '=', 'container.id')
@@ -599,8 +599,8 @@ class AccountController extends Controller
             $search = array();
             $country = $request->input("country");
             $status = $request->input("status");
-            if(!$status){
-                $status=3;
+            if (!$status) {
+                $status = 3;
             }
             $last30 = $request->input("last30"); // last 30 days
             $search['country'] = $country;
@@ -618,16 +618,17 @@ class AccountController extends Controller
 //                $query->where('package.country_id', $country);
 //            }
 
-            $currentStatus=3;
+            $currentStatus = 3;
 
             if (isset($status) && !empty($status)) {
                 // search by status
                 switch ($status) {
 
-                    case 2: {
-                        // incorrect_invoice (səhv invoys)
-                        $query->whereNull('package.deleted_at');
-                    }
+                    case 2:
+                        {
+                            // incorrect_invoice (səhv invoys)
+                            $query->whereNull('package.deleted_at');
+                        }
                         break;
                     case 3:
                         {
@@ -665,14 +666,14 @@ class AccountController extends Controller
                         break;
                     case 7:
                     {
-                        $query->where('package.internal_id',$request->input("track_number"));
+                        $query->where('package.internal_id', $request->input("track_number"));
                         break;
 
                     }
                     default:
                     {
                         //default - in baku
-                        $query->whereIn('package.is_warehouse',1);
+                        $query->whereIn('package.is_warehouse', 1);
                         $query->whereNull('package.delivered_by');
                         //$query->whereNull('package.delivered_by');
                         $status = 5;
@@ -680,7 +681,7 @@ class AccountController extends Controller
                 }
             } else {
                 //default - in baku
-                $query->whereIn('package.is_warehouse', [1,2,3]);
+                $query->whereIn('package.is_warehouse', [1, 2, 3]);
 //                $query->whereNull('package.delivered_by');
                 //$query->whereNull('package.delivered_by');
                 $status = 5;
@@ -688,7 +689,7 @@ class AccountController extends Controller
 
             $search['status'] = $status;
 
-
+            $hasNotPaidPackage = false;
             $packages = $query
                 ->select(
                     'package.id',
@@ -766,6 +767,7 @@ class AccountController extends Controller
                     if ($package->paid_status == 1) {
                         $package->payment_button = __('static.paid');
                     } elseif ($package->amount > 0) {
+                        $hasNotPaidPackage = true;
                         $package->payment_button = __('buttons.not_paid');
                     } else {
                         $package->payment_button = null;
@@ -773,7 +775,7 @@ class AccountController extends Controller
                     if ($package->invoice_doc) {
                         $package->invoice_doc = 'https://asercargo.az' . $package->invoice_doc;
                     }
-                    $package->paid_status_text = $package->paid_status == 1 ? __('static.paid') :  __('buttons.not_paid');
+                    $package->paid_status_text = $package->paid_status == 1 ? __('static.paid') : __('buttons.not_paid');
 
                     if ($package->last_status_id == 7) {
                         $package->invoice_status_text = "Qadağan edilən bağlamalara invoys yüklənə bilməz";
@@ -815,11 +817,12 @@ class AccountController extends Controller
                 return compact(
                     'packages',
                     'search',
-                    'counts'
+                    'counts',
+                    'hasNotPaidPackage'
                 );
             }
 
-            $clients = User::whereNull('deleted_at')->where('id', $this->userID)->select('id','is_legality')->first();
+            $clients = User::whereNull('deleted_at')->where('id', $this->userID)->select('id', 'is_legality')->first();
 
 
             return view('web.account.packages.index', compact(
@@ -837,10 +840,11 @@ class AccountController extends Controller
             return view("front.error");
         }
     }
+
     public function pay_package(Request $request, $package_id)
     {
         try {
-            $package_id=$request->package_id;
+            $package_id = $request->package_id;
             if (!is_numeric($package_id)) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Wrong order format!']);
             }
@@ -852,16 +856,13 @@ class AccountController extends Controller
             }
 
             $balance = $user->balance;
-            
-            
-
 
 
             $package_exist = Package::where(['id' => $package_id, 'client_id' => $user_id, 'paid_status' => 0])
                 ->where('total_charge_value', '>', 0)
                 ->whereNull('delivered_by')
                 ->first();
-  
+
 
             if (!$package_exist) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Package not found!']);
@@ -874,18 +875,18 @@ class AccountController extends Controller
             if ($package_exist->issued_to_courier_date != null) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('static.packages_has_courier_message')]);
             }
-    
+
             $amount_ceil = ceil($package_exist->amount_usd * 100) / 100;
             $external_w_debt = ceil($package_exist->external_w_debt * 100) / 100;
             $internal_w_debt = ceil($package_exist->internal_w_debt_usd * 100) / 100;
             $paid_usd = ceil($package_exist->paid_sum * 100) / 100;
-    
+
             $total_amount_ceil = $amount_ceil + $external_w_debt + $internal_w_debt;
-    
+
             $total_amount = number_format($total_amount_ceil, 2, '.', '');
-            $total_amount = ceil(($total_amount - $paid_usd) * 100)/100;
-            if($request->type==1){
-                if($this->api){
+            $total_amount = ceil(($total_amount - $paid_usd) * 100) / 100;
+            if ($request->type == 1) {
+                if ($this->api) {
                     if ($user->cargo_debt > 0 || $user->common_debt > 0) {
                         return response(['case' => 'warning', 'title' => 'Oops!', 'errorKey' => 'error.debt.package'], Response::HTTP_BAD_REQUEST);
                     }
@@ -893,40 +894,40 @@ class AccountController extends Controller
                     if ($balance == 0) {
                         return response(['case' => 'warning', 'title' => 'Oops!', 'errorKey' => 'error.balance.notenough'], Response::HTTP_BAD_REQUEST);
                     }
-                }else{
+                } else {
                     if ($user->cargo_debt > 0 || $user->common_debt > 0) {
                         return response(['case' => 'warning', 'title' => 'Xəbərdarlıq!', 'content' => 'Sizin sifariş et xidmətində borcunuz mövcuddur. Zəhmət olmasa ilk öncə sifariş et xidmətinə keçid edərək borcu ödəyin.']);
                     }
                     if ($balance == 0) {
                         return response([
-                            'case' => 'warning', 
-                            'title' => 'Ooops!',
-                            'debt' => 0,
-                            'amount_paid' => $total_amount,
-                            'content' => __('static.packages_balance_message')]);
-                    }    
-                }
-                if ($balance < $total_amount) {
-                    
-                    if($this->api){
-                        return response(['case' => 'warning', 'title' => 'Oops!', 'errorKey' => 'error.balance.notenough'], Response::HTTP_BAD_REQUEST);
-                    }else{
-                        return response([
-                            'case' => 'warning', 
+                            'case' => 'warning',
                             'title' => 'Ooops!',
                             'debt' => 0,
                             'amount_paid' => $total_amount,
                             'content' => __('static.packages_balance_message')]);
                     }
-            
                 }
-                
+                if ($balance < $total_amount) {
+
+                    if ($this->api) {
+                        return response(['case' => 'warning', 'title' => 'Oops!', 'errorKey' => 'error.balance.notenough'], Response::HTTP_BAD_REQUEST);
+                    } else {
+                        return response([
+                            'case' => 'warning',
+                            'title' => 'Ooops!',
+                            'debt' => 0,
+                            'amount_paid' => $total_amount,
+                            'content' => __('static.packages_balance_message')]);
+                    }
+
+                }
+
                 $residue = 0;
-        
+
                 $result = $this->CalculatePaid($package_exist);
                 $pay = $result['pay_usd'];
                 $pay_azn = $result['pay_azn'];
-        
+
                 $new_balance = $balance - $pay;
                 User::where('id', $user_id)->update(['balance' => $new_balance]);
 
@@ -964,31 +965,31 @@ class AccountController extends Controller
                 //     $request->user()->notify(new Emails($email_title, $email_subject, $email_content, $email_bottom, $email_button));
                 // }
 
-                if($this->api){
+                if ($this->api) {
                     return response([
-                        'case' => 'success', 
-                        'title' => 'Paid!', 
-                        'content' => 'Paid!', 
+                        'case' => 'success',
+                        'title' => 'Paid!',
+                        'content' => 'Paid!',
                         'residue' => $new_balance
                     ]);
                 }
-                
+
                 return response(['case' => 'success', 'title' => 'Paid!', 'content' => 'Paid!', 'residue' => $residue]);
-            }else{
-                if($this->api){
+            } else {
+                if ($this->api) {
                     if ($user->cargo_debt > 0 || $user->common_debt > 0) {
                         return response(['case' => 'warning', 'title' => 'Oops!', 'errorKey' => 'error.debt.package'], Response::HTTP_BAD_REQUEST);
                     }
 
-                    
-                }else{
+
+                } else {
                     if ($user->cargo_debt > 0 || $user->common_debt > 0) {
                         return response(['case' => 'warning', 'title' => 'Xəbərdarlıq!', 'content' => 'Sizin sifariş et xidmətində borcunuz mövcuddur. Zəhmət olmasa ilk öncə sifariş et xidmətinə keçid edərək borcu ödəyin.']);
-                    }                      
+                    }
                 }
 
                 $new_packages_str = '';
-                $new_packages_str .= $package_exist->id . ',';                
+                $new_packages_str .= $package_exist->id . ',';
                 $new_packages_str = substr($new_packages_str, 0, -1);
                 $return_type = 2;
                 $ip_address = $request->ip();
@@ -1202,7 +1203,7 @@ class AccountController extends Controller
         }
     }
 
-    public function get_package_update(Request $request, $locale,$package_id)
+    public function get_package_update(Request $request, $locale, $package_id)
     {
         try {
             $package = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
@@ -1230,7 +1231,7 @@ class AccountController extends Controller
                 ->first();
 
             //dd($package);
-            if($package->last_status_id == 7){
+            if ($package->last_status_id == 7) {
                 return 'Qadağan olunan məhsullarda düzəliş edilə bilməz.';
             }
             if ($this->api) {
@@ -1292,7 +1293,7 @@ class AccountController extends Controller
             'remark' => ['nullable', 'string', 'max:5000'],
         ]);
         if ($validator->fails()) {
-            if($this->api){
+            if ($this->api) {
                 return response([
                     'case' => 'warning',
                     'title' => 'Oops!',
@@ -1310,7 +1311,7 @@ class AccountController extends Controller
             //return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
         }
         if ($request->get('price') < 1) {
-            if($this->api){
+            if ($this->api) {
                 return response([
                     'case' => 'warning',
                     'title' => 'Warning!',
@@ -1328,7 +1329,7 @@ class AccountController extends Controller
         }
         try {
             if (empty($request->seller_id) && empty($request->other_seller)) {
-                if($this->api){
+                if ($this->api) {
                     return response([
                         'case' => 'warning',
                         'title' => 'Oops!',
@@ -1348,14 +1349,15 @@ class AccountController extends Controller
 
             if (!$item_exist) {
 
-                if($this->api){
+                if ($this->api) {
                     return response([
                         'case' => 'warning',
                         'title' => 'Oops!',
                         'type' => 'validation',
                         'content' => 'Item not found!'
                     ]);
-                }return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
+                }
+                return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                     'case' => 'warning',
                     'title' => 'Oops!',
                     'type' => 'validation',
@@ -1364,7 +1366,7 @@ class AccountController extends Controller
             }
 
             if ($item_exist->invoice_status == 3) {
-                if($this->api){
+                if ($this->api) {
                     return response([
                         'case' => 'warning',
                         'title' => 'Oops!',
@@ -1383,7 +1385,7 @@ class AccountController extends Controller
             $old_invoice_doc = $item_exist->invoice_doc;
 
             if (!isset($request->invoice) && $old_invoice_doc == null) {
-        //                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('static.invoice_file_cannot_be_null')]);
+                //                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('static.invoice_file_cannot_be_null')]);
             }
 
             $package_arr = array();
@@ -1400,7 +1402,7 @@ class AccountController extends Controller
                 ->whereNotIn('package.carrier_status_id', [7, 8])
                 ->select('package.client_id', 'package.country_id', 'package.internal_id', 'last_status_id', 'carrier_status_id')->first();
             if (!$package_exist) {
-                if($this->api){
+                if ($this->api) {
                     return response([
                         'case' => 'warning',
                         'title' => 'Oops!',
@@ -1419,7 +1421,7 @@ class AccountController extends Controller
 
             $client_id = $package_exist->client_id;
             if ($client_id != null && $client_id != $this->userID) {
-                if($this->api){
+                if ($this->api) {
                     return response([
                         'case' => 'warning',
                         'title' => 'Oops!',
@@ -1438,7 +1440,7 @@ class AccountController extends Controller
             $user = User::where('id', $client_id)->select('is_legality')->first();
 
             $currency_id = $request->currency_id;
-  
+
 
             Package::where('id', $package_id)->update($package_arr);
 
@@ -1461,7 +1463,7 @@ class AccountController extends Controller
             $item_arr['price'] = $request->price;
             $item_arr['currency_id'] = $currency_id;
             $item_arr['price_usd'] = $price_usd;
-	        $item_arr['title'] = $request->title;
+            $item_arr['title'] = $request->title;
 
             if (isset($request->invoice)) {
                 $file = $request->file('invoice');
@@ -1481,7 +1483,7 @@ class AccountController extends Controller
 
             $item_arr['category_id'] = $request->category_id;
             $item_arr['title'] = $request->title;
-            if($user->is_legality != 1){
+            if ($user->is_legality != 1) {
                 if (
                     $package_exist->title != $item_arr['title'] or
                     $package_exist->price != $item_arr['price'] or
@@ -1509,10 +1511,10 @@ class AccountController extends Controller
                 'status_id' => 35
             ]);
 
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'case' => 'success', 
-                    'title' => 'Success!', 
+                    'case' => 'success',
+                    'title' => 'Success!',
                     'content' => 'Success!',
                     'item_arr' => $item_arr
                 ]);
@@ -1523,8 +1525,7 @@ class AccountController extends Controller
                 'title' => 'Success!',
                 'content' => 'Success'
             ]);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             // dd($exception);
             return redirect()->route('get_orders', ['locale' => App::getLocale()])->with([
                 'case' => 'error',
@@ -1562,11 +1563,11 @@ class AccountController extends Controller
                 ->get();
 
 
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'case' => 'success', 
-                    'title' => 'Success!', 
-                    'content' => 'Successful!', 
+                    'case' => 'success',
+                    'title' => 'Success!',
+                    'content' => 'Successful!',
                     'items' => $items]);
             }
 
@@ -1580,14 +1581,13 @@ class AccountController extends Controller
 
     public function get_special_orders_select(Request $request)
     {
-        try 
-        {
-            $countries = Country::whereIn('id', [7,2,9,12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
-            $countr = Country::whereIn('id', [7,2,9,12])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+        try {
+            $countries = Country::whereIn('id', [7, 2, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [7, 2, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'client_id' => $this->userID])
-                    ->whereNull('placed_by')
-                    ->whereNull('canceled_by')
-                    ->count();
+                ->whereNull('placed_by')
+                ->whereNull('canceled_by')
+                ->count();
 
 
             $query = SpecialOrderGroups::leftJoin('currency as cur', 'special_order_groups.currency_id', '=', 'cur.id')
@@ -1620,7 +1620,7 @@ class AccountController extends Controller
                 //$order->total_amount_azn = sprintf('%0.2f', $total_amount * $rate_azn);
             }
 
-            $country_id=2;
+            $country_id = 2;
             return view("front.account.special_order_country", compact(
                 'countries',
                 'countr',
@@ -1637,15 +1637,16 @@ class AccountController extends Controller
             return view("front.error");
         }
     }
-    public function get_special_orders(Request $request,$a, $country_id)
+
+    public function get_special_orders(Request $request, $a, $country_id)
     {
         try {
-            $countr = Country::whereIn('id', [2,9,12,7])->select('id', 'name_' . App::getLocale(), 'flag','image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 
             //return redirect()->route("get_account");
 
             $settings = SpecialOrdersSettings::first();
-    
+
             if (!$settings || $settings->active == 0) {
                 Session::flash('message', $settings->message);
                 Session::flash('special_orders_active', 'false');
@@ -1665,7 +1666,7 @@ class AccountController extends Controller
                 if ($this->api) {
                     return 'Country not found!';
                 }
-                return redirect()->route("get_account",['locale' => App::getLocale()]);
+                return redirect()->route("get_account", ['locale' => App::getLocale()]);
             }
 
             $currency = Country::leftJoin('currency as cur', 'countries.local_currency', '=', 'cur.id')
@@ -1701,7 +1702,7 @@ class AccountController extends Controller
             }
             $rate_azn = $rate->rate;
 
-            $countr = Country::whereIn('id', [2,9,12,7])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
             $countrFlag = Country::where('id', $country_id)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->first();
 
             $packages_price_for_last_month = $this->packages_price_for_last_month();
@@ -1785,7 +1786,7 @@ class AccountController extends Controller
                 'countrFlag'
             ));
             // if($country_id == 7 || $country_id == 2){
-               
+
 
             // }else{
             //     return redirect()->back();
@@ -1824,7 +1825,7 @@ class AccountController extends Controller
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Orders not found!']);
             }
 
-            if($this->api){
+            if ($this->api) {
                 return response([
                     'case' => 'Success',
                     'orders' => $orders
@@ -1836,76 +1837,76 @@ class AccountController extends Controller
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!']);
         }
     }
-    
-    public function pay_to_special_order(Request $request,$country_id, $order_id)
+
+    public function pay_to_special_order(Request $request, $country_id, $order_id)
     {
         try {
-            $order_id=$request->order_id;
-            $country_id=$request->country_id;
+            $order_id = $request->order_id;
+            $country_id = $request->country_id;
             if (!is_numeric($order_id)) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Wrong order format!']);
             }
-            
-            $order = SpecialOrderGroups::where('id', $order_id)->select('id', 'price', 'paid', 'cargo_debt', 'common_debt', 'group_code','currency_id')->first();
-            
+
+            $order = SpecialOrderGroups::where('id', $order_id)->select('id', 'price', 'paid', 'cargo_debt', 'common_debt', 'group_code', 'currency_id')->first();
+
             if (!$order) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Order not found!']);
             }
-            
+
             $amount = ($order->price - $order->paid) + $order->cargo_debt + $order->common_debt;
-            
+
             $special_orders = SpecialOrder::where('group_code', $order->group_code)
                 ->select('id', 'price', 'quantity')
                 ->get();
-            
+
             $ip_address = $_SERVER['REMOTE_ADDR'];
             $user_basket_arr = array();
             $orders_id_arr = array();
             $total_single_price = 0;
             $total_price = 0;
             $urls = '';
-            $currency_id=$order->currency_id;
+            $currency_id = $order->currency_id;
             $user_basket_arr = array();
             foreach ($special_orders as $special_order) {
                 $order_arr = array();
                 array($order_arr, $special_order->id);
                 array($order_arr, $special_order->price);
                 array($order_arr, $special_order->quantity);
-                
+
                 array_push($user_basket_arr, $order_arr);
             }
             $user_basket = base64_encode(json_encode($user_basket_arr));
             //$paytr = $this->amount_send_to_paytr($country_id, $user_basket, $amount);
-            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address,$currency_id);
+            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
             $url = $pay[2];
-            $merchant_oid =  urldecode($pay[3]);
-            
-            
+            $merchant_oid = urldecode($pay[3]);
+
+
             SpecialOrderPayments::create([
                 'order_id' => $order_id,
                 'payment_key' => $merchant_oid,
                 'created_by' => $this->userID
             ]);
-            
+
             SpecialOrderStatus::create([
                 'order_id' => $order_id,
                 'status_id' => 32,
                 'created_by' => $this->userID
             ]);
-            
-            
-            if($this->api){
+
+
+            if ($this->api) {
                 return response(['case' => 'success', 'url' => $url]);
             }
-            
+
             return response(['case' => 'success', $url]);
         } catch (\Exception $exception) {
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!']);
         }
     }
-    
-    
-    private function pay_to_pashaBank_special($get_amount, $user_id, $ip_address,  $currency_id=1, $payment_type = 'specialOrder', $order_id = 0, $packages_str = null)
+
+
+    private function pay_to_pashaBank_special($get_amount, $user_id, $ip_address, $currency_id = 1, $payment_type = 'specialOrder', $order_id = 0, $packages_str = null)
     {
         try {
             $date = Carbon::today();
@@ -1914,22 +1915,20 @@ class AccountController extends Controller
                 ->select('rate')
                 ->first();
             $amount = sprintf('%0.2f', ($get_amount * $rate->rate)) * 100;
-            
-            
 
 
             $client_url = "";
             $currency = 944;
             $description = "c_" . $user_id;
             $language = "az";
-            
+
             $ca = "/var/www/sites/certificates_special/PSroot.pem";
             $key = "/var/www/sites/certificates_special/rsa_key_pair.pem";
             $cert = "/var/www/sites/certificates_special/certificate.0032188.pem";
-            
+
             $merchant_handler = "https://ecomm.pashabank.az:18443/ecomm2/MerchantHandler";
             $client_handler = "https://ecomm.pashabank.az:8463/ecomm2/ClientHandler";
-            
+
             $params['command'] = "V";
             $params['amount'] = $amount;
             $params['currency'] = $currency;
@@ -1938,8 +1937,8 @@ class AccountController extends Controller
             $params['msg_type'] = "SMS";
             $params['client_ip_addr'] = $ip_address;
             $params['terminal_id'] = "EC101948";
-            
-            
+
+
             $qstring = http_build_query($params);
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $merchant_handler);
@@ -1955,22 +1954,22 @@ class AccountController extends Controller
             curl_setopt($ch, CURLOPT_SSLCERTTYPE, "PEM");
             curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
             $result = curl_exec($ch);
-            
-            if(empty($result)) $errors[] = 'Ödəniş sistemində xəta baş verdi. Bir az sonra yenidən cəhd edin';
-            
-            if(!empty($result)){
-                
+
+            if (empty($result)) $errors[] = 'Ödəniş sistemində xəta baş verdi. Bir az sonra yenidən cəhd edin';
+
+            if (!empty($result)) {
+
                 if (curl_error($ch)) array_push($errors, 'Payment error!');
-                
+
                 curl_close($ch);
-                
+
                 $trans_ref = explode(' ', $result)[1];
                 $payment_task = $this->generate_payment_task_pasha("pasha", $ip_address, $payment_type, $order_id, $packages_str, $trans_ref, $amount, $this->api);
-                
+
                 $trans_ref = urlencode($trans_ref);
                 $client_url = $client_handler . "?trans_id=" . $trans_ref;
             }
-            
+
             return ['success', 'Uğurlu', $client_url, $trans_ref];
         } catch (\Exception $exception) {
             Session::flash('message', "Səhv baş verdi!");
@@ -1981,10 +1980,10 @@ class AccountController extends Controller
                 return 'Səhv baş verdi!';
             }
             return redirect()->route("get_balance_page");
-            
+
         }
     }
-    
+
     private function amount_send_to_paytr($country_id, $user_basket, $price)
     {
         $merchant_id = '122743';
@@ -2095,17 +2094,17 @@ class AccountController extends Controller
         }
         try {
             $settings = SpecialOrdersSettings::where('id', 1)->select('percent')->first();
-        
+
             if (!$settings) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Settings not found!']);
             }
             $country_id = $request->country_id;
             $group_code = Str::random(200) . time() . $this->userID;
-        
+
             $lang = strtolower(Auth::user()->language());
-        
+
             $percent = $settings->percent;
-        
+
             $country = Country::where('id', $country_id)->select('local_currency as currency_id', 'countries.name_' . $lang . ' as name')->first();
             if ($country) {
                 $currency_id = $country->currency_id;
@@ -2127,27 +2126,27 @@ class AccountController extends Controller
                 $color = $request->color[$i];
                 $size = $request->size[$i];
                 $description = $request->description[$i];
-            
+
                 if ($quantity < 1) {
                     SpecialOrder::where('group_code', $group_code)->update(['deleted_by' => 1907, 'deleted_at' => Carbon::now()]);
                     return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Say 1-dən kiçik ola bilməz!']);
                 }
-            
+
                 if ($single_price < 0.01) {
                     SpecialOrder::where('group_code', $group_code)->update(['deleted_by' => 1907, 'deleted_at' => Carbon::now()]);
                     return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Qiymət 0.01-dən kiçik ola bilməz!']);
                 }
-            
+
                 $single_price = str_replace(',', '.', $single_price);
-            
+
                 $multi_price = $single_price * $quantity;
                 $price = $multi_price + ($multi_price * $percent) / 100;
-            
+
                 $price = sprintf('%0.2f', $price);
-            
+
                 $total_price += $price;
                 $total_single_price += $multi_price;
-            
+
                 $special_order = SpecialOrder::create([
                     'url' => $url,
                     'quantity' => $quantity,
@@ -2160,19 +2159,19 @@ class AccountController extends Controller
                     'created_by' => $this->userID,
                     'last_status_id' => 10, //special order created
                 ]);
-            
+
                 $order_arr = array();
                 array($order_arr, $special_order->id);
                 array($order_arr, $price);
                 array($order_arr, $quantity);
-            
+
                 array_push($user_basket_arr, $order_arr);
-            
+
                 array_push($orders_id_arr, $special_order->id);
             }
-        
+
             $urls = substr($urls, 0, -1);
-        
+
             $group = SpecialOrderGroups::create([
                 'client_id' => $this->userID,
                 'country_id' => $country_id,
@@ -2184,47 +2183,47 @@ class AccountController extends Controller
                 'group_code' => $group_code,
                 'created_by' => $this->userID
             ]);
-        
+
             SpecialOrderStatus::create([
                 'order_id' => $group->id,
                 'status_id' => 10, //not paid
                 'created_by' => $this->userID
             ]);
-        
+
             $user_basket = base64_encode(json_encode($user_basket_arr));
-        
-            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address,$currency_id);
-        
-        
-            $merchant_oid =  urldecode($pay[3]);
+
+            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
+
+
+            $merchant_oid = urldecode($pay[3]);
             $url = $pay[2];
             //SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
-        
+
             SpecialOrderPayments::create([
                 'order_id' => $group->id,
                 'payment_key' => $merchant_oid,
                 'created_by' => $this->userID
             ]);
-        
+
             SpecialOrderStatus::create([
                 'order_id' => $group->id,
                 'status_id' => 32,
                 'created_by' => $this->userID
             ]);
-    
+
             return response(['case' => 'success', $url]);
-    
+
         } catch (\Exception $exception) {
             //dd($exception);
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!', 'errorKey' => 'error.http.500'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function delete_special_order(Request $request,$country_id, $order_id)
+    public function delete_special_order(Request $request, $country_id, $order_id)
     {
         try {
-            $order_id=$request->order_id;
-            $country_id=$request->country_id;
+            $order_id = $request->order_id;
+            $country_id = $request->country_id;
             if (!is_numeric($order_id)) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Wrong order format!']);
             }
@@ -2383,8 +2382,8 @@ class AccountController extends Controller
 
             if ($this->api) {
                 return response([
-                    'case' => 'success', 
-                    'title' => 'Uğurlu!', 
+                    'case' => 'success',
+                    'title' => 'Uğurlu!',
                     'content' => 'Sifariş bilgiləri uğurla dəyişdirildi!',
                     'group' => $group
                 ]);
@@ -2470,13 +2469,13 @@ class AccountController extends Controller
             $total_debt = sprintf('%0.2f', $total_debt);
 
             $sub_accounts = User::where('parent_id', $this->userID)
-            ->select(
-                'id',
-                'name',
-                'surname',
-                'balance'
-            )
-            ->paginate(8);
+                ->select(
+                    'id',
+                    'name',
+                    'surname',
+                    'balance'
+                )
+                ->paginate(8);
 
             return view('front.account.sub_accounts', compact(
                 'packages_price_for_last_month',
@@ -2636,7 +2635,6 @@ class AccountController extends Controller
         }
     }
 
-    
 
     public function login_referal_account(Request $request)
     {
@@ -2751,12 +2749,12 @@ class AccountController extends Controller
                 ->whereNull('package.deleted_by')
                 ->whereNull('package.delivered_by')
                 ->count();
-        //            $counts['incorrect_invoice'] = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
-        //                ->whereIn('package.client_id', $sub_accounts)
-        //                ->whereNotNull('item.invoice_doc')
-        //                ->where('item.invoice_confirmed', 0)
-        //                ->whereNull('package.deleted_by')
-        //                ->count();
+            //            $counts['incorrect_invoice'] = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
+            //                ->whereIn('package.client_id', $sub_accounts)
+            //                ->whereNotNull('item.invoice_doc')
+            //                ->where('item.invoice_confirmed', 0)
+            //                ->whereNull('package.deleted_by')
+            //                ->count();
             $counts['is_warehouse'] = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
                 ->whereIn('package.client_id', $sub_accounts)
                 ->where('package.is_warehouse', 1)
@@ -2806,20 +2804,20 @@ class AccountController extends Controller
             if (isset($status) && !empty($status)) {
                 // search by status
                 switch ($status) {
-        //                    case 1:
-        //                        {
-        //                            // declared (beyan olunanlar)
-        //                            $query->whereNotNull('item.invoice_doc');
-        //                            $query->where('package.is_warehouse', 0);
-        //                            $query->whereNull('package.delivered_by');
-        //                        }
-        //                        break;
-        //                    case 2: {
-        //                        // incorrect_invoice (səhv invoys)
-        //                        $query->whereNotNull('item.invoice_doc');
-        //                        $query->where('item.invoice_confirmed', 0);
-        //                    }
-        //                        break;
+                    //                    case 1:
+                    //                        {
+                    //                            // declared (beyan olunanlar)
+                    //                            $query->whereNotNull('item.invoice_doc');
+                    //                            $query->where('package.is_warehouse', 0);
+                    //                            $query->whereNull('package.delivered_by');
+                    //                        }
+                    //                        break;
+                    //                    case 2: {
+                    //                        // incorrect_invoice (səhv invoys)
+                    //                        $query->whereNotNull('item.invoice_doc');
+                    //                        $query->where('item.invoice_confirmed', 0);
+                    //                    }
+                    //                        break;
                     case 3:
                         {
                             // is_warehouse (xarici anbardadir)
@@ -2983,7 +2981,7 @@ class AccountController extends Controller
             $package = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
                 ->where(['package.id' => $package_id])
                 ->whereIn('package.client_id', $sub_accounts)
-        //                ->whereNull('package.internal_id')
+                //                ->whereNull('package.internal_id')
                 ->whereRaw('(package.internal_id is null or item.invoice_doc is null or item.invoice_confirmed <> 1)')
                 ->whereNull('package.deleted_by')
                 ->select(
@@ -3168,10 +3166,10 @@ class AccountController extends Controller
                 ->orderBy('id', 'desc')
                 ->take(100)
                 ->get();
-            
+
             $amount = 0;
 
-            if ($request->amount){
+            if ($request->amount) {
                 $amount = $request->amount;
             }
 
@@ -3209,7 +3207,7 @@ class AccountController extends Controller
             $response = $this->pay_to_pashaBank($request->amount, $this->userID, $return_type, $ip_address);
             //$response = $this->pay_to_millikart($request->amount, $this->userID, $return_type, $ip_address);
 
-            if($this->api){
+            if ($this->api) {
                 return response([
                     'url' => $response
                 ]);
@@ -3264,8 +3262,7 @@ class AccountController extends Controller
                     }
                 }
                 $amount = sprintf('%0.2f', ($input_amount * $rate->rate)) * 100;
-            } 
-            else if ($payment_type == 'payment') {
+            } else if ($payment_type == 'payment') {
                 // usd
                 $date = Carbon::today();
                 $rate = ExchangeRate::where(['from_currency_id' => 1, 'to_currency_id' => 3]) // usd -> azn
@@ -3286,8 +3283,7 @@ class AccountController extends Controller
                     }
                 }
                 $amount = sprintf('%0.2f', ($input_amount * $rate->rate)) * 100;
-            }            
-            else {
+            } else {
                 // courier
                 // azn
                 $amount = $input_amount * 100;
@@ -3309,13 +3305,12 @@ class AccountController extends Controller
                     return $url;
                 }
                 return redirect($url);
-            }else if($return_type == 4){
-                if($this->api){
+            } else if ($return_type == 4) {
+                if ($this->api) {
                     return $url;
                 }
                 return redirect($url);
-            }
-            else {
+            } else {
                 return ['success', 'Uğurlu', $url];
             }
         } catch (\Exception $exception) {
@@ -3373,7 +3368,16 @@ class AccountController extends Controller
                 ->take(100)
                 ->get();
 
-            if($this->api){
+            foreach ($logs as $log) {
+                if ($log->created_at instanceof \Carbon\Carbon) {
+                    $log->created_at = $log->created_at->format('Y-m-d H:i');
+                } else {
+                    $log->created_at = date('Y-m-d H:i', strtotime($log->created_at));
+                }
+            }
+
+
+            if ($this->api) {
                 return response([
                     'logs' => $logs
                 ]);
@@ -3411,7 +3415,7 @@ class AccountController extends Controller
                 $min_date = date('Y-m-d');
                 $max_date = date("Y-m-d", strtotime(date("Y-m-d") . "+2 day"));
             }
-            
+
             $query = CourierOrders::leftJoin('courier_areas', 'courier_orders.area_id', '=', 'courier_areas.id')
                 ->leftJoin('courier_metro_stations', 'courier_orders.metro_station_id', '=', 'courier_metro_stations.id')
                 ->leftJoin('courier_payment_types', 'courier_orders.courier_payment_type_id', '=', 'courier_payment_types.id')
@@ -3425,7 +3429,7 @@ class AccountController extends Controller
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
                 )');
             //->whereRaw('(((courier_orders.courier_payment_type_id = 1 or courier_orders.delivery_payment_type_id = 1) and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 0))');
-            
+
             $where_archive_status = $request->input("archive");
             if (!isset($where_archive_status) || $where_archive_status != 'yes') {
                 $query->whereNull('courier_orders.delivered_at');
@@ -3454,22 +3458,22 @@ class AccountController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
 
-            if($this->api){
+            if ($this->api) {
                 return response([
                     'orders' => $orders
                 ]);
             }
 
             return view("web.account.courier.index", compact(
-                //'areas',
-                //'regions',
-                //'metro_stations',
+            //'areas',
+            //'regions',
+            //'metro_stations',
                 'orders',
                 'min_date',
                 'max_date'
-                //'amount_for_urgent',
-                //'packages',
-                //'has_sub_accounts'
+            //'amount_for_urgent',
+            //'packages',
+            //'has_sub_accounts'
             ));
         } catch (\Exception $exception) {
             return view("front.error");
@@ -3562,9 +3566,9 @@ class AccountController extends Controller
                 )
                 ->get();
 
-                //if (count($packages) == 0) {
-                //    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.no_referral_packages')]);
-                //}
+            //if (count($packages) == 0) {
+            //    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.no_referral_packages')]);
+            //}
 
             $date = Carbon::now();
             $rates = ExchangeRate::whereDate('from_date', '<=', $date)->whereDate('to_date', '>=', $date)
@@ -3590,14 +3594,14 @@ class AccountController extends Controller
                 $external_debt = $package->external_w_debt_azn;
                 $internal_debt = $package->internal_w_debt;
                 $paid_azn = $package->paid_azn;
-    
-                if($paid_azn > 0){
+
+                if ($paid_azn > 0) {
                     $amount = $paid_azn - $amount;
-    
+
                     if ($amount > 0) {
                         $external_debt -= $amount;
                     }
-    
+
                     if ($amount != 0 && $external_debt != 0) {
                         $internal_debt_collect = $external_debt + $internal_debt;
                         $external_debt = $external_debt > 0 ? $external_debt : 0;
@@ -3607,11 +3611,11 @@ class AccountController extends Controller
                         $internal_debt = $internal_debt;
                         $amount = 0;
                     }
-    
-                    
+
+
                 }
-                
-                
+
+
                 //$amount_azn = ($package->amount - $package->paid) * $rate_to_azn;
                 $amount_azn = sprintf('%0.2f', $amount);
                 $external_amount_azn = sprintf('%0.2f', $external_debt);
@@ -3620,7 +3624,7 @@ class AccountController extends Controller
                 $package->amount = $amount_azn;
                 $package->external_w_debt = $external_amount_azn;
                 $package->internal_w_debt = $internal_amount_azn;
-               
+
                 if (strlen($package->track) > 7) {
                     $package->track = substr($package->track, strlen($package->track) - 7);
                 }
@@ -3644,7 +3648,7 @@ class AccountController extends Controller
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
                 )');
             //->whereRaw('(((courier_orders.courier_payment_type_id = 1 or courier_orders.delivery_payment_type_id = 1) and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 0))');
-            
+
             $where_archive_status = $request->input("archive");
             if (!isset($where_archive_status) || $where_archive_status != 'yes') {
                 $query->whereNull('courier_orders.delivered_at');
@@ -3673,7 +3677,7 @@ class AccountController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(15);
 
-            if($this->api){
+            if ($this->api) {
                 return response([
                     'packages' => $packages,
                     'orders' => $orders
@@ -3893,7 +3897,7 @@ class AccountController extends Controller
             $zone_id = $area->zone_id;
 
             $payment_types = CourierZonePaymentTypes::where('courier_zone_payment_type.zone_id', $zone_id)
-                ->where('courier_payment_type_id','<',3)
+                ->where('courier_payment_type_id', '<', 3)
                 ->select('courier_zone_payment_type.courier_payment_type_id')
                 ->distinct()
                 ->get();
@@ -3902,10 +3906,10 @@ class AccountController extends Controller
             }
 
 
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'case' => 'success', 
-                    'payment_types' => $payment_types, 
+                    'case' => 'success',
+                    'payment_types' => $payment_types,
                     'tariff' => $area->tariff
                 ]);
             }
@@ -3922,7 +3926,7 @@ class AccountController extends Controller
             'area_id' => ['required', 'integer'],
             'courier_payment_type' => ['required', 'string'],
         ]);
-        $courier_payment_type_id = substr((string) $request->courier_payment_type, -1);
+        $courier_payment_type_id = substr((string)$request->courier_payment_type, -1);
 
         if ($validator->fails()) {
             return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_selected')]);
@@ -3940,9 +3944,9 @@ class AccountController extends Controller
             $zone_id = $area->zone_id;
 
             $payment_types = CourierZonePaymentTypes::where('courier_zone_payment_type.zone_id', $zone_id)
-                ->where('delivery_payment_type_id','<',3)
+                ->where('delivery_payment_type_id', '<', 3)
                 ->where('courier_zone_payment_type.courier_payment_type_id', $courier_payment_type)
-                ->select('courier_zone_payment_type.delivery_payment_type_id' )
+                ->select('courier_zone_payment_type.delivery_payment_type_id')
                 ->distinct()
                 ->get();
 
@@ -3950,9 +3954,9 @@ class AccountController extends Controller
                 $payment_type->delivery_payment_type_id = 'delivery_pay_button_' . $payment_type->delivery_payment_type_id;
             }
 //
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'case' => 'success', 
+                    'case' => 'success',
                     'payment_types' => $payment_types]);
             }
 
@@ -4012,7 +4016,7 @@ class AccountController extends Controller
         ], [
 
             'packages_list.required' => 'Bağlama seçmək mütləqdir.',
-                'date.required' => 'Tarix seçimi mütləqdir',
+            'date.required' => 'Tarix seçimi mütləqdir',
             'area_id.required' => 'Metro stansiya seçmək mütləqdir.',
 
             'address.required' => 'Adres mütləq olmalıdır',
@@ -4023,11 +4027,11 @@ class AccountController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'title'=> 'error',
+                    'title' => 'error',
                     'case' => 'error',
-                    'content'=> $validator,
+                    'content' => $validator,
 
                 ]);
             }
@@ -4040,7 +4044,7 @@ class AccountController extends Controller
 
         try {
             DB::beginTransaction();
-            
+
             $courier_settings = CourierSettings::first();
 
             if (!$courier_settings) {
@@ -4187,16 +4191,16 @@ class AccountController extends Controller
             $packages_arr_for_update = array();
 
             foreach ($packages as $package) {
-    
+
                 $result = $this->CourierCalculatePaid($package);
                 $pay = $result['paid_azn'];
-                
-         
+
+
                 $new_packages_str .= $package->id . ',';
 
                 $currency_id = $package->currency_id;
 
-           
+
                 $delivery_amount += $pay;
 
                 if (($delivery_payment_type_id != 1 || $package->paid_status == 1) && $courier_payment_type_id != 1) {
@@ -4226,28 +4230,28 @@ class AccountController extends Controller
                 'total_amount' => $summary_amount,
                 'order_type' => 1
             ]);
-            
 
-           $data = [
-            'area_id'=>$request->area_id,
-            'metro_station_id'=>$request->metro_station_id,
-            'address'=>$request->address,
-            'phone'=>$request->phone,
-            'date'=>$request->date,
-            'courier_payment_type_id'=>$courier_payment_type_id,
-            'delivery_payment_type_id'=>$delivery_payment_type_id,
-            'urgent_order'=>$request->urgent_order,
-            'packages'=>$request->packages,
-            'created_by'=>$request->created_by,
-            'client_id'=>$request->client_id,
-            'amount'=>$request->amount,
-            'delivery_amount'=>$request->delivery_amount,
-            'total_amount'=>$request->total_amount,
-            'order_type'=>$request->order_type
-           ];
-        //    dd($data);
+
+            $data = [
+                'area_id' => $request->area_id,
+                'metro_station_id' => $request->metro_station_id,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'date' => $request->date,
+                'courier_payment_type_id' => $courier_payment_type_id,
+                'delivery_payment_type_id' => $delivery_payment_type_id,
+                'urgent_order' => $request->urgent_order,
+                'packages' => $request->packages,
+                'created_by' => $request->created_by,
+                'client_id' => $request->client_id,
+                'amount' => $request->amount,
+                'delivery_amount' => $request->delivery_amount,
+                'total_amount' => $request->total_amount,
+                'order_type' => $request->order_type
+            ];
+            //    dd($data);
             $order = CourierOrders::create($data);
-           
+
             Package::whereIn('id', $packages_arr_for_update)->update([
                 'courier_order_id' => $order->id,
                 'has_courier' => 1,
@@ -4268,7 +4272,7 @@ class AccountController extends Controller
             }
             // dd($new_packages_str);
             $online_pay_amount = 0;
-           
+
             if ($courier_payment_type_id == 1) {
                 // online
                 $online_pay_amount += $amount;
@@ -4278,7 +4282,7 @@ class AccountController extends Controller
                 // online
                 $online_pay_amount += $delivery_amount;
             }
-            
+
             if ($online_pay_amount > 0) {
                 // online
                 $return_type = 2;
@@ -4287,7 +4291,7 @@ class AccountController extends Controller
                 $response = $this->pay_to_pashaBank($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
                 $payResponse = response(['case' => $response[0], 'title' => $response[1], 'content' => $response[2], 'pay' => true]);
             }
-            
+
             //dd($payResponse);
 
 
@@ -4298,14 +4302,14 @@ class AccountController extends Controller
                 $content = $payResponse->getContent();
                 $data = json_decode($content, true);
                 // return back()->with('success', 'Success')->withInput();
-                if($this->api){
+                if ($this->api) {
                     if (isset($payResponse)) {
                         return $payResponse;
                     } else {
                         return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
                     }
                 }
-                if(!empty($data['content'])){
+                if (!empty($data['content'])) {
                     if (filter_var($data['content'], FILTER_VALIDATE_URL)) {
                         return redirect($data['content']);
                     }
@@ -4313,25 +4317,25 @@ class AccountController extends Controller
                 return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
             }
 
-            if($this->api){
+            if ($this->api) {
                 return response([
-                    'title'=> 'success',
+                    'title' => 'success',
                     'case' => 'success',
-                    'content'=> 'Kuryer sifarişi əlavə olundu'
+                    'content' => 'Kuryer sifarişi əlavə olundu'
                 ]);
             }
             return redirect()->route('get_courier_page', ['locale' => App::getLocale()]);
         } catch (\Exception $exception) {
-             //dd($exception);
+            //dd($exception);
             DB::rollback();
             Log::error('courier_error', [
-                'error' =>$exception
-                ]);
-            if($this->api){
+                'error' => $exception
+            ]);
+            if ($this->api) {
                 return response([
-                    'title'=> 'error',
+                    'title' => 'error',
                     'case' => 'error',
-                    'content'=> 'Kuryer sifarişi tamamlanmadı',
+                    'content' => 'Kuryer sifarişi tamamlanmadı',
 
                 ]);
             }
@@ -4370,42 +4374,45 @@ class AccountController extends Controller
             return response('Something goes wrong', 404);
         }
     }
-    public function get_branches(Request $request){
 
-        $branches = DB::table('filial')->select('id', 'name as title', 'address', 'phone1 as phone_number' ,'map_location','work_hours')->get();
+    public function get_branches(Request $request)
+    {
+
+        $branches = DB::table('filial')->select('id', 'name as title', 'address', 'phone1 as phone_number', 'map_location', 'work_hours', 'orjinal_map_link')->get();
 
         return response()->json($branches);
 
     }
+
     public function get_statuses()
     {
         try {
-            if($this->api){
-                $statuses=array(
+            if ($this->api) {
+                $statuses = array(
 //                [
 //                    'id'=>null,
 //                    'title'=>__('static.all_orders_status')
 //                ],
-                [
-                    'id'=>3,
-                    'title'=>__('static.in_warehouse_status')
-                ],
-                [
-                    'id'=>4,
-                    'title'=>str_replace("\n", "", html_entity_decode(__('static.sent_status'), ENT_QUOTES, 'UTF-8'))
-                ],
-                [
-                    'id'=>5,
-                    'title'=>__('static.in_baku_status')
-                ],
-                [
-                    'id'=>6,
-                    'title'=>__('static.archive_status')
-                ]
-            );
+                    [
+                        'id' => 3,
+                        'title' => __('static.in_warehouse_status')
+                    ],
+                    [
+                        'id' => 4,
+                        'title' => str_replace("\n", "", html_entity_decode(__('static.sent_status'), ENT_QUOTES, 'UTF-8'))
+                    ],
+                    [
+                        'id' => 5,
+                        'title' => __('static.in_baku_status')
+                    ],
+                    [
+                        'id' => 6,
+                        'title' => __('static.archive_status')
+                    ]
+                );
                 return compact('statuses');
             }
-            $statuses = LbStatus::whereNull('deleted_by')->select('id', 'status_' . App::getLocale().' as title')->get();
+            $statuses = LbStatus::whereNull('deleted_by')->select('id', 'status_' . App::getLocale() . ' as title')->get();
             return compact('statuses');
         } catch (\Exception $e) {
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'Sorry, something went wrong!']);
@@ -4448,7 +4455,7 @@ class AccountController extends Controller
             ->where('id', $id)
             ->first();
         $item_arr = [];
-        
+
         if (($request->file('image'))) {
             $file = $request->file('image');
             $file_name = $item->package->getAttribute('internal_id') . '_invoice_' . Str::random(4) . '_' . time();
@@ -4483,10 +4490,11 @@ class AccountController extends Controller
         ]);
     }
 
-   
+
     //deleted end
 
-    public function courier_update_packages(Request $request){
+    public function courier_update_packages(Request $request)
+    {
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'date' => ['required', 'date']
@@ -4494,7 +4502,7 @@ class AccountController extends Controller
         if ($validator->fails()) {
             return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.incomplete_information')]);
         }
-        try{
+        try {
 
             $courier_order = CourierOrders::where('id', $request->id)
                 ->whereNull('deleted_by')
@@ -4504,75 +4512,76 @@ class AccountController extends Controller
                     'courier_id'
                 )
                 ->first();
-           
-                if($courier_order->courier_id != null){
-                    return response([
-                        'title'=> 'Oops',
-                        'content'=> 'Tarix yenilənmədi! Kuriyer təyin olunub'
-                    ]);
-                }else{  
-                    $date = $request->date;
-                    $status = CourierOrders::where(['id'=>$request->id])->whereNull('deleted_by')->update(['date'=>$date]);
 
-                    if($this->api){
-                        return response([
-                            'title'=> 'Success',
-                            'case' => 'success',
-                            'content'=> 'Tarix uğurla yeniləndi',
-                            'status' => $status
-                        ]);
-                    }
-                
+            if ($courier_order->courier_id != null) {
+                return response([
+                    'title' => 'Oops',
+                    'content' => 'Tarix yenilənmədi! Kuriyer təyin olunub'
+                ]);
+            } else {
+                $date = $request->date;
+                $status = CourierOrders::where(['id' => $request->id])->whereNull('deleted_by')->update(['date' => $date]);
+
+                if ($this->api) {
                     return response([
-                        'title'=> 'Success',
+                        'title' => 'Success',
                         'case' => 'success',
-                        'content'=> 'Tarix uğurla yeniləndi'
+                        'content' => 'Tarix uğurla yeniləndi',
+                        'status' => $status
                     ]);
-                    // return redirect()->route('get_courier_page');
                 }
-            
-        }catch (\Exception $e) {
+
+                return response([
+                    'title' => 'Success',
+                    'case' => 'success',
+                    'content' => 'Tarix uğurla yeniləndi'
+                ]);
+                // return redirect()->route('get_courier_page');
+            }
+
+        } catch (\Exception $e) {
             DB::rollBack();
             return response(['case' => 'error', 'title' => 'Error!', 'content' => 'An error occurred!']);
         }
 
     }
 
-    public function getData(Request $request){
-        $courier=CourierOrders::find($request->id);
+    public function getData(Request $request)
+    {
+        $courier = CourierOrders::find($request->id);
         return response()->json($courier);
     }
 
-    public function courier_get_region_payment_tariff(){
+    public function courier_get_region_payment_tariff()
+    {
         // dd('tst');
         try {
             $tariff = CourierRegionTariff::whereNull('deleted_at')
                 ->select('static_price', 'dynamic_price', 'from_weight', 'to_weight')
                 ->get();
 
-            
-                
+
             return response(['case' => 'success', 'tariff' => $tariff]);
         } catch (\Exception $exception) {
             return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
         }
 
     }
-    
+
     public function get_azerpost_courier_page(Request $request)
     {
         try {
             $courier_settings = CourierSettings::first();
-            
+
             if (!$courier_settings) {
                 return redirect()->route("get_account");
             }
-            
+
             $closing_time = Carbon::parse($courier_settings->closing_time);
             $now = Carbon::parse(Carbon::now()->toTimeString());
-            
+
             $diff_time = $now->diffInSeconds($closing_time, false);
-            
+
             if ($diff_time < 0) {
                 // not today
                 $min_date = date("Y-m-d", strtotime(date("Y-m-d") . "+1 day"));
@@ -4581,8 +4590,8 @@ class AccountController extends Controller
                 $min_date = date('Y-m-d');
                 $max_date = date("Y-m-d", strtotime(date("Y-m-d") . "+2 day"));
             }
-            
-            
+
+
             //dd($packages);
             // show orders
             $query = CourierOrders::leftJoin('courier_areas', 'courier_orders.area_id', '=', 'courier_areas.id')
@@ -4598,7 +4607,7 @@ class AccountController extends Controller
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
                 )');
             //->whereRaw('(((courier_orders.courier_payment_type_id = 1 or courier_orders.delivery_payment_type_id = 1) and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 0))');
-            
+
             $where_archive_status = $request->input("archive");
             if (!isset($where_archive_status) || $where_archive_status != 'yes') {
                 $query->whereNull('courier_orders.delivered_at');
@@ -4606,7 +4615,7 @@ class AccountController extends Controller
             } else {
                 $query->whereRaw('(courier_orders.delivered_at is not null or courier_orders.canceled_at is not null)');
             }
-            
+
             $orders = $query->select(
                 'courier_orders.id',
                 'courier_areas.name_' . App::getLocale() . ' as area',
@@ -4626,7 +4635,7 @@ class AccountController extends Controller
             )
                 ->orderBy('id', 'desc')
                 ->paginate(15);
-            
+
             return view("web.account.azerpost.index", compact(
                 'orders',
                 'min_date',
@@ -4637,21 +4646,21 @@ class AccountController extends Controller
             return view("front.error");
         }
     }
-    
+
     public function get_create_azerpost_page(Request $request)
     {
         try {
             $courier_settings = CourierSettings::first();
-            
+
             if (!$courier_settings) {
                 return redirect()->route("get_account");
             }
-            
+
             $closing_time = Carbon::parse($courier_settings->closing_time);
             $now = Carbon::parse(Carbon::now()->toTimeString());
-            
+
             $diff_time = $now->diffInSeconds($closing_time, false);
-            
+
             if ($diff_time < 0) {
                 // not today
                 $min_date = date("Y-m-d", strtotime(date("Y-m-d") . "+1 day"));
@@ -4660,34 +4669,34 @@ class AccountController extends Controller
                 $min_date = date('Y-m-d');
                 $max_date = date("Y-m-d", strtotime(date("Y-m-d") . "+2 day"));
             }
-            
+
             $amount_for_urgent = $courier_settings->amount_for_urgent;
-            
+
             //$packages_price_for_last_month = $this->packages_price_for_last_month();
-            
+
             $areas = CourierAreas::where('active', 1)->select('id', 'name_' . App::getLocale() . ' as name')->orderBy('name_' . App::getLocale())->get();
             $metro_stations = CourierMetroStations::select('id', 'name_' . App::getLocale() . ' as name')->orderBy('name_' . App::getLocale())->get();
-            
+
             $regions = CourierRegion::whereNull('deleted_at')->select('id', 'name_' . App::getLocale() . ' as name')->orderBy('name_' . App::getLocale())->get();
-            
+
             //$azerpost_index = DB::table('azerpost_index')->get();
             // show packages
             $users = array();
             array_push($users, $this->userID);
-            
+
             $sub_accounts = User::where('parent_id', $this->userID)->whereNull('deleted_by')
                 ->select('id')->get();
-            
+
             $has_sub_accounts = 'yes';
-            
+
             if (count($sub_accounts) == 0) {
                 $has_sub_accounts = 'no';
             }
-            
+
             foreach ($sub_accounts as $sub_account) {
                 array_push($users, $sub_account->id);
             }
-            
+
             $packages = Package::leftJoin('courier_payment_types', 'package.payment_type_id', '=', 'courier_payment_types.id')
                 ->leftJoin('users as client', 'package.client_id', '=', 'client.id')
                 ->whereIn('package.client_id', $users)
@@ -4723,43 +4732,43 @@ class AccountController extends Controller
                     'package.internal_w_debt_usd'
                 )
                 ->get();
-            
+
             //if (count($packages) == 0) {
             //    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.no_referral_packages')]);
             //}
-            
+
             $date = Carbon::now();
             $rates = ExchangeRate::whereDate('from_date', '<=', $date)->whereDate('to_date', '>=', $date)
                 ->where('to_currency_id', 3) // to AZN
                 ->select('rate', 'from_currency_id', 'to_currency_id')
                 ->get();
-            
+
             $has_rate = true;
             if (count($rates) == 0) {
                 $has_rate = false;
             }
-            
+
             foreach ($packages as $package) {
                 $currency_id = $package->currency_id;
-                
+
                 if ($has_rate) {
                     $rate_to_azn = $this->calculate_exchange_rate($rates, $currency_id, 3);
                 } else {
                     $rate_to_azn = 1;
                 }
-                
+
                 $amount = $package->amount_azn;
                 $external_debt = $package->external_w_debt_azn;
                 $internal_debt = $package->internal_w_debt;
                 $paid_azn = $package->paid_azn;
-                
-                if($paid_azn > 0){
+
+                if ($paid_azn > 0) {
                     $amount = $paid_azn - $amount;
-                    
+
                     if ($amount > 0) {
                         $external_debt -= $amount;
                     }
-                    
+
                     if ($amount != 0 && $external_debt != 0) {
                         $internal_debt_collect = $external_debt + $internal_debt;
                         $external_debt = $external_debt > 0 ? $external_debt : 0;
@@ -4769,29 +4778,29 @@ class AccountController extends Controller
                         $internal_debt = $internal_debt;
                         $amount = 0;
                     }
-                    
-                    
+
+
                 }
-                
-                
+
+
                 //$amount_azn = ($package->amount - $package->paid) * $rate_to_azn;
                 $amount_azn = sprintf('%0.2f', $amount);
                 $external_amount_azn = sprintf('%0.2f', $external_debt);
                 $internal_amount_azn = sprintf('%0.2f', $internal_debt);
-                
+
                 $package->amount = $amount_azn;
                 $package->external_w_debt = $external_amount_azn;
                 $package->internal_w_debt = $internal_amount_azn;
-                
+
                 if (strlen($package->track) > 7) {
                     $package->track = substr($package->track, strlen($package->track) - 7);
                 }
-                
+
                 if ($package->paid_status == 0) {
                     $package->payment_type = 'Not paid';
                 }
             }
-            
+
             //dd($packages);
             // show orders
             $query = CourierOrders::leftJoin('courier_areas', 'courier_orders.area_id', '=', 'courier_areas.id')
@@ -4806,7 +4815,7 @@ class AccountController extends Controller
                 (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id = 1 and courier_orders.delivery_amount > 0 and courier_orders.is_paid = 1)
                 )');
             //->whereRaw('(((courier_orders.courier_payment_type_id = 1 or courier_orders.delivery_payment_type_id = 1) and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 1) or (courier_orders.courier_payment_type_id <> 1 and courier_orders.delivery_payment_type_id <> 1 and courier_orders.is_paid = 0))');
-            
+
             $where_archive_status = $request->input("archive");
             if (!isset($where_archive_status) || $where_archive_status != 'yes') {
                 $query->whereNull('courier_orders.delivered_at');
@@ -4814,7 +4823,7 @@ class AccountController extends Controller
             } else {
                 $query->whereRaw('(courier_orders.delivered_at is not null or courier_orders.canceled_at is not null)');
             }
-            
+
             $orders = $query->select(
                 'courier_orders.id',
                 'courier_areas.name_' . App::getLocale() . ' as area',
@@ -4834,14 +4843,14 @@ class AccountController extends Controller
             )
                 ->orderBy('id', 'desc')
                 ->paginate(15);
-            
-            if($this->api){
+
+            if ($this->api) {
                 return response([
                     'packages' => $packages,
                     'orders' => $orders
                 ]);
             }
-            
+
             return view("web.account.azerpost.create", compact(
                 'areas',
                 'regions',
@@ -4952,7 +4961,7 @@ class AccountController extends Controller
             if (!$area) {
                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
             }
-   
+
             $old_packages_str = $request->packages_list;
             $old_packages_arr = explode(',', $old_packages_str);
             unset($request['packages_list']);
@@ -4999,7 +5008,7 @@ class AccountController extends Controller
 
             $delivery_payment_type_id = 1;
             $courier_payment_type_id = 1;
-            
+
             $new_packages_str = '';
             $amount = 0;
             $delivery_amount = 0;
@@ -5032,23 +5041,23 @@ class AccountController extends Controller
                 $package_amount_sum = ($package_amount_azn  + $package_external_w_debt_to_azn + $package_internal_w_debt) - $package_paid_azn;
 
                 $delivery_amount += $package_amount_sum;*/
-    
+
                 $result = $this->CourierCalculatePaid($package);
                 $pay = $result['paid_azn'];
-    
+
                 $delivery_amount += $pay;
 
                 $total_gross_weight = $package->gross_weight;
                 $total_weight += $total_gross_weight;
 
                 $azerpost_weight = bcadd($azerpost_weight, $total_gross_weight, 3);
-           
+
                 if (($delivery_payment_type_id != 1 || $package->paid_status == 1) && $courier_payment_type_id != 1) {
                     array_push($packages_arr_for_update, $package->id);
                 }
-                
+
                 // array_push($packages_arr_for_update, $package->id);
-              
+
             }
             //dd($delivery_amount);
             //$azerpost_weight = $total_weight;
@@ -5060,19 +5069,19 @@ class AccountController extends Controller
                 ->where('to_weight', '>=', $total_weight)
                 ->select('static_price', 'dynamic_price', 'from_weight', 'to_weight')
                 ->first();
-          
+
             $total_weight = $total_weight / 1000;
-            
+
             $amount = $tariff->static_price + ($total_weight * $tariff->dynamic_price);
-           
+
             // dd($amount);
             $online_pay_amount = 0;
-      
+
             $online_pay_amount += $amount;
 
-         
+
             $online_pay_amount += $delivery_amount;
-           
+
 
             $new_packages_str = substr($new_packages_str, 0, -1);
 
@@ -5122,13 +5131,13 @@ class AccountController extends Controller
             // $online_pay_amount=0.01;
             //$response = $this->pay_to_millikart($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
             $response = $this->pay_to_pashaBank($online_pay_amount, $this->userID, $return_type, $ip_address, 'courier', $order->id, $new_packages_str);
-            
+
             $payResponse = response(['case' => $response[0], 'title' => $response[1], 'content' => $response[2], 'pay' => true]);
-       
+
 
             DB::commit();
-            
-            if($this->api){
+
+            if ($this->api) {
                 if (isset($payResponse)) {
                     return response([
                         'paying_info' => $payResponse,
@@ -5143,7 +5152,7 @@ class AccountController extends Controller
                 $content = $payResponse->getContent();
                 $data = json_decode($content, true);
                 // return back()->with('success', 'Success')->withInput();
-                if(!empty($data['content'])){
+                if (!empty($data['content'])) {
                     if (filter_var($data['content'], FILTER_VALIDATE_URL)) {
                         return redirect($data['content']);
                     }
@@ -5158,15 +5167,16 @@ class AccountController extends Controller
             //dd($exception);
             DB::rollback();
             Log::error('courier_error', [
-                'error' =>$exception
-                ]);
+                'error' => $exception
+            ]);
             return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
         }
     }
 
 
     // send legality
-    public function send_legality(){
+    public function send_legality()
+    {
 
         Package::whereNull('deleted_at')
             ->whereNull('send_legality')
@@ -5211,26 +5221,26 @@ class AccountController extends Controller
             return redirect()->route("get_payment_page");
         }
         try {
-            
+
             $is_partner = User::where('id', $this->userID)->where('is_partner', 1)->first();
-     
-            if($is_partner){
+
+            if ($is_partner) {
                 $return_type = 4;
                 $ip_address = $request->ip();
-    
+
                 //$response = $this->pay_to_millikart($request->amount, $this->userID, $return_type, $ip_address, 'payment');
                 $response = $this->pay_to_pashaBank($request->amount, $this->userID, $return_type, $ip_address, 'payment');
 
-                if($this->api){
+                if ($this->api) {
                     return response([
                         'url' => $response
                     ]);
                 }
-    
+
                 return $response;
-            }else{
+            } else {
                 return response([
-                    'case' => 'warning', 
+                    'case' => 'warning',
                     'title' => 'Oops!',
                     'content' => 'Siz partner deyilsiniz'
                 ], 404);
@@ -5250,7 +5260,7 @@ class AccountController extends Controller
         try {
 
             $is_partner = User::where('id', $this->userID)->where('is_partner', 1)->first();
-            if($is_partner){
+            if ($is_partner) {
                 $packages_price_for_last_month = $this->packages_price_for_last_month();
                 $logs = PartnerPaymentLog::where('client_id', $this->userID)
                     ->select(
@@ -5262,20 +5272,20 @@ class AccountController extends Controller
                     ->orderBy('id', 'desc')
                     ->take(100)
                     ->get();
-    
-                if($this->api){
+
+                if ($this->api) {
                     return response([
                         'logs' => $logs
                     ]);
                 }
-    
+
                 return view('front.account.partner_payment_log', compact(
                     'packages_price_for_last_month',
                     'logs'
                 ));
-            }else{
+            } else {
                 return response([
-                    'case' => 'warning', 
+                    'case' => 'warning',
                     'title' => 'Oops!',
                     'content' => 'Siz partner deyilsiniz'
                 ], 404);
@@ -5331,31 +5341,31 @@ class AccountController extends Controller
     public function get_special_orders_mobil(Request $request, $country_id, $order_id)
     {
 
-        try{
-            
+        try {
+
             $header = $request->header('Accept-Language');
-            
-    
+
+
             $special_order_group = SpecialOrderGroups::leftJoin('lb_status as status', 'special_order_groups.last_status_id', '=', 'status.id')
                 ->leftJoin('currency as cur', 'special_order_groups.currency_id', '=', 'cur.id')
                 ->where('special_order_groups.id', $order_id)
                 ->whereNull('special_order_groups.deleted_at')
                 ->select(
-                    'special_order_groups.group_code', 
-                    'special_order_groups.urls', 'price',  
-                    'special_order_groups.is_paid', 'paid', 
-                    'special_order_groups.common_debt', 
+                    'special_order_groups.group_code',
+                    'special_order_groups.urls', 'price',
+                    'special_order_groups.is_paid', 'paid',
+                    'special_order_groups.common_debt',
                     'special_order_groups.cargo_debt',
                     'cur.name as currency',
                     'status.status_' . $header . ' as status'
                 )
                 ->get();
-            
-            foreach($special_order_group as $order){
+
+            foreach ($special_order_group as $order) {
                 $total_amount = ($order->price - $order->paid) + $order->cargo_debt + $order->common_debt;
                 $order->total_amount = sprintf('%0.2f', $total_amount);
             }
-    
+
             $special_order = SpecialOrder::where('group_code', $order->group_code)
                 ->select(
                     'url',
@@ -5366,13 +5376,13 @@ class AccountController extends Controller
                     'description'
                 )
                 ->get();
-    
+
             return response([
                 'order_group' => $special_order_group,
                 'orders' => $special_order
             ], Response::HTTP_OK);
 
-        }catch(Exception $exception){
+        } catch (Exception $exception) {
             //dd($exception);
             return response(['title' => 'Error', 'content' => 'something went wrong'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -5404,8 +5414,7 @@ class AccountController extends Controller
                     }
                 }
                 $amount = sprintf('%0.2f', ($input_amount * $rate->rate)) * 100;
-            }
-            else if ($payment_type == 'packages') {
+            } else if ($payment_type == 'packages') {
                 // usd
                 $date = Carbon::today();
                 $rate = ExchangeRate::where(['from_currency_id' => 1, 'to_currency_id' => 3]) // usd -> azn
@@ -5426,8 +5435,7 @@ class AccountController extends Controller
                     }
                 }
                 $amount = sprintf('%0.2f', ($input_amount * $rate->rate)) * 100;
-            }
-            else if ($payment_type == 'payment') {
+            } else if ($payment_type == 'payment') {
                 // usd
                 $date = Carbon::today();
                 $rate = ExchangeRate::where(['from_currency_id' => 1, 'to_currency_id' => 3]) // usd -> azn
@@ -5448,8 +5456,7 @@ class AccountController extends Controller
                     }
                 }
                 $amount = sprintf('%0.2f', ($input_amount * $rate->rate)) * 100;
-            }
-            else {
+            } else {
                 // courier
                 // azn
                 $amount = $input_amount * 100;
@@ -5494,10 +5501,10 @@ class AccountController extends Controller
             curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
             $result = curl_exec($ch);
 
-            if(empty($result)) $errors[] = 'Ödəniş sistemində xəta baş verdi. Bir az sonra yenidən cəhd edin';
+            if (empty($result)) $errors[] = 'Ödəniş sistemində xəta baş verdi. Bir az sonra yenidən cəhd edin';
 
 
-            if(!empty($result)){
+            if (!empty($result)) {
 
                 if (curl_error($ch)) array_push($errors, 'Payment error!');
 
@@ -5514,13 +5521,12 @@ class AccountController extends Controller
                     return $client_url;
                 }
                 return redirect($client_url);
-            }else if($return_type == 4){
-                if($this->api){
+            } else if ($return_type == 4) {
+                if ($this->api) {
                     return $client_url;
                 }
                 return redirect($client_url);
-            }
-            else {
+            } else {
                 return ['success', 'Uğurlu', $client_url];
             }
         } catch (\Exception $exception) {
@@ -5563,7 +5569,8 @@ class AccountController extends Controller
         }
     }
 
-    public function bulk_pay(Request $request){
+    public function bulk_pay(Request $request)
+    {
 //        dd($request->all());
 //        return $request;
         $validator = Validator::make($request->all(), [
@@ -5583,11 +5590,10 @@ class AccountController extends Controller
                 ->whereNull('deleted_at')
                 ->distinct()
                 ->get();
-           // dd($packages);
+            // dd($packages);
             if ($packages->count() == 0) {
                 return response(['case' => 'error', 'title' => 'Xəbərdarlıq!', 'content' => 'Bağlama tapılmadı. Bağlamaların borcu ödənib!']);
             }
-
 
 
             $amount_ceil = ceil($packages->sum('amount_usd') * 100) / 100;
@@ -5599,8 +5605,8 @@ class AccountController extends Controller
             $total_amount_ceil = $amount_ceil + $external_w_debt + $internal_w_debt;
 
             $total_amount = number_format($total_amount_ceil, 2, '.', '');
-            $total_amount = ceil(($total_amount - $paid_usd) * 100)/100;
-            
+            $total_amount = ceil(($total_amount - $paid_usd) * 100) / 100;
+
             $user = User::where('id', $this->userID)->first();
             $user_balance_ceil = ceil($user->balance * 100) / 100;
             $debt_formatted = number_format($user_balance_ceil, 2, '.', '');
@@ -5608,9 +5614,16 @@ class AccountController extends Controller
             if ($user->cargo_debt > 0 || $user->common_debt > 0) {
                 return response(['case' => 'error', 'title' => 'Xəbərdarlıq!', 'content' => 'Sizin sifariş et xidmətində borcunuz mövcuddur. Zəhmət olmasa öncə sifariş et xidmətinə keçid edərək borcu ödəyin.']);
             }
-            if($request->type==1){
+            if ($request->type == 1) {
                 if ($debt_formatted == 0) {
-
+                    if ($this->api) {
+                        return response([
+                            'case' => 'warning',
+                            'debt' => 0,
+                            'amount_paid' => $total_amount,
+                            'title' => 'Xəbərdarlıq!',
+                            'content' => 'Balansınızda məbləğ yoxdur! Zəhmət olmasa balansınızı artırın'], 400);
+                    }
                     return response([
                         'case' => 'warning',
                         'debt' => 0,
@@ -5619,41 +5632,52 @@ class AccountController extends Controller
                         'content' => 'Balansınızda məbləğ yoxdur! Zəhmət olmasa balansınızı artırın']);
                 }
 
-                if ($total_amount > $debt_formatted)
-                {
+                if ($total_amount > $debt_formatted) {
                     $missing_amount = $total_amount - $user->balance;
                     $rounded_amount = ceil($missing_amount * 100) / 100;
                     $formatted_amount = number_format($rounded_amount, 2, '.', '');
                     //dd($formatted_amount, $missing_amount, $total_amount, $user->balance);
+                    if ($this->api) {
+                        return response([
+                            //'url' => '',
+                            'case' => 'warning',
+                            'title' => 'Oops!',
+                            'amount_paid' => 'Ümumi məbləğ ' . $total_amount . ' ',
+                            'balance' => 'Balans ' . $debt_formatted . ' ',
+                            'missing_amount' => 'Çatışmayan məbləğ ' . ($total_amount - $debt_formatted) . ' ',
+                            'debt' => $formatted_amount,
+                            'currency' => 'USD',
+                            'content' => 'Hesabda yetərli qədər balans yoxdur. Zəhmət olmasa balansınızı artırın'
+                        ], 400);
+                    }
                     return response([
                         //'url' => '',
                         'case' => 'warning',
                         'title' => 'Oops!',
-                        'amount_paid' => 'Ümumi məbləğ '. $total_amount .' ',
-                        'balance' => 'Balans '. $debt_formatted.' ',
+                        'amount_paid' => 'Ümumi məbləğ ' . $total_amount . ' ',
+                        'balance' => 'Balans ' . $debt_formatted . ' ',
+                        'missing_amount' => 'Çatışmayan məbləğ ' . ($total_amount - $debt_formatted) . ' ',
                         'debt' => $formatted_amount,
                         'currency' => 'USD',
                         'content' => 'Hesabda yetərli qədər balans yoxdur. Zəhmət olmasa balansınızı artırın'
                     ]);
-                }
-                else
-                {
+                } else {
                     $total_pay = 0;
                     foreach ($packages as $package) {
-        
+
                         $result = $this->CalculatePaid($package);
                         $pay = $result['pay_usd'];
                         $total_pay += $pay;
-                    
+
                     }
-        
+
                     $new_balance = $debt_formatted - $total_pay;
                     User::where('id', $user->id)->update(['balance' => $new_balance]);
                     return response(['case' => 'success', 'title' => 'Paid!', 'content' => 'Ödəniş uğurla başa çatdırıldı!']);
                 }
-            }else{
+            } else {
                 $new_packages_str = '';
-                foreach($packages as $p){
+                foreach ($packages as $p) {
                     $new_packages_str .= $p->id . ',';
                 }
                 $new_packages_str = substr($new_packages_str, 0, -1);
@@ -5671,9 +5695,9 @@ class AccountController extends Controller
                 return response(['case' => 'success', 'title' => 'Uğurlu!', 'pay' => false]);
             }
 
-        }catch (Exception $exception){
+        } catch (Exception $exception) {
             //dd($exception);
-            return \response( 'Error');
+            return \response('Error');
         }
     }
 
@@ -5688,8 +5712,9 @@ class AccountController extends Controller
         ]);
     }
 
-    function generateUniqueId() {
-        $uniqueId = 'CB'. substr(microtime(true) * 10000, -7) . rand(111, 999) . 'P';
+    function generateUniqueId()
+    {
+        $uniqueId = 'CB' . substr(microtime(true) * 10000, -7) . rand(111, 999) . 'P';
         return $uniqueId;
     }
 
@@ -5711,7 +5736,8 @@ class AccountController extends Controller
         return $pay;
     }
 
-    private function GetExchangeRate($from_currency_id, $to_currency_id = 1){
+    private function GetExchangeRate($from_currency_id, $to_currency_id = 1)
+    {
         $date = Carbon::today();
         $rate = ExchangeRate::whereDate('from_date', '<=', $date)
             ->whereDate('to_date', '>=', $date)
@@ -5726,32 +5752,33 @@ class AccountController extends Controller
         return $rate->rate;
     }
 
-    private function CalculatePaid($package){
+    private function CalculatePaid($package)
+    {
 
         $user_id = $package->client_id;
         $package_id = $package->id;
-        
+
         $amount = $package->total_charge_value;
         $amount_usd = $package->amount_usd;
         $amount_azn = $package->amount_azn;
-        
+
         $paid = $package->paid;
         $paid_usd = $package->paid_sum;
         $paid_azn = $package->paid_azn;
-        
+
         $currency_id = $package->currency_id;
 
         $external_w_debt_azn = $package->external_w_debt_azn;
         $external_w_debt_usd = $package->external_w_debt;
         $internal_w_debt_azn = $package->internal_w_debt;
         $internal_w_debt_usd = $package->internal_w_debt_usd;
-    
+
         $allDebtUsd = $amount_usd + $internal_w_debt_usd + $external_w_debt_usd;
         $allDebtAzn = $amount_azn + $internal_w_debt_azn + $external_w_debt_azn;
 
         $pay_azn = $allDebtAzn - $paid_azn;
         $pay_azn = sprintf('%0.2f', $pay_azn);
-    
+
         $pay_usd = $allDebtUsd - $paid_usd;
         $pay_usd = sprintf('%0.2f', $pay_usd);
 
@@ -5763,15 +5790,15 @@ class AccountController extends Controller
             $pay = (($internal_w_debt_usd + $external_w_debt_usd) * $calculate_rate) + $amount;
             $pay = $pay - $paid;
             $pay = sprintf('%0.2f', $pay);
-        }else{
+        } else {
             $pay = $pay_usd;
         }
-        
+
         $paid_status = 1;
         $total_paid = $paid + $pay;
         $total_paid_usd = $paid_usd + $pay_usd;
         $total_paid_azn = $paid_azn + $pay_azn;
-        
+
         PaymentLog::create([
             'payment' => $pay,
             'currency_id' => $currency_id,
@@ -5780,8 +5807,8 @@ class AccountController extends Controller
             'type' => 3, // balance
             'created_by' => $user_id
         ]);
-        
-        
+
+
         $total_paid = sprintf('%0.2f', $total_paid);
         //dd($total_paid, $no_paid, $paid, $pay);
         Package::where('id', $package_id)
@@ -5820,7 +5847,7 @@ class AccountController extends Controller
                 }
 
                 $new_total_amount = $old_total_amount - $pay_azn;
-                $new_total_amount = ceil($new_total_amount *100)/100;
+                $new_total_amount = ceil($new_total_amount * 100) / 100;
                 if ($new_total_amount < 0) {
                     $new_total_amount = 0;
                 }
@@ -5836,67 +5863,68 @@ class AccountController extends Controller
                 CourierOrders::where('id', $courier_order_id)->update($courier_order_update_arr);
             }
         }
-    
+
         $response = [
             'pay_azn' => $pay_azn,
             'pay_usd' => $pay_usd,
         ];
-        
+
         return $response;
     }
-    
-    private function CourierCalculatePaid($package){
-        
+
+    private function CourierCalculatePaid($package)
+    {
+
         $amount = $package->amount;
         $amount_usd = $package->amount_usd;
         $amount_azn = $package->amount_azn;
-        
+
         $paid = $package->paid;
         $paid_usd = $package->paid_sum;
         $paid_azn = $package->paid_azn;
-        
+
         $currency_id = $package->currency_id;
-        
+
         $external_w_debt_azn = $package->external_w_debt_azn;
         $external_w_debt_usd = $package->external_w_debt;
         $internal_w_debt_azn = $package->internal_w_debt;
         $internal_w_debt_usd = $package->internal_w_debt_usd;
-        
+
         $allDebtUsd = $amount_usd + $internal_w_debt_usd + $external_w_debt_usd;
         $allDebtAzn = $amount_azn + $internal_w_debt_azn + $external_w_debt_azn;
 
         if (($paid_usd <= 0 || $paid_azn <= 0) && $paid > 0) {
             $rate_usd_to_azn = $this->ExchangeRate($currency_id, 3, $paid);
-           
+
             $rate_azn_to_usd = $currency_id != 1 ? $this->ExchangeRate($currency_id, 1, $paid) : $paid;
-          
+
             $paid_azn += $rate_usd_to_azn;
             $paid_usd += $rate_azn_to_usd;
         }
-    
+
         $pay_azn = $allDebtAzn - $paid_azn;
         $pay_azn = sprintf('%0.2f', $pay_azn);
-        
-        
+
+
         $response = [
             'paid_azn' => $pay_azn,
         ];
 
         return $response;
     }
-    
-    
+
+
     public function set_incoming_otp(Request $request)
     {
         $validatedData = $request->validate([
             'platform' => 'required|string|max:255',
         ]);
-    
+
         $clientId = Auth::user()->id;
         $createdBy = Auth::user()->id;
         $text = null;
         $expiredTime = now()->addMinutes(3)->timestamp * 1000000;
-    
+
         DB::table('incoming_otp')->insert([
             'client_id' => $clientId,
             'created_by' => $createdBy,
@@ -5906,7 +5934,7 @@ class AccountController extends Controller
             'expired_time' => $expiredTime,
             'created_at' => Carbon::now(),
         ]);
-    
+
         return response()->json([
             'case' => 'success',
             'title' => 'Success!',
@@ -5916,55 +5944,53 @@ class AccountController extends Controller
 
     public function get_notification_page()
     {
-        try{
+        try {
             $notifications = DB::table('user_devices')
-            ->join('user_notification_details', 'user_devices.user_id', '=', 'user_notification_details.client_id')
-            ->where('user_notification_details.client_id', Auth::user()->id)
-            ->select(
-                'user_notification_details.id',
-                'user_notification_details.client_id',
-                'user_notification_details.subject_header',
-                'user_notification_details.is_read',
-                'user_notification_details.created_at'
-            )->orderByDesc('user_notification_details.id')
-            ->paginate(15);
+                ->join('user_notification_details', 'user_devices.user_id', '=', 'user_notification_details.client_id')
+                ->where('user_notification_details.client_id', Auth::user()->id)
+                ->select(
+                    'user_notification_details.id',
+                    'user_notification_details.client_id',
+                    'user_notification_details.subject_header',
+                    'user_notification_details.is_read',
+                    'user_notification_details.created_at'
+                )->orderByDesc('user_notification_details.id')
+                ->paginate(15);
 
             return view('web.account.notification.index', compact(
                 'notifications'
             ));
 
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return 'error';
         }
     }
 
     public function change_notification()
     {
-        $notification=User::query()
-            ->select('sms_notification','email_notification')
-            ->where('id',Auth::id())
+        $notification = User::query()
+            ->select('sms_notification', 'email_notification')
+            ->where('id', Auth::id())
             ->first();
 //        return  $notification;
-        return  view('web.account.profile.notification',compact('notification'));
+        return view('web.account.profile.notification', compact('notification'));
     }
 
     public function edit_notification(Request $request)
     {
-        if($request->type=='sms'){
-            User::find(Auth::id())->update(['sms_notification'=>$request->enabled]);
+        if ($request->type == 'sms') {
+            User::find(Auth::id())->update(['sms_notification' => $request->enabled]);
             return response()->json([
-                'message'=>'Success'
+                'message' => 'Success'
             ]);
-        }
-        elseif($request->type='email'){
-            User::find(Auth::id())->update(['email_notification'=>$request->enabled]);
+        } elseif ($request->type = 'email') {
+            User::find(Auth::id())->update(['email_notification' => $request->enabled]);
             return response()->json([
-                'message'=>'Success'
+                'message' => 'Success'
             ]);
-        }
-        else{
+        } else {
             return response()->json([
-                'message'=>'Something went wrong'
+                'message' => 'Something went wrong'
             ]);
         }
     }

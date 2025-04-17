@@ -147,7 +147,7 @@
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
-                                    <input class="form__input {{ session('errorType') == 'number' ? 'is-invalid' : '' }}"
+                                    <input class="form__input {{ session('errorType') == 'number' || session('errorType') == 'number2' ? 'is-invalid' : '' }}"
                                            name="phone1"
                                            value="{{ session('errorType') == 'number' ? '' : old('phone1') }}"
                                            type="text"
@@ -157,6 +157,8 @@
                                     <div class="invalid-feedback">
                                         @if (session('errorType') == 'number')
                                             <strong>{{__('register.phone_exists')}}</strong>
+                                        @elseif(session('errorType') == 'number2')
+                                            <strong>{{ session('content') }}</strong>
                                         @endif
                                     </div>
                                 </div>

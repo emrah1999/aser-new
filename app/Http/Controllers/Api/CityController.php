@@ -16,8 +16,9 @@ class CityController extends Controller
 
         $header = $request->header('Language');
         $cities = Cities::whereNull('deleted_at')
-        ->select('id','name_' . $header.' as title' , 'created_at')
-        ->get();
+            ->orderBy('name_' . $header ,'asc')
+            ->select('id','name_' . $header.' as title' , 'created_at')
+            ->get();
         
         return response($cities);
     }

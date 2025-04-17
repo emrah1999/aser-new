@@ -294,8 +294,8 @@ class RegisterController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'surname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
-                'phone1' => ['required', 'string', 'max:30'],
-                'phone2' => ['nullable', 'string', 'max:30'],
+                'phone1' => ['required', 'string', 'max:10'],
+                'phone2' => ['nullable', 'string', 'max:10'],
                 'language' => ['required', 'string', 'max:10'],
                 'city' => ['required', 'string', 'max:255'],
                 'address1' => ['required', 'string', 'max:255'],
@@ -343,8 +343,8 @@ class RegisterController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'surname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
-                'phone1' => ['required', 'string', 'max:30'],
-                'phone2' => ['nullable', 'string', 'max:30'],
+                'phone1' => ['required', 'string', 'max:10'],
+                'phone2' => ['nullable', 'string', 'max:10'],
                 'birthday' => ['required'],
                 'language' => ['required', 'string', 'max:10'],
                 'city' => ['required', 'string', 'max:255'],
@@ -506,6 +506,30 @@ class RegisterController extends Controller
 				 }
 				 return redirect()->back()->withErrors($validator)->withInput();
 			 }
+
+             $request->phone1 = preg_replace("/[^0-9,.]/", "",$request->phone1);
+
+             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
+
+             if (strlen($request->phone1) !== 10 || $request->phone1[0] !== '0') {
+                 $errorType = 'number2';
+                 if($request->is('api/*')){
+                     return response()->json([
+                         'case' => 'warning',
+                         'title' => __('static.attention') . '!',
+                         'content' => 'Telfon nömrəsini düzgün daxil edin'
+
+                     ],422);
+                 }
+//                 return $errorType;
+                 return redirect()->back()->with([
+                     'case' => 'warning',
+                     'title' => __('static.attention') . '!',
+                     'content' => 'Telfon nömrəsini düzgün daxil edin',
+                     'errorType' => $errorType,
+                 ])->withInput();
+             }
+
 
 
              if ($request->is_legality==0){
