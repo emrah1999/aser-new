@@ -6,126 +6,132 @@ use Monolog\Handler\SyslogUdpHandler;
 
 return [
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Log Channel
-	|--------------------------------------------------------------------------
-	|
-	| This option defines the default log channel that gets used when writing
-	| messages to the logs. The name specified in this option should match
-	| one of the channels defined in the "channels" configuration array.
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Default Log Channel
+    |--------------------------------------------------------------------------
+    |
+    | This option defines the default log channel that gets used when writing
+    | messages to the logs. The name specified in this option should match
+    | one of the channels defined in the "channels" configuration array.
+    |
+    */
 
-		'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => env('LOG_CHANNEL', 'stack'),
 
-	/*
-	|--------------------------------------------------------------------------
-	| Log Channels
-	|--------------------------------------------------------------------------
-	|
-	| Here you may configure the log channels for your application. Out of
-	| the box, Laravel uses the Monolog PHP logging library. This gives
-	| you a variety of powerful log handlers / formatters to utilize.
-	|
-	| Available Drivers: "single", "daily", "slack", "syslog",
-	|                    "errorlog", "monolog",
-	|                    "custom", "stack"
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Log Channels
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the log channels for your application. Out of
+    | the box, Laravel uses the Monolog PHP logging library. This gives
+    | you a variety of powerful log handlers / formatters to utilize.
+    |
+    | Available Drivers: "single", "daily", "slack", "syslog",
+    |                    "errorlog", "monolog",
+    |                    "custom", "stack"
+    |
+    */
 
-		'channels' => [
-				'stack' => [
-						'driver' => 'stack',
-						'channels' => ['daily'],
-						'ignore_exceptions' => false,
-				],
+    'channels' => [
+        'stack' => [
+            'driver' => 'stack',
+            'channels' => ['daily'],
+            'ignore_exceptions' => false,
+        ],
 
-				'single' => [
-						'driver' => 'single',
-						'path' => storage_path('logs/laravel.log'),
-						'level' => 'debug',
-				],
+        'single' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'debug',
+        ],
 
-				'daily' => [
-						'driver' => 'daily',
-						'path' => storage_path('logs/laravel.log'),
-						'level' => 'debug',
-						'days' => 14,
-				],
+        'daily' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
 
-				'slack' => [
-						'driver' => 'slack',
-						'url' => env('LOG_SLACK_WEBHOOK_URL'),
-						'username' => 'Laravel Log',
-						'emoji' => ':boom:',
-						'level' => 'critical',
-				],
+        'slack' => [
+            'driver' => 'slack',
+            'url' => env('LOG_SLACK_WEBHOOK_URL'),
+            'username' => 'Laravel Log',
+            'emoji' => ':boom:',
+            'level' => 'critical',
+        ],
 
-				'papertrail' => [
-						'driver' => 'monolog',
-						'level' => 'debug',
-						'handler' => SyslogUdpHandler::class,
-						'handler_with' => [
-								'host' => env('PAPERTRAIL_URL'),
-								'port' => env('PAPERTRAIL_PORT'),
-						],
-				],
+        'papertrail' => [
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => SyslogUdpHandler::class,
+            'handler_with' => [
+                'host' => env('PAPERTRAIL_URL'),
+                'port' => env('PAPERTRAIL_PORT'),
+            ],
+        ],
 
-				'stderr' => [
-						'driver' => 'monolog',
-						'handler' => StreamHandler::class,
-						'formatter' => env('LOG_STDERR_FORMATTER'),
-						'with' => [
-								'stream' => 'php://stderr',
-						],
-				],
+        'stderr' => [
+            'driver' => 'monolog',
+            'handler' => StreamHandler::class,
+            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
+                'stream' => 'php://stderr',
+            ],
+        ],
 
-				'syslog' => [
-						'driver' => 'syslog',
-						'level' => 'debug',
-				],
+        'syslog' => [
+            'driver' => 'syslog',
+            'level' => 'debug',
+        ],
 
-				'errorlog' => [
-						'driver' => 'errorlog',
-						'level' => 'debug',
-				],
+        'errorlog' => [
+            'driver' => 'errorlog',
+            'level' => 'debug',
+        ],
 
-				'null' => [
-						'driver' => 'monolog',
-						'handler' => NullHandler::class,
-				],
+        'null' => [
+            'driver' => 'monolog',
+            'handler' => NullHandler::class,
+        ],
 
-				'millikart_callback' => [
-						'driver' => 'daily',
-						'path' => storage_path('logs/payment/millikart/millikart_callback.log'),
-						'level' => 'debug',
-				],
-				'register_verification' => [
-						'driver' => 'daily',
-						'path' => storage_path('logs/register/verification/verification.log'),
-						'level' => 'debug',
-				],
-				'balance_log' => [
-					'driver' => 'daily',
-					'path' => storage_path('logs/payment/balance/balance_log.log'),
-					'level' => 'debug',
-				],
-				'register_create' => [
-						'driver' => 'daily',
-						'path' => storage_path('logs/register/create/create.log'),
-						'level' => 'debug',
-				],
-                'thirdpart_data_logger' => [
-                    'driver' => 'daily',
-                    'path' => storage_path('logs/external/orders/create.log')
-				],
-				'pasha_callback' => [
-					'driver' => 'daily',
-					'path' => storage_path('logs/payment/pasha/pasha_callback.log'),
-					'level' => 'debug',
-			],
+        'millikart_callback' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payment/millikart/millikart_callback.log'),
+            'level' => 'debug',
+        ],
+        'register_verification' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/register/verification/verification.log'),
+            'level' => 'debug',
+        ],
+        'balance_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payment/balance/balance_log.log'),
+            'level' => 'debug',
+        ],
+        'register_create' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/register/create/create.log'),
+            'level' => 'debug',
+        ],
+        'thirdpart_data_logger' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/external/orders/create.log')
+        ],
+        'pasha_callback' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payment/pasha/pasha_callback.log'),
+            'level' => 'debug',
+        ],
+        'register_requests' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/register_requests.log'),
+            'level' => 'info',
+            'days' => 100,
+        ],
 
-		],
+    ],
 
 ];

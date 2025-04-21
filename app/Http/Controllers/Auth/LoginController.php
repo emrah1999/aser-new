@@ -81,6 +81,10 @@ class LoginController extends Controller
                 'type' => 'login',
             ]);
 
+//            $remember=$request->remember_me?true:false;
+//
+//            if(Auth::attempt($checkData,$remember)){
+
             return $this->sendLoginResponse($request);
         }
 

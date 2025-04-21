@@ -103,7 +103,7 @@
 																	placeholder="" name="price[]" id="price_1"
 																	oninput="change_price_for_special_product(1);"
 																	min="0.01">
-																<label id="price_label">{!! __('labels.price') !!}</label>
+																<label id="price_label">{!! __('labels.price2') !!} ({{$currency_name}})</label>
 																<span class="focus-border"><i></i></span>
 															</div>
 														</div>

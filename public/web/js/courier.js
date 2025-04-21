@@ -6,7 +6,7 @@ let delivery_price = 0;
 let external_debt = 0;
 let internal_debt = 0;
 let urgent_order = false;
-let default_urgent_amount = 0;
+let default_urgent_amount = 3;
 
 function courier_change_area(e, url) {
     let area_id = $(e).val();
