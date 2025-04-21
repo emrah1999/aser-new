@@ -294,7 +294,7 @@ class RegisterController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'surname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
-                'phone1' => ['required', 'string', 'max:10'],
+                'phone1' => ['required', 'string', 'max:30'],
                 'phone2' => ['nullable', 'string', 'max:10'],
                 'language' => ['required', 'string', 'max:10'],
                 'city' => ['required', 'string', 'max:255'],
@@ -343,7 +343,7 @@ class RegisterController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'surname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255'],
-                'phone1' => ['required', 'string', 'max:10'],
+                'phone1' => ['required', 'string', 'max:30'],
                 'phone2' => ['nullable', 'string', 'max:10'],
                 'birthday' => ['required'],
                 'language' => ['required', 'string', 'max:10'],
@@ -511,7 +511,7 @@ class RegisterController extends Controller
 
              $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
 
-             if (strlen($request->phone1) !== 10 || $request->phone1[0] !== '0') {
+             if (strlen($request->phone1) !== 10 ) {
                  $errorType = 'number2';
                  if($request->is('api/*')){
                      return response()->json([
@@ -525,7 +525,26 @@ class RegisterController extends Controller
                  return redirect()->back()->with([
                      'case' => 'warning',
                      'title' => __('static.attention') . '!',
-                     'content' => 'Telfon nömrəsini düzgün daxil edin',
+                     'content' => 'Telfon nömrəsi 10 simvol olmalıdır',
+                     'errorType' => $errorType,
+                 ])->withInput();
+             }
+
+             if ($request->phone1[0] !== '0' ) {
+                 $errorType = 'number2';
+                 if($request->is('api/*')){
+                     return response()->json([
+                         'case' => 'warning',
+                         'title' => __('static.attention') . '!',
+                         'content' => 'Telfon nömrəsi 0 ilə başlamalıdır'
+
+                     ],422);
+                 }
+//                 return $errorType;
+                 return redirect()->back()->with([
+                     'case' => 'warning',
+                     'title' => __('static.attention') . '!',
+                     'content' => 'Telfon nömrəsi 0 ilə başlamalıdır',
                      'errorType' => $errorType,
                  ])->withInput();
              }
@@ -694,6 +713,11 @@ class RegisterController extends Controller
 					 $request->city="Baki";
 				 }
 			 }
+             if($request->is_legality==1){
+                 $is_legality = 1;
+                 $request->passport_series="VOEN";
+                 $request->passport_number=$request->voen;
+             }
  
 			 $response = $this->create($request);
 
@@ -778,7 +802,6 @@ class RegisterController extends Controller
 						 ]);
 						 
 					 } catch (\Exception $exception) {
-                            return $exception->getMessage();
 						 Log::channel('register_verification')->error('Failed to send mail.', [
 							 'id' => $response[1]->id,
 							 'message' => $exception

@@ -350,4 +350,11 @@ class OtherApiController extends Controller
         return 'Güncelleme tamamlandı.';
 
     }
+
+    public function socialLinks()
+    {
+        $medias =  DB::table('social_links')
+            ->get();
+        return response()->json(['medias' => $medias]);
+    }
 }

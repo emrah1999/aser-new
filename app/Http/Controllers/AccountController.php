@@ -4057,7 +4057,15 @@ class AccountController extends Controller
             $courier_settings = CourierSettings::first();
 
             if (!$courier_settings) {
-                return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+                if ($this->api) {
+                    return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+                }
+                return redirect()->back()
+                    ->withInput()
+//                    ->withErrors($validator)
+                    ->with(['case' => 'error',
+                        'content' => __('courier.error_message')
+                    ]);
             }
 
             $closing_time = Carbon::parse($courier_settings->closing_time);
@@ -4079,7 +4087,14 @@ class AccountController extends Controller
             $diff_date = $today->diffInDays($selected_date, false);
 
             if ($diff_date < $min_date || $diff_date > $max_date) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.date_message')]);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.date_message')]);
+                }
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'content' => __('courier.date_message')]);
+
             }
 
             $courier_daily_limits = CourierDailyLimits::whereDate('date', $selected_date)->orderBy('id', 'desc')->select('id', 'count', 'used')->first();
@@ -4103,7 +4118,16 @@ class AccountController extends Controller
             $area_id = $request->area_id;
             $area = CourierAreas::where('id', $area_id)->select('zone_id', 'tariff')->first();
             if (!$area) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
+
+                }
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'content' => __('courier.area_not_correct')]);
+
+
             }
             $zone_id = $area->zone_id;
             $request->courier_payment_type_id = substr($request->courier_payment_type_id, -1);
@@ -4134,7 +4158,16 @@ class AccountController extends Controller
             ])->select('id')->first();
 
             if (!$type_control) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz bölgədə seçdiyiniz ödəniş növləri üzrə çatdırılma yoxdur!']);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz bölgədə seçdiyiniz ödəniş növləri üzrə çatdırılma yoxdur!']);
+
+                }
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'content' => 'Seçdiyiniz bölgədə seçdiyiniz ödəniş növləri üzrə çatdırılma yoxdur!']);
+
+
             }
 
             $users = array();
@@ -4181,7 +4214,14 @@ class AccountController extends Controller
                 ->get();
 
             if (count($packages) == 0) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.packages_not_conditions')]);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.packages_not_conditions')]);
+                }
+
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'content' => __('courier.packages_not_conditions')]);
+
             }
 
             $date = Carbon::now();
@@ -5623,17 +5663,32 @@ class AccountController extends Controller
             $debt_formatted = number_format($user_balance_ceil, 2, '.', '');
 
             if ($user->cargo_debt > 0 || $user->common_debt > 0) {
-                return response(['case' => 'error', 'title' => 'Xəbərdarlıq!', 'content' => 'Sizin sifariş et xidmətində borcunuz mövcuddur. Zəhmət olmasa öncə sifariş et xidmətinə keçid edərək borcu ödəyin.']);
+                return response([
+                    'case' => 'error',
+                    'title' => 'Xəbərdarlıq!',
+                    'content' => "Sizin sifariş et xidmətində borcunuz mövcuddur.\nZəhmət olmasa öncə sifariş et xidmətinə keçid edərək borcu ödəyin."
+                ]);
+
             }
             if ($request->type == 1) {
                 if ($debt_formatted == 0) {
+                    $missing_amount = $total_amount - $user->balance;
+                    $rounded_amount = ceil($missing_amount * 100) / 100;
+                    $formatted_amount = number_format($rounded_amount, 2, '.', '');
+                    //dd($formatted_amount, $missing_amount, $total_amount, $user->balance);
                     if ($this->api) {
                         return response([
+                            //'url' => '',
                             'case' => 'warning',
-                            'debt' => 0,
-                            'amount_paid' => $total_amount,
-                            'title' => 'Xəbərdarlıq!',
-                            'content' => 'Balansınızda məbləğ yoxdur! Zəhmət olmasa balansınızı artırın'], 400);
+                            'title' => 'Oops!',
+                            'amount_paid' => 'Ümumi məbləğ ' . $total_amount . ' ',
+                            'balance' => 'Balans ' . $debt_formatted . ' ',
+                            'missing_amount' => 'Çatışmayan məbləğ ' . ($total_amount - $debt_formatted) . ' ',
+                            'debt' => $formatted_amount,
+                            'currency' => 'USD',
+                            'amount_for_balance' => $total_amount - $debt_formatted,
+                            'content' => "Hesabda yetərli qədər balans yoxdur.\nZəhmət olmasa balansınızı artırın"
+                        ], 400);
                     }
                     return response([
                         'case' => 'warning',
@@ -5658,7 +5713,8 @@ class AccountController extends Controller
                             'missing_amount' => 'Çatışmayan məbləğ ' . ($total_amount - $debt_formatted) . ' ',
                             'debt' => $formatted_amount,
                             'currency' => 'USD',
-                            'content' => 'Hesabda yetərli qədər balans yoxdur. Zəhmət olmasa balansınızı artırın'
+                            'amount_for_balance' => $total_amount - $debt_formatted,
+                            'content' => "Hesabda yetərli qədər balans yoxdur. \nZəhmət olmasa balansınızı artırın"
                         ], 400);
                     }
                     return response([
@@ -5669,6 +5725,7 @@ class AccountController extends Controller
                         'balance' => 'Balans ' . $debt_formatted . ' ',
                         'missing_amount' => 'Çatışmayan məbləğ ' . ($total_amount - $debt_formatted) . ' ',
                         'debt' => $formatted_amount,
+                        'amount_for_balance' => $total_amount - $debt_formatted,
                         'currency' => 'USD',
                         'content' => 'Hesabda yetərli qədər balans yoxdur. Zəhmət olmasa balansınızı artırın'
                     ]);

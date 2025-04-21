@@ -46,6 +46,7 @@ Route::get('/dangerous-goods', [\App\Http\Controllers\Api\LayoutController::clas
 Route::get('/calculate-index', [\App\Http\Controllers\Api\CalculateController::class, 'index']);
 Route::post('/calculate-amount', [\App\Http\Controllers\Api\CalculateController::class, 'calculate_amount'])->name("calculate_amount");
 Route::get('/seller-categories', [\App\Http\Controllers\Api\OtherApiController::class, 'sellerCategories']);
+Route::get('/social-links', [\App\Http\Controllers\Api\OtherApiController::class, 'socialLinks']);
 Route::get('/seller-for-courier',[\App\Http\Controllers\Api\OtherApiController::class, 'seller']);
 Route::post('/feedback', [\App\Http\Controllers\IndexController::class, 'feedback']);
 Route::get('/app-version',[\App\Http\Controllers\IndexController::class, 'app_version']);

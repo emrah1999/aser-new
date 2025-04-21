@@ -25,6 +25,9 @@
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
+                                        @if(session('content'))
+                                                <li>{{ session('content') }}</li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
