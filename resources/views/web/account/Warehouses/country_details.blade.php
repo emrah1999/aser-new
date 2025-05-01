@@ -104,7 +104,7 @@
                                 @endif
                                 @foreach($details as $detail)
                                     @php($information = $detail->information)
-                                    @php($information = str_replace('{name_surname}', Auth::user()->full_name(), $information))
+                                    @php($information = str_replace('{name_surname}', Auth::user()->is_legality==1 ? Auth::user()->company_name : Auth::user()->full_name(), $information))
                                     @php($information = str_replace('{aser_id}', Auth::user()->suite(), $information))
 
                                     <div class="thumbnail thumbnail-profile-addresses d-flex justify-content-between align-items-start thumbnail-style ">

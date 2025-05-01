@@ -4289,7 +4289,7 @@ class AccountController extends Controller
                 'date' => $request->date,
                 'courier_payment_type_id' => $courier_payment_type_id,
                 'delivery_payment_type_id' => $delivery_payment_type_id,
-                'urgent_order' => $request->urgent_order,
+                'urgent' => (int)$request->urgent_order,
                 'packages' => $request->packages,
                 'created_by' => $request->created_by,
                 'client_id' => $request->client_id,
@@ -4298,7 +4298,7 @@ class AccountController extends Controller
                 'total_amount' => $request->total_amount,
                 'order_type' => $request->order_type
             ];
-            //    dd($data);
+
             $order = CourierOrders::create($data);
 
             Package::whereIn('id', $packages_arr_for_update)->update([
@@ -4945,8 +4945,15 @@ class AccountController extends Controller
             'post_zip' => 'Poçt indeksi',
         ]);
         if ($validator->fails()) {
-//            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.incomplete_information')]);
             if ($validator->fails()) {
+                if ($this->api) {
+                    return response([
+                        'title' => 'error',
+                        'case' => 'error',
+                        'content' => $validator,
+
+                    ]);
+                }
                 return redirect()->back()
                     ->withInput()
                     ->withErrors($validator)
@@ -4960,7 +4967,15 @@ class AccountController extends Controller
             $courier_settings = CourierSettings::first();
 
             if (!$courier_settings) {
-                return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+
+                if ($validator->fails()) {
+                    if ($this->api) {
+                        return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+                    }
+                    return redirect()->back()
+                        ->withInput()
+                        ->with(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+                }
             }
 
             $closing_time = Carbon::parse($courier_settings->closing_time);
@@ -4983,7 +4998,13 @@ class AccountController extends Controller
             $diff_date = $today->diffInDays($selected_date, false);
 
             if ($diff_date < $min_date || $diff_date > $max_date) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.date_message')]);
+
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.date_message')]);
+                }
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'title' => 'Oops!', 'content' => __('courier.date_message')]);
             }
 
             $courier_daily_limits = CourierDailyLimits::whereDate('date', $selected_date)->orderBy('id', 'desc')->select('id', 'count', 'used')->first();
@@ -5001,14 +5022,26 @@ class AccountController extends Controller
             }
 
             if ($limit_residue <= 0) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
+
+                }
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
             }
 
 
             $area_id = $request->region_id;
             $area = CourierRegion::where('id', $area_id)->first();
             if (!$area) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
+                }
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'title' => 'Oops!', 'content' => __('courier.area_not_correct')]);
+
             }
 
             $old_packages_str = $request->packages_list;
@@ -5041,7 +5074,13 @@ class AccountController extends Controller
                 ->get();
 
             if (count($packages) == 0) {
-                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.packages_not_conditions')]);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.packages_not_conditions')]);
+                }
+                return redirect()->back()
+                    ->withInput()
+                    ->with(['case' => 'error', 'title' => 'Oops!', 'content' => __('courier.packages_not_conditions')]);
+
             }
 
             $date = Carbon::now();
@@ -5220,7 +5259,13 @@ class AccountController extends Controller
             Log::error('courier_error', [
                 'error' => $exception
             ]);
-            return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+            if ($this->api) {
+                return response(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+            }
+            return redirect()->back()
+                ->withInput()
+                ->with(['case' => 'error', 'title' => 'Error!', 'content' => __('courier.error_message')]);
+
         }
     }
 

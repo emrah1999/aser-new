@@ -281,7 +281,7 @@ class CourierController extends Controller
             }
 
             if ($package->paid_status == 0) {
-                $package->payment_type = __('buttons.pay');
+                $package->payment_type = __('buttons.not_paid');
             }
         }
 

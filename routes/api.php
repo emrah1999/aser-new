@@ -49,7 +49,7 @@ Route::get('/seller-categories', [\App\Http\Controllers\Api\OtherApiController::
 Route::get('/social-links', [\App\Http\Controllers\Api\OtherApiController::class, 'socialLinks']);
 Route::get('/seller-for-courier',[\App\Http\Controllers\Api\OtherApiController::class, 'seller']);
 Route::post('/feedback', [\App\Http\Controllers\IndexController::class, 'feedback']);
-Route::get('/app-version',[\App\Http\Controllers\IndexController::class, 'app_version']);
+Route::post('/app-version',[\App\Http\Controllers\IndexController::class, 'app_version']);
 Route::get('/news', [\App\Http\Controllers\Api\OtherApiController::class, 'news'])->name('api_news');
 Route::get('/news/{slug}', [\App\Http\Controllers\Api\OtherApiController::class, 'newsSlug']);
 

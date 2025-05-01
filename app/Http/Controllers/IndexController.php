@@ -403,7 +403,8 @@ class IndexController extends HomeController
         $validated = $request->validate([
             'version' => 'required|string|max:20'
         ]);
-        $version = Settings::query()->select('app_version')->first();
+        $version = Settings::query()->select('app_version','app_store_url','play_market_url')->first();
+
         if($version->app_version == $request->version){
             return response()->json([
                 'status' => true,
@@ -411,8 +412,10 @@ class IndexController extends HomeController
             ]);
         }
         return response()->json([
-            'status' => true,
-            'message' => 'Tətbiqin yeni versiyası mövcuddur'
-        ],400);
+            'status' => false,
+            'message' => 'Tətbiqin yeni versiyası mövcuddur',
+            'app_store_url' => $version->app_store_url,
+            'play_market_url' => $version->play_market_url,
+        ]);
     }
 }

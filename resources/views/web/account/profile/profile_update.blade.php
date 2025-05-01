@@ -73,6 +73,8 @@
                                     <input class="form__input" name="user_surname" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" readonly disabled value="{{Auth::user()->surname}}">
                                 </div>
                             </div>
+
+                            @if(Auth::user()->is_legality==0)
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="passport_prefix">{!! __('auth.PassportSeries') !!}</label>
@@ -104,6 +106,8 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
+                            @endif
+
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="birthday">{!! __('register.input_birthday') !!}</label>
@@ -125,55 +129,109 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="form__group">
-                                    <label class="form__label" for="email">{!! __('register.input_email') !!}</label>
-                                    <input class="form__input" name="email" type="email" id="email" value="{{Auth::user()->email}}" required>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form__group">
-                                    <label class="form__label" for="userSex">{!! __('auth.Language') !!}</label>
-                                    <div class="form__select-wrapper">
-                                        <select class="form__select" name="language" id="language" required>
-                                        @switch(Auth::user()->language)
-                                            @case('AZ')
-                                            <option selected value="AZ">AZ
-                                            </option>
-                                            <option value="EN">EN</option>
-                                            <option value="RU">RU</option>
-                                            @break
-                                            @case('EN')
-                                            <option value="AZ">AZ</option>
-                                            <option selected value="EN">EN
-                                            </option>
-                                            <option value="RU">RU</option>
-                                            @break
-                                            @case('RU')
-                                            <option value="AZ">AZ</option>
-                                            <option value="EN">EN</option>
-                                            <option selected value="RU">RU
-                                            </option>
-                                            @break
-                                        @endswitch
-                                        </select>
-                                    </div>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form__group">
-                                    <label class="form__label" for="branch_id">Filial</label>
-                                    <div class="form__select-wrapper">
-                                        <select class="form__select" name="branch_id" id="branch_id" required>
-                                            <option value="" disabled>Filialın adı</option>
-                                            @foreach($branchs as $branch)
-                                                <option value="{{$branch->id}}" {{ isset(Auth::user()->branch_id) && Auth::user()->branch_id == $branch->id ? 'selected' : '' }}>{{$branch->name}}</option>
-                                            @endforeach
-                                        </select>
+
+                            @if(Auth::user()->is_legality==1)
+
+                                <div class="col-sm-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="email">{!! __('register.input_email') !!}</label>
+                                        <input class="form__input" name="email" type="email" id="email" value="{{Auth::user()->email}}" required>
                                     </div>
                                 </div>
-                            </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="userSex">{!! __('auth.Language') !!}</label>
+                                        <div class="form__select-wrapper">
+                                            <select class="form__select" name="language" id="language" required>
+                                                @switch(Auth::user()->language)
+                                                    @case('AZ')
+                                                        <option selected value="AZ">AZ
+                                                        </option>
+                                                        <option value="EN">EN</option>
+                                                        <option value="RU">RU</option>
+                                                        @break
+                                                    @case('EN')
+                                                        <option value="AZ">AZ</option>
+                                                        <option selected value="EN">EN
+                                                        </option>
+                                                        <option value="RU">RU</option>
+                                                        @break
+                                                    @case('RU')
+                                                        <option value="AZ">AZ</option>
+                                                        <option value="EN">EN</option>
+                                                        <option selected value="RU">RU
+                                                        </option>
+                                                        @break
+                                                @endswitch
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form__group">
+                                        <label class="form__label" for="userPassportFinCode">Şirkət Adı</label>
+                                        <input class="form__input" type="text" id="passport_fin" name="passport_fin" value="{{Auth::user()->company_name}}" readonly disabled>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                @else
+
+
+                                <div class="col-sm-4">
+                                    <div class="form__group">
+                                        <label class="form__label" for="email">{!! __('register.input_email') !!}</label>
+                                        <input class="form__input" name="email" type="email" id="email" value="{{Auth::user()->email}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form__group">
+                                        <label class="form__label" for="userSex">{!! __('auth.Language') !!}</label>
+                                        <div class="form__select-wrapper">
+                                            <select class="form__select" name="language" id="language" required>
+                                                @switch(Auth::user()->language)
+                                                    @case('AZ')
+                                                        <option selected value="AZ">AZ
+                                                        </option>
+                                                        <option value="EN">EN</option>
+                                                        <option value="RU">RU</option>
+                                                        @break
+                                                    @case('EN')
+                                                        <option value="AZ">AZ</option>
+                                                        <option selected value="EN">EN
+                                                        </option>
+                                                        <option value="RU">RU</option>
+                                                        @break
+                                                    @case('RU')
+                                                        <option value="AZ">AZ</option>
+                                                        <option value="EN">EN</option>
+                                                        <option selected value="RU">RU
+                                                        </option>
+                                                        @break
+                                                @endswitch
+                                            </select>
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form__group">
+                                        <label class="form__label" for="branch_id">Filial</label>
+                                        <div class="form__select-wrapper">
+                                            <select class="form__select" name="branch_id" id="branch_id" required>
+                                                <option value="" disabled>Filialın adı</option>
+                                                @foreach($branchs as $branch)
+                                                    <option value="{{$branch->id}}" {{ isset(Auth::user()->branch_id) && Auth::user()->branch_id == $branch->id ? 'selected' : '' }}>{{$branch->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
+
                             <div class="col-sm-6">
                                 <a href="#" class="btn btn-trns-black btn-block form__btn form-profile-information-edit__btn font-n-b">Ləğv et</a>
                             </div>
