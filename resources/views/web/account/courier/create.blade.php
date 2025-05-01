@@ -242,7 +242,7 @@
         </div>
     </div>
 
-    <div class="modal modal-profile-curier-orders fade" id="modalProfileCurierOrders" data-bs-backdrop="static">
+    <div class="modal modal-profile-curier-orders fade " style="margin-top: 100px;" id="modalProfileCurierOrders" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-profile-curier-orders__dialog center-block">
             <div class="modal-content modal-profile-curier-orders__content">
                 <div class="modal-body modal-profile-curier-orders__body">
@@ -313,6 +313,17 @@
     .modal-button{
         display: flex;
         margin-right: 5px;
+    }
+    .table-responsive::-webkit-scrollbar {
+        width: 8px;
+    }
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.2);
+        border-radius: 4px;
+    }
+    .modal-profile-curier-orders__body {
+        max-height: 500px;
+        overflow-y: auto;
     }
 </style>
 @endsection

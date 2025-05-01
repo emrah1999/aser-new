@@ -407,8 +407,8 @@ class RegisterController extends Controller
 					'address1' => $request->address1,
 					'location_latitude1' => $request->location_latitude,
 					'location_longitude1' => $request->location_longitude,
-					'passport_series' => $request->passport_series,
-					'passport_number' => $request->passport_number,
+					'passport_series' => $request->passport_series ? $request->passport_series : 'VOEN' ,
+					'passport_number' => $request->passport_number ? $request->passport_number : $request->voen ,
 					'passport_fin' => $request->passport_fin,
 					'gender' => $request->gender,
 					'referral_unconfirm' => $request->parent_code,
@@ -486,16 +486,26 @@ class RegisterController extends Controller
 			 $request->location_latitude1 = $this->convert_to_ascii($request->location_latitude);
  //            return $request;
  //            return $request->voen;
-			 if ($request->is_legality==1){
-				 $validator = $this->validator($request,1);
-			 }
-			 else{
-				 $validator = $this->validator($request);
-			 }
- 
- 
- 
-			 if ($validator->fails()) {
+
+//             if($request->is_legality==1){
+//                 $is_legality = 1;
+//                 $request->passport_series="VOEN";
+//                 $request->passport_number=$request->voen;
+//             }
+//
+//             return $request;
+
+             if ($request->is_legality==1){
+                 $validator = $this->validator($request,1);
+             }
+             else{
+                 $validator = $this->validator($request);
+             }
+
+             Log::channel('register_create')->error('Request.', ['message' => $validator]);
+
+
+             if ($validator->fails()) {
 				 if($request->is('api/*')){
 					 $messages = $validator->messages();
 					 return response()->json([
@@ -713,12 +723,7 @@ class RegisterController extends Controller
 					 $request->city="Baki";
 				 }
 			 }
-             if($request->is_legality==1){
-                 $is_legality = 1;
-                 $request->passport_series="VOEN";
-                 $request->passport_number=$request->voen;
-             }
- 
+
 			 $response = $this->create($request);
 
              switch ($response[0]) {
@@ -761,7 +766,6 @@ class RegisterController extends Controller
 					 try {
 						 $user = $response[1];
 						 $this->guard()->login($user);
- 
 						 /*$resend_email = new VerificationController();
 						 $resend_email->resendAjax($request);*/
 						 $userId = $user->getAttribute('id');

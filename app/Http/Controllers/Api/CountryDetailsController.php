@@ -57,7 +57,7 @@ class CountryDetailsController extends Controller
                         "id" => 13,
                         "country_id" => 'special',
                         "title" => "Address Line2:",
-                        "information" => $user->colibri_id . ", Aser Cargo Express"
+                        "information" => 'AS'.$user->colibri_id . ", Aser Cargo Express"
                     ],
                     [
                         "id" => 14,

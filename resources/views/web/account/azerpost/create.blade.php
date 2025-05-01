@@ -3,24 +3,7 @@
 
     <div class="content" id="content">
         <section class="section section-profile-balances">
-            @if (session()->has('case') && session('case') === 'error')
-                <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
-                    </svg>
-                    <div>
-                        <ul class="mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            @endif
-                @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+
             <div class="container-lg">
                 <div class="row">
                     @include("web.account.account_left_bar")
@@ -29,6 +12,29 @@
                             <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('courier.azerpost_title') !!}</h4>
                             
                         </div>
+                        @if (session()->has('case') && session('case') === 'error')
+                            <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
+                                </svg>
+                                <div>
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                        @if(session('content'))
+                                            <li>{{ session('content') }}</li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+
+
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <form class="form form-profile-azerpoct" name="formProfileAzerpoct" id="formProfileAzerpoct" method="post" action="{{route('courier_create_order_region', ['locale' => App::getLocale()])}}" novalidate="novalidate">
                             @csrf
                             <input type="hidden" required name="packages_list" id="checked_packages_region" value="{{ old('packages_list') }}">
@@ -174,7 +180,7 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal modal-profile-curier-orders fade" id="modalProfileAzerpoctOrders" data-bs-backdrop="static">
+    <div class="modal modal-profile-curier-orders fade" style="margin-top: 100px;" id="modalProfileAzerpoctOrders" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-profile-curier-orders__dialog center-block">
             <div class="modal-content modal-profile-curier-orders__content">
                 <div class="modal-body modal-profile-curier-orders__body">
@@ -273,6 +279,17 @@
     <style>
         .buttons-section{
             text-align: right;
+        }
+        .table-responsive::-webkit-scrollbar {
+            width: 8px;
+        }
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+        .modal-profile-curier-orders__body {
+            max-height: 500px;
+            overflow-y: auto;
         }
     </style>
 @endsection
