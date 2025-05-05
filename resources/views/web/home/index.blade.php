@@ -206,7 +206,7 @@
                                         <label class="form__label" for="calcCountry">{!! __('static.country') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="country" id="calcCountry" required>
-                                                <option  disabled selected>Ölkə seçin</option>
+                                                <option  disabled selected>{!! __('static.select_country1') !!}</option>
                                                 @foreach($countries as $country)
                                                     <option value="{{$country->id}}">{{$country->name}}</option>
                                                 @endforeach
@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form__group">
-                                        <label class="form__label" for="calcTransferType">{!! __('static.type') !!}</label>
+                                        <label class="form__label" for="calcTransferType">{!! __('static.type2') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="type" id="calcTransferType" required>
                                                 @foreach($types as $type)
@@ -229,48 +229,48 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form__group">
-                                        <label class="form__label" for="calcWeightType">{!! __('static.unit') !!}</label>
+                                        <label class="form__label" for="calcWeightType">{!! __('static.unit1') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="unit" id="calc_weight_type" required>
-                                                <option value="kq">kg</option>
-                                                <option value="gm">gr</option>
+                                                <option value="kq">{!! __('static.kq1') !!}</option>
+                                                <option value="gm">{!! __('static.gr1') !!}</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form__group">
-                                        <label class="form__label" for="calcWide">En</label>
+                                        <label class="form__label" for="calcWide">{!! __('static.width1') !!}</label>
                                         <input class="form__input" name="length" type="text" id="calcWide"
-                                               placeholder="En (sm)" >
+                                               placeholder="{!! __('static.width1') !!}" >
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form__group">
-                                        <label class="form__label" for="calcWidth">Uzunluq</label>
+                                        <label class="form__label" for="calcWidth">{!! __('static.lenght1') !!}</label>
                                         <input class="form__input" name="width" type="text" id="calcWidth"
-                                               placeholder="Uzunluq (sm)" >
+                                               placeholder="{!! __('static.lenght1') !!}" >
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form__group">
-                                        <label class="form__label" for="calcHeight">Hündürlük</label>
+                                        <label class="form__label" for="calcHeight">{!! __('static.hieght1') !!}</label>
                                         <input class="form__input" name="height" type="text" id="calcHeight"
-                                               placeholder="Hündürlük" >
+                                               placeholder="{!! __('static.hieght1') !!}" >
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form__group">
-                                        <label class="form__label" for="calcWeght">Çəki</label>
+                                        <label class="form__label" for="calcWeght">{!! __('static.weight1') !!}</label>
                                         <input class="form__input" name="weight" type="text" id="calcWeght"
-                                               placeholder="Çəki" required>
+                                               placeholder="{!! __('static.weight1') !!}" required>
                                         <label id="calcWeghtErrorMessage" class="form-error-text" for="calcWeght"></label>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="d-flex justify-content-center align-items-center">
                                         <button class="btn btn-yellow form__btn form-calculator__btn font-n-b"
-                                                name="formCalculatorSubmit" type="button">Hesabla</button>
+                                                name="formCalculatorSubmit" type="button">{!! __('static.calculate1') !!}</button>
                                     </div>
                                     <p id="amount" class="form-calculator__result text-center font-n-b"> 00.0</p>
                                 </div>
