@@ -191,4 +191,41 @@ return [
     'calculate1' => 'Calculate',
     'calculator_required' => 'Country and weight must be entered ',
 
+    'company1' => 'Company',
+    'about_us1' => 'About us ',
+    'faq1' => 'Questions and answers',
+    'terms1' => 'Terms and conditions ',
+    'news1' => 'News',
+    'vodeos1' => 'Video tutorials ',
+    'prohibited1' => 'Prohibited items',
+    'stores1' => 'Stores',
+    'contact1' => 'Contact',
+    'blog1' => 'Blog',
+
+    'tariffs1' => 'Rates',
+    'logistics1' => 'Logistics services',
+    'articles1' => 'Useful articles ',
+
+    'name1' => ' First Name',
+    'name1ph' => 'Enter your first name',
+    'surname1' => 'Last Name',
+    'surname1ph' => 'Enter your last name',
+    'email1' => 'Email',
+    'email1ph' => 'Enter your email',
+    'number1' => 'Phone',
+    'number1ph' => ' Enter your phone number',
+    'message1' => 'Message',
+    'message1ph' => 'Type your message...',
+    'submit1' => 'Send',
+
+
+
+    'trackNUmber1' => ' Tracking number ',
+    'trackNUmber1ph' => 'Enter tracking number ',
+    'globalSearch1' => 'Global tracking search',
+    'aserSearch1' => 'Search in Aser ',
+
+    'address3' => 'Address',
+    'view_on_map' => 'View on map',
+    'contact_number3' => 'Phone',
 ];

@@ -34,10 +34,10 @@
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <h6 class="thumbnail-branches__title font-n-b">{{$branch->name}}</h6>
-                                                <p class="thumbnail-branches__title2 font-n-b">Ünvan</p>
+                                                <p class="thumbnail-branches__title2 font-n-b">{!! __('static.address3') !!}</p>
                                                 <p class="thumbnail-branches__desc2 font-n-b">{{$branch->address}}</p>
                                                 <br>
-                                                <p class="thumbnail-branches__title2 font-n-b">Əlaqə nömrəsi</p>
+                                                <p class="thumbnail-branches__title2 font-n-b">{!! __('static.contact_number3') !!}</p>
                                                 <p class="thumbnail-branches__desc2 font-n-b">{{$branch->phone1}}</p>
                                                 <p class="thumbnail-branches__desc2 font-n-b">{{$branch->phone2}}</p>
                                                 <br>
@@ -48,7 +48,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <a href="#" class="btn btn-trns-blue thumbnail-branches__link font-n-b" data-map="{{$branch->map_location}}">Xəritədə bax</a>
+                                            <a href="#" class="btn btn-trns-blue thumbnail-branches__link font-n-b" data-map="{{$branch->map_location}}">{!! __('static.view_on_map') !!}</a>
                                         </div>
                                     </div>
                                 @endforeach

@@ -55,32 +55,32 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="userName">Ad</label>
-                                    <input class="form__input" name="name" type="text" id="userName" placeholder="Adınızı daxil edin" required>
+                                    <label class="form__label" for="userName">{!! __('static.name1') !!}</label>
+                                    <input class="form__input" name="name" type="text" id="userName" placeholder="{!! __('static.name1ph') !!}" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="userSurname">Soyad</label>
-                                    <input class="form__input" name="surname" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" required>
+                                    <label class="form__label" for="userSurname">{!! __('static.surname1') !!}</label>
+                                    <input class="form__input" name="surname" type="text" id="userSurname" placeholder="{!! __('static.surname1ph') !!}" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="userEmail">Email</label>
-                                    <input class="form__input" name="email" type="email" id="userEmail" placeholder="Emailiniz daxil edin" required>
+                                    <label class="form__label" for="userEmail">{!! __('static.email1') !!}</label>
+                                    <input class="form__input" name="email" type="email" id="userEmail" placeholder="{!! __('static.email1ph') !!}" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="userPhone">Telefon</label>
-                                    <input class="form__input" name="phone" type="text" id="userPhone" placeholder="Telefon nömrənizi daxil edin" required>
+                                    <label class="form__label" for="userPhone">{!! __('static.number1') !!}</label>
+                                    <input class="form__input" name="phone" type="text" id="userPhone" placeholder="{!! __('static.number1ph') !!}" required>
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form__group">
-                                    <label class="form__label" for="userMessage">Mesaj</label>
-                                    <textarea class="form__textarea" name="message" id="userMessage" rows="6" placeholder="Mesajınızı yazın......" required></textarea>
+                                    <label class="form__label" for="userMessage">{!! __('static.message1') !!}</label>
+                                    <textarea class="form__textarea" name="message" id="userMessage" rows="6" placeholder="{!! __('static.message1ph') !!}" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
 
                             </div>
                             <div class="col-sm-4">
-                                <button class="btn btn-yellow btn-block form__btn form-contact__btn font-n-b" name="formContactSubmit" type="submit">Göndər</button>
+                                <button class="btn btn-yellow btn-block form__btn form-contact__btn font-n-b" name="formContactSubmit" type="submit">{!! __('static.submit1') !!}</button>
                             </div>
                         </div>
                     </form>
