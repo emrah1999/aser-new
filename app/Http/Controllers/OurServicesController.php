@@ -71,7 +71,19 @@ class OurServicesController extends Controller
     
     public function branches(){
         try {
-            $branches = DB::table('filial')->where('is_active', 1)->get();
+            if (App::getLocale() == "az") {
+                $branches = DB::table('filial')->where('is_active', 1)->get();
+            }else{
+                $branches = DB::table('filial')->where('is_active', 1)
+                    ->select('filial.name',
+                        'filial.address_'.App::getLocale().' as address',
+                        'filial.phone1',
+                        'filial.phone2',
+                        'filial.work_hours_'.App::getLocale().' as work_hours',
+                        'filial.map_location'
+                    )
+                    ->get();
+            }
             $breadcrumbs=1;
             $fields = [
                 'branch'

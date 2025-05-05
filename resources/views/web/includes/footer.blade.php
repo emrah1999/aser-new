@@ -13,28 +13,28 @@
                     <div class="col-xl-10 col-lg-10 col-md-10  d-none d-lg-block ">
                         <div class="row">
                             <div class="col-xl-3 col-lg-3 col-md-3 footer-tab-menu">
-                                <p class="footer__text font-n-b">Şirkət</p>
+                                <p class="footer__text font-n-b">{!! __('static.company1') !!}</p>
                                 <ul class="nav nav-menu-2  flex-column">
                                     <li class="nav-menu-2__item ">
-                                        <a href="{{route('about_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Haqqımızda</a>
+                                        <a href="{{route('about_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.about_us1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('faq_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Suallar və cavablar</a>
+                                        <a href="{{route('faq_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.faq1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('terms_and_conditions', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('menu.terms_new') !!}</a>
+                                        <a href="{{route('terms_and_conditions', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.terms1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('news_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Xəbərlər</a>
+                                        <a href="{{route('news_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.news1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('video_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Video təlimatlar</a>
+                                        <a href="{{route('video_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.vodeos1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('prohibited_items', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Qadağan olunmuş məhsullar</a>
+                                        <a href="{{route('prohibited_items', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.prohibited1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
-                                        <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">Mağazalar</a>
+                                        <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link nav-padding">{!! __('static.stores1') !!}</a>
                                     </li>
                                     <li class="nav-menu-2__item">
                                         <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
@@ -50,7 +50,7 @@
                                 </ul>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-3 footer-tab-menu">
-                                <p class="footer__text font-n-b">Tariflər</p>
+                                <p class="footer__text font-n-b">{!! __('static.tariffs1') !!}</p>
                                 <ul class="nav nav-menu-2 flex-column">
                                     @foreach ($tariffs as $tariff)
                                     <li class="nav-menu-2__item">
@@ -62,7 +62,7 @@
                                 </ul>
                             </div>
                             <div class="col-xl-2 col-lg-3 col-md-2 footer-tab-menu">
-                                <p class="footer__text font-n-b">Logistika xidməti</p>
+                                <p class="footer__text font-n-b">{!! __('static.logistics1') !!}</p>
                                 <ul class="nav nav-menu-2 flex-column">
                                     @foreach ($logistics as $logistic)
                                     <li class="nav-menu-2__item">
@@ -76,7 +76,7 @@
                             </div>
                             @if(count($footerBlogs)>0)
                             <div class="col-xl-3 col-lg-2 col-md-4 footer-tab-menu">
-                                <p class="footer__text font-n-b">Faydalı məqalələr</p>
+                                <p class="footer__text font-n-b">{!! __('static.articles1') !!}</p>
                                 <ul class="nav nav-menu-2 flex-column">
                                     @foreach($footerBlogs as $footerBlog)
                                     <li class="nav-menu-2__item">
@@ -98,28 +98,28 @@
                     </div>
                     <div class="d-block d-lg-none">
                         <div class="col-xl-2 col-lg-2 col-md-2 footer-tab-menu">
-                            <p class="footer__text font-n-b" id="footer-company">Şirkət <i class="fa fa-chevron-down footer-company-icon"></i></p>
+                            <p class="footer__text font-n-b" id="footer-company">{!! __('static.company1') !!} <i class="fa fa-chevron-down footer-company-icon"></i></p>
                             <ul class="nav nav-menu-2 flex-column footer-company-menus d-none">
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('about_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Haqqımızda</a>
+                                    <a href="{{route('about_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('static.about_us1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('faq_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Suallar və cavablar</a>
+                                    <a href="{{route('faq_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('static.faq1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('terms_and_conditions', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('menu.terms_new') !!}</a>
+                                    <a href="{{route('terms_and_conditions', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('menu.terms1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('news_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Xəbərlər</a>
+                                    <a href="{{route('news_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('static.news1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('video_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Video təlimatlar</a>
+                                    <a href="{{route('video_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('static.vodeos1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('prohibited_items', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Qadağan olunmuş məhsullar</a>
+                                    <a href="{{route('prohibited_items', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('static.prohibited1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
-                                    <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">Mağazalar</a>
+                                    <a href="{{route('sellers_page', ['locale' => app::getLocale()])}}" class="nav-menu-2__link">{!! __('static.stores1') !!}</a>
                                 </li>
                                 <li class="nav-menu-2__item">
                                     <a href="{{ route('menuIndex', ['locale' => App::getLocale(),optional($menu['contact'])->{'slug_' . App::getLocale()}]) }}"
@@ -127,7 +127,7 @@
                                 </li>
 
                                 <li class="nav-menu-2__item">
-                                    <a href="{{ route('blogs', ['locale' => App::getLocale()]) }}" class="nav-menu-2__link">Bloq</a>
+                                    <a href="{{ route('blogs', ['locale' => App::getLocale()]) }}" class="nav-menu-2__link">{!! __('static.blog1') !!}</a>
                                 </li>
                             </ul>
                         </div>

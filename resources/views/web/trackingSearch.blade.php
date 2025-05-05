@@ -16,15 +16,15 @@
                     @csrf
                     <div class="col-sm-12">
                         <div class="form__group">
-                            <label class="form__label" for="trackNumber">Trek nömrə</label>
-                            <input class="form__input" name="track_number" type="text" id="trackNumber" placeholder="Trek nömrəni yazın" required>
+                            <label class="form__label" for="trackNumber">{!! __('static.trackNUmber1') !!}</label>
+                            <input class="form__input" name="track_number" type="text" id="trackNumber" placeholder="{!! __('static.trackNUmber1ph') !!}" required>
                         </div>
                     </div>
                     <div class="col-sm-6" style="display: inline-block; width: 48%; padding-right: 5px;">
-                        <button class="btn btn-yellow btn-block form__btn form-tracking-search__btn font-n-b" onclick="global_tracking_search();" name="formTrackingSearchGlobalSubmit" type="button">{!! __('tracking_search.global_search_button') !!}</button>
+                        <button class="btn btn-yellow btn-block form__btn form-tracking-search__btn font-n-b" onclick="global_tracking_search();" name="formTrackingSearchGlobalSubmit" type="button">{!! __('static.globalSearch1') !!}</button>
                     </div>
                     <div class="col-sm-6" style="display: inline-block; width: 48%; padding-left: 5px;">
-                        <button class="btn btn-trns-yellow btn-block form__btn form-tracking-search__btn font-n-b" onclick="submitTrackingSearchForm()">Aserdə axtar</button>
+                        <button class="btn btn-trns-yellow btn-block form__btn form-tracking-search__btn font-n-b" onclick="submitTrackingSearchForm()">{!! __('static.aserSearch1') !!}</button>
                     </div>
                 </form>
             </div>

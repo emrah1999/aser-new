@@ -119,4 +119,46 @@ return [
     'calculate1' => 'Hesabla',
     'calculator_required' => 'Ölkə və çəki mütləq daxil edilməlidir ',
 
+    'company1' => 'Şirkət',
+    'about_us1' => 'Haqqmızda',
+    'faq1' => 'Suallar və cavablar',
+    'terms1' => 'Şərtlər və qaydalar',
+    'news1' => 'Xəbərlər',
+    'vodeos1' => 'Video təlimatlar',
+    'prohibited1' => 'Qadağan olunmuş məhsullar',
+    'stores1' => 'Mağazalar',
+    'contact1' => 'Əlaqə',
+    'blog1' => 'Bloqlar',
+
+
+    'tariffs1' => 'Tariflər',
+    'logistics1' => 'Logistika xidməti',
+    'articles1' => 'Faydalı məqalələr',
+
+
+    'name1' => 'Ad',
+    'name1ph' => 'Adınızı daxil edin',
+    'surname1' => 'Soyad',
+    'surname1ph' => 'Soyadınızı daxil edin',
+    'email1' => 'Email',
+    'email1ph' => 'Emailinizi daxil edin ',
+    'number1' => 'Telefon',
+    'number1ph' => 'Telefon nömrənizi daxil edin',
+    'message1' => 'Mesaj',
+    'message1ph' => 'Mesajınızı yazın...... ',
+    'submit1' => 'Göndər',
+
+
+
+    'trackNUmber1' => 'Trek nömrə',
+    'trackNUmber1ph' => 'Trek nömrəni yazın',
+    'globalSearch1' => 'Global tracking search',
+    'aserSearch1' => 'Aserdə axtar',
+
+
+    'address3' => 'Ünvan',
+    'view_on_map' => 'Xəritədə bax',
+    'contact_number3' => 'Əlaqə nömrəsi',
+
+
 ];
