@@ -16,8 +16,8 @@ return [
     'calculator' => 'Kalkulyator',
     'country' => 'Ölkə',
     'baku' => 'Bakı',
-    'type' => 'Tip',
-    'unit' => 'Çəki vahidi',
+    'type2' => 'Daşınma növü',
+    'unit1' => 'Çəki vahidi',
     'weight' => 'Çəki',
     'width' => 'En (sm)',
     'length' => 'Uzunluq (sm)',
@@ -107,7 +107,16 @@ return [
     'using_way_delivery_home_head' => 'Sifarişlərinizi ünvanınıza çatdırırıq',
     'using_way_delivery_home_title' => 'Sifarişiniz Bakıya çatdırılır',
     'selectItem'=>'Zəhmət olmasa, sifariş etmək istədiyiniz ölkəni seçin',
-    'germany_info'=>'Diqqət!Anbar ünvanı ilə bərabər şirkətin adını qeyd etməyiniz mütləqdir. Bağlamanın üzərində şirkətin adı qeyd edilmədikdə DHL kuryer şirkəti bağlamanı çatdırmaqdan imtina edir.'
+    'germany_info'=>'Diqqət!Anbar ünvanı ilə bərabər şirkətin adını qeyd etməyiniz mütləqdir. Bağlamanın üzərində şirkətin adı qeyd edilmədikdə DHL kuryer şirkəti bağlamanı çatdırmaqdan imtina edir.',
 
+    'select_country1' => 'Ölkə seçin',
+    'kq1' => 'kq',
+    'gr1' => 'qr',
+    'width1' => 'En (sm)',
+    'hieght1' => 'Hündürlük ',
+    'lenght1' => 'Uzunluq (sm) ',
+    'weight1' => 'Çəki',
+    'calculate1' => 'Hesabla',
+    'calculator_required' => 'Ölkə və çəki mütləq daxil edilməlidir ',
 
 ];

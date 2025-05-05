@@ -16,8 +16,8 @@ return [
     'calculator' => 'Calculator',
     'country' => 'Country',
     'baku' => 'Baku',
-    'type' => 'Type',
-    'unit' => 'Unit',
+    'type2' => 'Delivery type ',
+    'unit1' => 'Weight unit ',
     'weight' => 'Weight',
     'width' => 'Width (cm)',
     'length' => 'Length (cm)',
@@ -181,5 +181,14 @@ return [
     'using_way_delivery_home_title' => 'Your order is being delivered to Baku',
     'germany_info'=>'Attention!It is mandatory to indicate the company name along with the warehouse address. If the company name is not indicated on the package, DHL courier company will refuse to deliver the package.',
 
+    'select_country1' => 'Select country ',
+    'kq1' => 'kq',
+    'gr1' => 'gr',
+    'width1' => 'Width (cm) ',
+    'hieght1' => 'Height',
+    'lenght1' => ' Length (cm) ',
+    'weight1' => 'Weight',
+    'calculate1' => 'Calculate',
+    'calculator_required' => 'Country and weight must be entered ',
 
 ];
