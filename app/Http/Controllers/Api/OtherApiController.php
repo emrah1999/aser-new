@@ -124,10 +124,16 @@ class OtherApiController extends Controller
 
     }
 
-//    public function getNotification()
-//    {
-//
-//    }
+    public function getNotification()
+    {
+        $user = User::find(Auth::id());
+
+        return response()->json([
+            'status' => 'success',
+            'sms' => $user->sms_notification,
+            'email' => $user->email_notification,
+        ]);
+    }
 
     public function sellerCategories(Request $request)
     {

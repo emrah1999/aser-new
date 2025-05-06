@@ -161,6 +161,7 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
     });
 
     Route::post('/notification-type',[\App\Http\Controllers\Api\OtherApiController::class, 'notificationType']);
+    Route::get('/notification-type',[\App\Http\Controllers\Api\OtherApiController::class, 'getNotification']);
 
     Route::prefix('/notifications')->group(function (){
         Route::get('/',[\App\Http\Controllers\Api\NotificationController::class,'index']);
