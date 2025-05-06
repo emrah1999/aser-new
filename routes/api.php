@@ -17,6 +17,7 @@ use App\Http\Controllers\OTPController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/muradTest',[\App\Http\Controllers\Api\OtherApiController::class,'muradTest']);
+Route::get('/release',[\App\Http\Controllers\Api\OtherApiController::class,'release']);
 Route::get('/get-api-token', [\App\Http\Controllers\Api\OtherApiController::class, 'getFcmToken']);
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
