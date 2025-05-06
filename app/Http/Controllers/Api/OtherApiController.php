@@ -18,12 +18,36 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class OtherApiController extends Controller
 {
+    public $general_settings;
+    private $userID;
+    private $api = false;
+
+    public function __construct(Request $request)
+    {
+        //		$this->middleware(['auth', 'verified']);
+        $this->middleware(function ($request, $next) {
+
+            if ($request->get('api')) {
+                App::setlocale($request->get('apiLang') ?? 'en');
+                $this->userID = $request->get('user_id');
+                $this->api = true;
+                if (Auth::guest()) {
+                    $user = User::find($this->userID);
+                    Auth::login($user);
+                }
+            } else {
+                $this->userID = Auth::id();
+            }
+            return $next($request);
+        });
+    }
 
     public function release()
     {
@@ -63,6 +87,52 @@ class OtherApiController extends Controller
         }
 
         return $data;
+    }
+
+    public function notificationType(Request $request)
+    {
+        $request->validate([
+            'sms' => 'nullable|in:0,1|required_without:email',
+            'email' => 'nullable|in:0,1|required_without:sms',
+        ]);
+
+        $user = User::find(Auth::id());
+
+
+        if (filled($request->sms)) {
+            if ($request->sms == 1){
+                $user->sms_notification = 1;
+            }else{
+                $user->sms_notification = 0;
+            }
+        }
+
+        if (filled($request->email)) {
+            if ($request->email == 1){
+                $user->email_notification = 1;
+            }else{
+                $user->email_notification = 0;
+            }
+        }
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'sms' => $user->sms_notification,
+            'email' => $user->email_notification,
+        ]);
+
+    }
+
+    public function getNotification()
+    {
+        $user = User::find(Auth::id());
+
+        return response()->json([
+            'status' => 'success',
+            'sms' => $user->sms_notification,
+            'email' => $user->email_notification,
+        ]);
     }
 
     public function sellerCategories(Request $request)
