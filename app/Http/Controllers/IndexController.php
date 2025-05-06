@@ -261,8 +261,9 @@ class IndexController extends HomeController
             'height' => ['nullable'],
             'length' => ['nullable'],
         ]);
+//        return response(App::getLocale());
         if ($validator->fails()) {
-            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => 'Ölkə və çəki mütləq daxil edilməlidir']);
+            return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => __('static.calculator_required1')]);
         }
 //        return $request;
         try {
