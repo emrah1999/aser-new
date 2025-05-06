@@ -127,14 +127,14 @@
             <form class="form form-registration center-block" name="formRegistrationPhysical" id="formRegistrationPhysical" method="post" action="{{route("register", ['locale' => App::getLocale()])}}" novalidate="novalidate">
                 @csrf
                 <input class="form__input" name="is_legality" value="0" type="hidden">
-                <h1 class="form-registration__title text-center font-n-b">Aser-ə xoş gəlmişsiniz!</h1>
-                <p class="form-registration__title-2 text-center font-n-b">Qeydiyyat forumu</p>
+                <h1 class="form-registration__title text-center font-n-b">{!! __('static.welcome') !!}</h1>
+                <p class="form-registration__title-2 text-center font-n-b">{!! __('static.registerForm') !!}</p>
                 <div class="form-registration__btn-types d-flex justify-content-center align-items-center">
                     <div class="col">
-                        <a href="{{route("register", ['locale' => App::getLocale(), 'type' => 'physical'])}}" class="btn btn-trns-yellow btn-block btn-trns-yellow--active form-registration__btn-type form-registration__btn-type--pos-rel-right font-n-b">Fiziki şəxs</a>
+                        <a href="{{route("register", ['locale' => App::getLocale(), 'type' => 'physical'])}}" class="btn btn-trns-yellow btn-block btn-trns-yellow--active form-registration__btn-type form-registration__btn-type--pos-rel-right font-n-b">{!! __('static.physic') !!}</a>
                     </div>
                     <div class="col">
-                        <a href="{{route("register", ['locale' => App::getLocale(), 'type' => 'juridical'])}}" class="btn btn-trns-yellow btn-block form-registration__btn-type font-n-b">Hüquqi şəxs</a>
+                        <a href="{{route("register", ['locale' => App::getLocale(), 'type' => 'juridical'])}}" class="btn btn-trns-yellow btn-block form-registration__btn-type font-n-b">{!! __('static.jurdical') !!}</a>
                     </div>
                 </div>
                 <div class="form-registration__content form-registration__content--1 {{ $showSecondPart ?  'd-none': '' }}">
@@ -142,14 +142,14 @@
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userName">{!! __('auth.Name') !!}</label>
-                                <input class="form__input" name="name"  type="text" id="userName" placeholder="Adınızı daxil edin" value="{{ old('name') }}"  required>
+                                <input class="form__input" name="name"  type="text" id="userName" placeholder="{!! __('static.namePH') !!}" value="{{ old('name') }}"  required>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userSurname">{!! __('auth.Surname') !!}</label>
-                                <input class="form__input" name="surname" value="{{ old('surname')}}" type="text" id="userSurname" placeholder="Soyadınızı daxil edin" required>
+                                <input class="form__input" name="surname" value="{{ old('surname')}}" type="text" id="userSurname" placeholder="{!! __('static.surnamePH') !!}" required>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                                        value="{{ session('errorType') == 'email' ? '' : old('email') }}"
                                        type="email"
                                        id="userEmail"
-                                       placeholder="Emailiniz daxil edin"
+                                       placeholder="{!! __('static.emailPhLogin') !!}"
                                        required>
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'email')
@@ -205,7 +205,7 @@
                                 >
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'age')
-                                        <strong>18 yaşdan böyük olmalısınız</strong>
+                                        <strong>{!! __('static.ageLimit') !!}</strong>
                                     @endif
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                 <label class="form__label" for="userSex">{!! __('auth.City') !!}</label>
                                 <div class="form__select-wrapper">
                                     <select class="form__select" name="city" id="city" required>
-                                        <option value="">Seç</option>
+                                        <option value="">{!! __('static.choose') !!}</option>
                                         @foreach($cities as $city)
                                             <option value="{{$city->name}}" {{ old('city') == $city->name ? 'selected' : '' }}>{{$city->name}}</option>
                                         @endforeach
@@ -256,10 +256,10 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form__group">
-                                <label class="form__label" for="userBranch">{!! __('auth.branch') !!}</label>
+                                <label class="form__label" for="userBranch">{!! __('static.branch') !!}</label>
                                 <div class="form__select-wrapper">
                                     <select class="form__select" name="branch_id" id="userBranch" required>
-                                        <option value="0" disabled selected>{!! __('auth.branch') !!}</option>
+                                        <option value="0" disabled selected>{!! __('static.branch') !!}</option>
                                         @foreach($branchs as $branch)
                                             <option value="{{$branch->id}}" {{ old('branch_id') == $branch->id ? 'selected' : '' }}>{{$branch->name}}</option>
                                         @endforeach
@@ -288,7 +288,7 @@
                                 <label class="form__label" for="userPassportSeria">{!! __('auth.PassportSeries') !!}</label>
                                 <div class="form__select-wrapper">
                                     <select class="form__select" name="passport_series" id="userPassportSeria" required>
-                                        <option value="0" disabled {{ old('passport_series') ? '' : 'selected' }}>Seçin</option>
+                                        <option value="0" disabled {{ old('passport_series') ? '' : 'selected' }}>{!! __('static.choose') !!}</option>
                                         <option value="AA" {{ old('passport_series') == 'AA' ? 'selected' : '' }}>AA</option>
                                         <option value="AZE" {{ old('passport_series') == 'AZE' ? 'selected' : '' }}>AZE</option>
                                         <option value="MYI" {{ old('passport_series') == 'MYI' ? 'selected' : '' }}>MYI</option>
@@ -307,7 +307,7 @@
                                        value="{{ session('errorType') == 'passport_number' ? '' : old('passport_number') }}"
                                        type="text"
                                        id="userPassportSeriaNumber"
-                                       placeholder="Ş.V-nin nömrəsini daxil edin"
+                                       placeholder="{!! __('static.passprtNumberPh') !!}n"
                                        required>
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'passport_number')
@@ -325,7 +325,7 @@
                                        value="{{ session('errorType') == 'fin' ? '' : old('passport_fin') }}"
                                        type="text"
                                        id="userPassportFinCode"
-                                       placeholder="Fin kodu daxil edin"
+                                       placeholder="{!! __('static.finReg') !!}"
                                        required>
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'fin')
@@ -338,7 +338,7 @@
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="userAddress">{!! __('auth.Address') !!}</label>
-                                <input class="form__input" name="address1" value="{{ old('address1')}}" type="text" id="userAddress" placeholder="Ünvanızı daxil edin" required>
+                                <input class="form__input" name="address1" value="{{ old('address1')}}" type="text" id="userAddress" placeholder="{!! __('static.addressPhReg') !!}" required>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -346,7 +346,7 @@
                             <div class="form__group">
                                 <label class="form__label" for="userPassword">{!! __('auth.Password') !!}</label>
                                 <div class="input-container" style="position: relative;">
-                                    <input class="form__input" name="password" value="{{ old('password')}}" type="password" id="userPassword" placeholder="Şifrənizi daxil edin" required style="padding-right: 30px;">
+                                    <input class="form__input" name="password" value="{{ old('password')}}" type="password" id="userPassword" placeholder="{!! __('static.passwordReg') !!}" required style="padding-right: 30px;">
                                     <span class="eye-icon" id="togglePassword1" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
                                         <i class="fas fa-eye"></i>
                                     </span>
@@ -357,9 +357,9 @@
 
                         <div class="col-sm-6">
                             <div class="form__group">
-                                <label class="form__label" for="userPassword2">Təkrar şifrə</label>
+                                <label class="form__label" for="userPassword2">{!! __('static.confirmPasswordReg2') !!}</label>
                                 <div class="input-container" style="position: relative;">
-                                    <input class="form__input" name="user_password2" value="{{ old('user_password2')}}" type="password" id="userPassword2" placeholder="Təkrar şifrənizi daxil edin" required style="padding-right: 30px;">
+                                    <input class="form__input" name="user_password2" value="{{ old('user_password2')}}" type="password" id="userPassword2" placeholder="{!! __('static.confirmPasswordReg') !!}" required style="padding-right: 30px;">
                                     <span class="eye-icon" id="togglePassword2" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
                                         <i class="fas fa-eye"></i>
                                     </span>
@@ -372,7 +372,7 @@
                                 <div class="input-container" style="position: relative;">
                                     <label class="form-checkbox d-flex align-items-center" style="margin-right: 15px;">
                                         <input class="form-checkbox__input" type="radio" name="verification" value="sms" id="smsVerification">
-                                        <span class="form-checkbox__span"></span> SMS təsdiq
+                                        <span class="form-checkbox__span"></span> {!! __('static.sms') !!}
                                     </label>
                                 </div>
                                 <div class="invalid-feedback"></div>
@@ -384,7 +384,7 @@
                                 <div class="input-container" style="position: relative;">
                                     <label class="form-checkbox d-flex align-items-center">
                                         <input class="form-checkbox__input" type="radio" name="verification" value="email" id="emailVerification">
-                                        <span class="form-checkbox__span"></span> Email təsdiq
+                                        <span class="form-checkbox__span"></span> {!! __('static.emailReg') !!}
                                     </label>
                                 </div>
                                 <div class="invalid-feedback"></div>
@@ -410,24 +410,24 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--next font-n-b" type="button">Irəli</button>
+                            <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--next font-n-b" type="button">{!! __('static.next') !!}</button>
                         </div>
                     </div>
                 </div>
                 <div class="form-registration__btn-actions form-registration__btn-actions--2 {{ $showSecondPart ? '' : 'd-none' }}">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-sm-6">
-                            <button class="btn btn-black btn-block form__btn form-registration__btn-action form-registration__btn-action--prev font-n-b" type="button">Geriyə qayıt</button>
+                            <button class="btn btn-black btn-block form__btn form-registration__btn-action form-registration__btn-action--prev font-n-b" type="button">{!! __('static.backReg') !!}</button>
                         </div>
                         <div class="col-sm-6">
-                            <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--submit font-n-b" name="formRegistrationPhysicalSubmit" type="submit">Qeydiyyatdan keçin</button>
+                            <button class="btn btn-yellow btn-block form__btn form-registration__btn-action form-registration__btn-action--submit font-n-b" name="formRegistrationPhysicalSubmit" type="submit">{!! __('static.register') !!}</button>
                         </div>
                     </div>
                 </div>
                 <div class="login-registration-question">
                     <p class="login-registration-question__block text-center">
-                        <span class="login-registration-question__title">Hesabınız var?</span>
-                        <a href="{{route("login", ['locale' => App::getLocale()])}}" class="login-registration-question__link font-n-b">Daxil olun</a>
+                        <span class="login-registration-question__title">{!! __('static.haveacc') !!}</span>
+                        <a href="{{route("login", ['locale' => App::getLocale()])}}" class="login-registration-question__link font-n-b">{!! __('static.login') !!}</a>
                     </p>
                 </div>
             </form>

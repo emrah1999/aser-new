@@ -9,20 +9,19 @@
                     <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
                         <div class="thumbnail thumbnail-profile-title-block packages-boxes d-flex justify-content-between align-items-center row">
                             <div class="col-md-3">
-                                <h4 class="thumbnail-profile-title-block__title font-n-b">Bağlamalar</h4>
+                                <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('static.package3') !!}</h4>
                             </div>
                             <div class="dropdown-container dropdown-container3 d-none d-lg-block col-md-5 col-6">
                                 <label for="dropdown-toggle3" class="dropdown-label dropdown-label-1 float-right" id="dropdown-label-package">
-                                    @if($currentStatus==0)
-                                        Bütün bağlamalarım
-                                    @elseif($currentStatus==3)
-                                        Xarici anbardadır
+
+                                    @if($currentStatus==3)
+                                        {!! __('static.external_warehouse') !!}
                                     @elseif($currentStatus==4)
-                                        Anbardan göndərilib
+                                        {!! __('static.send__warehouse') !!}
                                     @elseif($currentStatus==5)
-                                        Bakı ofisindədir
+                                        {!! __('static.in_baku') !!}
                                     @elseif($currentStatus==6)
-                                        Arxiv
+                                        {!! __('static.arceve') !!}
 
                                     @endif
                                     <span class="dropdown-icon"></span>
@@ -31,12 +30,12 @@
                                 <ul class="dropdown-menu package-dropdown">
                                     @php
                                         $statuses = [
-                                         //   ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
-                                            ['key' => 'is_warehouse', 'text' => 'Xarici anbardadır', 'status' => 3],
-                                            ['key' => 'sent', 'text' => 'Anbardan göndərilib', 'status' => 4],
-                                            ['key' => 'in_office', 'text' => 'Bakı ofisindədir', 'status' => 5],
-                                            ['key' => 'delivered', 'text' => 'Arxiv', 'status' => 6],
-                                        ];
+                                            // ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
+                                             ['key' => 'is_warehouse', 'text' => __('static.external_warehouse'), 'status' => 3],
+                                             ['key' => 'sent', 'text' => __('static.send_warehouse') , 'status' => 4],
+                                             ['key' => 'in_office', 'text' => __('static.in_baku'), 'status' => 5],
+                                             ['key' => 'delivered', 'text' => __('static.arceve'), 'status' => 6],
+                                         ];
                                     @endphp
 
                                     @foreach ($statuses as $status)
@@ -66,16 +65,14 @@
                         <div class="d-flex justify-content-between align-items-center d-block d-lg-none mb-10">
                             <div class="dropdown-container dropdown-container2">
                                 <label for="dropdown-toggle2" class="dropdown-label dropdown-label-1" id="dropdown-label-package1">
-                                    @if($currentStatus==0)
-                                        Bütün bağlamalarım
-                                    @elseif($currentStatus==3)
-                                        Xarici anbardadır
+                                    @if($currentStatus==3)
+                                        {!! __('static.external_warehouse') !!}
                                     @elseif($currentStatus==4)
-                                        Anbardan göndərilib
+                                        {!! __('static.send__warehouse') !!}
                                     @elseif($currentStatus==5)
-                                        Bakı ofisindədir
+                                        {!! __('static.in_baku') !!}
                                     @elseif($currentStatus==6)
-                                        Arxiv
+                                        {!! __('static.arceve') !!}
 
                                     @endif
                                     <span class="dropdown-icon"></span>
@@ -85,10 +82,10 @@
                                     @php
                                         $statuses = [
                                            // ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
-                                            ['key' => 'is_warehouse', 'text' => 'Xarici anbardadır', 'status' => 3],
-                                            ['key' => 'sent', 'text' => 'Anbardan göndərilib', 'status' => 4],
-                                            ['key' => 'in_office', 'text' => 'Bakı ofisindədir', 'status' => 5],
-                                            ['key' => 'delivered', 'text' => 'Arxiv', 'status' => 6],
+                                            ['key' => 'is_warehouse', 'text' => __('static.external_warehouse'), 'status' => 3],
+                                            ['key' => 'sent', 'text' => __('static.send__warehouse') , 'status' => 4],
+                                            ['key' => 'in_office', 'text' => __('static.in_baku'), 'status' => 5],
+                                            ['key' => 'delivered', 'text' => __('static.arceve'), 'status' => 6],
                                         ];
                                     @endphp
 
@@ -135,7 +132,7 @@
                                             <th class="table-data__thead-th">{!! __('table.weight') !!}</th>
                                             <th class="table-data__thead-th th-new">{!! __('table.delivery_amount') !!}</th>
                                             {{-- <th class="table-data__thead-th">{!! __('table.debt') !!}</th>--}}
-                                            <th class="table-data__thead-th">Filial</th>
+                                            <th class="table-data__thead-th">{!! __('static.branch') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.invoice_status') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.status') !!}</th>
                                             <th class="table-data__thead-th">{!! __('table.pay') !!}</th>

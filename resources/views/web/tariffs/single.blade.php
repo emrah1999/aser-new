@@ -75,31 +75,31 @@
         </section>
         <section class="seller-section-unique section seller-section-tarifs-order-how section-margin-top">
             <div class="seller-section-unique container-lg">
-                <h4 class="seller-section-unique section-title text-center font-n-b">Sifarişləri hardan edək?</h4>
+                <h4 class="seller-section-unique section-title text-center font-n-b">{!! __('static.seller_place') !!}</h4>
                 <p class="seller-section-unique section-desc text-center">
-                    Sifarişlərinizi Türkiyənin, Amerikanın, İngiltərənin, İspaniyanın müxtəlif mağazalardan edə bilərsiniz
+                    {!! __('static.seller_detail') !!}
                 </p>
                 <ul class="seller-section-unique nav seller-section-nav-shops">
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="1">Aksessuar</a>
+                        <a href="#" class="nav-shops__link" data-type="1">{!! __('static.seller_accessory') !!}</a>
                     </li>
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="2">Geyim</a>
+                        <a href="#" class="nav-shops__link" data-type="2">{!! __('static.seller_dress') !!}</a>
                     </li>
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="3">Elektronika</a>
+                        <a href="#" class="nav-shops__link" data-type="3">{!! __('static.seller_electronic') !!}</a>
                     </li>
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="4">İdman</a>
+                        <a href="#" class="nav-shops__link" data-type="4">{!! __('static.seller_sport') !!}</a>
                     </li>
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="5">Kosmetika</a>
+                        <a href="#" class="nav-shops__link" data-type="5">{!! __('static.seller_cosmetic') !!}</a>
                     </li>
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="6">Kitab</a>
+                        <a href="#" class="nav-shops__link" data-type="6">{!! __('static.seller_book') !!}</a>
                     </li>
                     <li class="nav-shops__item">
-                        <a href="#" class="nav-shops__link" data-type="5">Baxım</a>
+                        <a href="#" class="nav-shops__link" data-type="5">{!! __('static.seller_self') !!}</a>
                     </li>
                 </ul>
                 <div id="sellers-list" class="seller-section-unique row align-items-center">

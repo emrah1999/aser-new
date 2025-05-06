@@ -8,15 +8,15 @@
                     @include("web.account.account_left_bar")
                     <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
                         <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
-                            <h4 class="thumbnail-profile-title-block__title font-n-b">Balansım</h4>
+                            <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('static.my_balance') !!}</h4>
                             <div class="d-flex justify-content-center align-items-center">
                                 <p class="thumbnail-profile-title-block__desc">
-                                    <span>Balansım :</span>
+                                    <span>{!! __('static.my_balance') !!} :</span>
                                     <span class=font-n-b>{{Auth::user()->balance}} USD</span>
                                 </p>
                                 <button class="btn btn-blue thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileBalanceAdd">
                                     <img class="thumbnail-profile-title-block__btn-img" src="/web/images/content/other-plus-3.png" alt="Add">
-                                    <span class="thumbnail-profile-title-block__btn-title d-none d-lg-block">Balansı artır</span>
+                                    <span class="thumbnail-profile-title-block__btn-title d-none d-lg-block">{!! __('static.increase_balance') !!}</span>
                                 </button>
                             </div>
                         </div>
@@ -28,19 +28,19 @@
                                             <h6 class="thumbnail-balances-transactions__title font-n-b">
                                                 @switch($log->type)
                                                     @case('cart')
-                                                        Kart
+                                                        {!! __('static.card') !!}
                                                         @break
                                                     @case('balance')
-                                                        Balansdan
+                                                        {!! __('static.from_balance') !!}
                                                         @break
                                                     @case('courier')
-                                                        Kuriyer
+                                                        {!! __('static.courier') !!}
                                                         @break
                                                     @case('package')
-                                                        Bağlama
+                                                        {!! __('static.package5') !!}
                                                         @break
                                                     @case('cash')
-                                                        Nağd
+                                                        {!! __('static.cash') !!}
                                                         @break
                                                     @default
                                                         {{ ucfirst($log->type) }}
@@ -61,7 +61,7 @@
                         @if(count($logs)>0)
                         <div class="d-flex justify-content-center align-items-center">
                             <a href="#" class="profile-more-btn d-flex justify-content-center align-items-center">
-                                <span class="profile-more-btn__title font-n-b">Daha çox</span>
+                                <span class="profile-more-btn__title font-n-b">{!! __('static.more') !!}</span>
                                 <img class="profile-more-btn__img" src="/web/images/content/profile-more.png" alt="More">
                             </a>
                         </div>
@@ -81,9 +81,9 @@
                 <div class="modal-body modal-profile-balance-add__body">
                     <form class="form form-modal-profile form-modal-profile-balance-add center-block" name="formModalProfileLogout" id="formModalProfileBalanceAdd" method="post" action="{{route("post_balance_page", ['locale' => App::getLocale()])}}" novalidate="novalidate">
                         @csrf
-                        <h6 class="form-modal-profile__title form-modal-profile-balance-add__title text-center font-n-b">Balans artımı</h6>
+                        <h6 class="form-modal-profile__title form-modal-profile-balance-add__title text-center font-n-b">{!! __('static.increase_balance') !!}</h6>
                         <div class="form__group">
-                            <label class="form__label" for="balanceCurrency">Valyuta seçin</label>
+                            <label class="form__label" for="balanceCurrency">{!! __('static.select_currency') !!}</label>
                             <div class="form__select-wrapper">
                                 <select class="form__select" name="balance_currency" id="balanceCurrency" required>
                                     <option value="1">USD</option>
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div class="form__group">
-                            <label class="form__label" for="balanceAmount">Məbləği daxil edin</label>
+                            <label class="form__label" for="balanceAmount">{!! __('static.enter_amount') !!}</label>
                             @if($amount == 0)
                                 <input class="form__input" name="amount" type="text" id="balanceAmount" required>
                             @else
@@ -100,10 +100,10 @@
 
                         </div>
                         <div class="form__group">
-                            <button class="btn btn-blue btn-block form__btn form-modal-profile__btn form-modal-profile-balance-add__btn font-n-b" name="formModalProfileBalanceAddSubmit" type="submit">Balans artırın</button>
+                            <button class="btn btn-blue btn-block form__btn form-modal-profile__btn form-modal-profile-balance-add__btn font-n-b" name="formModalProfileBalanceAddSubmit" type="submit">{!! __('static.increase_balance') !!}</button>
                         </div>
                         <div class="form__group">
-                            <button class="btn btn-trns-black btn-block form__btn form-modal-profile__btn form-modal-profile-balance-add__btn font-n-b" type="button" data-bs-dismiss="modal">Bağla</button>
+                            <button class="btn btn-trns-black btn-block form__btn form-modal-profile__btn form-modal-profile-balance-add__btn font-n-b" type="button" data-bs-dismiss="modal">{!! __('static.close') !!}</button>
                         </div>
                     </form>
                 </div>

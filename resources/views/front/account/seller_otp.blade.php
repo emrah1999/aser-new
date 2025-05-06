@@ -43,7 +43,7 @@
                                         <div class="order-btn">
                                             <a href="{{route("get_seller_add", ['locale' => App::getLocale()])}}"
                                                 class="btn btn-orange btn-success"
-                                                style="background-color: rgba(16, 69, 140, 1); border-color: rgba(16, 69, 140, 1); float: right; margin: 0px 5px 5px 0;">{!! __('buttons.create_otp') !!}</a>
+                                                style="background-color: rgba(16, 69, 140, 1); border-color: rgba(16, 69, 140, 1); float: right; margin: 0px 5px 5px 0;">{!! __('static.create_otp') !!}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -58,8 +58,8 @@
                                     <table id="dataTable">
                                         <thead>
                                             <tr>
-                                                <th>Track</th>
-                                                <th>OTP</th>
+                                                <th>{!! __('static.track') !!}</th>
+                                                <th>{!! __('static.otp') !!}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
