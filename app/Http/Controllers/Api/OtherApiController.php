@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Package;
 use App\PackageStatus;
 use App\Seller;
+use App\Settings;
 use App\SmsTask;
 use App\StoreCategory;
 use App\User;
@@ -23,6 +24,15 @@ use Illuminate\Support\Facades\Validator;
 
 class OtherApiController extends Controller
 {
+
+    public function release()
+    {
+        $data = Settings::query()->first();
+        return response()->json([
+            'status' => 'success',
+            'data' => $data->app_release==1 ? true : false
+        ]);
+    }
     public function seller()
     {
         $first = Seller::where('id', 2824)
