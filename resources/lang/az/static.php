@@ -160,5 +160,97 @@ return [
     'view_on_map' => 'Xəritədə bax',
     'contact_number3' => 'Əlaqə nömrəsi',
 
+    'seller_place' =>'Sifarişləri hardan edək?',
+    'seller_detail' => 'Sifarişlərinizi Türkiyənin, Amerikanın, İngiltərənin, İspaniyanın müxtəlif mağazalardan edə bilərsiniz',
+    'seller_accessory' => 'Aksessuar',
+    'seller_dress' => 'Geyim',
+    'seller_electronic' => 'Elektronika',
+    'seller_sport' => 'İdman',
+    'seller_cosmetic' => 'Kosmetika',
+    'seller_book' => 'Kitab',
+    'seller_self' => 'Baxım',
+
+
+
+    'welcome' => 'Aser ailəsinə xoş gəlmisiniz!',
+    'emailPhLogin' => 'Emailiniz daxil edin',
+    'passwordPhLogin' => 'Şifrənizi daxil edin',
+    'rememberLogin' => 'Məni xatırla',
+    'login' => 'Daxil ol',
+
+    'registerForm' => 'Qeydiyyat forumu',
+    'physic' =>'Fiziki şəxs',
+    'jurdical' => 'Hüquqi şəxs',
+
+    'namePH' => 'Adınızı daxil edin',
+    'surnamePH' => 'Soyadınızı daxil edin',
+    'choose' => 'Seç',
+    'branches' => 'Filiallar',
+    'next' => 'İrəli',
+    'haveacc' => 'Hesabnız var?',
+    'passprtNumberPh' => 'Şəxsiyyət vəsiqəsinin nömrəsini daxil edin',
+    'addressPhReg' => 'Ünvanınızı daxil edin',
+    'finReg' => 'Fin kodu daxil edin',
+    'passwordReg' => 'Şifrənizi daxil edin',
+    'confirmPasswordReg' => 'Təkrar şifrənizi daxil edin',
+    'confirmPasswordReg2' => 'Təkrar şifrə',
+    'sms' => 'SMS təsdiq',
+    'emailReg' => 'Email təsdiq',
+    'backReg' => 'Geriyə qayıt' ,
+    'register' => 'Qeydiyyatdan keçin' ,
+    'ageLimit' => '18 yaşdan böyük olmalısınız',
+
+
+    'voenPH' => 'Vöeni daxil edin',
+    'companyPH' =>'Şirkət adını daxil edin',
+
+
+    'company_name' => 'Şirkət adı',
+    'voen' => 'VÖEN',
+
+
+    'branch' => 'Filial',
+    'package3' => 'Bağlamalar',
+    'external_warehouse' => ' Xarici anbardadır',
+    'send_warehouse' => 'Anbardan göndərilib',
+    'in_baku' => 'Bakı ofisindədir',
+    'arceve' => 'Arxiv',
+
+
+
+
+    'my_balance' => 'Balansım',
+    'increase_balance' => 'Balansı artır',
+    'card' => 'Kart',
+    'from_balance' => 'Balansdan',
+    'courier' => 'Kuriyer',
+    'package5' => 'Bağlama',
+    'cash' => 'Nağd',
+    'more' => 'Daha çox',
+    'select_currency' => 'Valyuta seçin',
+    'enter_amount' => 'Məbləği daxil edin',
+    'close' => 'Bağla',
+
+
+    'refereal_account' => 'Referal Hesablar',
+    'otp' => 'OTP',
+    'trendyol_otp' => 'Trendyol Onay kodu',
+    'profile' => 'Profil' ,
+    'logout' => 'Çıxış' ,
+    'confirmLogout' => 'Hesabdan çıxış edilsin?' ,
+    'yes' => 'Bəli' ,
+    'no' => 'Xeyr' ,
+    'create_otp' => 'OTP əlavə et' ,
+    'track' => 'İzləmə' ,
+
+
+
+
+
+
+
+
+
+
 
 ];

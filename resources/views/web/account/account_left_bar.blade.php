@@ -66,7 +66,7 @@
             <a href="{{route("get_sub_accounts", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_sub_accounts') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/referal-new.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/referal-new.png" alt="ProfileMenu">
-                <span class="nav-profile-menu__link-title">Referal Hesablar</span>
+                <span class="nav-profile-menu__link-title">{!! __('static.refereal_account') !!}</span>
             </a>
         </li>
         <li class="nav-profile-menu__item">
@@ -75,7 +75,7 @@
                     {{ request()->routeIs('get_seller_otp', ['locale' => App::getLocale()]) ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/otp-new.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/otp-new.png" alt="ProfileMenu">
-                <span class="nav-profile-menu__link-title">OTP</span>
+                <span class="nav-profile-menu__link-title">{!! __('static.otp') !!}</span>
             </a>
         </li>
         <li class="nav-profile-menu__item">
@@ -84,14 +84,14 @@
                     {{ request()->routeIs('onay_code_list') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img leftbar-icon-special" src="/web/images/content/trendyolOTP.png" height="20px" width="10px" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/trendyolOTP.png" alt="ProfileMenu">
-                <span class="nav-profile-menu__link-title">Trendyol Onay kodu</span>
+                <span class="nav-profile-menu__link-title">{!! __('static.trendyol_otp') !!}</span>
             </a>
         </li>
         <li class="nav-profile-menu__item">
             <a href="{{route("get_user_settings", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_user_settings') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-user.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-user.png" alt="ProfileMenu">
-                <span class="nav-profile-menu__link-title">Profil</span>
+                <span class="nav-profile-menu__link-title">{!! __('static.profile') !!}</span>
             </a>
         </li>
 
@@ -115,7 +115,7 @@
             <a class="nav-profile-menu__link d-flex justify-content-start align-items-center" data-bs-toggle="modal" data-bs-target="#modalProfileLogout">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-exit.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-exit.png" alt="ProfileMenu">
-                <span class="nav-profile-menu__link-title">Çıxış</span>
+                <span class="nav-profile-menu__link-title">{!! __('static.logout') !!}</span>
             </a>
         </li>
     </ul>
@@ -129,13 +129,13 @@
             </div>
             <div class="modal-body modal-profile-logout__body">
                 <form class="form form-modal-profile form-modal-profile-logout center-block" name="formModalProfileLogout" id="formModalProfileLogout" method="get" action="{{route("logout", ['locale' => App::getLocale()])}}" novalidate="novalidate">
-                    <h6 class="form-modal-profile__title form-modal-profile-logout__title text-center font-n-b">Hesabdan çıxış edilsin?</h6>
+                    <h6 class="form-modal-profile__title form-modal-profile-logout__title text-center font-n-b">{!! __('static.confirmLogout') !!}</h6>
                     <div class="row">
                         <div class="col-6">
-                            <button class="btn btn-trns-black btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" type="button" data-bs-dismiss="modal">Xeyr</button>
+                            <button class="btn btn-trns-black btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" type="button" data-bs-dismiss="modal">{!! __('static.no') !!}</button>
                         </div>
                         <div class="col-6">
-                            <button class="btn btn-blue btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" name="formModalProfileLogoutSubmit" type="submit">Bəli</button>
+                            <button class="btn btn-blue btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" name="formModalProfileLogoutSubmit" type="submit">{!! __('static.yes') !!}</button>
                         </div>
                     </div>
                 </form>

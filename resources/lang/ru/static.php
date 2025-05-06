@@ -229,4 +229,87 @@ return [
     'view_on_map' => 'Посмотреть на карте',
     'contact_number3' => 'Телефон',
 
+    'seller_place' => 'Откуда оформить заказ?',
+    'seller_detail' => 'Вы можете заказать из различных магазинов Турции, США, Великобритании и Испании.',
+    'seller_accessory' => 'Аксессуары',
+    'seller_dress' => 'Одежда',
+    'seller_electronic' => 'Электроника',
+    'seller_sport' => 'Спорт',
+    'seller_cosmetic' => 'Косметика',
+    'seller_book' => 'Книга',
+    'seller_self' => 'Уход за собой',
+
+
+    'welcome' => 'Добро пожаловать в семью Aser!',
+    'emailPhLogin' => 'Введите ваш email',
+    'passwordPhLogin' => 'Введите ваш пароль',
+    'rememberLogin' => 'Запомнить меня',
+    'login' => 'Войти',
+
+
+    'registerForm' => 'Форма регистрации',
+    'physic' => 'Физическое лицо',
+    'jurdical' => 'Юридическое лицо',
+
+    'namePH' => 'Введите ваше имя',
+    'surnamePH' => 'Введите вашу фамилию',
+    'choose' => 'Выбрать',
+    'branches' => 'Филиалы',
+    'next' => 'Далее',
+    'haveacc' => 'Уже есть аккаунт?',
+    'passprtNumberPh' => 'Введите номер удостоверения личности',
+    'addressPhReg' => 'Введите ваш адрес',
+    'finReg' => 'Введите FIN код',
+    'passwordReg' => 'Введите ваш пароль',
+    'confirmPasswordReg' => 'Повторно введите ваш пароль',
+    'confirmPasswordReg2' => 'Повторите пароль',
+    'sms' => 'SMS подтверждение',
+    'emailReg' => 'Подтверждение по email',
+    'backReg' => 'Назад',
+    'register' => 'Зарегистрироваться',
+    'ageLimit' => 'Вам должно быть больше 18 лет',
+
+    'voenPH' => 'Введите ваш ВОЕН',
+    'companyPH' => 'Введите название компании',
+
+    'company_name' => 'Название компании',
+    'voen' => 'ВОЕН',
+
+
+    'branch' => 'Филиал',
+    'package3' => 'Посылки',
+    'external_warehouse' => 'На внешнем складе',
+    'send_warehouse' => 'Отправлено со склада',
+    'in_baku' => 'В офисе Баку',
+    'arceve' => 'Архив',
+
+
+    'my_balance' => 'Мой баланс',
+    'increase_balance' => 'Пополнить баланс',
+    'card' => 'Карта',
+    'from_balance' => 'С баланса',
+    'courier' => 'Курьер',
+    'package5' => 'Посылка',
+    'cash' => 'Наличные',
+    'more' => 'Подробнее',
+    'select_currency' => 'Выберите валюту',
+    'enter_amount' => 'Введите сумму',
+    'close' => 'Закрыть',
+
+
+    'refereal_account' => 'Реферальные аккаунты',
+    'otp' => 'OTP',
+    'trendyol_otp' => 'Код подтверждения Trendyol',
+    'profile' => 'Профиль',
+    'logout' => 'Выход',
+    'confirmLogout' => 'Выйти из аккаунта?',
+    'yes' => 'Да',
+    'no' => 'Нет',
+
+
+
+
+    'create_otp' => 'Добавить OTP',
+    'track' => 'Отслеживание',
+
 ];
