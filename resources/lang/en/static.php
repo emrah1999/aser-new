@@ -189,7 +189,7 @@ return [
     'lenght1' => ' Length (cm) ',
     'weight1' => 'Weight',
     'calculate1' => 'Calculate',
-    'calculator_required' => 'Country and weight must be entered ',
+    'calculator_required1' => 'Country and weight must be entered ',
 
     'company1' => 'Company',
     'about_us1' => 'About us ',

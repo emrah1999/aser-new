@@ -435,7 +435,7 @@
                     if (response.case === "success") {
                         $("#amount").text(response.amount);
                     } else {
-                        alert(response.content);
+                        alert("{{ __('static.calculator_required1') }}");
                     }
                 },
                 error: function() {

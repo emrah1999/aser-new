@@ -117,7 +117,7 @@ return [
     'lenght1' => 'Uzunluq (sm) ',
     'weight1' => 'Çəki',
     'calculate1' => 'Hesabla',
-    'calculator_required' => 'Ölkə və çəki mütləq daxil edilməlidir ',
+    'calculator_required1' => 'Ölkə və çəki mütləq daxil edilməlidir ',
 
     'company1' => 'Şirkət',
     'about_us1' => 'Haqqmızda',
