@@ -243,14 +243,33 @@ return [
     'create_otp' => 'OTP əlavə et' ,
     'track' => 'İzləmə' ,
 
+    'trendyol' => 'Trendyol Onay Kodu' ,
+    'trendyol_code' => 'Onay kodu' ,
 
 
+    'information' => 'Şəxsi məlumatlarım' ,
+    'change_password' => 'Şifrəni dəyiş' ,
+    'notification' => 'Bildiriş məlumatlandırma' ,
 
 
+    'current_password' => 'Cari şifrə' ,
+    'new_password' => 'Yeni Şifrə' ,
+    'confirm_password' => 'Yeni şifrənin təkrarı' ,
+    'submit' => 'Təsdiq et' ,
+
+    'show' => 'Göstər' ,
+    'hide' => 'Gizlə' ,
 
 
+    'send_sms' => 'SMS Göndər' ,
+    'send_mail' => 'E-mail Göndər' ,
 
 
+    'input_address' => 'Qeydiyyatda Olduğunuz Ünvan' ,
+    'input_birthday' => 'Qeydiyyatda Olduğunuz Ünvan' ,
+    'cancel' => 'Ləğv et' ,
+    'save' => 'Yadda saxla' ,
+    '' => '' ,
 
 
 ];

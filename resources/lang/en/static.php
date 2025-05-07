@@ -304,4 +304,31 @@ return [
     'create_otp' => 'Add OTP',
     'track' => 'Tracking',
 
+    'trendyol' => 'Trendyol Confirmation Code',
+    'trendyol_code' => 'Confirmation Code',
+
+
+    'information' => 'My Personal Information',
+    'change_password' => 'Change Password',
+    'notification' => 'Notification Settings',
+
+
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
+    'confirm_password' => 'Confirm New Password',
+    'submit' => 'Submit',
+
+    'show' => 'Show',
+    'hide' => 'Hide',
+
+    'send_sms' => 'Send SMS',
+    'send_mail' => 'Send Email',
+
+    'input_address' => 'Registered Address',
+    'input_birthday' => 'Date of Birth',
+    'cancel' => 'Cancel',
+    'save' => 'Save',
+
+
+
 ];

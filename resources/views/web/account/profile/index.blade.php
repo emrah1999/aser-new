@@ -14,7 +14,7 @@
                                         <img class="thumbnail-profile-settings__img" src="/web/images/content/profile-settings1.png" alt="Settings">
                                     </div>
                                     <div class="thumbnail-profile-settings__caption">
-                                        <h6 class="thumbnail-profile-settings__title font-n-b">Şəxsi məlumatlarım</h6>
+                                        <h6 class="thumbnail-profile-settings__title font-n-b">{!! __('static.information') !!}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                                         <img class="thumbnail-profile-settings__img" src="/web/images/content/profile-settings2.png" alt="Settings">
                                     </div>
                                     <div class="thumbnail-profile-settings__caption">
-                                        <h6 class="thumbnail-profile-settings__title font-n-b">Şifrəni dəyişin</h6>
+                                        <h6 class="thumbnail-profile-settings__title font-n-b">{!! __('static.change_password') !!}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                         <img class="thumbnail-profile-settings__img" src="/web/images/content/notification-new.png" height="24px" width="24px" alt="Settings">
                                     </div>
                                     <div class="thumbnail-profile-settings__caption">
-                                        <h6 class="thumbnail-profile-settings__title font-n-b">Bildiriş məlumatlandırma</h6>
+                                        <h6 class="thumbnail-profile-settings__title font-n-b">{!! __('static.notification') !!}</h6>
                                     </div>
                                 </div>
                             </div>
