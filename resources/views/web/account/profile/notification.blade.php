@@ -48,13 +48,13 @@
                         <form id="notificationForm">
                             @csrf
                             <div class="form-group d-flex justify-content-between align-items-center">
-                                <label class="form-check-label" for="sms">SMS Göndər</label>
+                                <label class="form-check-label" for="sms">{!! __('static.send_sms') !!}</label>
                                 <div class="form-switch">
                                     <input class="form-check-input notification-switch" type="checkbox" name="notifications[]" value="sms" id="sms" {{$notification->sms_notification==1 ? 'checked':'' }}>
                                 </div>
                             </div>
                             <div class="form-group d-flex justify-content-between align-items-center mt-2">
-                                <label class="form-check-label" for="email">E-mail Göndər</label>
+                                <label class="form-check-label" for="email">{!! __('static.send_mail') !!}</label>
                                 <div class="form-switch">
                                     <input class="form-check-input notification-switch" type="checkbox" name="notifications[]" value="email" id="email"{{$notification->email_notification==1 ? 'checked':'' }}>
                                 </div>

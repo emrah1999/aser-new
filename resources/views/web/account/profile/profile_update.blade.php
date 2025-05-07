@@ -50,7 +50,7 @@
                             <div class="col-xxl-8">
                                 <a href="{{route("get_user_settings", ['locale' => App::getLocale()])}}" class="d-flex justify-content-start align-items-center">
                                     <img class="profile-title-block__img" src="/web/images/content/profile-settings-chevron-left.png" alt="Settings">
-                                    <h1 class="profile-title-block__title font-n-b">Şəxsi məlumatlar</h1>
+                                    <h1 class="profile-title-block__title font-n-b">{!! __('static.information') !!}</h1>
                                 </a>
                             </div>
                             <div class="col-xxl-4">
@@ -110,14 +110,14 @@
 
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="birthday">{!! __('register.input_birthday') !!}</label>
+                                    <label class="form__label" for="birthday">{!! __('static.input_birthday') !!}</label>
                                     <input class="form__input" name="birthday" type="date" id="birthday" required value="{{ Auth::user()->birthday }}">
                                 </div>
                             </div>
                            
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form__label" for="address">{!! __('register.input_address') !!}</label>
+                                    <label class="form__label" for="address">{!! __('static.input_address') !!}</label>
                                     <input class="form__input" name="address" type="text" id="userAddress" placeholder="Ünvanızı daxil edin" required value="{{Auth::user()->address1}}">
                                 </div>
                             </div>
@@ -218,10 +218,10 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form__group">
-                                        <label class="form__label" for="branch_id">Filial</label>
+                                        <label class="form__label" for="branch_id">{!! __('static.branch') !!}</label>
                                         <div class="form__select-wrapper">
                                             <select class="form__select" name="branch_id" id="branch_id" required>
-                                                <option value="" disabled>Filialın adı</option>
+                                                <option value="" disabled>{!! __('static.branches') !!}</option>
                                                 @foreach($branchs as $branch)
                                                     <option value="{{$branch->id}}" {{ isset(Auth::user()->branch_id) && Auth::user()->branch_id == $branch->id ? 'selected' : '' }}>{{$branch->name}}</option>
                                                 @endforeach
@@ -233,10 +233,10 @@
 
 
                             <div class="col-sm-6">
-                                <a href="#" class="btn btn-trns-black btn-block form__btn form-profile-information-edit__btn font-n-b">Ləğv et</a>
+                                <a href="#" class="btn btn-trns-black btn-block form__btn form-profile-information-edit__btn font-n-b">{!! __('static.cancel') !!}</a>
                             </div>
                             <div class="col-sm-6">
-                                <button class="btn btn-blue btn-block form__btn form-profile-information-edit__btn font-n-b" name="formProfileInformationEditSubmit" type="submit">Yadda saxla</button>
+                                <button class="btn btn-blue btn-block form__btn form-profile-information-edit__btn font-n-b" name="formProfileInformationEditSubmit" type="submit">{!! __('static.save') !!}</button>
                             </div>
                         </div>
                     </form>

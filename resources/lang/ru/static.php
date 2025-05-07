@@ -312,4 +312,32 @@ return [
     'create_otp' => 'Добавить OTP',
     'track' => 'Отслеживание',
 
+    'trendyol' => 'Код подтверждения Trendyol',
+    'trendyol_code' => 'Код подтверждения',
+
+
+    'information' => 'Мои личные данные',
+    'change_password' => 'Изменить пароль',
+    'notification' => 'Настройки уведомлений',
+
+
+    'current_password' => 'Текущий пароль',
+    'new_password' => 'Новый пароль',
+    'confirm_password' => 'Повторите новый пароль',
+    'submit' => 'Подтвердить',
+    'show' => 'Показать',
+    'hide' => 'Скрыть',
+
+
+    'send_sms' => 'Отправить SMS',
+    'send_mail' => 'Отправить Email',
+
+
+    'input_address' => 'Адрес регистрации',
+    'input_birthday' => 'Дата рождения',
+    'cancel' => 'Отмена',
+    'save' => 'Сохранить',
+
+
+
 ];

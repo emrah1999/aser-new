@@ -38,22 +38,22 @@
                                 </div>
                             </div>
                         @endif
-                        <h3 class="form-profile-curier__title  font-n-b">Şifrəni dəyiş</h3>
+                        <h3 class="form-profile-curier__title  font-n-b">{!! __('static.change_password') !!}</h3>
                     <form action="{{route('post_update_user_password', ['locale' => \Illuminate\Support\Facades\App::getLocale()])}}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <label>Cari şifrə</label>
+                        <label>{!! __('static.current_password') !!}</label>
                         <div class="form-group pass_show">
-                            <input type="password" value="{{old('currentPassword')}}"  name="currentPassword" class="form-control" placeholder="Cari Şifrə">
+                            <input type="password" value="{{old('currentPassword')}}"  name="currentPassword" class="form-control" placeholder="{!! __('static.current_password') !!}">
                         </div>
-                        <label>Yeni Şifrə</label>
+                        <label>{!! __('static.new_password') !!}</label>
                         <div class="form-group pass_show">
-                            <input type="password" value="{{old('newPassword')}}" class="form-control"  name="newPassword" placeholder="Yeni Şifrə">
+                            <input type="password" value="{{old('newPassword')}}" class="form-control"  name="newPassword" placeholder="{!! __('static.new_password') !!}">
                         </div>
-                        <label>Yeni şifrənin təkrarı</label>
+                        <label>{!! __('static.confirm_password') !!}</label>
                         <div class="form-group pass_show">
-                            <input type="password" value="{{old('confirmPassword')}}" class="form-control"  name="confirmPassword" placeholder="Yeni Şifrənin təkrarı">
+                            <input type="password" value="{{old('confirmPassword')}}" class="form-control"  name="confirmPassword" placeholder="{!! __('static.confirm_password') !!}">
                         </div>
-                        <button class="btn btn-success mt-4" type="submit" >Təsdiq et</button>
+                        <button class="btn btn-success mt-4" type="submit" >{!! __('static.submit') !!}</button>
                     </form>
                     </div>
                 </div>
@@ -103,14 +103,14 @@
 @section('scripts')
     <script>
         $(document).ready(function(){
-            $('.pass_show').append('<span class="ptxt">Göstər</span>');
+            $('.pass_show').append('<span class="ptxt">{{ __("static.show") }}</span>');
+
         });
 
 
         $(document).on('click','.pass_show .ptxt', function(){
 
-            $(this).text($(this).text() == "Göstər" ? "Gizlə" : "Göstər");
-
+            $(this).text($(this).text() == '{{ __("static.show") }}' ? '{{ __("static.hide") }}' : '{{ __("static.show") }}');
             $(this).prev().attr('type', function(index, attr){return attr == 'password' ? 'text' : 'password'; });
 
         });

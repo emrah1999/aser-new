@@ -10,7 +10,7 @@
                         <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7 page-content-right">
                             <div class="n-order-list row">
                                 <div class="n-order-top flex space-between">
-                                    <h1>Trendyol Onay Kodu</h1>
+                                    <h1>{!! __('static.trendyol') !!}</h1>
                                 </div>
                                 <div class="orange-spinner order-list-table">
                                     @if(count($data) > 0)
@@ -19,7 +19,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>№</th>
-                                                    <th>Onay kodu</th>
+                                                    <th>{!! __('static.trendyol_code') !!}</th>
                                                     <th>{!! __('table.date') !!}</th>
                                                 </tr>
                                             </thead>
