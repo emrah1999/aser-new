@@ -83,11 +83,12 @@
                                     <label class="form__label" for="userSex">{!! __('inputs.seller_name') !!}</label>
                                     <div class="form__select-wrapper">
                                         <select class="form__select select2" id="seller_id" name="seller_id" {{$disable_input}} {{$seller_id_required}} onchange="show_other_seller_input(this);">
-                                            <option value="">{!! __('inputs.seller_name') !!}</option>
+                                            <option value="" {{$package->seller_id == null ? 'selected' : ''}}>{!! __('inputs.seller_name') !!}</option>
+
                                             @foreach($sellers as $seller)
                                                 <option value="{{$seller->id}}" {{$package->seller_id == $seller->id ? 'selected' : ''}}>{{$seller->title}}</option>
                                             @endforeach
-                                            <option value="0" {{$package->seller_id == 0 ? 'selected' : ''}}>{!! __('static.other') !!}...</option>
+                                            <option value="0" >{!! __('static.other') !!}...</option>
                                         </select>
                                     </div>
                                 </div>
@@ -234,4 +235,21 @@
     }
 
 </script>
+<script>
+    function show_other_seller_input(selectElement) {
+        var otherSellerArea = document.getElementById('other_seller_area');
+        if (selectElement.value == '0' || selectElement.value == '2824' ) {
+            otherSellerArea.style.display = 'block';
+        } else {
+            otherSellerArea.style.display = 'none';
+        }
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var selectElement = document.getElementById('seller_id');
+        show_other_seller_input(selectElement);
+    });
+</script>
+
 @endsection
