@@ -4111,9 +4111,18 @@ class AccountController extends Controller
                 $has_limit = true;
             }
 
-            // if ($limit_residue <= 0) {
-            //     return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
-            // }
+             if ($limit_residue <= 0) {
+
+                 if ($this->api) {
+                     return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('labels.service_count')]);
+                 }
+
+                 return redirect()->back()
+                     ->withInput()
+                     ->with(['case' => 'error', 'content' => __('labels.service_count')]);
+
+//                 return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.']);
+             }
 
             $area_id = $request->area_id;
             $area = CourierAreas::where('id', $area_id)->select('zone_id', 'tariff')->first();
