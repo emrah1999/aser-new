@@ -57,7 +57,7 @@ return [
         <h6></h6><span>Əsas fəaliyyətlərə diqqət yetirin: Müəssisələr logistikanı mütəxəssislərə həvalə edərək məhsulun inkişafı, marketinqi və böyüməsi üzərində cəmləşə bilər.</span>
         <h6></h6><span>Ölçeklenebilirlik: İcra xidmətləri dəyişən sifariş həcmlərinə asanlıqla uyğunlaşa bilər.</span>
     '
-    
+
     
 
 ];

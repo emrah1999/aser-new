@@ -5,5 +5,7 @@ return [
     'password'   => 'Şifrə',
     'subscribe' => 'Sərfəli yeniliklərə abunə ol',
     'logout'=>'Çıxış',
-    'price2' => 'Qiymət'
+    'price2' => 'Qiymət',
+    'service_count' => 'Seçdiyiniz gün üçün kuryer sifarişi bitmişdir. Zəhmət olmasa başqa tarix seçin.'
+
 ];
