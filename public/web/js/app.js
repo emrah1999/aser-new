@@ -1,4 +1,25 @@
 $(document).ready(function(){
+    const messages = {
+        az: {
+            required: "Bu sahə boş ola bilməz",
+            min_country: "Ölkə seçilməlidir (1-dən böyük olmalıdır)",
+            min_weight: "Çəki 0-dan böyük olmalıdır"
+        },
+        en: {
+            required: "This field is required",
+            min_country: "This field must be more than 1",
+            min_weight: "This field must be more than 0"
+        },
+        ru: {
+            required: "Заполните поле",
+            min_country: "Это поле должно быть больше 1",
+            min_weight: "Это поле должно быть больше 0"
+        }
+    };
+
+
+    let currentLang = document.documentElement.lang;
+    console.log(currentLang);
     //BODY ANIMATION
     $("body").animate({
         opacity: 1
@@ -44,7 +65,7 @@ $(document).ready(function(){
 
     //FORMS
     $.extend($.validator.messages, {
-        required: "Bu sahə boş ola bilməz",
+        required: messages[currentLang].required,
         email: "Zəhmət olmasa düzgün e-poçt ünvanı daxil edin",
         equalTo: "Parol uyğunsuzluğu",
         maxlength: jQuery.validator.format("Zəhmət olmasa, ən çox {0} simvol daxil edin."),
@@ -57,7 +78,7 @@ $(document).ready(function(){
 
     $.validator.addMethod("valueNotEquals", function(value, element, arg){
         return arg !== value;
-    }, "Bu sahə boş ola bilməz");
+    }, messages[currentLang].required);
 
     $("#formCalculator").validate({
         errorClass: 'form-error-text',

@@ -107,8 +107,6 @@ class TariffController extends HomeController
     
     public function show_tariffs($locale, $country_id) {
         try {
-
-
             $contract = Contract::where('default_option', 1)->select('id')->first();
 
             if (!$contract) {
@@ -186,8 +184,12 @@ class TariffController extends HomeController
                 $country_id = 9;
             }elseif ($country_id==4) {
                 $country_id = 12;
-            }else {
+            }elseif ($country_id==6) {
                 $country_id = 14;
+            }elseif ($country_id==7) {
+                $country_id = 4;
+            }else {
+               return 'aaaaaaa';
             }
 
             $tariffAll = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
@@ -240,7 +242,11 @@ class TariffController extends HomeController
                      END AS sales_amount_azn')
                 )
                 ->get();
-            
+
+            foreach ($tariffAll as $item) {
+                $item->to_weight = number_format($item->to_weight, 3, '.', '');
+            }
+
             return view('web.tariffs.single', compact(
                 'tariffAll',
                 'country',

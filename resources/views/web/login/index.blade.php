@@ -44,10 +44,10 @@
                                 <a href="{{ route('password.request', ['locale' => App::getLocale()]) }}" class="form-login__link-forgot">{!! __('auth.forgot_password')!!}</a>
                             </div>
                             <button class="btn btn-blue btn-block form__btn form-login__btn font-n-b" name="formLoginSubmit" type="submit">{!! __('static.login') !!}</button>
-                            <a href="" class="login-sima d-flex justify-content-center align-items-center">
-                                <img class="login-sima__img" src="/web/images/content/login/other-sima.png" alt="Sima">
-                                <span class="login-sima__title">{!! __('static.enterWith') !!}</span>
-                            </a>
+{{--                            <a href="" class="login-sima d-flex justify-content-center align-items-center">--}}
+{{--                                <img class="login-sima__img" src="/web/images/content/login/other-sima.png" alt="Sima">--}}
+{{--                                <span class="login-sima__title">{!! __('static.enterWith') !!}</span>--}}
+{{--                            </a>--}}
                             <div class="login-registration-question">
                                 <p class="login-registration-question__block text-center">
                                     <span class="login-registration-question__title">{!! __('auth.have_account') !!}</span>

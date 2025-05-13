@@ -48,10 +48,12 @@
                                             <tr class="table-tarifs__tbody-tr">
                                                 @php($rate = $tariff->rate == 0 ? $tariff->charge : $tariff->rate)
                                                 @if($tariff->to_weight > 1000)
-                                                <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight', ['from_weight' => $tariff->from_weight]) !!}</td>
+                                                <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight', ['from_weight' => $tariff->from_weight  ]) !!}</td>
+                                                @elseif($tariff->to_weight > 9)
+                                                <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight2', ['from_weight' => $tariff->from_weight ,'to_weight' => $tariff->to_weight]) !!}</td>
 
                                                @else
-                                               <td class="table-tarifs__tbody-td font-n-b">{{$tariff->from_weight}} Kq - {{$tariff->to_weight}} Kq</td>
+                                               <td class="table-tarifs__tbody-td font-n-b">{{$tariff->from_weight}} {!! __('static.kq') !!} - {{$tariff->to_weight}} {!! __('static.kq') !!}</td>
                                                 @endif
                                                 <td class="table-tarifs__tbody-td text-right">{{$tariff->icon}}{{$rate}} / ₼{{ $tariff->amount_azn }}</td>
                                             </tr>

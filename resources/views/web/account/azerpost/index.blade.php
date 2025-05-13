@@ -8,11 +8,11 @@
                     @include("web.account.account_left_bar")
                     <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
                         <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
-                            <h4 class="thumbnail-profile-title-block__title font-n-b">Azərpoçt sifarişim</h4>
+                            <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('static.azerpost_ordersss') !!}</h4>
                             <div class="d-flex justify-content-center align-items-center">
                                 <a href="{{route('get_create_azerpost_page', ['locale' => App::getLocale()])}}" class="btn btn-blue thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b">
                                     <img class="thumbnail-profile-title-block__btn-img" src="/web/images/content/other-plus-3.png" alt="Add">
-                                    <span class="thumbnail-profile-title-block__btn-title d-none d-lg-block">Yeni azərpoçt sifariş et</span>
+                                    <span class="thumbnail-profile-title-block__btn-title d-none d-lg-block">{!! __('static.new_azerpost_ordersss') !!}</span>
                                 </a>
                             </div>
                         </div>

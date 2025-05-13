@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="d-flex justify-content-center justify-content-sm-end">
-                                        <button class="btn btn-blue form-profile-azerpoct__btn font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileAzerpoct">Sifariş et</button>
+                                        <button class="btn btn-blue form-profile-azerpoct__btn font-n-b" type="button" data-bs-toggle="modal" data-bs-target="#modalProfileAzerpoct">{!! __('courier.courietCreateOrderButton') !!}</button>
                                     </div>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@
                         </table>
 
                         <div class="d-flex buttons-section justify-content-end">
-                            <button class="btn btn-secondary btnOrderSelect font-n-b" style="margin-right: 5px" type="button" data-bs-dismiss="modal">Bağla</button>
+                            <button class="btn btn-secondary btnOrderSelect font-n-b" style="margin-right: 5px" type="button" data-bs-dismiss="modal">{!! __('static.close') !!}</button>
                             <button class="btn btn-yellow btnOrderSelect font-n-b" type="button" data-bs-dismiss="modal" onclick="check_packages_region();">{!! __('courier.choose_button') !!}</button>
                         </div>
                     </div>

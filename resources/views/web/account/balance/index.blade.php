@@ -58,14 +58,14 @@
 
 
                         </div>
-                        @if(count($logs)>0)
-                        <div class="d-flex justify-content-center align-items-center">
-                            <a href="#" class="profile-more-btn d-flex justify-content-center align-items-center">
-                                <span class="profile-more-btn__title font-n-b">{!! __('static.more') !!}</span>
-                                <img class="profile-more-btn__img" src="/web/images/content/profile-more.png" alt="More">
-                            </a>
-                        </div>
-                        @endif
+{{--                        @if(count($logs)>0)--}}
+{{--                        <div class="d-flex justify-content-center align-items-center">--}}
+{{--                            <a href="#" class="profile-more-btn d-flex justify-content-center align-items-center">--}}
+{{--                                <span class="profile-more-btn__title font-n-b">{!! __('static.more') !!}</span>--}}
+{{--                                <img class="profile-more-btn__img" src="/web/images/content/profile-more.png" alt="More">--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                        @endif--}}
                     </div>
                 </div>
             </div>

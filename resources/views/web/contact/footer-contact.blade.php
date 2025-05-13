@@ -35,7 +35,7 @@
                                 <img class="thumbnail-contact__img" src="{{asset('web/images/content/contact-phone.png')}}" alt="Contact">
                             </div>
                             <div class="thumbnail-contact__caption">
-                                <h6 class="thumbnail-contact__title font-n-b">Bizə zəng edin</h6>
+                                <h6 class="thumbnail-contact__title font-n-b">{!! __('static.call_us') !!}</h6>
                                 <p class="thumbnail-contact__desc">(+994) 12 310 07 09</p>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 <img class="thumbnail-contact__img" src="{{asset('web/images/content/contact-email.png')}}" alt="Contact">
                             </div>
                             <div class="thumbnail-contact__caption">
-                                <h6 class="thumbnail-contact__title font-n-b">Email</h6>
+                                <h6 class="thumbnail-contact__title font-n-b">{!! __('static.email') !!}</h6>
                                 <p class="thumbnail-contact__desc">info@asercargo.az</p>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 <img class="thumbnail-contact__img" src="{{asset('web/images/content/contact-media.png')}}" alt="Contact">
                             </div>
                             <div class="thumbnail-contact__caption">
-                                <h6 class="thumbnail-contact__title font-n-b">Sosial media</h6>
+                                <h6 class="thumbnail-contact__title font-n-b">{!! __('static.social_media') !!}</h6>
                                 <ul class="nav nav-socials thumbnail-contact__nav-socials justify-content-center align-items-center">
                                     <li class="nav-socials__item thumbnail-contact__nav-socials-item d-flex justify-content-center align-items-center">
                                         <a href="https://www.facebook.com/share/1Dkj88UQxV/"  class="nav-socials__link thumbnail-contact__nav-socials-link">
@@ -85,8 +85,8 @@
                                 <img class="thumbnail-contact__img" src="{{asset('web/images/content/contact-address.png')}}" alt="Contact">
                             </div>
                             <div class="thumbnail-contact__caption">
-                                <h6 class="thumbnail-contact__title font-n-b">Ünvan</h6>
-                                <p class="thumbnail-contact__desc">Abbasqulu Ağa Bakıxanov küç, 92</p>
+                                <h6 class="thumbnail-contact__title font-n-b">{!! __('static.address') !!}</h6>
+                                <p class="thumbnail-contact__desc">{!! __('static.address_detail') !!}</p>
                             </div>
                         </div>
                     </div>

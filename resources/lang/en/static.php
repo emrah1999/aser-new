@@ -31,8 +31,12 @@ return [
     'tariffs_by_country' => 'Tariffs for :country',
     'tariffs_for_liquid' => 'TARIFFS FOR LIQUID PRODUCTS',
     'tariff_from_weight' => 'More than :from_weight kg (per kg)',
+    'tariff_from_weight2' => 'Up to :from_weight kg, per kg',
     'tariff_from_to_by_kg' => 'From :from_weight kg to :to_weight kg (per kg)',
     'tariff_from_to' => 'From :from_weight kg to :to_weight kg',
+    'create_courier_order' => 'Create new courier order',
+    'selectItem'=>'Please, select the country you want to order from',
+
     'about_us' => 
             '
             <h3 style="margin-bottom: 15px; margin-top: 15px">About Us</h3>
