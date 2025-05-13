@@ -4,8 +4,8 @@
 <script src="{{asset('web/js/library/owl.carousel.min.js')}}"></script>
 <script src="{{asset('frontend/js/sweetalert2.min.js')}}"></script>
 <script src="{{asset('web/js/validator.js')}}"></script>
-<script src="{{asset('web/js/calculator.js')}}"></script>
-<script src="{{asset('web/js/app.js')}}"></script>
+<script src="{{asset('web/js/calculator.js?v=1.1')}}"></script>
+<script src="{{asset('web/js/app.js?v=1.10')}}"></script>
 @if(strpos(request()->fullUrl(), "special-order")!== false)
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
@@ -16,7 +16,7 @@
 @endif
 <script src="{{asset('web/js/ajax.js?ver=1.3.5')}}"></script>
 <script src="{{asset('web/js/courier.js?v=1.2')}}"></script>
-<script src="{{asset('web/js/main.js?v=1.3')}}"></script>
+<script src="{{asset('web/js/main.js?v=1.21')}}"></script>
 <script>
 
     

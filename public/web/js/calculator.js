@@ -1,3 +1,21 @@
+const messages = {
+    az: {
+        required: "Bu sahə boş ola bilməz",
+        min_country: "Ölkə seçilməlidir (1-dən böyük olmalıdır)",
+        min_weight: "Çəki 0-dan böyük olmalıdır"
+    },
+    en: {
+        required: "This field is required",
+        min_country: "This field must be more than 1",
+        min_weight: "This field must be more than 0"
+    },
+    ru: {
+        required: "Это поле не может быть пустым",
+        min_country: "Это поле должно быть больше 1",
+        min_weight: "Это поле должно быть больше 0"
+    }
+};
+let currentLang = document.documentElement.lang || 'az';
 const config = {
     formSelector: document.getElementById('formCalculator'),
     objects: [
@@ -7,11 +25,11 @@ const config = {
             validators: [
                 {
                     method: isRequired,
-                    message: 'Bu sahə boş ola bilməz'
+                    message: messages[currentLang].required
                 },
                 {
                     method: min(1),
-                    message: 'This field must be more than 1'
+                    message: messages[currentLang].min_country
                 }
             ]
         },
@@ -21,11 +39,11 @@ const config = {
             validators: [
                 {
                     method: isRequired,
-                    message: 'This field is required'
+                    message: messages[currentLang].required
                 },
                 {
                     method: min(0),
-                    message: 'This field must be more than 0'
+                    message: messages[currentLang].min_weight
                 }
             ]
         }
@@ -37,6 +55,7 @@ const config = {
         calculateRequest();
     }
 }
+
 
 const calculateRequest = async () => {
     const country = document.getElementById("calcCountry").value;

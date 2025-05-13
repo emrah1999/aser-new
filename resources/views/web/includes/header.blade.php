@@ -59,7 +59,7 @@
                         </li>
                         @if(!Auth::check())
                         <li class="nav-menu__item">
-                            <a href="{{route("register", ['locale' => App::getLocale()])}}" class="btn btn-yellow header-top__btn font-n-b">{!! __('auth.register') !!}</a>
+                            <a href="{{route("register", ['locale' => App::getLocale()])}}" class="btn btn-yellow header-top__btn font-n-b">{!! __('auth.register1') !!}</a>
                             <a href="{{route("login", ['locale' => App::getLocale()])}}" class="btn btn-trns-black header-top__btn font-n-b">{!! __('auth.login') !!} </a>
                         </li>
                         @endif

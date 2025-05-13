@@ -29,10 +29,10 @@
 									<input type="hidden" id="currency_name" value="{{ $currency_name }}">
 								</div>
 								<div class="last-30-day-notf" style="line-height: 20px; margin-top: 0px !important; margin-bottom: 0!important;">
-									Mobil telefonların sifarişi “Sifariş et” xidməti ilə qəbul olunmur. 
+									{!! __('static.mobile_phone') !!}
 								</div>
 								<div class="last-30-day-notf" style="line-height: 20px; margin-top: 0px !important; margin-bottom: 0!important;">
-									Bir məhsulun dəyəri 700 ABŞ dollarından yuxarı olan sifarişlər qəbul olunmur.
+									{!! __('static.700') !!}
 								</div>
 
 								<div class="n-order-form n-order-form-turkey orange-spinner">
@@ -103,7 +103,7 @@
 																	placeholder="" name="price[]" id="price_1"
 																	oninput="change_price_for_special_product(1);"
 																	min="0.01">
-																<label id="price_label">{!! __('labels.price2') !!} ({{$currency_name}})</label>
+																<label id="price_label">{!! __('labels.price') !!} ({{$currency_name}})</label>
 																<span class="focus-border"><i></i></span>
 															</div>
 														</div>
