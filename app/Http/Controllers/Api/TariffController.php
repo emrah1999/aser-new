@@ -50,6 +50,7 @@ class TariffController extends Controller
             }
 
             $default_contract = $contract->id;
+//            return  $default_contract;
 
             $tariffs = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
                 ->leftJoin('currency', 'contract_detail.currency_id', '=', 'currency.id')
@@ -66,7 +67,7 @@ class TariffController extends Controller
                 ->orderBy('contract_detail.type_id')
                 ->orderBy('contract_detail.from_weight')
                 ->whereNotIn('contract_detail.departure_id', [14])
-                ->whereNotIn('country_id', [1, 4, 10, 13])
+                ->whereNotIn('country_id', [1, 10, 13])
                 ->where('country_id',$request['country_id'])
                 ->where('contract_detail.type_id', 1)
                 ->select(
@@ -105,7 +106,7 @@ class TariffController extends Controller
                 ->get();
 
    
-            $countries = Country::whereNotIn('id', [1, 4, 10, 13])->select('id', 'name_' . $header.' as title', 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::whereNotIn('id', [1,  10, 13])->select('id', 'name_' . $header.' as title', 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
 
   
             return response([

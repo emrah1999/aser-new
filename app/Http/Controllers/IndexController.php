@@ -52,7 +52,7 @@ class IndexController extends HomeController
 
             $countries =InternationalDelivery::query()
                 ->select([
-                    'id','icon','rank',
+                    'id','icon','rank', 'country_id' ,
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content"),
                     DB::raw("slug_" . App::getLocale() . " as slug"),
@@ -267,17 +267,18 @@ class IndexController extends HomeController
         }
 //        return $request;
         try {
-            if ($request->country==1) {
-                $country_id = 7;
-            }elseif ($request->country==2) {
-                $country_id = 2;
-            }elseif ($request->country==3) {
-                $country_id = 9;
-            }elseif ($request->country==4) {
-                $country_id = 12;
-            }else{
-                $country_id = 14;
-            }
+            $country_id = $request->country;
+//            if ($request->country==1) {
+//                $country_id = 7;
+//            }elseif ($request->country==2) {
+//                $country_id = 2;
+//            }elseif ($request->country==3) {
+//                $country_id = 9;
+//            }elseif ($request->country==4) {
+//                $country_id = 12;
+//            }else{
+//                $country_id = 14;
+//            }
 
 //            $country_id = $request->country;
             $type = $request->type;
@@ -287,6 +288,7 @@ class IndexController extends HomeController
             $height = $request->height;
             $length = $request->length;
             $volume_weight = ($width * $length * $height) / 6000;
+
 
             if ($unit == 'gr') {
                 $weight = $weight / 1000;

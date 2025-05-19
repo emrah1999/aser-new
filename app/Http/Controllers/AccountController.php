@@ -323,7 +323,7 @@ class AccountController extends Controller
     public function special_orders_country(Request $request)
     {
         $lang = $request->header('Language');
-        $countr = Country::whereIn('id', [2, 7, 9, 12])->select('id', 'name_' . $lang . ' as title', DB::raw("CONCAT('" . env('APP_URL') . "', flag) as flag"), DB::raw("CONCAT('" . env('APP_URL') . "', image) as image"))->orderBy('sort', 'desc')->orderBy('id')->get();
+        $countr = Country::whereIn('id', [2, 7,4, 9, 12])->select('id', 'name_' . $lang . ' as title', DB::raw("CONCAT('" . env('APP_URL') . "', flag) as flag"), DB::raw("CONCAT('" . env('APP_URL') . "', image) as image"))->orderBy('sort', 'desc')->orderBy('id')->get();
         return $countr;
     }
 
@@ -1583,8 +1583,8 @@ class AccountController extends Controller
     public function get_special_orders_select(Request $request)
     {
         try {
-            $countries = Country::whereIn('id', [7, 2, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
-            $countr = Country::whereIn('id', [7, 2, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::whereIn('id', [7, 2, 4, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [7, 2, 4,  9, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'client_id' => $this->userID])
                 ->whereNull('placed_by')
                 ->whereNull('canceled_by')
@@ -1642,7 +1642,7 @@ class AccountController extends Controller
     public function get_special_orders(Request $request, $a, $country_id)
     {
         try {
-            $countr = Country::whereIn('id', [2, 9, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9,4, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 
             //return redirect()->route("get_account");
 
@@ -1703,7 +1703,7 @@ class AccountController extends Controller
             }
             $rate_azn = $rate->rate;
 
-            $countr = Country::whereIn('id', [2, 9, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9,4, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
             $countrFlag = Country::where('id', $country_id)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->first();
 
             $packages_price_for_last_month = $this->packages_price_for_last_month();
@@ -4446,6 +4446,9 @@ class AccountController extends Controller
     {
         try {
             if ($this->api) {
+                $sent_status =str_replace("\n", "", html_entity_decode(__('static.sent_status'), ENT_QUOTES, 'UTF-8'));
+                $sent_status =str_replace("<p>", "", html_entity_decode($sent_status, ENT_QUOTES, 'UTF-8'));
+                $sent_status =str_replace("</p>", "", html_entity_decode($sent_status, ENT_QUOTES, 'UTF-8'));
                 $statuses = array(
 //                [
 //                    'id'=>null,
@@ -4457,7 +4460,7 @@ class AccountController extends Controller
                     ],
                     [
                         'id' => 4,
-                        'title' => str_replace("\n", "", html_entity_decode(__('static.sent_status'), ENT_QUOTES, 'UTF-8'))
+                        'title' => $sent_status
                     ],
                     [
                         'id' => 5,

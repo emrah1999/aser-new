@@ -58,6 +58,11 @@ class SMS
             $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
             curl_close ($ch);
 
+//            dd([
+//                'data' => $data,
+//                'status_code' => $headers
+//            ]);
+
             //$this->writeToLog('sendBulkSms', serialize($data), serialize($result));
 
             return [true, $result];

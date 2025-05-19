@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Request;
 
 class TariffController extends HomeController
 {
-    public function index(){
+    public function index()
+    {
 //        $countries =InternationalDelivery::query()
 //            ->select([
 //                'id','icon',
@@ -40,14 +41,14 @@ class TariffController extends HomeController
         $partners = Partner::all();
 
         $title = Title::query()
-            ->select(array_map(function($field) {
+            ->select(array_map(function ($field) {
                 return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
             }, $fields))
             ->first();
 
         $sellers = Seller::where('in_home', 1)->where('has_site', 1)->select('url', 'img', 'title')->take(12)->get();
 
-        $text=TariffText::query()
+        $text = TariffText::query()
             ->select([
                 DB::raw("name_1_" . App::getLocale() . " as name1"),
                 DB::raw("content_2_" . App::getLocale() . " as content1"),
@@ -60,25 +61,25 @@ class TariffController extends HomeController
             ])
             ->first();
 
-        $faqs = Faq::query()->where('page',1)->select([
+        $faqs = Faq::query()->where('page', 1)->select([
             'id',
             DB::raw("question_" . App::getLocale() . " as name"),
             DB::raw("answer_" . App::getLocale() . " as content")
         ])
             ->get();
         $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
-            ->where('page',2)
+            ->where('page', 2)
             ->select([
-                'id','icon',
+                'id', 'icon',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
                 DB::raw("slug_" . App::getLocale() . " as slug")
             ])
             ->get();
 
-        $countries =InternationalDelivery::query()
+        $countries = InternationalDelivery::query()
             ->select([
-                'id','icon','rank','internal_images',
+                'id', 'icon', 'rank', 'internal_images', 'country_id',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
                 DB::raw("slug_" . App::getLocale() . " as slug"),
@@ -90,7 +91,7 @@ class TariffController extends HomeController
 
 //        return $text;
 
-        $breadcrumbs=1;
+        $breadcrumbs = 1;
 
         return view('web.tariffs.index', compact(
             'countries',
@@ -104,8 +105,9 @@ class TariffController extends HomeController
             'partners'
         ));
     }
-    
-    public function show_tariffs($locale, $country_id) {
+
+    public function show_tariffs($locale, $country_id)
+    {
         try {
             $contract = Contract::where('default_option', 1)->select('id')->first();
 
@@ -116,35 +118,38 @@ class TariffController extends HomeController
             $default_contract = $contract->id;
 
 
-
             $country = InternationalDelivery::query()
-                    ->select(['id','icon','internal_images',
-                        DB::raw("name_" . App::getLocale() . " as name"),
-                        DB::raw("content_" . App::getLocale() . " as content"),
-                        DB::raw("sub_title_" . App::getLocale() . " as sub_title"),
-                        DB::raw("sub_description_" . App::getLocale() . " as sub_description"),
-                        DB::raw("ceo_title_" . App::getLocale() . " as ceo_title"),
-                        DB::raw("seo_description_" . App::getLocale() . " as seo_description"),
-                    ])
+                ->select(['id', 'icon', 'internal_images', 'country_id',
+                    DB::raw("name_" . App::getLocale() . " as name"),
+                    DB::raw("content_" . App::getLocale() . " as content"),
+                    DB::raw("sub_title_" . App::getLocale() . " as sub_title"),
+                    DB::raw("sub_description_" . App::getLocale() . " as sub_description"),
+                    DB::raw("ceo_title_" . App::getLocale() . " as ceo_title"),
+                    DB::raw("seo_description_" . App::getLocale() . " as seo_description"),
+                ])
                 ->where('id', $country_id)
-                    ->first();
+                ->orderBy('rank', 'asc')
+                ->first();
 
             $newText = str_replace("http://asercargo.az", "https://manager.asercargo.az", $country->internal_images);
-           
-            $country->internal_images=$newText;
+
+            $country->internal_images = $newText;
             $country->save();
 
 //            return $country;
 
             $countries = InternationalDelivery::query()
                 ->select([
-                    'id','internal_images',
+                    'id', 'internal_images', 'country_id',
                     DB::raw("name_" . App::getLocale() . " as name"),
-                ])->get();
-    
+                ])
+                ->orderBy('rank', 'asc')
+                ->get();
+
+
             $sellers = Seller::where('in_home', 1)->where('has_site', 1)->whereNotNull('img')->select('url', 'img', 'title')->take(6)->get();
-            $faqs = Faq::query()->where('page',1)
-                ->where('sub_category_id',$country_id)
+            $faqs = Faq::query()->where('page', 1)
+                ->where('sub_category_id', $country_id)
                 ->select([
                     'id',
                     DB::raw("question_" . App::getLocale() . " as name"),
@@ -154,10 +159,10 @@ class TariffController extends HomeController
             $types = TariffType::all();
 
             $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
-                ->where('page',1)
-                ->where('sub_category_id',$country_id)
+                ->where('page', 1)
+                ->where('sub_category_id', $country_id)
                 ->select([
-                    'id','icon',
+                    'id', 'icon',
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content"),
                     DB::raw("slug_" . App::getLocale() . " as slug")
@@ -170,32 +175,34 @@ class TariffController extends HomeController
             ];
 
             $title = Title::query()
-                ->select(array_map(function($field) {
+                ->select(array_map(function ($field) {
                     return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
                 }, $fields))
                 ->first();
 
-            $breadcrumbs=1;
-            if ($country_id==1) {
-                $country_id = 7;
-            }elseif ($country_id==2) {
-                $country_id = 2;
-            }elseif ($country_id==3) {
-                $country_id = 9;
-            }elseif ($country_id==4) {
-                $country_id = 12;
-            }elseif ($country_id==6) {
-                $country_id = 14;
-            }elseif ($country_id==7) {
-                $country_id = 4;
-            }else {
-               return 'aaaaaaa';
-            }
+            $breadcrumbs = 1;
+            $country_id = $country->country_id;
+//            return $country_id;
+//            if ($country_id==1) {
+//                $country_id = 7;
+//            }elseif ($country_id==2) {
+//                $country_id = 2;
+//            }elseif ($country_id==3) {
+//                $country_id = 9;
+//            }elseif ($country_id==4) {
+//                $country_id = 12;
+//            }elseif ($country_id==6) {
+//                $country_id = 14;
+//            }elseif ($country_id==7) {
+//                $country_id = 4;
+//            }else {
+//               return 'aaaaaaa';
+//            }
 
             $tariffAll = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
                 ->leftJoin('currency', 'contract_detail.currency_id', '=', 'currency.id')
                 ->leftJoin('tariff_types', 'contract_detail.type_id', '=', 'tariff_types.id')
-                ->leftJoin('exchange_rate', function($join) {
+                ->leftJoin('exchange_rate', function ($join) {
                     $join->on('exchange_rate.from_currency_id', '=', 'contract_detail.currency_id')
                         ->whereDate('exchange_rate.from_date', '<=', Carbon::today())
                         ->whereDate('exchange_rate.to_date', '>=', Carbon::today())
@@ -222,7 +229,7 @@ class TariffController extends HomeController
                     'countries.flag',
                     'contract_detail.currency_id as currency',
                     'currency.icon',
-                    'tariff_types.name_'. App::getLocale() . ' as tariff_type_name',
+                    'tariff_types.name_' . App::getLocale() . ' as tariff_type_name',
                     'contract_detail.description_' . App::getLocale() . ' as description',
                     DB::raw('CASE 
                     WHEN exchange_rate.rate IS NOT NULL THEN 
@@ -259,7 +266,7 @@ class TariffController extends HomeController
                 'breadcrumbs'
             ));
         } catch (\Exception $exception) {
-
+            return $exception;
             return view('front.error');
         }
     }

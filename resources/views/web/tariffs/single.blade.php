@@ -136,7 +136,7 @@
                                                         <select class="form__select" name="country" id="calcCountry" required>
                                                             <option value="null" disabled selected>{!! __('static.select_country1') !!}</option>
                                                             @foreach($countries as $country)
-                                                                <option value="{{$country->id}}">{{$country->name}}</option>
+                                                                <option value="{{$country->country_id}}">{{$country->name}}</option>
                                                             @endforeach
                                                         </select>
                                                         <label id="calcCountryErrorMessage" class="form-error-text" for="calcCountry"></label>
@@ -161,7 +161,7 @@
                                                     <div class="form__select-wrapper">
                                                         <select class="form__select" name="unit" id="calc_weight_type" required>
                                                             <option value="kq">kg</option>
-                                                            <option value="gm">gr</option>
+                                                            <option value="gr">gr</option>
                                                         </select>
                                                     </div>
                                                 </div>
