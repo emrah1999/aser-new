@@ -63,18 +63,19 @@
                                                 <td class="table-tarifs__tbody-td text-right">{{$tariff->icon}}{{$rate}}
                                                     / ₼{{ $tariff->amount_azn }}
                                                     @if ($tariff->sales_rate > 0 || $tariff->sales_charge > 0)
-                                                        <div class="discounted-prices text-danger" style="margin-top: -4px">
-                                                            <!-- endirimli rate -->
+                                                        <div class="discounted-prices text-danger"
+                                                             style="margin-top: -4px">
+
                                                             @if ($tariff->sales_rate > 0)
                                                                 <span>
-                                        <del>{{ $tariff->icon }}{{ $tariff->sales_rate }} / ₼{{ $tariff->sales_amount_azn }}</del>
-                                    </span>
+                                                                    <del>{{ $tariff->icon }}{{ $tariff->sales_rate }} / ₼{{ $tariff->sales_amount_azn }}</del>
+                                                                </span>
                                                             @endif
-                                                            <!-- endirimli charge -->
+
                                                             @if ($tariff->sales_charge > 0)
                                                                 <span>
-                                        <del>{{ $tariff->icon }}{{ $tariff->sales_charge }} / ₼{{ $tariff->sales_amount_azn }}</del>
-                                    </span>
+                                                                    <del>{{ $tariff->icon }}{{ $tariff->sales_charge }} / ₼{{ $tariff->sales_amount_azn }}</del>
+                                                                </span>
                                                             @endif
                                                         </div>
                                                     @endif
@@ -489,7 +490,7 @@
                         alert("{{ __('static.calculator_required1') }}");
                     }
                 },
-                error: function() {
+                error: function () {
                 }
             });
         });
@@ -507,14 +508,14 @@
 
 
             var tabLinks = document.querySelectorAll('.nav-tab-categories__link');
-            tabLinks.forEach(function(link) {
-                link.addEventListener('click', function(event) {
+            tabLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
                     event.preventDefault();
 
-                    document.querySelectorAll('.tab-pane').forEach(function(tab) {
+                    document.querySelectorAll('.tab-pane').forEach(function (tab) {
                         tab.classList.remove('show', 'active');
                     });
-                    tabLinks.forEach(function(link) {
+                    tabLinks.forEach(function (link) {
                         link.classList.remove('active');
                     });
 
