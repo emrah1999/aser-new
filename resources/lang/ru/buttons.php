@@ -7,6 +7,7 @@ return [
     'pay_all' => 'Оплатить выбранный',
     'create_courier' => 'New order',
     'create_otp' => 'OTP əlavə et',
-    'not_paid' => 'Ödənilməyib'
+    'not_paid' => 'Ödənilməyib',
+    'new_order2' => 'Ödənilməyib3',
 
 ];

@@ -18,7 +18,7 @@ class CountryController extends Controller
         $header = $request->header('Language');
         $countries = Country::whereNull('deleted_at')
             ->leftJoin('international_deliveries', 'countries.id', '=', 'international_deliveries.country_id')
-            ->where('url_permission', 1)->whereNotIn('countries.id', [1, 4, 10, 13])
+            ->where('url_permission', 1)->whereNotIn('countries.id', [1, 10, 13])
             ->select('countries.id',
                 'countries.name_' . $header.' as title',
                 DB::raw("CONCAT('".env('APP_URL')."', countries.new_flag) as flag"),

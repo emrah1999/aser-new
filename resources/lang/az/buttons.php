@@ -7,5 +7,6 @@ return [
     'pay_all' => 'Seçilmişləri ödə',
     'create_courier' => 'Yeni sifariş',
     'create_otp' => 'OTP əlavə et',
-    'not_paid' => 'Ödənilməyib'
+    'not_paid' => 'Ödənilməyib',
+    'new_order2' => 'Ödənilməyib1',
 ];

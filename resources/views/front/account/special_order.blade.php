@@ -128,7 +128,7 @@
 
 												<div class="row" id="product_button_1">
 													<div id="new_order_button" style="border-radius: 10px"
-														new_order_button_text="{!! __('buttons.new_order') !!}"
+														new_order_button_text="{!! __('buttons.new_order2') !!}"
 														remove_order_button_text="{!! __('buttons.remove_order') !!}"
 														class="sp-product-control btn btn-add btn-success"
 														onclick="new_special_product(this, 1);"

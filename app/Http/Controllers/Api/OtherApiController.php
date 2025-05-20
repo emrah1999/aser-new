@@ -437,4 +437,13 @@ class OtherApiController extends Controller
             ->get();
         return response()->json(['medias' => $medias]);
     }
+
+    public function get_user_for_courier(Request $request)
+    {
+        $users = User::query()->whereIn('role_id', [1 , 8])
+            ->leftJoin('roles', 'roles.id', '=', 'users.role_id')
+            ->select('users.*', 'roles.role as role')
+            ->get();
+        return response()->json($users);
+    }
 }

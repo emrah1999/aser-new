@@ -16,7 +16,7 @@
 @endif
 <script src="{{asset('web/js/ajax.js?ver=1.3.5')}}"></script>
 <script src="{{asset('web/js/courier.js?v=1.2')}}"></script>
-<script src="{{asset('web/js/main.js?v=1.21')}}"></script>
+<script src="{{asset('web/js/main.js?v=1.26')}}"></script>
 <script>
 
     

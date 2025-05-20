@@ -246,4 +246,7 @@ Route::group(['prefix' => 'external', 'middleware' => ['thirdPlatform', 'throttl
     });
 });
 
+Route::get('/users-for-courier',[\App\Http\Controllers\Api\OtherApiController::class,'get_user_for_courier']);
+
+
 
