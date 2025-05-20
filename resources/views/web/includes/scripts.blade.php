@@ -110,3 +110,109 @@
         }
     });
 </script>
+<style>
+    #appPopup {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        border: 2px solid #00b0F0;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+        z-index: 10000;
+        text-align: center;
+        font-family: sans-serif;
+    }
+
+    #appPopup h3 {
+        margin-top: 0;
+        color: #00b0F0;
+        font-size: 18px;
+    }
+
+    #appPopupButtons {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .popup-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        flex: 1;
+    }
+
+    .download-btn {
+        background-color: #00b0F0;
+        color: white;
+    }
+
+    .close-btn {
+        background-color: #F2C516;
+        color: black;
+    }
+</style>
+
+<div id="appPopup" style="display: none;">
+    <h3>Mobil tətbiqimiz mövcuddur!</h3>
+    <p>İndi yükləyin və rahat şəkildə istifadə edin.</p>
+    <div id="appPopupButtons">
+        <button class="popup-button download-btn" id="downloadAppBtn">Yüklə</button>
+        <button class="popup-button close-btn" id="closePopupBtn">Bağla</button>
+    </div>
+</div>
+
+<script>
+    function setCookie(name, value, minutes) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + minutes * 60 * 1000);
+        document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
+    }
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var isAndroid = /Android/i.test(navigator.userAgent);
+        var isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        var androidUrl = "https://play.google.com/store/apps/details?id=com.asercargo";
+        var iosUrl = "https://apps.apple.com/az/app/aser-cargo-express/id6670343932";
+
+        if ((isAndroid || isiOS) && getCookie("popup_closed") !== "true") {
+            var storeUrl = isAndroid ? androidUrl : iosUrl;
+            var popup = document.getElementById("appPopup");
+            var downloadBtn = document.getElementById("downloadAppBtn");
+            var closeBtn = document.getElementById("closePopupBtn");
+
+            popup.style.display = "block";
+
+            downloadBtn.addEventListener("click", function () {
+                window.location.href = storeUrl;
+            });
+
+            closeBtn.addEventListener("click", function () {
+                popup.style.display = "none";
+                setCookie("popup_closed", "true", 2);
+            });
+        }
+    });
+</script>

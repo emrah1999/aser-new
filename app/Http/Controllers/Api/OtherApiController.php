@@ -446,4 +446,20 @@ class OtherApiController extends Controller
             ->get();
         return response()->json($users);
     }
+
+    public function redirect(Request $request)
+    {
+        $userAgent = $request->header('User-Agent');
+
+        $androidUrl = "https://play.google.com/store/apps/details?id=com.asercargo";
+        $iosUrl = "https://apps.apple.com/az/app/aser-cargo-express/id6670343932";
+
+        if (stripos($userAgent, 'Android') !== false) {
+            return response()->json(['url' => $androidUrl]);
+        } elseif (stripos($userAgent, 'iPhone') !== false || stripos($userAgent, 'iPad') !== false || stripos($userAgent, 'iPod') !== false) {
+            return response()->json(['url' => $iosUrl]);
+        } else {
+            return response()->json(['url' => '/']); // Default fallback
+        }
+    }
 }
