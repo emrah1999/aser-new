@@ -1,4 +1,11 @@
 @extends('web.layouts.web')
+@section('title')
+    {{$menu['home']->{'title_' . App::getLocale()} }}
+@endsection
+
+@section('description')
+    {{$menu['home']->{'description_' . App::getLocale()} }}
+@endsection
 @section('content')
     <div class="content" id="content">
         <section class="section section-main">
