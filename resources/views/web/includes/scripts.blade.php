@@ -113,63 +113,111 @@
 <style>
     #appPopup {
         position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
+        bottom: 0;
+        left: 0;
+        right: 0;
         background: white;
-        border: 2px solid #00b0F0;
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        width: 90%;
-        max-width: 400px;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px 20px 25px;
         z-index: 10000;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        border-top: 1px solid #e0e0e0;
+        animation: slideUp 0.3s ease-out;
         text-align: center;
-        font-family: sans-serif;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
     }
 
     #appPopup h3 {
         margin-top: 0;
-        color: #00b0F0;
+        color: #00b0F0; /* Mavi rəng */
         font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
     }
 
-    #appPopupButtons {
-        margin-top: 15px;
-        display: flex;
-        justify-content: space-around;
-        gap: 10px;
-        flex-wrap: wrap;
+    #appPopup p {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 15px;
     }
 
-    .popup-button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        font-size: 15px;
-        cursor: pointer;
-        flex: 1;
-    }
-
-    .download-btn {
-        background-color: #00b0F0;
+    .open-app-btn {
+        display: block;
+        width: 90%;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 14px 20px;
+        background-color: #00b0F0; /* Mavi rəng */
         color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
 
-    .close-btn {
-        background-color: #F2C516;
-        color: black;
+    .open-app-btn:hover {
+        background-color: #0090D0;
+        transform: translateY(-2px);
+    }
+
+    .close-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+        stroke: #F2C516; /* Sarı rəng */
+    }
+
+    .close-icon:hover {
+        opacity: 1;
+    }
+
+    .popup-header {
+        position: relative;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .popup-header:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 4px;
+        background-color: #F2C516; /* Sarı rəng */
+        border-radius: 2px;
     }
 </style>
 
 <div id="appPopup" style="display: none;">
-    <h3>Mobil tətbiqimiz mövcuddur!</h3>
-    <p>İndi yükləyin və rahat şəkildə istifadə edin.</p>
-    <div id="appPopupButtons">
-        <button class="popup-button download-btn" id="downloadAppBtn">Yüklə</button>
-        <button class="popup-button close-btn" id="closePopupBtn">Bağla</button>
+    <div class="popup-header">
+        <h3>Mobil tətbiqimiz mövcuddur!</h3>
+        <svg class="close-icon" id="closePopupBtn" xmlns="http://www3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
     </div>
+    <p>Daha rahat istifadə üçün tətbiqdə açın</p>
+    <button class="open-app-btn" id="openAppBtn">Tətbiqdə aç</button>
 </div>
 
 <script>
@@ -191,27 +239,38 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        var isAndroid = /Android/i.test(navigator.userAgent);
-        var isiOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var appUrlScheme = "asercargo://";
+        var webUrl = "https://asercargo.az";
 
-        var androidUrl = "https://play.google.com/store/apps/details?id=com.asercargo";
-        var iosUrl = "https://apps.apple.com/az/app/aser-cargo-express/id6670343932";
-
-        if ((isAndroid || isiOS) && getCookie("popup_closed") !== "true") {
-            var storeUrl = isAndroid ? androidUrl : iosUrl;
+        if (isMobile && getCookie("popup_closed2") !== "true") {
             var popup = document.getElementById("appPopup");
-            var downloadBtn = document.getElementById("downloadAppBtn");
+            var openBtn = document.getElementById("openAppBtn");
             var closeBtn = document.getElementById("closePopupBtn");
 
-            popup.style.display = "block";
+            setTimeout(function() {
+                popup.style.display = "block";
+            }, 1000);
 
-            downloadBtn.addEventListener("click", function () {
-                window.location.href = storeUrl;
+            openBtn.addEventListener("click", function () {
+                window.location.href = appUrlScheme;
+
+                setTimeout(function() {
+                    if (!document.hidden) {
+                        var isAndroid = /Android/i.test(navigator.userAgent);
+                        var storeUrl = isAndroid ?
+                            "https://play.google.com/store/apps/details?id=com.asercargo" :
+                            "https://apps.apple.com/az/app/aser-cargo-express/id6670343932";
+                        window.location.href = storeUrl;
+                    }
+                }, 300);
+
+                setCookie("popup_closed2", "true", 1440);
             });
 
             closeBtn.addEventListener("click", function () {
                 popup.style.display = "none";
-                setCookie("popup_closed", "true", 2);
+                setCookie("popup_closed2", "true", 2);
             });
         }
     });
