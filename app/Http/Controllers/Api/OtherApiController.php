@@ -447,19 +447,13 @@ class OtherApiController extends Controller
         return response()->json($users);
     }
 
-    public function redirect(Request $request)
+    public function special_order_terms()
     {
-        $userAgent = $request->header('User-Agent');
+       $terms = Settings::query()->select('special_order_terms')->first();
 
-        $androidUrl = "https://play.google.com/store/apps/details?id=com.asercargo";
-        $iosUrl = "https://apps.apple.com/az/app/aser-cargo-express/id6670343932";
-
-        if (stripos($userAgent, 'Android') !== false) {
-            return response()->json(['url' => $androidUrl]);
-        } elseif (stripos($userAgent, 'iPhone') !== false || stripos($userAgent, 'iPad') !== false || stripos($userAgent, 'iPod') !== false) {
-            return response()->json(['url' => $iosUrl]);
-        } else {
-            return response()->json(['url' => '/']); // Default fallback
-        }
+       return response()->json([
+           'status' => 'success',
+           'data' => $terms
+       ]);
     }
 }

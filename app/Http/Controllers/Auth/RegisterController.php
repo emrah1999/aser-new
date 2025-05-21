@@ -465,10 +465,14 @@ class RegisterController extends Controller
 	 public function register(Request $request)
 	 {
 		 try {
+             $request->merge([
+                 'phone1' => str_replace("-", "", $request->phone1)
+             ]);
+
 //             if($request->is('api/*')){
 //                 return $request;
 //             }
- //            return $request;
+//             return $request;
 			 $request->is_legality = $this->convert_to_ascii($request->is_legality);
 			 $request->voen = $this->convert_to_ascii($request->voen);
 			 $request->company_name = $this->convert_to_ascii($request->company_name);
@@ -514,12 +518,13 @@ class RegisterController extends Controller
 						 "content" => $messages
 					 ],422);
 				 }
+
 				 return redirect()->back()->withErrors($validator)->withInput();
 			 }
 
-             $request->phone1 = preg_replace("/[^0-9,.]/", "",$request->phone1);
-
-             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
+//             $request->phone1 = preg_replace("/[^0-9,.]/", "",$request->phone1);
+//
+//             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
 
              if (strlen($request->phone1) !== 10 ) {
                  $errorType = 'number2';
