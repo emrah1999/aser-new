@@ -174,13 +174,14 @@
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
-                                <input class="form__input {{ session('errorType') == 'number' || session('errorType') == 'number2' ? 'is-invalid' : '' }}"
+                                <input class="form__input"
                                        name="phone1"
                                        value="{{ session('errorType') == 'number' ? '' : old('phone1') }}"
                                        type="text"
                                        id="phone"
-                                       placeholder="xxx-xxx-xx-xx"
-                                       required>
+                                       placeholder="0xx-xxx-xx-xx"
+                                       maxlength="13"
+                                required>
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'number')
                                         <strong>{{__('register.phone_exists')}}</strong>
@@ -436,6 +437,7 @@
 </div>
 @endsection
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
     <script>
         document.getElementById('togglePassword1').addEventListener('click', function() {
             const passwordField = document.getElementById('userPassword');
@@ -477,4 +479,80 @@
             });
 
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('phone');
+            const mask = '0__-___-__-__';
+
+            phoneInput.value = mask;
+            phoneInput.setAttribute('placeholder', mask);
+
+            function setCursorToNextUnderscore(input) {
+                const pos = input.value.indexOf('_');
+                input.setSelectionRange(pos, pos);
+            }
+
+            phoneInput.addEventListener('focus', () => {
+                setCursorToNextUnderscore(phoneInput);
+            });
+
+            phoneInput.addEventListener('click', () => {
+                setCursorToNextUnderscore(phoneInput);
+            });
+
+            phoneInput.addEventListener('keydown', function(e) {
+                const cursor = this.selectionStart;
+
+                if ((e.key === 'Backspace' || e.key === 'Delete') && cursor === 0) {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (/\d/.test(e.key)) {
+                    e.preventDefault();
+
+                    const chars = this.value.split('');
+                    let pos = this.selectionStart;
+
+                    while (pos < chars.length) {
+                        if (chars[pos] === '_') {
+                            chars[pos] = e.key;
+                            break;
+                        }
+                        pos++;
+                    }
+
+                    this.value = chars.join('');
+                    setCursorToNextUnderscore(this);
+                }
+
+                if (e.key === 'Backspace') {
+                    e.preventDefault();
+
+                    const chars = this.value.split('');
+                    let pos = this.selectionStart - 1;
+
+                    while (pos >= 0) {
+                        if (chars[pos] !== '-' && pos !== 0) {
+                            chars[pos] = '_';
+                            break;
+                        }
+                        pos--;
+                    }
+
+                    this.value = chars.join('');
+                    this.setSelectionRange(pos >= 0 ? pos : 1, pos >= 0 ? pos : 1);
+                }
+            });
+
+            phoneInput.addEventListener('input', function(e) {
+                if (this.value.length !== mask.length) {
+                    this.value = mask;
+                    setCursorToNextUnderscore(this);
+                }
+            });
+        });
+    </script>
+
 @endsection

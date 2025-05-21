@@ -153,6 +153,7 @@
                                            type="text"
                                            id="phone"
                                            placeholder="xxx-xxx-xx-xx"
+                                           maxlength="13"
                                            required>
                                     <div class="invalid-feedback">
                                         @if (session('errorType') == 'number')
@@ -322,6 +323,81 @@
             const icon = this.querySelector('i');
             icon.classList.toggle('fa-eye');
             icon.classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('phone');
+            const mask = '0__-___-__-__';
+
+            phoneInput.value = mask;
+            phoneInput.setAttribute('placeholder', mask);
+
+            function setCursorToNextUnderscore(input) {
+                const pos = input.value.indexOf('_');
+                input.setSelectionRange(pos, pos);
+            }
+
+            phoneInput.addEventListener('focus', () => {
+                setCursorToNextUnderscore(phoneInput);
+            });
+
+            phoneInput.addEventListener('click', () => {
+                setCursorToNextUnderscore(phoneInput);
+            });
+
+            phoneInput.addEventListener('keydown', function(e) {
+                const cursor = this.selectionStart;
+
+                if ((e.key === 'Backspace' || e.key === 'Delete') && cursor === 0) {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (/\d/.test(e.key)) {
+                    e.preventDefault();
+
+                    const chars = this.value.split('');
+                    let pos = this.selectionStart;
+
+                    while (pos < chars.length) {
+                        if (chars[pos] === '_') {
+                            chars[pos] = e.key;
+                            break;
+                        }
+                        pos++;
+                    }
+
+                    this.value = chars.join('');
+                    setCursorToNextUnderscore(this);
+                }
+
+                if (e.key === 'Backspace') {
+                    e.preventDefault();
+
+                    const chars = this.value.split('');
+                    let pos = this.selectionStart - 1;
+
+                    while (pos >= 0) {
+                        if (chars[pos] !== '-' && pos !== 0) {
+                            chars[pos] = '_';
+                            break;
+                        }
+                        pos--;
+                    }
+
+                    this.value = chars.join('');
+                    this.setSelectionRange(pos >= 0 ? pos : 1, pos >= 0 ? pos : 1);
+                }
+            });
+
+            phoneInput.addEventListener('input', function(e) {
+                if (this.value.length !== mask.length) {
+                    this.value = mask;
+                    setCursorToNextUnderscore(this);
+                }
+            });
         });
     </script>
 @endsection

@@ -6,7 +6,7 @@
             <div class="nav nav-tab-categories">
                 @foreach($countries as $index => $country)
                     <a href="#country-{{ $country->id }}" class="nav-tab-categories__link nav-tab-categories__link--{{ $index === 0 ? 'active' : '' }} {{ $index === 0 ? 'active' : '' }} flex-fill d-flex justify-content-center align-items-center" data-bs-toggle="tab" role="tab" aria-controls="country-{{ $country->id }}" aria-selected="{{ $index === 0 ? 'true' : 'false' }}">
-                        <img class="nav-tab-categories__link-img" src="{{ $country->flag }}" alt="{{ $country->name }}" style="height: 15px; margin: 6px 8px; top:0">
+                        <img class="nav-tab-categories__link-img" src="{{ $country->flag }}" alt="{{ $country->name }}" style=" margin: 6px 8px; top:0">
                         <span class="nav-tab-categories__link-title d-none d-sm-block">{{ $country->name }}</span>
                     </a>
                 @endforeach

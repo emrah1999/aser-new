@@ -23,7 +23,7 @@ class ProhibitedItemsController extends HomeController
                 ->get();
 
             $countries = Country::where('url_permission', 1)
-                ->select('id', 'name_' . App::getLocale() . ' as name', 'flag')
+                ->select('id', 'name_' . App::getLocale() . ' as name', 'new_flag as flag')
                 ->orderBy('sort', 'desc')
                 ->orderBy('id')
                 ->get();
