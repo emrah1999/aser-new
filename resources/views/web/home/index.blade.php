@@ -166,20 +166,20 @@
                 </div>
             </div>
         </section>
-        <section class="section section-tarifs-country">
-            <div class="container-lg">
-                <div class="media media-tarif-country">
-                    <div class="row">
-                        <div class="media-tarif-country__body">
-                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
-                            <p class="media-tarif-country__desc">
-                               {{$text->content}}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+{{--        <section class="section section-tarifs-country">--}}
+{{--            <div class="container-lg">--}}
+{{--                <div class="media media-tarif-country">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="media-tarif-country__body">--}}
+{{--                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>--}}
+{{--                            <p class="media-tarif-country__desc">--}}
+{{--                               {{$text->content}}--}}
+{{--                            </p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <section class="section section-partners">
             <div class="container-lg">
                 <h2 class="section-title text-center font-n-b">{{$title->partners}}</h2>

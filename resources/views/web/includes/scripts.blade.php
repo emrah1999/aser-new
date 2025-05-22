@@ -139,14 +139,14 @@
 
     #appPopup h3 {
         margin-top: 0;
-        color: #00b0F0; /* Mavi rəng */
+        color: #333333;
         font-size: 18px;
-        font-weight: 600;
+        font-weight: 750;
         margin-bottom: 10px;
     }
 
     #appPopup p {
-        color: #666;
+        color: #2F2F2F;
         font-size: 14px;
         line-height: 1.4;
         margin-bottom: 15px;
@@ -206,25 +206,202 @@
         background-color: #F2C516; /* Sarı rəng */
         border-radius: 2px;
     }
+
+    .app-popup {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999;
+        width: 480px;
+        height: 240px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease-out;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-popup-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.5);
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10000;
+        transition: background 0.2s ease;
+    }
+
+    .popup-banner {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    .popup-content {
+        position: relative;
+        z-index: 1;
+        width: 55%;
+        height: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .popup-title {
+        margin: 0 0 8px 0;
+        text-align: left;
+        font-size: 18px;
+        font-weight: 700;
+        color: #000;
+    }
+
+    .popup-description {
+        margin: 0 0 16px 0;
+        text-align: left;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .popup-button {
+        background-color: #FFD600;
+        width: 75%;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #000;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+        .app-popup {
+            width: auto;
+            max-width: 100%;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            border-radius: 0;
+            height: auto;
+            min-height: 200px;
+            box-shadow: none;
+        }
+
+        .popup-banner {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        .popup-content {
+            width: 55%;
+            padding: 15px;
+            margin-left: 0;
+        }
+
+        .close-popup-btn {
+            background: rgba(0, 0, 0, 0.7);
+            width: 30px;
+            height: 30px;
+            top: 15px;
+            right: 15px;
+        }
+
+        .popup-title {
+            font-size: 17px;
+        }
+
+        .popup-description {
+            font-size: 13px;
+        }
+
+        .popup-button {
+            width: 85%;
+            padding: 12px 20px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .popup-content {
+            width: 60%;
+            padding: 12px;
+        }
+
+        .popup-title {
+            font-size: 16px;
+        }
+
+        .popup-description {
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .popup-button {
+            width: 70%;
+            padding: 10px 15px;
+            font-size: 13px;
+        }
+
+        .close-popup-btn {
+            width: 25px;
+            height: 25px;
+            top: 10px;
+            right: 10px;
+        }
+    }
+
 </style>
 
-<div id="appPopup" style="display: none;">
-    <div class="popup-header">
-        <h3>Mobil tətbiqimiz mövcuddur!</h3>
-        <svg class="close-icon" id="closePopupBtn" xmlns="http://www3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<div id="appPopup" class="app-popup">
+    <div id="closePopupBtn" class="close-popup-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
     </div>
-    <p>Daha rahat istifadə üçün tətbiqdə açın</p>
-    <button class="open-app-btn" id="openAppBtn">Tətbiqdə aç</button>
+
+    <img src="{{env('APP_URL') . '/web/images/content/banner_aser.png'}}" alt="Mobil tətbiq" class="popup-banner">
+
+    <div class="popup-content">
+        <h3 class="popup-title">Mobil tətbiqimiz mövcuddur!</h3>
+        <p class="popup-description">Daha rahat istifadə üçün</p>
+        <button id="openAppBtn" class="popup-button">
+            Tətbiqdə aç
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
 </div>
+
+
 
 <script>
     function setCookie(name, value, minutes) {
         var expires = new Date();
         expires.setTime(expires.getTime() + minutes * 60 * 1000);
-        document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/";
+        document.cookie = name + "=" + value + ";expires=" + expires.toUTCString() + ";path=/;SameSite=Lax";
     }
 
     function getCookie(name) {
@@ -241,21 +418,25 @@
     document.addEventListener("DOMContentLoaded", function () {
         var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         var appUrlScheme = "asercargo://";
-        var webUrl = "https://asercargo.az";
 
         if (isMobile && getCookie("popup_closed2") !== "true") {
             var popup = document.getElementById("appPopup");
             var openBtn = document.getElementById("openAppBtn");
             var closeBtn = document.getElementById("closePopupBtn");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 popup.style.display = "block";
+                setTimeout(function () {
+                    popup.style.opacity = "1";
+                    popup.style.transform = "translateY(0)";
+                }, 10);
             }, 1000);
 
             openBtn.addEventListener("click", function () {
                 window.location.href = appUrlScheme;
+                setCookie("popup_closed2", "true", 2);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     if (!document.hidden) {
                         var isAndroid = /Android/i.test(navigator.userAgent);
                         var storeUrl = isAndroid ?
@@ -264,13 +445,33 @@
                         window.location.href = storeUrl;
                     }
                 }, 300);
-
-                setCookie("popup_closed2", "true", 1440);
             });
 
             closeBtn.addEventListener("click", function () {
-                popup.style.display = "none";
-                setCookie("popup_closed2", "true", 2);
+                popup.style.opacity = "0";
+                popup.style.transform = "translateY(20px)";
+                setTimeout(function () {
+                    popup.style.display = "none";
+                    setCookie("popup_closed2", "true", 2);
+                }, 300);
+            });
+
+            openBtn.addEventListener("mouseenter", function () {
+                this.style.background = "#3e8e41";
+                this.style.transform = "scale(1.02)";
+            });
+
+            openBtn.addEventListener("mouseleave", function () {
+                this.style.background = "#4CAF50";
+                this.style.transform = "scale(1)";
+            });
+
+            closeBtn.addEventListener("mouseenter", function () {
+                this.style.background = "rgba(0,0,0,0.7)";
+            });
+
+            closeBtn.addEventListener("mouseleave", function () {
+                this.style.background = "rgba(0,0,0,0.5)";
             });
         }
     });
