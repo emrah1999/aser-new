@@ -506,7 +506,8 @@ class RegisterController extends Controller
                  $validator = $this->validator($request);
              }
 
-             Log::channel('register_create')->error('Request.', ['message' => $validator]);
+             Log::channel('register_create')->error('Request.', ['message' => $request]);
+             Log::channel('register_create')->error('Validator.', ['message' => $validator]);
 
 
              if ($validator->fails()) {
@@ -526,42 +527,57 @@ class RegisterController extends Controller
 //
 //             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
 
-             if (strlen($request->phone1) !== 10 ) {
-                 $errorType = 'number2';
-                 if($request->is('api/*')){
-                     return response()->json([
+
+             if($request->is('api/*')){
+                 if (strlen($request->phone1) !== 10 ) {
+                     $errorType = 'number2';
+                     if($request->is('api/*')){
+                         return response()->json([
+                             'case' => 'warning',
+                             'title' => __('static.attention') . '!',
+                             'content' => 'Telfon nömrəsini düzgün daxil edin'
+
+                         ],422);
+                     }
+//                 return $errorType;
+
+                 }
+
+             }else{
+                 if (strlen($request->phone1) !== 12 ) {
+
+                     $errorType = 'number2';
+
+                     return redirect()->back()->with([
                          'case' => 'warning',
                          'title' => __('static.attention') . '!',
-                         'content' => 'Telfon nömrəsini düzgün daxil edin'
-
-                     ],422);
+                         'content' => 'Telfon nömrəsi 10 simvol olmalıdır',
+                         'errorType' => $errorType,
+                     ])->withInput();
                  }
-//                 return $errorType;
-                 return redirect()->back()->with([
-                     'case' => 'warning',
-                     'title' => __('static.attention') . '!',
-                     'content' => 'Telfon nömrəsi 10 simvol olmalıdır',
-                     'errorType' => $errorType,
-                 ])->withInput();
              }
 
-             if ($request->phone1[0] !== '0' ) {
-                 $errorType = 'number2';
-                 if($request->is('api/*')){
-                     return response()->json([
+
+             if($request->is('api/*')){
+                 if ($request->phone1[0] !== '0' ) {
+                     $errorType = 'number2';
+                     if($request->is('api/*')){
+                         return response()->json([
+                             'case' => 'warning',
+                             'title' => __('static.attention') . '!',
+                             'content' => 'Telfon nömrəsi 0 ilə başlamalıdır'
+
+                         ],422);
+                     }
+//                 return $errorType;
+                     return redirect()->back()->with([
                          'case' => 'warning',
                          'title' => __('static.attention') . '!',
-                         'content' => 'Telfon nömrəsi 0 ilə başlamalıdır'
-
-                     ],422);
+                         'content' => 'Telfon nömrəsi 0 ilə başlamalıdır',
+                         'errorType' => $errorType,
+                     ])->withInput();
                  }
-//                 return $errorType;
-                 return redirect()->back()->with([
-                     'case' => 'warning',
-                     'title' => __('static.attention') . '!',
-                     'content' => 'Telfon nömrəsi 0 ilə başlamalıdır',
-                     'errorType' => $errorType,
-                 ])->withInput();
+
              }
 
 
@@ -590,7 +606,7 @@ class RegisterController extends Controller
 				 }
  
 			 }
- 
+
 			 // Check for existing user conflicts
 			 if (!User::where('email', $request->email)->select('id')->first() && User::withoutGlobalScope(DeletedScope::class)->where('email', $request->email)->select('id')->first()) {
                  $errorType = 'email';
@@ -674,12 +690,19 @@ class RegisterController extends Controller
 					 ])->withInput();
 				 }
 			 }
- 
-			 $phone1 = str_replace(['(', ')', '-'], '', $request->phone1);
-			 $phone1 = '994' . substr($phone1, 1);
-			 $request->phone1 = $phone1;
- 
-			 if (User::whereNull('deleted_by')->whereRaw('(phone1 = ? or phone2 = ?)', [$phone1, $phone1])->select('id')->first()) {
+
+             if($request->is('api/*')){
+                 $phone1 = str_replace(['(', ')', '-'], '', $request->phone1);
+                 $phone1 = '994' . substr($phone1, 1);
+                 $request->phone1 = $phone1;
+             }
+             $phone1 = $request->phone1;
+
+             $existUser = User::whereNull('deleted_by')->whereRaw('(phone1 = ? or phone2 = ?)', [$phone1, $phone1])->select('id')->first();
+
+
+
+             if ($existUser) {
 				$errorType = 'number';
 				 if($request->is('api/*')){
 					 return response()->json([
@@ -696,7 +719,8 @@ class RegisterController extends Controller
 					 'errorType' => $errorType,
 				 ])->withInput();
 			 }
- 
+
+
 			 if ($request->phone2 !== null && !empty($request->phone2)) {
 				 $phone2 = str_replace(['(', ')', '-'], '', $request->phone2);
 				 $phone2 = '994' . substr($phone2, 1);
@@ -842,6 +866,7 @@ class RegisterController extends Controller
  
 				 ],400);
 			 }
+             return $exception;
 			 return redirect()->back()->with([
 				 'case' => 'error',
 				 'title' => __('static.error'),
