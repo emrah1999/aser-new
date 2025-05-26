@@ -506,7 +506,8 @@ class RegisterController extends Controller
                  $validator = $this->validator($request);
              }
 
-             Log::channel('register_create')->error('Request.', ['message' => $validator]);
+             Log::channel('register_create')->error('Request.', ['message' => $request]);
+             Log::channel('register_create')->error('Validator.', ['message' => $validator]);
 
 
              if ($validator->fails()) {

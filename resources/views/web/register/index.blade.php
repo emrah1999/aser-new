@@ -174,14 +174,33 @@
                         <div class="col-sm-6">
                             <div class="form__group">
                                 <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
-                                <input class="form__input"
-                                       name="phone1"
-                                       value="{{ session('errorType') == 'number' ? '' : old('phone1') }}"
-                                       type="text"
-                                       id="phone"
-                                       placeholder="0xx-xxx-xx-xx"
-                                       maxlength="13"
-                                required>
+                                <div class="d-flex gap-2">
+                                    <span class="form-control d-flex align-items-center justify-content-center" style="width: 70px;">+994</span>
+
+
+                                    <select id="prefix" name="prefix" class="form-control" style="width: 50px;" required>
+                                        <option value="" disabled selected>--</option>
+                                        <option value="50">50</option>
+                                        <option value="55">55</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="77">77</option>
+                                        <option value="99">99</option>
+                                    </select>
+
+                                    <input
+                                            class="form__input"
+                                            type="text"
+                                            id="phoneSuffix"
+                                            name="phone_suffix"
+                                            maxlength="9"
+                                            placeholder="xxx-xx-xx"
+                                            required
+                                            value="{{ session('errorType') == 'number' ? '' : old('phone_suffix') }}"
+                                            style="flex: 1;"
+                                    />
+                                </div>
+
                                 <div class="invalid-feedback">
                                     @if (session('errorType') == 'number')
                                         <strong>{{__('register.phone_exists')}}</strong>
@@ -480,79 +499,66 @@
 
     </script>
 
-{{--    <script>--}}
-{{--        document.addEventListener('DOMContentLoaded', function() {--}}
-{{--            const phoneInput = document.getElementById('phone');--}}
-{{--            const mask = '0__-___-__-__';--}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneSuffix = document.getElementById('phoneSuffix');
+            const mask = '___-__-__';
 
-{{--            phoneInput.value = mask;--}}
-{{--            phoneInput.setAttribute('placeholder', mask);--}}
+            phoneSuffix.value = mask;
 
-{{--            function setCursorToNextUnderscore(input) {--}}
-{{--                const pos = input.value.indexOf('_');--}}
-{{--                input.setSelectionRange(pos, pos);--}}
-{{--            }--}}
+            function setCursorToNextUnderscore(input) {
+                const pos = input.value.indexOf('_');
+                input.setSelectionRange(pos, pos);
+            }
 
-{{--            phoneInput.addEventListener('focus', () => {--}}
-{{--                setCursorToNextUnderscore(phoneInput);--}}
-{{--            });--}}
+            phoneSuffix.addEventListener('focus', () => setCursorToNextUnderscore(phoneSuffix));
+            phoneSuffix.addEventListener('click', () => setCursorToNextUnderscore(phoneSuffix));
 
-{{--            phoneInput.addEventListener('click', () => {--}}
-{{--                setCursorToNextUnderscore(phoneInput);--}}
-{{--            });--}}
+            phoneSuffix.addEventListener('keydown', function (e) {
+                const cursor = this.selectionStart;
 
-{{--            phoneInput.addEventListener('keydown', function(e) {--}}
-{{--                const cursor = this.selectionStart;--}}
+                if (/\d/.test(e.key)) {
+                    e.preventDefault();
+                    const chars = this.value.split('');
+                    let pos = this.selectionStart;
 
-{{--                if ((e.key === 'Backspace' || e.key === 'Delete') && cursor === 0) {--}}
-{{--                    e.preventDefault();--}}
-{{--                    return;--}}
-{{--                }--}}
+                    while (pos < chars.length) {
+                        if (chars[pos] === '_') {
+                            chars[pos] = e.key;
+                            break;
+                        }
+                        pos++;
+                    }
 
-{{--                if (/\d/.test(e.key)) {--}}
-{{--                    e.preventDefault();--}}
+                    this.value = chars.join('');
+                    setCursorToNextUnderscore(this);
+                }
 
-{{--                    const chars = this.value.split('');--}}
-{{--                    let pos = this.selectionStart;--}}
+                if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    const chars = this.value.split('');
+                    let pos = this.selectionStart - 1;
 
-{{--                    while (pos < chars.length) {--}}
-{{--                        if (chars[pos] === '_') {--}}
-{{--                            chars[pos] = e.key;--}}
-{{--                            break;--}}
-{{--                        }--}}
-{{--                        pos++;--}}
-{{--                    }--}}
+                    while (pos >= 0) {
+                        if (chars[pos] !== '-' && pos !== -1) {
+                            chars[pos] = '_';
+                            break;
+                        }
+                        pos--;
+                    }
 
-{{--                    this.value = chars.join('');--}}
-{{--                    setCursorToNextUnderscore(this);--}}
-{{--                }--}}
+                    this.value = chars.join('');
+                    this.setSelectionRange(pos >= 0 ? pos : 1, pos >= 0 ? pos : 1);
+                }
+            });
 
-{{--                if (e.key === 'Backspace') {--}}
-{{--                    e.preventDefault();--}}
-
-{{--                    const chars = this.value.split('');--}}
-{{--                    let pos = this.selectionStart - 1;--}}
-
-{{--                    while (pos >= 0) {--}}
-{{--                        if (chars[pos] !== '-' && pos !== 0) {--}}
-{{--                            chars[pos] = '_';--}}
-{{--                            break;--}}
-{{--                        }--}}
-{{--                        pos--;--}}
-{{--                    }--}}
-
-{{--                    this.value = chars.join('');--}}
-{{--                    this.setSelectionRange(pos >= 0 ? pos : 1, pos >= 0 ? pos : 1);--}}
-{{--                }--}}
-{{--            });--}}
-
-{{--            phoneInput.addEventListener('input', function(e) {--}}
-{{--                if (this.value.length !== mask.length) {--}}
-{{--                    this.value = mask;--}}
-{{--                    setCursorToNextUnderscore(this);--}}
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
+            phoneSuffix.addEventListener('input', function () {
+                if (this.value.length !== mask.length) {
+                    this.value = mask;
+                    setCursorToNextUnderscore(this);
+                }
+            });
+        });
+    </script>
 
 @endsection

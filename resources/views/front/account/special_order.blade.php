@@ -61,7 +61,7 @@
 													<div class="seperate_block col-12 row">
 														<div class="col-md-12 col-xs-12 n-margin">
 															<div class="input_custom input-effect">
-																<input class="effect-20" type="text" placeholder=""
+																<input class="effect-20" type="url" placeholder=""
 																	name="url[]">
 																<label id="url_label">{!! __('labels.url') !!}</label>
 																<span class="focus-border"><i></i></span>

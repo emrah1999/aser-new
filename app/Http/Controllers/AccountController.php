@@ -323,7 +323,17 @@ class AccountController extends Controller
     public function special_orders_country(Request $request)
     {
         $lang = $request->header('Language');
-        $countr = Country::whereIn('id', [2, 7,4, 9, 12])->select('id', 'name_' . $lang . ' as title', DB::raw("CONCAT('" . env('APP_URL') . "', flag) as flag"), DB::raw("CONCAT('" . env('APP_URL') . "', image) as image"))->orderBy('sort', 'desc')->orderBy('id')->get();
+        $countr = Country::whereIn('countries.id', [2, 7,4, 9, 12])
+            ->select('countries.id', 'countries.name_' . $lang . ' as title',
+                DB::raw("CONCAT('" . env('APP_URL') . "', countries.flag) as flag"),
+                DB::raw("CONCAT('" . env('APP_URL') . "', countries.image) as image"),
+                'countries.currency_id as id_currency' ,
+                'currency.name as currency_name'
+            )
+            ->leftJoin('currency', 'currency.id', '=', 'countries.currency_id')
+            ->orderBy('countries.sort', 'desc')
+            ->orderBy('countries.id')
+            ->get();
         return $countr;
     }
 
