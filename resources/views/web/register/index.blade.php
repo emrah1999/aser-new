@@ -153,8 +153,8 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form__group">
+                        <div class="col-12 col-sm-12 col-md-6">
+                        <div class="form__group">
                                 <label class="form__label" for="userEmail">{!! __('auth.Email') !!}</label>
                                 <input class="form__input {{ session('errorType') == 'email' ? 'is-invalid' : '' }}"
                                        name="email"
@@ -171,14 +171,14 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
-                            <div class="form__group">
+                        <div class="col-12 col-sm-12 col-md-6">
+                        <div class="form__group">
                                 <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
                                 <div class="d-flex gap-2">
                                     <span class="form-control d-flex align-items-center justify-content-center" style="width: 70px;">+994</span>
 
 
-                                    <select id="prefix" name="prefix" class="form-control" style="width: 50px;" required>
+                                    <select id="prefix" name="prefix" class="form-control" style="width: 50px;" >
                                         <option value="" disabled selected>--</option>
                                         <option value="50">50</option>
                                         <option value="55">55</option>

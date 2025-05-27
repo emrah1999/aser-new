@@ -271,7 +271,10 @@ return [
     'input_birthday' => 'Qeydiyyatda Olduğunuz Ünvan' ,
     'cancel' => 'Ləğv et' ,
     'save' => 'Yadda saxla' ,
-    '' => '' ,
+
+
+
+    'phone_exist1' => 'Bu nömrə artıq sistemdə mövcuddur' ,
 
 
 ];

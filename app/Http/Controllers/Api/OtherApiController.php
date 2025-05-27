@@ -456,4 +456,23 @@ class OtherApiController extends Controller
            'data' => $terms
        ]);
     }
+
+    public function getNumberPrefix()
+    {
+        $prefix = [
+            '10' => '10',
+            '50' => '50',
+            '51' => '51',
+            '55' => '55',
+            '70' => '70',
+            '77' => '77',
+            '99' => '10',
+            '60' => '60'
+        ];
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $prefix
+        ]);
+    }
 }

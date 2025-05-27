@@ -203,6 +203,7 @@ Route::get('/countries/{status?}', [\App\Http\Controllers\Api\CountryController:
 Route::get('/seller', [\App\Http\Controllers\SellerController::class, 'show_sellers'])->name('api_seller');
 Route::get('/categories', [\App\Http\Controllers\Api\OtherApiController::class, 'categories'])->name('api_categories');
 Route::get('/currency', [\App\Http\Controllers\Api\OtherApiController::class, 'currency'])->name('api_currency');
+Route::get('/number-prefix', [\App\Http\Controllers\Api\OtherApiController::class, 'getNumberPrefix']);
 Route::get('/tariffs', [\App\Http\Controllers\Api\TariffController::class, 'tariffs'])->name("tariffs");
 Route::post('/check-order', [\App\Http\Controllers\Api\OtherApiController::class, 'local_tracking_search']);
 Route::post('/send-otp', [\App\Http\Controllers\Api\OtherApiController::class, 'send_incoming_otp']);

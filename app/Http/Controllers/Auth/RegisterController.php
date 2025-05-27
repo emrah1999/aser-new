@@ -466,7 +466,7 @@ class RegisterController extends Controller
 	 {
 		 try {
              $request->merge([
-                 'phone1' => str_replace("-", "", $request->phone1)
+                 'phone1' => str_replace("-", "", '994'.$request->prefix.$request->phone_suffix),
              ]);
 
 //             if($request->is('api/*')){
@@ -551,7 +551,7 @@ class RegisterController extends Controller
                      return redirect()->back()->with([
                          'case' => 'warning',
                          'title' => __('static.attention') . '!',
-                         'content' => 'Telfon nömrəsi 10 simvol olmalıdır',
+                         'content' => 'Telfon nömrəsi doğru deyil',
                          'errorType' => $errorType,
                      ])->withInput();
                  }
