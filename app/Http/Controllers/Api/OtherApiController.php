@@ -64,6 +64,10 @@ class OtherApiController extends Controller
             ->select('id', 'name', 'title', 'url', 'img')
             ->get();
 
+        foreach ($first as $item) {
+            $item->id = 0 ;
+        }
+
         $rest = Seller::whereNull('deleted_by')
             ->where('id', '!=', 2824)
             ->select('id', 'name', 'title', 'url', 'img')
@@ -460,15 +464,16 @@ class OtherApiController extends Controller
     public function getNumberPrefix()
     {
         $prefix = [
-            '10' => '10',
-            '50' => '50',
-            '51' => '51',
-            '55' => '55',
-            '70' => '70',
-            '77' => '77',
-            '99' => '10',
-            '60' => '60'
+            ['key' => '10' , 'value' => '10'],
+            ['key' => '50' , 'value' => '50'],
+            ['key' => '51' , 'value' => '51'],
+            ['key' => '55' , 'value' => '55'],
+            ['key' => '70' , 'value' => '70'],
+            ['key' => '77' , 'value' => '77'],
+            ['key' => '99' , 'value' => '99'],
+            ['key' => '60' , 'value' => '60'],
         ];
+
 
         return response()->json([
             'status' => 'success',

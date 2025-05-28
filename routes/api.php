@@ -22,6 +22,7 @@ Route::get('/get-api-token', [\App\Http\Controllers\Api\OtherApiController::clas
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/user-login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register']);
+Route::post('/register-new', [\App\Http\Controllers\Auth\RegisterController::class, 'register2']);
 Route::post('/forgot-password', [\App\Http\Controllers\OTPController::class, 'reset']);
 //Route::post('/reset-password', [\App\Http\Controllers\Api\AuthController::class, 'reset_password']);
 //Route::get('/get', [\App\Http\Controllers\Api\AuthController::class, 'test'])->middleware('myApi');
