@@ -42,7 +42,7 @@
         .invalid-feedback {
             color: red;
             font-size: 12px;
-            display: none;
+            display: block;
         }
 
         @keyframes blink {
@@ -63,6 +63,7 @@
         .invalid-feedback {
             color: red;
             font-size: 0.875rem;
+            display: block;
         }
     </style>
 @endsection
@@ -127,8 +128,9 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form__group">
+                            <div class="col-12 col-sm-12 col-md-6">
+
+                            <div class="form__group">
                                     <label class="form__label" for="userEmail">{!! __('auth.Email') !!}</label>
                                     <input class="form__input {{ session('errorType') == 'email' ? 'is-invalid' : '' }}"
                                            name="email"
@@ -144,17 +146,41 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form__group">
+                            <div class="col-12 col-sm-12 col-md-6">
+
+                            <div class="form__group">
                                     <label class="form__label" for="phone">{!! __('auth.Phone') !!}</label>
-                                    <input class="form__input {{ session('errorType') == 'number' || session('errorType') == 'number2' ? 'is-invalid' : '' }}"
-                                           name="phone1"
-                                           value="{{ session('errorType') == 'number' ? '' : old('phone1') }}"
-                                           type="text"
-                                           id="phone"
-                                           placeholder="xxx-xxx-xx-xx"
-                                           maxlength="13"
-                                           required>
+                                    <div class="d-flex gap-2">
+                                        <span class="form-control d-flex align-items-center justify-content-center"
+                                              style="width: 70px;">+994</span>
+
+
+                                        <select id="prefix" name="prefix" class="form-control" style="width: 50px;">
+                                            <option value="" disabled selected>--</option>
+                                            <option value="" disabled selected>--</option>
+                                            <option value="10">10</option>
+                                            <option value="50">50</option>
+                                            <option value="51">51</option>
+                                            <option value="55">55</option>
+                                            <option value="70">70</option>
+                                            <option value="77">77</option>
+                                            <option value="99">99</option>
+                                            <option value="60">60</option>
+                                        </select>
+
+                                        <input
+                                                class="form__input"
+                                                type="text"
+                                                id="phoneSuffix"
+                                                name="phone_suffix"
+                                                maxlength="9"
+                                                placeholder="xxx-xx-xx"
+                                                required
+                                                value="{{ session('errorType') == 'number' ? '' : old('phone_suffix') }}"
+                                                style="flex: 1;"
+                                        />
+                                    </div>
+
                                     <div class="invalid-feedback">
                                         @if (session('errorType') == 'number')
                                             <strong>{{__('register.phone_exists')}}</strong>
@@ -164,6 +190,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-sm-6">
                                 <div class="form__group">
                                     <label class="form__label" for="userSex">{!! __('auth.City') !!}</label>
@@ -275,10 +302,10 @@
 
                             <div class="col-sm-6">
                                 <div class="form__group">
-                                    <label class="form-checkbox d-flex justify-content-start align-items-center" for="userAgree">
+                                    <label class="form-checkbox d-flex justify-content-start align-items-center" style="width: 200%;" for="userAgree">
                                         <input class="form-checkbox__input" name="agreement" type="checkbox" id="userAgree" >
-                                        <span class="form-checkbox__span" style="border-radius: 50px;width: 25px"></span>
-                                        <a href="https://asercargo.az/uploads/static/terms2.pdf" target="_blank">
+                                        <span class="form-checkbox__span" style="border-radius: 50px;width: 27px"></span>
+                                        <a href="https://asercargo.az/uploads/static/terms2.pdf"  target="_blank">
                                             <span class="form-checkbox__text" style="animation: blink 1s infinite;">{!! __('auth.agreement') !!}</span>
                                         </a>
                                         <div class="invalid-feedback"></div>
@@ -400,4 +427,96 @@
 {{--            });--}}
 {{--        });--}}
 {{--    </script>--}}
+
+    <input id="phoneSuffix" type="tel" maxlength="9" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneSuffix = document.getElementById('phoneSuffix');
+            const mask = '___-__-__';
+            const ua = navigator.userAgent.toLowerCase();
+            const isiOS = /iphone|ipad|ipod/.test(ua);
+            const isAndroid = /android/.test(ua);
+
+            phoneSuffix.value = mask;
+
+            function setCursorToNextUnderscore(input) {
+                const pos = input.value.indexOf('_');
+                if (pos !== -1) {
+                    requestAnimationFrame(() => input.setSelectionRange(pos, pos));
+                }
+            }
+
+            function formatInput(value, inputChar) {
+                const chars = value.split('');
+                let pos = -1;
+                for (let i = 0; i < chars.length; i++) {
+                    if (chars[i] === '_') {
+                        chars[i] = inputChar;
+                        pos = i + 1;
+                        break;
+                    }
+                }
+                return { value: chars.join(''), pos };
+            }
+
+            function handleBackspace(value, cursorPos) {
+                const chars = value.split('');
+                for (let i = cursorPos - 1; i >= 0; i--) {
+                    if (chars[i] !== '-') {
+                        chars[i] = '_';
+                        return { value: chars.join(''), pos: i };
+                    }
+                }
+                return { value, pos: cursorPos };
+            }
+
+            phoneSuffix.addEventListener('focus', () => setCursorToNextUnderscore(phoneSuffix));
+            phoneSuffix.addEventListener('click', () => setCursorToNextUnderscore(phoneSuffix));
+
+            if (isAndroid) {
+                // Android üçün beforeinput əsaslı kod
+                phoneSuffix.addEventListener('beforeinput', function (e) {
+                    const isDigit = /^\d$/.test(e.data);
+                    if (isDigit) {
+                        e.preventDefault();
+                        const result = formatInput(this.value, e.data);
+                        this.value = result.value;
+                        if (result.pos !== -1) {
+                            requestAnimationFrame(() => this.setSelectionRange(result.pos, result.pos));
+                        }
+                    } else if (e.inputType === 'deleteContentBackward') {
+                        e.preventDefault();
+                        const result = handleBackspace(this.value, this.selectionStart);
+                        this.value = result.value;
+                        requestAnimationFrame(() => this.setSelectionRange(result.pos, result.pos));
+                    }
+                });
+            } else if (isiOS) {
+                // iOS üçün keydown əsaslı kod
+                phoneSuffix.addEventListener('keydown', function (e) {
+                    if (/\d/.test(e.key)) {
+                        e.preventDefault();
+                        const result = formatInput(this.value, e.key);
+                        this.value = result.value;
+                        setCursorToNextUnderscore(this);
+                    }
+
+                    if (e.key === 'Backspace') {
+                        e.preventDefault();
+                        const result = handleBackspace(this.value, this.selectionStart);
+                        this.value = result.value;
+                        this.setSelectionRange(result.pos, result.pos);
+                    }
+                });
+            }
+
+            phoneSuffix.addEventListener('input', function () {
+                if (this.value.length !== mask.length) {
+                    this.value = mask;
+                    setCursorToNextUnderscore(this);
+                }
+            });
+        });
+    </script>
 @endsection

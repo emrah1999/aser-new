@@ -465,9 +465,15 @@ class RegisterController extends Controller
 	 public function register(Request $request)
 	 {
 		 try {
-             $request->merge([
-                 'phone1' => str_replace("-", "", $request->phone1)
-             ]);
+             if($request->is('api/*')){
+                 $phone1 = str_replace(['(', ')', '-'], '', $request->phone1);
+                 $phone1 = '994' . substr($phone1, 1);
+                 $request->phone1 = $phone1;
+             }else{
+                 $request->merge([
+                     'phone1' => str_replace("-", "", '994'.$request->prefix.$request->phone_suffix),
+                 ]);
+             }
 
 //             if($request->is('api/*')){
 //                 return $request;
@@ -528,57 +534,50 @@ class RegisterController extends Controller
 //             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
 
 
-             if($request->is('api/*')){
-                 if (strlen($request->phone1) !== 10 ) {
-                     $errorType = 'number2';
-                     if($request->is('api/*')){
-                         return response()->json([
-                             'case' => 'warning',
-                             'title' => __('static.attention') . '!',
-                             'content' => 'Telfon nömrəsini düzgün daxil edin'
+//             if($request->is('api/*')){
+//                 if (strlen($request->phone1) !== 10 ) {
+//                     $errorType = 'number2';
+//                     if($request->is('api/*')){
+//                         return response()->json([
+//                             'case' => 'warning',
+//                             'title' => __('static.attention') . '!',
+//                             'content' => 'Telfon nömrəsini düzgün daxil edin'
+//
+//                         ],422);
+//                     }
+////                 return $errorType;
+//
+//                 }
 
-                         ],422);
-                     }
-//                 return $errorType;
-
-                 }
-
-             }else{
-                 if (strlen($request->phone1) !== 12 ) {
-
-                     $errorType = 'number2';
-
-                     return redirect()->back()->with([
-                         'case' => 'warning',
-                         'title' => __('static.attention') . '!',
-                         'content' => 'Telfon nömrəsi 10 simvol olmalıdır',
-                         'errorType' => $errorType,
-                     ])->withInput();
-                 }
-             }
+//             }else{
+//                 if (strlen($request->phone1) !== 12 ) {
+//
+//                     $errorType = 'number2';
+//
+//                     return redirect()->back()->with([
+//                         'case' => 'warning',
+//                         'title' => __('static.attention') . '!',
+//                         'content' => 'Telfon nömrəsi doğru deyil',
+//                         'errorType' => $errorType,
+//                     ])->withInput();
+//                 }
+//             }
 
 
-             if($request->is('api/*')){
-                 if ($request->phone1[0] !== '0' ) {
-                     $errorType = 'number2';
-                     if($request->is('api/*')){
-                         return response()->json([
-                             'case' => 'warning',
-                             'title' => __('static.attention') . '!',
-                             'content' => 'Telfon nömrəsi 0 ilə başlamalıdır'
-
-                         ],422);
-                     }
-//                 return $errorType;
-                     return redirect()->back()->with([
-                         'case' => 'warning',
-                         'title' => __('static.attention') . '!',
-                         'content' => 'Telfon nömrəsi 0 ilə başlamalıdır',
-                         'errorType' => $errorType,
-                     ])->withInput();
-                 }
-
-             }
+//             if($request->is('api/*')){
+//                 if ($request->phone1[0] !== '0' ) {
+//                     $errorType = 'number2';
+//                     if($request->is('api/*')){
+//                         return response()->json([
+//                             'case' => 'warning',
+//                             'title' => __('static.attention') . '!',
+//                             'content' => $request->phone1[0]
+//
+//                         ],422);
+//                     }
+//                 }
+//
+//             }
 
 
 
@@ -691,11 +690,7 @@ class RegisterController extends Controller
 				 }
 			 }
 
-             if($request->is('api/*')){
-                 $phone1 = str_replace(['(', ')', '-'], '', $request->phone1);
-                 $phone1 = '994' . substr($phone1, 1);
-                 $request->phone1 = $phone1;
-             }
+
              $phone1 = $request->phone1;
 
              $existUser = User::whereNull('deleted_by')->whereRaw('(phone1 = ? or phone2 = ?)', [$phone1, $phone1])->select('id')->first();
@@ -949,4 +944,393 @@ class RegisterController extends Controller
 		// }
 		return 'bbb';
 	}
+
+
+    public function register2(Request $request)
+    {
+        try {
+
+
+             if($request->is('api/*')){
+                 $request->merge([
+                     'phone1' => str_replace("-", "", '994'.$request->phone1),
+                 ]);
+             }else{
+                 $request->merge([
+                     'phone1' => str_replace("-", "", '994'.$request->prefix.$request->phone_suffix),
+                 ]);
+             }
+//             return $request;
+            $request->is_legality = $this->convert_to_ascii($request->is_legality);
+            $request->voen = $this->convert_to_ascii($request->voen);
+            $request->company_name = $this->convert_to_ascii($request->company_name);
+            $request->name = $this->convert_to_ascii($request->name);
+            $request->surname = $this->convert_to_ascii($request->surname);
+            $request->email = $this->convert_to_ascii($request->email);
+            $request->phone1 = $this->convert_to_ascii($request->phone1);
+            $request->phone2 = $this->convert_to_ascii($request->phone2);
+            $request->city = $this->convert_to_ascii($request->city);
+            $request->address1 = $this->convert_to_ascii($request->address1);
+            $request->passport_series = $this->convert_to_ascii($request->passport_series);
+            $request->passport_number = $this->convert_to_ascii($request->passport_number);
+            $request->passport_fin = $this->convert_to_ascii($request->passport_fin);
+            $request->location_longitude1 = $this->convert_to_ascii($request->location_longitude);
+            $request->location_latitude1 = $this->convert_to_ascii($request->location_latitude);
+            //            return $request;
+            //            return $request->voen;
+
+//             if($request->is_legality==1){
+//                 $is_legality = 1;
+//                 $request->passport_series="VOEN";
+//                 $request->passport_number=$request->voen;
+//             }
+//
+//             return $request;
+
+            if ($request->is_legality==1){
+                $validator = $this->validator($request,1);
+            }
+            else{
+                $validator = $this->validator($request);
+            }
+
+            Log::channel('register_create')->error('Request.', ['message' => $request]);
+            Log::channel('register_create')->error('Validator.', ['message' => $validator]);
+
+
+            if ($validator->fails()) {
+                if($request->is('api/*')){
+                    $messages = $validator->messages();
+                    return response()->json([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        "content" => $messages
+                    ],422);
+                }
+
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+//             $request->phone1 = preg_replace("/[^0-9,.]/", "",$request->phone1);
+//
+//             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
+
+
+            if($request->is('api/*')){
+                if (strlen($request->phone1) !== 12 ) {
+                    $errorType = 'number2';
+                    if($request->is('api/*')){
+                        return response()->json([
+                            'case' => 'warning',
+                            'title' => __('static.attention') . '!',
+                            'content' => 'Telfon nömrəsini düzgün daxil edin'
+
+                        ],422);
+                    }
+//                 return $errorType;
+
+                }
+
+            }else{
+                if (strlen($request->phone1) !== 12 ) {
+
+                    $errorType = 'number2';
+
+                    return redirect()->back()->with([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => 'Telfon nömrəsi doğru deyil',
+                        'errorType' => $errorType,
+                    ])->withInput();
+                }
+            }
+
+
+            if ($request->is_legality==0){
+                if($request->is('api/*')){
+                    $request->birthday = \Carbon\Carbon::createFromFormat('d.m.Y', $request->birthday)->format('Y-m-d');
+                }
+            }
+
+
+
+            if (!$request->voen){
+                $birthday = $request->input('birthday');
+                $birthdayDate = Carbon::parse($birthday);
+                $age = Carbon::now()->diffInYears($birthdayDate);
+                if ($age < 18) {
+                    $errorType = 'age';
+                    //  return $errorType;
+                    return redirect()->back()->with([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => '18 yaşdan böyük olmalısınız',
+                        'errorType' => $errorType,
+                    ])->withInput();
+                }
+
+            }
+
+            // Check for existing user conflicts
+            if (!User::where('email', $request->email)->select('id')->first() && User::withoutGlobalScope(DeletedScope::class)->where('email', $request->email)->select('id')->first()) {
+                $errorType = 'email';
+                if($request->is('api/*')){
+                    //  return $errorType;
+                    return response()->json([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => __('register.user_deleted'),
+                        'errorType' => $errorType,
+
+                    ],422);
+                }
+
+                return redirect()->back()->with([
+                    'case' => 'warning',
+                    'title' => __('static.attention') . '!',
+                    'content' => __('register.user_deleted'),
+                    'errorType' => $errorType,
+                ])->withInput();
+            }
+
+            if (User::where('email', $request->email)->select('id')->first()) {
+                $errorType = 'email';
+                // return $errorType;
+                if($request->is('api/*')){
+
+                    return response()->json([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => __('register.email_exists')
+
+                    ],422);
+                }
+                return redirect()->back()->with([
+                    'case' => 'warning',
+                    'title' => __('static.attention') . '!',
+                    'content' => __('register.email_exists'),
+                    'errorType' => $errorType,
+
+                ])->withInput();
+            }
+
+            if (!$request->voen){
+                if (User::where('passport_number', $request->passport_number)->select('id')->first()) {
+                    $errorType = 'passport_number';
+                    if($request->is('api/*')){
+                        return response()->json([
+                            'case' => 'warning',
+                            'title' => __('static.attention') . '!',
+                            'content' => __('register.passport_number_exists')
+
+                        ],422);
+                    }
+                    return redirect()->back()->with([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => __('register.passport_number_exists'),
+                        'errorType' => $errorType,
+                    ])->withInput();
+                }
+            }
+
+
+            if (!$request->voen){
+                if ($request->passport_series !== 'VOEN' && User::where('passport_fin', $request->passport_fin)->select('id')->first()) {
+                    $errorType = 'fin';
+                    if($request->is('api/*')){
+                        return response()->json([
+                            'case' => 'warning',
+                            'title' => __('static.attention') . '!',
+                            'content' => __('register.passport_fin_exists')
+
+                        ],422);
+                    }
+                    return redirect()->back()->with([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => __('register.passport_fin_exists'),
+                        'errorType' => $errorType,
+                    ])->withInput();
+                }
+            }
+
+            $phone1 = $request->phone1;
+
+            $existUser = User::whereNull('deleted_by')->whereRaw('(phone1 = ? or phone2 = ?)', [$phone1, $phone1])->select('id')->first();
+
+
+
+            if ($existUser) {
+                $errorType = 'number';
+                if($request->is('api/*')){
+                    return response()->json([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => __('register.phone_exists')
+
+                    ],422);
+                }
+                return redirect()->back()->with([
+                    'case' => 'warning',
+                    'title' => __('static.attention') . '!',
+                    'content' => __('register.phone_exists'),
+                    'errorType' => $errorType,
+                ])->withInput();
+            }
+
+
+            if ($request->phone2 !== null && !empty($request->phone2)) {
+                $phone2 = str_replace(['(', ')', '-'], '', $request->phone2);
+                $phone2 = '994' . substr($phone2, 1);
+                $request->phone2 = $phone2;
+
+                if (User::whereNull('deleted_by')->whereRaw('(phone1 = ? or phone2 = ?)', [$phone2, $phone2])->select('id')->first()) {
+                    $errorType = 'number';
+                    if($request->is('api/*')){
+                        return response()->json([
+                            'case' => 'warning',
+                            'title' => __('static.attention') . '!',
+                            'content' => __('register.phone_exists')
+
+                        ],422);
+                    }
+                    return redirect()->back()->with([
+                        'case' => 'warning',
+                        'title' => __('static.attention') . '!',
+                        'content' => __('register.phone_exists'),
+                        'errorType' => $errorType,
+                    ])->withInput();
+                }
+            }
+            if($request->is('api/*')){
+                $city=Cities::where('id',$request->city)->first();
+                if($city){
+                    $request->city=$city->name_en;
+                }else{
+                    $request->city="Baki";
+                }
+            }
+
+            $response = $this->create($request);
+
+            switch ($response[0]) {
+                case 0:
+                    Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+                    if($request->is('api/*')){
+                        return response()->json([
+                            'case' => 'error',
+                            'title' => __('static.error') . '!',
+                            'content' => __('static.error_text') . ' (1) - ',
+                            'error'=>2
+
+
+                        ],400);
+                    }
+                    return redirect()->back()->with([
+                        'case' => 'error',
+                        'title' => __('static.error'),
+                        'content' => __('static.error_text') . ' (1) - '
+                    ])->withInput();
+                case 2:
+                    Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+
+                    if($request->is('api/*')){
+                        return response()->json([
+                            'case' => 'warning',
+                            'title' => __('static.error') . '!',
+                            'content' => __('register.agreement_not_chosen')
+
+                        ],422);
+                    }
+                    return redirect()->back()->with([
+                        'case' => 'warning',
+                        'title' => __('static.error'),
+                        'content' => __('register.agreement_not_chosen')
+                    ])->withInput();
+                case 1:
+                    Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+
+                    try {
+                        $user = $response[1];
+                        $this->guard()->login($user);
+                        /*$resend_email = new VerificationController();
+                        $resend_email->resendAjax($request);*/
+                        $userId = $user->getAttribute('id');
+                        $otp_session = $this->generateRandomCode();
+                        if ( $request->verification=='sms'){
+                            $sendOtp = new SendOTPCode();
+                            $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                            $otpType = 1;
+                            $credential = $request->phone1;
+                        }
+                        elseif ( $request->verification=='email'){
+                            $sendOtp = new SendOTPCode();
+                            $sendOtp->send_mail($userId, $request->email, $otp_session);
+                            $otpType = 2;
+                            $credential = $request->email;
+                        }
+
+                        Auth::logout();
+
+                        if($request->is('api/*')){
+                            return response()->json([
+                                'case' => 'success',
+                                'phone1'=> $request->phone1,
+                                'user_id'=>$userId,
+                                'OTP_TYPE'=>$otpType,
+                                'credential'=>$credential,
+                                'title' => __('static.success'),
+
+                            ],201);
+                        }
+
+                        return redirect()->route('otp_page', ['locale'=>App::getLocale(),'otp_session' => $otp_session,'otpType' => $otpType])->with([
+                            'case' => 'success',
+                            'title' => __('static.success'),
+                            'content' => __('register.success_message'),
+                            'otpType' => $otpType,
+                            'credential'=>$credential
+                        ]);
+
+                    } catch (\Exception $exception) {
+                        Log::channel('register_verification')->error('Failed to send mail.', [
+                            'id' => $response[1]->id,
+                            'message' => $exception
+                        ]);
+                        return redirect()->back()->with([
+                            'case' => 'error',
+                            'title' => __('static.error'),
+                            'content' => __('register.sent_email_error')
+                        ])->withInput();
+                    }
+                default:
+
+                    Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+
+                    return redirect()->back()->with([
+                        'case' => 'error',
+                        'title' => __('static.error'),
+                        'content' => __('static.error_text') . ' (2)'
+                    ])->withInput();
+            }
+        } catch (\Exception $exception) {
+            if($request->is('api/*')){
+                return response()->json([
+                    'case' => 'error',
+                    'title' => __('static.error') . '!',
+                    'content' => __('register.sent_email_error'),
+                    'error'=>1
+
+
+                ],400);
+            }
+            return $exception;
+            return redirect()->back()->with([
+                'case' => 'error',
+                'title' => __('static.error'),
+                'content' => __('register.sent_email_error')
+            ])->withInput();
+        }
+    }
 }
