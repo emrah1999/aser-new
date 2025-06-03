@@ -70,7 +70,7 @@
                         <div class="profile-title-block">
                             <div class="row">
                                 <div class="col-xxl-8">
-                                    <h4 class="profile-title-block__title font-n-b">Xaricdəki ünvanlarım</h4>
+                                    <h4 class="profile-title-block__title font-n-b">{!! __('account_menu.my_account2') !!}</h4>
                                 </div>
                             </div>
                         </div>

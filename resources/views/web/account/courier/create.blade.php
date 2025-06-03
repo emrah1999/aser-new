@@ -16,22 +16,22 @@
                                 {{ session('success') }}
                             </div>
                         @endif
-                        @if (session()->has('case') && session('case') === 'error')
-                            <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">
-                                </svg>
-                                <div>
-                                    <ul class="mb-0">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                        @if(session('content'))
-                                                <li>{{ session('content') }}</li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
-                        @endif
+{{--                        @if (session()->has('case') && session('case') === 'error')--}}
+{{--                            <div class="alert alert-danger d-flex align-items-center p-3 shadow-lg rounded-3" role="alert">--}}
+{{--                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle me-2">--}}
+{{--                                </svg>--}}
+{{--                                <div>--}}
+{{--                                    <ul class="mb-0">--}}
+{{--                                        @foreach ($errors->all() as $error)--}}
+{{--                                            <li>{{ $error }}</li>--}}
+{{--                                        @endforeach--}}
+{{--                                        @if(session('content'))--}}
+{{--                                                <li>{{ session('content') }}</li>--}}
+{{--                                        @endif--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
 
 
                         <form class="form form-profile-curier" name="formProfileCurier" id="formProfileCurier" method="post" action="{{route('courier_create_order', ['locale' => App::getLocale()])}}" novalidate="novalidate">
@@ -227,13 +227,13 @@
                 </div>
                 <div class="modal-body modal-profile-curier__body">
                     <form class="form form-modal-profile form-modal-profile-curier center-block">
-                        <h6 class="form-modal-profile__title form-modal-profile-curier__title text-center font-n-b">Kuryer sifariş edilsin?</h6>
+                        <h6 class="form-modal-profile__title form-modal-profile-curier__title text-center font-n-b">{!! __('popup.courier_question') !!}</h6>
                         <div class="row">
                             <div class="col-6">
-                                <button class="btn btn-trns-black btn-block form-modal-profile__btn form-modal-profile-curier__btn font-n-b" type="button" data-bs-dismiss="modal">Xeyr</button>
+                                <button class="btn btn-trns-black btn-block form-modal-profile__btn form-modal-profile-curier__btn font-n-b" type="button" data-bs-dismiss="modal">{!! __('popup.no') !!}</button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-blue btn-block form-modal-profile__btn form-modal-profile-curier__btn font-n-b" form="formProfileCurier" type="submit">Bəli</button>
+                                <button class="btn btn-blue btn-block form-modal-profile__btn form-modal-profile-curier__btn font-n-b" form="formProfileCurier" type="submit">{!! __('popup.yes') !!}</button>
                             </div>
                         </div>
                     </form>

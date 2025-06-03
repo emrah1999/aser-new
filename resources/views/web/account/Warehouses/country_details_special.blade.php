@@ -71,7 +71,7 @@
                         <div class="profile-title-block">
                             <div class="row">
                                 <div class="col-xxl-8">
-                                    <h4 class="profile-title-block__title font-n-b">Xaricdəki ünvanlarım</h4>
+                                    <h4 class="profile-title-block__title font-n-b">{!! __('account_menu.my_account2') !!}</h4>
                                 </div>
                             </div>
                         </div>
@@ -100,10 +100,7 @@
                                     </div>
 
                                     <p class="information col-md-11 ">
-                                        Diqqət!!!
-                                        Bu ünvan yalnız Amerikada yaşayan həmyerlilərimiz tərəfindən şəxsi göndərişlər üçün nəzərdə tutulmuşdur.
-                                        Nyu York vergi ştatı olduğu üçün onlayn sifarişlərinizə vergi hesablanacaqdır.
-                                        Bu səbəbdən onlayn sifarişləriniz üçün mütləq Delaware ştatındakı anbar ünvanımızı istifadə edin.
+                                      {!! __('static.newyork_text') !!}
                                     </p>
                                 </div>
 

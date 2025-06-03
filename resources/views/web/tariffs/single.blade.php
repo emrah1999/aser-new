@@ -133,8 +133,8 @@
                 <div id="sellers-list" class="seller-section-unique row align-items-center">
                 </div>
                 <div class="text-center">
-                    <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="btn seller-btn">Daha
-                        çoxunu göstər</a>
+                    <a href="{{route("sellers_page", ['locale' => App::getLocale()])}}" class="btn seller-btn">
+                        {!! __('static.show_more') !!}</a>
                 </div>
             </div>
         </section>

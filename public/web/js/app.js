@@ -63,14 +63,43 @@ $(document).ready(function(){
         }
     });
 
+    const validationMessages = {
+        az: {
+            required: "Bu xana mütləq doldurulmalıdır",
+            email: "Zəhmət olmasa düzgün e-poçt ünvanı daxil edin",
+            equalTo: "Parol uyğunsuzluğu",
+            maxlength: "Zəhmət olmasa, ən çox {0} simvol daxil edin.",
+            minlength: "Zəhmət olmasa, ən azı {0} simvol daxil edin."
+        },
+        en: {
+            required: "This field is required",
+            email: " Please enter a valid email address",
+            equalTo: "Password mismatch",
+            maxlength: "Please enter no more than {0} characters.",
+            minlength: "Please enter at least {0} characters."
+        },
+        ru: {
+            required: "Это поле обязательно для заполнения",
+            email: "Пожалуйста, введите корректный адрес электронной почты",
+            equalTo: "Пароли не совпадают",
+            maxlength: "Пожалуйста, введите не более {0} символов.",
+            minlength: "Пожалуйста, введите не менее {0} символов."
+        }
+    };
+
+
+
+
     //FORMS
+
     $.extend($.validator.messages, {
-        required: messages[currentLang].required,
-        email: "Zəhmət olmasa düzgün e-poçt ünvanı daxil edin",
-        equalTo: "Parol uyğunsuzluğu",
-        maxlength: jQuery.validator.format("Zəhmət olmasa, ən çox {0} simvol daxil edin."),
-        minlength: jQuery.validator.format("Zəhmət olmasa, ən azı {0} simvol daxil edin")
+        required: validationMessages[currentLang].required,
+        email: validationMessages[currentLang].email,
+        equalTo: validationMessages[currentLang].equalTo,
+        maxlength: $.validator.format(validationMessages[currentLang].maxlength),
+        minlength: $.validator.format(validationMessages[currentLang].minlength)
     });
+
 
     $.validator.addMethod("letters", function(value, element) {
         return this.optional(element) || value == value.match(/^[a-zA-Z ]*$/);

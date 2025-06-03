@@ -427,9 +427,9 @@
                                     <div class="input-container" style="position: relative;">
                                         <label class="form-checkbox d-flex align-items-center"
                                                style="margin-right: 15px;">
-                                            <input class="form-checkbox__input" type="radio" name="verification"
+                                            <input  class="form-checkbox__input" type="radio" name="verification"
                                                    value="sms" id="smsVerification">
-                                            <span class="form-checkbox__span"></span> {!! __('static.sms') !!}
+                                            <span style="width: 23px" class="form-checkbox__span"></span> {!! __('static.sms') !!}
                                         </label>
                                     </div>
                                     <div class="invalid-feedback"></div>
@@ -440,9 +440,9 @@
 
                                     <div class="input-container" style="position: relative;">
                                         <label class="form-checkbox d-flex align-items-center">
-                                            <input class="form-checkbox__input" type="radio" name="verification"
+                                            <input  class="form-checkbox__input" type="radio" name="verification"
                                                    value="email" id="emailVerification">
-                                            <span class="form-checkbox__span"></span> {!! __('static.emailReg') !!}
+                                            <span style="width: 23px" class="form-checkbox__span"></span> {!! __('static.emailReg') !!}
                                         </label>
                                     </div>
                                     <div class="invalid-feedback"></div>
@@ -461,7 +461,7 @@
                                         <input class="form-checkbox__input" name="agreement" type="checkbox"
                                                id="userAgree"{{old('agreement') ? 'checked' : ''}}>
                                         <span class="form-checkbox__span"
-                                              style="border-radius: 50px;width: 27px"></span>
+                                              style="border-radius: 50px;width: 35px"></span>
                                         <a href="https://asercargo.az/uploads/static/terms2.pdf" target="_blank">
                                             <span class="form-checkbox__text"
                                                   style="animation: blink 1s infinite;">{!! __('auth.agreement') !!}</span>
@@ -610,6 +610,22 @@
                 });
             } else if (isiOS) {
                 // iOS üçün keydown əsaslı kod
+                phoneSuffix.addEventListener('keydown', function (e) {
+                    if (/\d/.test(e.key)) {
+                        e.preventDefault();
+                        const result = formatInput(this.value, e.key);
+                        this.value = result.value;
+                        setCursorToNextUnderscore(this);
+                    }
+
+                    if (e.key === 'Backspace') {
+                        e.preventDefault();
+                        const result = handleBackspace(this.value, this.selectionStart);
+                        this.value = result.value;
+                        this.setSelectionRange(result.pos, result.pos);
+                    }
+                });
+            }else {
                 phoneSuffix.addEventListener('keydown', function (e) {
                     if (/\d/.test(e.key)) {
                         e.preventDefault();

@@ -37,15 +37,15 @@
                     @foreach($deliveries as $deliverie)
                         <div class="col-md-3 col-sm-6">
                             <div class="thumbnail thumbnail-cargo">
-                                <a href="{{ route('menuIndex',['locale' => App::getLocale(),$deliverie->slug]) }}" class="thumbnail-cargo__link">
+                                <a style="color: black" href="{{ route('menuIndex',['locale' => App::getLocale(),$deliverie->slug]) }}" class="thumbnail-cargo__link">
 
                                 <div class="thumbnail-cargo__img-block">
                                         <img class="thumbnail-cargo__img img-responsive" src="{{$deliverie->icon}}" alt="Cargo">
                                     </div>
                                     <div class="thumbnail-cargo__caption text-center">
                                         <h4 class="thumbnail-cargo__title font-n-b">{{$deliverie->name}}</h4>
-                                        <p class="thumbnail-cargo__desc">
-                                            {{$deliverie->content}}
+                                        <p  class="thumbnail-cargo__desc">
+                                            {!!  $deliverie->content !!}
                                         </p>
                                     </div>
                                 </a>
