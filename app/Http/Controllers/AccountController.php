@@ -340,20 +340,55 @@ class AccountController extends Controller
     public function post_update_user_password(Request $request)
     {
         // dd($request->all());
+
+        $messages = [
+            'az' => [
+                'required' => ':attribute mütləq doldurulmalıdır',
+                'string' => ':attribute mətn formatında olmalıdır',
+                'min' => ':attribute ən az :min simvol olmalıdır',
+                'same' => 'Yeni şifrə ilə təkrar şifrə eyni olmalıdır',
+                'attributes' => [
+                    'currentPassword' => 'Cari şifrə',
+                    'newPassword' => 'Yeni şifrə',
+                    'confirmPassword' => 'Təkrar şifrə'
+                ]
+            ],
+            'en' => [
+                'required' => 'The :attribute  is required',
+                'string' => 'The :attribute must be a string',
+                'min' => 'The :attribute must be at least :min characters',
+                'same' => 'The new password and confirmation password must match',
+                'attributes' => [
+                    'currentPassword' => 'Current password',
+                    'newPassword' => 'New password',
+                    'confirmPassword' => 'Confirm password'
+                ]
+            ],
+            'ru' => [
+                'required' => 'Поле :attribute обязателен для заполнения ',
+                'string' => 'Поле :attribute должно быть строкой',
+                'min' => 'Поле :attribute должно содержать минимум :min символов',
+                'same' => 'Новый пароль и подтверждение пароля должны совпадать',
+                'attributes' => [
+                    'currentPassword' => 'Текущий пароль',
+                    'newPassword' => 'Новый пароль',
+                    'confirmPassword' => 'Подтверждение пароля'
+                ]
+            ]
+        ];
+        $locale = App::getLocale();
+        $selectedMessages = $messages[$locale] ?? $messages['az'];
+
         $validator = Validator::make($request->all(), [
             'currentPassword' => ['required', 'string', 'min:8'],
             'newPassword' => ['required', 'string', 'min:8'],
-            'confirmPassword' => ['required', 'string', 'min:8'],
+            'confirmPassword' => ['required', 'string', 'min:8', 'same:newPassword'],
         ], [
-            'required' => ':attribute mütləq doldurulmalıdır',
-            'string' => ':attribute mətn formatında olmalıdır',
-            'min' => ':attribute ən az :min simvol olmalıdır',
-            'same' => 'Yeni şifrə ilə təkrar şifrə eyni olmalıdır'
-        ], [
-            'currentPassword' => 'Cari şifrə',
-            'newPassword' => 'Yeni şifrə',
-            'confirmPassword' => 'Təkrar şifrə'
-        ]);
+            'required' => $selectedMessages['required'],
+            'string' => $selectedMessages['string'],
+            'min' => $selectedMessages['min'],
+            'same' => $selectedMessages['same'],
+        ], $selectedMessages['attributes']);
 
         if ($validator->fails()) {
 //            return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.incomplete_information')]);
@@ -1292,6 +1327,7 @@ class AccountController extends Controller
     public function post_package_update(Request $request, $locale, $package_id)
     {
 //        dd($request->all());
+//        return $request;
         $validator = Validator::make($request->all(), [
             'currency_id' => ['required', 'integer'],
             'seller_id' => ['nullable', 'integer'],
@@ -4034,15 +4070,15 @@ class AccountController extends Controller
             'urgent_order' => ['required', 'integer'],
         ], [
 
-            'packages_list.required' => 'Bağlama seçmək mütləqdir.',
-            'date.required' => 'Tarix seçimi mütləqdir',
-            'area_id.required' => 'Metro stansiya seçmək mütləqdir.',
+            'packages_list.required' => __('popup.package_required'),
+            'date.required' => __('popup.date_required'),
+            'area_id.required' => __('popup.station_required'),
 
-            'address.required' => 'Adres mütləq olmalıdır',
+            'address.required' => __('popup.adress_required'),
 
-            'phone.required' => 'Telefon mütləqdir.',
-            'courier_payment_type_id.required' => 'Kuryer çatdırılma odəniş növü mütləq seçilməlidir .',
-            'delivery_payment_type_id.required' => 'Xaricdən çatdırılma ödəniş növü mütləq seçilməlidir .',
+            'phone.required' => __('popup.package_required'),
+            'courier_payment_type_id.required' => __('popup.courier_payment_required'),
+            'delivery_payment_type_id.required' => __('popup.international_payment_required'),
         ]);
 
         if ($validator->fails()) {

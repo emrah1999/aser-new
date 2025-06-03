@@ -526,16 +526,16 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="itemModalLabel">Bağlama detalları</h5>
+                    <h5 class="modal-title" id="itemModalLabel">{!! __('popup.package_detail') !!}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Satıcı</th>
-                            <th>Kateqoriya</th>
-                            <th>Qiymət</th>
+                            <th>{!! __('popup.seller') !!}</th>
+                            <th>{!! __('popup.category') !!}</th>
+                            <th>{!! __('popup.price') !!}</th>
                         </tr>
                         </thead>
                         <tbody id="items_list">
@@ -544,7 +544,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{!! __('popup.close') !!}</button>
                 </div>
             </div>
         </div>

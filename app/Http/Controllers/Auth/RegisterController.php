@@ -466,9 +466,9 @@ class RegisterController extends Controller
 	 {
 		 try {
              if($request->is('api/*')){
-                 $phone1 = str_replace(['(', ')', '-'], '', $request->phone1);
-                 $phone1 = '994' . substr($phone1, 1);
-                 $request->phone1 = $phone1;
+                 $request->merge([
+                     'phone1' => str_replace("-", "", '994'.$request->phone1),
+                 ]);
              }else{
                  $request->merge([
                      'phone1' => str_replace("-", "", '994'.$request->prefix.$request->phone_suffix),
@@ -512,12 +512,12 @@ class RegisterController extends Controller
                  $validator = $this->validator($request);
              }
 
-             Log::channel('register_create')->error('Request.', ['message' => $request]);
-             Log::channel('register_create')->error('Validator.', ['message' => $validator]);
+             Log::channel('register_create')->error('Request.', ['message' => $request->all()]);
 
 
              if ($validator->fails()) {
-				 if($request->is('api/*')){
+                 Log::channel('register_create')->error('Validator.', ['message' => $validator->messages()]);
+                 if($request->is('api/*')){
 					 $messages = $validator->messages();
 					 return response()->json([
 						 'case' => 'warning',
@@ -534,50 +534,35 @@ class RegisterController extends Controller
 //             $request->phone1 = preg_replace("/[^0-9]/", "", $request->phone1);
 
 
-//             if($request->is('api/*')){
-//                 if (strlen($request->phone1) !== 10 ) {
-//                     $errorType = 'number2';
-//                     if($request->is('api/*')){
-//                         return response()->json([
-//                             'case' => 'warning',
-//                             'title' => __('static.attention') . '!',
-//                             'content' => 'Telfon nömrəsini düzgün daxil edin'
-//
-//                         ],422);
-//                     }
-////                 return $errorType;
-//
-//                 }
+             if($request->is('api/*')){
+                 if (strlen($request->phone1) !== 12 ) {
+                     $errorType = 'number2';
+                     if($request->is('api/*')){
+                         return response()->json([
+                             'case' => 'warning',
+                             'title' => __('static.attention') . '!',
+                             'content' => 'Telfon nömrəsini düzgün daxil edin'
 
-//             }else{
-//                 if (strlen($request->phone1) !== 12 ) {
-//
-//                     $errorType = 'number2';
-//
-//                     return redirect()->back()->with([
-//                         'case' => 'warning',
-//                         'title' => __('static.attention') . '!',
-//                         'content' => 'Telfon nömrəsi doğru deyil',
-//                         'errorType' => $errorType,
-//                     ])->withInput();
-//                 }
-//             }
+                         ],422);
+                     }
+//                 return $errorType;
 
+                 }
 
-//             if($request->is('api/*')){
-//                 if ($request->phone1[0] !== '0' ) {
-//                     $errorType = 'number2';
-//                     if($request->is('api/*')){
-//                         return response()->json([
-//                             'case' => 'warning',
-//                             'title' => __('static.attention') . '!',
-//                             'content' => $request->phone1[0]
-//
-//                         ],422);
-//                     }
-//                 }
-//
-//             }
+             }else{
+                 if (strlen($request->phone1) !== 12 ) {
+
+                     $errorType = 'number2';
+
+                     return redirect()->back()->with([
+                         'case' => 'warning',
+                         'title' => __('static.attention') . '!',
+                         'content' => 'Telfon nömrəsi doğru deyil',
+                         'errorType' => $errorType,
+                     ])->withInput();
+                 }
+             }
+
 
 
 
@@ -587,6 +572,11 @@ class RegisterController extends Controller
                  }
              }
 
+             $unveryfied_user = User::where('email', $request->email)->whereNull('email_verified_at')->select('id')->first();
+
+             if ($unveryfied_user) {
+                 $unveryfied_user->delete();
+             }
 
  
 			 if (!$request->voen){
@@ -752,7 +742,7 @@ class RegisterController extends Controller
 
              switch ($response[0]) {
 				 case 0:
-                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+                     Log::channel('register_create')->error('Failed to create0.', ['message' => $response[1]]);
                      if($request->is('api/*')){
 						 return response()->json([
 							 'case' => 'error',
@@ -769,7 +759,7 @@ class RegisterController extends Controller
 						 'content' => __('static.error_text') . ' (1) - '
 					 ])->withInput();
 				 case 2:
-                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+                     Log::channel('register_create')->error('Failed to create2.', ['message' => $response[1]]);
 
 					 if($request->is('api/*')){
 						 return response()->json([
@@ -785,7 +775,7 @@ class RegisterController extends Controller
 						 'content' => __('register.agreement_not_chosen')
 					 ])->withInput();
 				 case 1:
-                     Log::channel('register_create')->error('Failed to create.', ['message' => $response[1]]);
+                     Log::channel('register_create')->error('Success.', ['message' => $response[1]]);
 
 					 try {
 						 $user = $response[1];

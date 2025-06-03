@@ -5,7 +5,7 @@
 <script src="{{asset('frontend/js/sweetalert2.min.js')}}"></script>
 <script src="{{asset('web/js/validator.js')}}"></script>
 <script src="{{asset('web/js/calculator.js?v=1.1')}}"></script>
-<script src="{{asset('web/js/app.js?v=1.10')}}"></script>
+<script src="{{asset('web/js/app.js?v=1.11')}}"></script>
 @if(strpos(request()->fullUrl(), "special-order")!== false)
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
@@ -19,7 +19,7 @@
 <script src="{{asset('web/js/main.js?v=1.26')}}"></script>
 <script>
 
-    
+
     $(document).ready(function() {
         $('#footer-tariff').click(function() {
             if ($('.footer-tariff-menus').hasClass('d-none')) {
@@ -373,27 +373,31 @@
 
 </style>
 
-<div id="appPopup" class="app-popup">
-    <div id="closePopupBtn" class="close-popup-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-    </div>
-
-    <img src="{{env('APP_URL') . '/web/images/content/banner_aser.png'}}" alt="Mobil tətbiq" class="popup-banner">
-
-    <div class="popup-content">
-        <h3 class="popup-title">Mobil tətbiqimiz mövcuddur!</h3>
-        <p class="popup-description">Daha rahat istifadə üçün</p>
-        <button id="openAppBtn" class="popup-button">
-            Tətbiqdə aç
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+@if($userAgent == 1)
+    <div id="appPopup" class="app-popup">
+        <div id="closePopupBtn" class="close-popup-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
-        </button>
+        </div>
+
+        <img src="{{env('APP_URL') . '/web/images/content/banner_aser.png'}}" alt="Mobil tətbiq" class="popup-banner">
+
+        <div class="popup-content">
+            <h3 class="popup-title">Mobil tətbiqimiz mövcuddur!</h3>
+            <p class="popup-description">Daha rahat istifadə üçün</p>
+            <button id="openAppBtn" class="popup-button">
+                Tətbiqdə aç
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
     </div>
-</div>
+
+@endif
+
 
 
 

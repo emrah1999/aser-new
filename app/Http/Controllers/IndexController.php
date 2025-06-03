@@ -373,9 +373,9 @@ class IndexController extends HomeController
 
         Mail::to('info@asercargo.az')->send(new FeedbackMail($details));
         if ($request->is('api/*')) {
-            return response(['case' => 'success', 'message' => 'Müraciətiniz qeydə alındı']);
+            return response(['case' => 'success', 'message' =>  __('static.accept_applications')]);
         }
-        return redirect()->back()->with('success', 'Müraciətiniz qeydə alındı');
+        return redirect()->back()->with('success',  __('static.accept_applications'));
 
     }
 

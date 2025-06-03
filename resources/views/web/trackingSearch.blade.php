@@ -55,21 +55,18 @@
 
     <script>
         function submitTrackingSearchForm() {
-            // Kullanıcıdan alınan trek numarasını al
             const trackNumber = document.getElementById('trackNumber').value;
 
-            // Eğer trackNumber boşsa bir uyarı ver
             if (!trackNumber) {
-                alert('Lütfen trek nömrəsini yazın!');
+                let sellerSelfText = `{!! __('static.tracking_search_validation') !!}`;
+                alert(sellerSelfText);
+
                 return;
             }
 
-            // Formu manuel olarak submit et
             const form = document.getElementById('trackingSearchForm');
-            // Trek numarasını form alanına yerleştir
             form.track_number.value = trackNumber;
 
-            // Formu gönder
             form.submit();
         }
     </script>
