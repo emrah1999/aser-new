@@ -208,7 +208,7 @@
     }
 
     .app-popup {
-        display: none;
+        /*display: none;*/
         position: fixed;
         bottom: 20px;
         right: 20px;
@@ -222,7 +222,7 @@
         transform: translateY(20px);
         transition: all 0.3s ease-out;
         overflow: hidden;
-        display: flex;
+        /*display: flex;*/
         align-items: center;
         justify-content: center;
     }

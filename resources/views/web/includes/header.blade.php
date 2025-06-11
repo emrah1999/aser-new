@@ -158,6 +158,13 @@
                                                 <span class="nav-profile-menu__link-title">{!! __('account_menu.order') !!}</span>
                                             </a>
                                         </li>
+
+                                        <li class="nav-profile-menu__item">
+                                            <a href="{{ route('branchAndPudo', ['locale' => App::getLocale()]) }}"
+                                                class="nav-profile-menu__link d-flex justify-content-start align-items-center">
+                                                <span class="nav-profile-menu__link-title">Filiallar və təhvil məntəqələri</span>
+                                            </a>
+                                        </li>
                                         <li class="nav-profile-menu__item">
                                             <a href="{{route("get_courier_page", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center ">
                                                 <span class="nav-profile-menu__link-title">{!! __('account_menu.courier') !!}</span>

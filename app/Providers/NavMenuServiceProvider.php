@@ -31,6 +31,9 @@ class NavMenuServiceProvider extends ServiceProvider
     {
 
         $userAgent = request()->header('User-Agent');
+        $popupClosed = request()->cookie('popup_closed2');
+
+
         $menu=[];
         $menu['tariff']=Menu::query()->where('id',1)->first();
         $menu['logistics']=Menu::query()->where('id',2)->first();
@@ -49,9 +52,17 @@ class NavMenuServiceProvider extends ServiceProvider
 
 
         if (stripos($userAgent, 'iPhone') !== false || stripos($userAgent, 'iPad') !== false || stripos($userAgent, 'iOS') !== false) {
-            $userAgent = 1;
+            if ($popupClosed !== 'true') {
+                $userAgent = 1;
+            } else {
+                $userAgent = 0;
+            }
         } elseif (stripos($userAgent, 'Android') !== false) {
-            $userAgent = 1;
+            if ($popupClosed !== 'true') {
+                $userAgent = 1;
+            } else {
+                $userAgent = 0;
+            }
 
         } else {
             $userAgent = 0;

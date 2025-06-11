@@ -493,7 +493,7 @@ class AccountController extends Controller
     }
 
     // approve referral user account
-    public function approve_referral_user($referral)
+    public function approve_referral_user($locale ,$referral)
     {
         try {
             $referral_user = User::where(['id' => $referral, 'role_id' => 2, 'referral_unconfirm' => $this->userID])
@@ -503,7 +503,7 @@ class AccountController extends Controller
 
             if (!$referral_user) {
                 $message = 'Referral account not found!';
-                return redirect(route("get_account") . "?approve-referral=OK&case=warning&message=" . $message);
+                return redirect(route("get_account", ['locale' => App::getLocale()]) . "?approve-referral=OK&case=warning&message=" . urlencode($message));
             }
 
             $contract_id = Auth::user()->contract_id();
@@ -515,7 +515,7 @@ class AccountController extends Controller
             return redirect(route("get_account") . "?approve-referral=OK&case=success&message=" . $message);
         } catch (\Exception $exception) {
             $message = 'Sorry, something went wrong!';
-            return redirect(route("get_account") . "?approve-referral=OK&case=error&message=" . $message);
+            return redirect(route("get_account", ['locale' => App::getLocale()]) . "?approve-referral=OK&case=error&message=" . $message);
         }
     }
 
@@ -1253,7 +1253,12 @@ class AccountController extends Controller
     {
         try {
             $package = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
-                ->where(['package.id' => $package_id, 'package.client_id' => $this->userID])
+                ->leftJoin('users', 'package.client_id','=' , 'users.id')
+                ->where(['package.id' => $package_id, ])
+                ->where(function ($query)  {
+                    $query->where('package.client_id' , $this->userID)
+                        ->orWhere('users.parent_id', $this->userID);
+                })
                 //->where('package.is_warehouse', '<', 2)
                 //->whereNull('package.internal_id')
                 //->whereRaw('(package.internal_id is null or item.invoice_doc is null or item.invoice_confirmed <> 1)')
@@ -1316,7 +1321,6 @@ class AccountController extends Controller
                 return redirect()->route("get_orders");
             }
         } catch (\Exception $exception) {
-            //dd($exception);
             if ($this->api) {
                 return 'Something goes wrong!';
             }
@@ -1444,10 +1448,11 @@ class AccountController extends Controller
             }
 
             $package_exist = Item::leftJoin('package', 'item.package_id', '=', 'package.id')
+                ->leftJoin('users', 'package.client_id', '=', 'users.id')
                 ->where(['package.id' => $package_id])
                 ->whereRaw('(package.internal_id is null or item.invoice_doc is null or item.invoice_confirmed <> 1)')
                 ->whereNotIn('package.carrier_status_id', [7, 8])
-                ->select('package.client_id', 'package.country_id', 'package.internal_id', 'last_status_id', 'carrier_status_id')->first();
+                ->select('package.client_id','users.parent_id as parent' ,'package.country_id', 'package.internal_id', 'last_status_id', 'carrier_status_id')->first();
             if (!$package_exist) {
                 if ($this->api) {
                     return response([
@@ -1467,21 +1472,25 @@ class AccountController extends Controller
             }
 
             $client_id = $package_exist->client_id;
-            if ($client_id != null && $client_id != $this->userID) {
-                if ($this->api) {
-                    return response([
+
+            if ($client_id != null && $client_id != $this->userID)  {
+                if ($package_exist->parent !=  $this->userID){
+                    if ($this->api) {
+                        return response([
+                            'case' => 'warning',
+                            'title' => 'Oops!',
+                            'type' => 'validation',
+                            'content' => 'Access denied!'
+                        ]);
+                    }
+                    return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
                         'case' => 'warning',
                         'title' => 'Oops!',
                         'type' => 'validation',
                         'content' => 'Access denied!'
                     ]);
+
                 }
-                return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
-                    'case' => 'warning',
-                    'title' => 'Oops!',
-                    'type' => 'validation',
-                    'content' => 'Access denied!'
-                ]);
             }
 
             $user = User::where('id', $client_id)->select('is_legality')->first();
@@ -4093,7 +4102,7 @@ class AccountController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors($validator)
-                ->with(['case' => 'error']);
+                ->with(['case' => 'warning']);
         }
 
 
@@ -4134,7 +4143,10 @@ class AccountController extends Controller
 
             if ($diff_date < $min_date || $diff_date > $max_date) {
                 if ($this->api) {
-                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('courier.date_message')]);
+                    return response([
+                        'title' => 'error',
+                        'case' => 'error',
+                        'content' => __('courier.date_message')]);
                 }
 
                 return redirect()->back()
@@ -6164,5 +6176,82 @@ class AccountController extends Controller
                 'message' => 'Something went wrong'
             ]);
         }
+    }
+
+    public function change_branch(Request $request)
+    {
+        $user = User::query()->where('id',Auth::id())->first();
+
+        $user->update(['branch_id' => $request->branch_id]);
+
+
+        return response()->json([
+            'succes' => 'ok',
+            'status' => 'success',
+            'message' => 'Filial uğrula dəyişdirildi'
+        ]);
+    }
+
+    public function branchAndPudo()
+    {
+        $branches = DB::table('filial')
+            ->select(
+                'filial.id',
+                'filial.name',
+                'filial.address',
+                'filial.phone1',
+                'filial.work_hours',
+                'filial.is_pudo',
+                'filial.map_location',
+                'filial.id',
+                'filial.weekday_start_date',
+                'filial.weekday_end_date',
+                'filial.weekend_start_date',
+                'filial.weekend_end_date'
+
+            )
+            ->get();
+
+        $today = Carbon::now()->locale('az')->isoFormat('dd');
+        foreach ($branches as $branch) {
+            $now = Carbon::now();
+            $currentTime = $now->format('H:i');
+            $dayOfWeek = $now->dayOfWeek;
+
+            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                if (
+                    $currentTime >= $branch->weekday_start_date &&
+                    $currentTime <= $branch->weekday_end_date
+                ) {
+                    $branch->is_open = 1;
+                } else {
+                    $branch->is_open = 0;
+                }
+            } elseif ($dayOfWeek == 6) {
+                if (
+                    $currentTime >= $branch->weekend_start_date &&
+                    $currentTime <= $branch->weekend_end_date
+                ) {
+                    $branch->is_open = 1;
+                } else {
+                    $branch->is_open = 0;
+                }
+            }else{
+                $branch->is_open = 0;
+            }
+            $branch->today_abbr = $today;
+
+            $workHours = [
+                'be' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ça' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ç' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ca' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'c' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ş' => $branch-> weekend_start_date . '-' . $branch-> weekend_end_date,
+            ];
+            $branch->work_hours = $workHours;
+        }
+//        return $branches;
+        return view("web.branch.branchAndPudo", compact('branches'));
     }
 }
