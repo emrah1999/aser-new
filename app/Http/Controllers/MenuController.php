@@ -66,7 +66,7 @@ class MenuController extends Controller
             return app(OurServicesController::class)->index();
         }
         elseif ($menuId == 4){
-            return app(OurServicesController::class)->branches();
+            return app(OurServicesController::class)->branchNew();
         }
         elseif ($menuId == 5){
             return app(ContactController::class)->index_footer();

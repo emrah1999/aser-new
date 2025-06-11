@@ -15,6 +15,8 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', function () {
     return redirect('/' . app()->getLocale());
 });
+Route::get('/branch2','OurServiceController@branchNew');
+
 Route::get('/testMurad', [RegisterController::class, 'testMurad']);
 Route::get('/language/{locale}', 'LanguageController@set_locale_language')->name("set_locale_language");
 Route::get('/r', 'RedirectController@redirect')->name('redirect_seller');
@@ -66,6 +68,8 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     Route::get('/prohibited-items', 'ProhibitedItemsController@index')->name("prohibited_items");
     Route::get('/tutorial', 'TutorialController@index')->name("tutorial");
 
+    Route::get('/branch-station', 'AccountController@branchAndPudo')->name("branchAndPudo");
+
     Route::group(['prefix' => '/our-services'], function () {
         Route::get('/', 'OurServicesController@index')->name("ourServices_page");
         Route::get('/branches', 'OurServicesController@branches')->name("ourServices_branhces");
@@ -89,7 +93,9 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
     });
 
     Route::group(['prefix' => '/account', 'middleware' => ['Login', 'auth']], function () {
+
         Route::get('/', 'AccountController@get_account')->name("get_account");
+        Route::post('/change-branch', 'AccountController@change_branch')->name("change_branch");
         Route::post('/save-token', 'NotificationController@saveToken')->name('saveToken');
 
         Route::group(['prefix' => '/details'], function () {
@@ -228,3 +234,4 @@ Route::post('/secret/payment/callback/paytr', 'BalanceController@callback_paytr'
 Route::post('/callback/pasha', 'BalanceController@callback_pashaBank')->name("callback_pashaBank");
 Route::post('/callback/special-order', 'BalanceController@callback_pashaBank_special')->name("callback_pashaBank_special");
 Route::post('/calculate','IndexController@calculate')->name("calculate");
+

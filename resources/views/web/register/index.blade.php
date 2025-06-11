@@ -399,7 +399,7 @@
                                         <span class="eye-icon" id="togglePassword1"
                                               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
                                         <i class="fas fa-eye"></i>
-                                    </span>
+                                    </span>z
                                     </div>
                                     <div class="invalid-feedback"></div>
                                 </div>

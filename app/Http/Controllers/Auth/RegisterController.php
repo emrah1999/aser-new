@@ -306,7 +306,7 @@ class RegisterController extends Controller
 //                'passport_fin' => ['required', 'string', 'max:15'],
                 'parent_code' => ['nullable', 'string', 'max:10'],
                 'agreement' => ['required'],
-                'password' => ['required', 'string', 'min:8'],
+                'password' => ['required', 'string', 'min:5'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
                 'verification'=>['required', 'string',  'min:2'],
@@ -333,7 +333,7 @@ class RegisterController extends Controller
                 'gender' => ['required', 'integer'],
                 'parent_code' => ['nullable', 'string', 'max:10'],
                 'agreement' => ['required'],
-                'password' => ['required', 'string', 'min:8'],
+                'password' => ['required', 'string', 'min:5'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
                 'verification'=>['required', 'string',  'min:2'],
@@ -357,7 +357,7 @@ class RegisterController extends Controller
                 'gender' => ['required', 'integer'],
                 'parent_code' => ['nullable', 'string', 'max:10'],
                 'agreement' => ['required'],
-                'password' => ['required', 'string', 'min:8'],
+                'password' => ['required', 'string', 'min:5'],
                 'branch_id' => ['required', 'integer'],
                 'is_legality' => ['required', 'integer'],
                 'verification'=>['required', 'string',  'min:2'],
@@ -439,9 +439,9 @@ class RegisterController extends Controller
 						$email_bottom = $email->{'content_bottom_' . $lang};
 						$email_content = $email->{'content_' . $lang};
 
-						$link = route("approve_referral_user_account", $user->id);
+                        $link = route("approve_referral_user_account", ['locale' => App::getLocale(), 'id' => $user->id]);
 
-						$email_content = str_replace(array('{name_surname}', '{inviter_name}', '{referral_link}'), array($client, $referral_user, $link), $email_content);
+                        $email_content = str_replace(array('{name_surname}', '{inviter_name}', '{referral_link}'), array($client, $referral_user, $link), $email_content);
 
 						$parent_user->notify(new Emails($email_title, $email_subject, $email_content, $email_bottom));
 					}

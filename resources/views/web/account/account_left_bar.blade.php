@@ -31,6 +31,16 @@
                 <span class="nav-profile-menu__link-title">{!! __('account_menu.order') !!}</span>
             </a>
         </li>
+
+        <li class="nav-profile-menu__item">
+            <a href="{{ route('branchAndPudo', ['locale' => App::getLocale()]) }}"
+               class="nav-profile-menu__link d-flex justify-content-start align-items-center
+                    {{ request()->routeIs('get_orders') ? 'nav-profile-menu__link--active' : '' }}">
+                <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-package.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/profile-menu-package.png" alt="ProfileMenu">
+                <span class="nav-profile-menu__link-title">Filiallar və Məntəqələr</span>
+            </a>
+        </li>
         <li class="nav-profile-menu__item">
             <a href="{{route("get_courier_page", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_courier_page') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-curier.png" alt="ProfileMenu">

@@ -8,6 +8,7 @@ use App\Menu;
 use App\Service;
 use App\ServiceText;
 use App\Title;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -123,5 +124,68 @@ class OurServicesController extends Controller
 
 
         return view("web.services.single", compact('service'));
+    }
+
+    public function branchNew()
+    {
+        $branches = DB::table('filial')
+            ->select(
+                'filial.id',
+                'filial.name',
+                'filial.address',
+                'filial.phone1',
+                'filial.work_hours',
+                'filial.is_pudo',
+                'filial.map_location',
+                'filial.id',
+                'filial.weekday_start_date',
+                'filial.weekday_end_date',
+                'filial.weekend_start_date',
+                'filial.weekend_end_date'
+
+            )
+            ->get();
+
+        $today = Carbon::now()->locale('az')->isoFormat('dd');
+        foreach ($branches as $branch) {
+            $now = Carbon::now();
+            $currentTime = $now->format('H:i');
+            $dayOfWeek = $now->dayOfWeek;
+
+            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                if (
+                    $currentTime >= $branch->weekday_start_date &&
+                    $currentTime <= $branch->weekday_end_date
+                ) {
+                    $branch->is_open = 1;
+                } else {
+                    $branch->is_open = 0;
+                }
+            } elseif ($dayOfWeek == 6) {
+                if (
+                    $currentTime >= $branch->weekend_start_date &&
+                    $currentTime <= $branch->weekend_end_date
+                ) {
+                    $branch->is_open = 1;
+                } else {
+                    $branch->is_open = 0;
+                }
+            }else{
+                $branch->is_open = 0;
+            }
+            $branch->today_abbr = $today;
+
+            $workHours = [
+               'be' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ça' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ç' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ca' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'c' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
+                'ş' => $branch-> weekend_start_date . '-' . $branch-> weekend_end_date,
+            ];
+           $branch->work_hours = $workHours;
+        }
+//        return $branches;
+        return view("web.services.branchNew", compact('branches'));
     }
 }
