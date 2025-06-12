@@ -415,7 +415,7 @@ class IndexController extends HomeController
             ]);
         }
         return response()->json([
-            'status' => true,
+            'status' => false,
             'message' => 'Tətbiqin yeni versiyası mövcuddur',
             'app_store_url' => $version->app_store_url,
             'play_market_url' => $version->play_market_url,
