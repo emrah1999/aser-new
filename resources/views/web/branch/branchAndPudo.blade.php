@@ -6,7 +6,7 @@
             <div class="container-lg">
                 <div class="row">
                     @include('web.account.account_left_bar')
-                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
+                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7 main-content">
 
                         @php
                             use Illuminate\Support\Facades\Auth;
@@ -189,63 +189,44 @@
             transition: transform 0.3s ease;
         }
 
-        .rotate-180 {
-            transform: rotate(180deg);
-        }
-
         .schedule-table {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
             transition: max-height 0.4s ease, opacity 0.4s ease;
         }
-
         .schedule-table.open {
             max-height: 500px;
             opacity: 1;
         }
-
         .opened {
             color: #32cd30;
         }
-
         .closed {
             color: red;
         }
-
         .branch-input {
             height: 15px;
             width: 15px;
         }
-
         .map-link {
             color: black;
         }
-
-        .thumbnail-branches__link {
-            padding: 8px 10px;
-        }
-
-        .btn-trns-blue {
-            color: black;
-        }
-
         body {
             font-family: Arial, sans-serif;
             margin: -20px;
             padding: 20px;
-            /*background: #f4f4f4;*/
         }
-
         .container {
             display: flex;
             border: 1px solid grey;
             gap: 20px;
-            max-width: 1200px;
+            /*max-width: 1200px;*/
+            height: 52%;
             background: #fff;
             padding: 20px;
             border-radius: 8px;
-            height: 700px;
+            /*height: 700px;*/
         }
 
         .left-panel {
@@ -320,6 +301,35 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: none;
+
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: none;
+                width: 110%;
+            }
+        }
+        @media (min-width: 1800px) {
+            .container {
+                max-width: none;
+                width: 120%;
+            }
+        }
+
     </style>
 @endsection
 
