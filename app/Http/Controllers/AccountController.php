@@ -1332,6 +1332,9 @@ class AccountController extends Controller
     {
 //        dd($request->all());
 //        return $request;
+        Log::channel('invoice_log')->info('P_ID.', ['message' => $package_id]);
+        Log::channel('invoice_log')->info('Request.', ['message' => $request->all()]);
+
         $validator = Validator::make($request->all(), [
             'currency_id' => ['required', 'integer'],
             'seller_id' => ['nullable', 'integer'],
@@ -1344,6 +1347,8 @@ class AccountController extends Controller
             'remark' => ['nullable', 'string', 'max:5000'],
         ]);
         if ($validator->fails()) {
+            Log::channel('invoice_log')->error('Validator.', ['message' => $validator->messages()]);
+
             if ($this->api) {
                 return response([
                     'case' => 'warning',
@@ -1362,6 +1367,8 @@ class AccountController extends Controller
             //return response(['case' => 'warning', 'title' => 'Warning!', 'type' => 'validation', 'content' => $validator->errors()->toArray()]);
         }
         if ($request->get('price') < 1) {
+            Log::channel('invoice_log')->error('Price.', ['message' => 'Invoice price cannot be 0']);
+
             if ($this->api) {
                 return response([
                     'case' => 'warning',
@@ -1567,6 +1574,9 @@ class AccountController extends Controller
                 'status_id' => 35
             ]);
 
+            Log::channel('invoice_log')->info('Success.');
+
+
             if ($this->api) {
                 return response([
                     'case' => 'success',
@@ -1583,6 +1593,8 @@ class AccountController extends Controller
             ]);
         } catch (\Exception $exception) {
             // dd($exception);
+            Log::channel('invoice_log')->error('Error.', ['message' => $exception->getMessage()]);
+
             return redirect()->route('get_orders', ['locale' => App::getLocale()])->with([
                 'case' => 'error',
                 'title' => 'Error!',
@@ -2132,6 +2144,7 @@ class AccountController extends Controller
 
     public function add_special_order(Request $request)
     {
+        return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Texniki işlər aparıldığından müvəqqəti olaraq link sifarişi dayandırılıb']);
         $validator = Validator::make($request->all(), [
             'url.*' => ['required', 'string', 'max:1000'],
             'url' => ['required', 'array'],
@@ -6194,23 +6207,30 @@ class AccountController extends Controller
 
     public function branchAndPudo()
     {
-        $branches = DB::table('filial')
-            ->select(
-                'filial.id',
-                'filial.name',
-                'filial.address',
-                'filial.phone1',
-                'filial.work_hours',
-                'filial.is_pudo',
-                'filial.map_location',
-                'filial.id',
-                'filial.weekday_start_date',
-                'filial.weekday_end_date',
-                'filial.weekend_start_date',
-                'filial.weekend_end_date'
+        $query = DB::table('filial');
 
-            )
+        if (Auth::check()) {
+            $userBranchId = Auth::user()->branch_id;
+
+            $query = $query->orderByRaw("CASE WHEN filial.id = ? THEN 0 ELSE 1 END", [$userBranchId])
+                ->orderBy(DB::raw('id = ' . $userBranchId), 'desc');;
+        }
+
+        $branches = $query->select(
+            'filial.id',
+            'filial.name',
+            'filial.address',
+            'filial.phone1',
+            'filial.work_hours',
+            'filial.is_pudo',
+            'filial.map_location',
+            'filial.weekday_start_date',
+            'filial.weekday_end_date',
+            'filial.weekend_start_date',
+            'filial.weekend_end_date'
+        )
             ->get();
+
 
         $today = Carbon::now()->locale('az')->isoFormat('dd');
         foreach ($branches as $branch) {

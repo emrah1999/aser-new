@@ -131,7 +131,11 @@ return [
             'level' => 'info',
             'days' => 100,
         ],
-
+        'invoice_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/invoice/invoice.log'),
+            'level' => 'debug',
+        ],
     ],
 
 ];

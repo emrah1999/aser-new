@@ -32,7 +32,7 @@
                                                         {{ $branch->name }} - {{ $branch->address }}
                                                         <br>
                                                         @if($branch->is_open == 1)
-                                                            <label class="opened font-n-b">Açıqdır - Bağlanacaq
+                                                            <label class="opened font-n-b2">Açıqdır - Bağlanacaq
                                                                 @foreach($branch->work_hours as $day => $time)
                                                                     <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                                             {{$branch->weekday_end_date}}
@@ -168,16 +168,44 @@
         </section>
     </div>
 
+
 @endsection
 
 @section('styles')
     <style>
-        .font-n-b{
+        .font-n-b2 {
+            font-size: 11px !important;
+        }
+        .section-title {
+            font-size: 15px;
+        }
+
+        .branch-item {
+            font-size: 13px;
+        }
+
+        .schedule-table table {
             font-size: 12px;
+        }
+
+        .opened, .closed {
+            font-size: 11px;
+        }
+
+        .change-branch-btn {
+            font-size: 13px;
+        }
+        .col-md-9{
+            font-size: 15px;
+        }
+
+        .map-link {
+            font-size: 13px;
         }
         .section-title {
             text-align: center;
             font-weight: bold;
+            font-size: 20px  ;
             padding: 10px;
             color: #f2c516;
             margin: 10px 0;
@@ -319,12 +347,14 @@
 
         @media (min-width: 1200px) {
             .container {
+                height: 57%;
                 max-width: none;
                 width: 110%;
             }
         }
         @media (min-width: 1800px) {
             .container {
+                height: 60%;
                 max-width: none;
                 width: 120%;
             }

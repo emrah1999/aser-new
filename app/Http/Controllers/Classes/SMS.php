@@ -4,6 +4,8 @@
 namespace App\Http\Controllers\Classes;
 
 
+use Illuminate\Support\Facades\Log;
+
 class SMS
 {
     public function sendBulkSms($message, $users, $control_id) {
@@ -35,6 +37,9 @@ class SMS
         }
 
         $xml .= '</request>';
+
+
+        Log::info('xml- '.$xml);
 
         $headers = array(
             "Content-type: text/xml",

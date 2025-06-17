@@ -786,7 +786,8 @@ class RegisterController extends Controller
 						 $otp_session = $this->generateRandomCode();
 						 if ( $request->verification=='sms'){
 							 $sendOtp = new SendOTPCode();
-							 $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+							 $response = $sendOtp->send_sms($userId, $request->phone1, $otp_session);
+                             Log::info('xmlResponse - ' . $response);
                              $otpType = 1;
                              $credential = $request->phone1;
 						 }
