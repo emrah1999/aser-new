@@ -24,7 +24,7 @@
                                     {{ $branch->name }} - {{ $branch->address }}
                                     <br>
                                     @if($branch->is_open == 1)
-                                        <label class="opened font-n-b">Açıqdır - Bağlanacaq
+                                        <label class="opened font-n-b2">Açıqdır - Bağlanacaq
                                             @foreach($branch->work_hours as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_end_date}}
@@ -40,7 +40,7 @@
                                             </span>
                                         </label>
                                     @else
-                                        <label class="closed font-n-b">Bağlıdır - Açılacaq
+                                        <label class="closed font-n-b2">Bağlıdır - Açılacaq
                                             @foreach($branch->work_hours as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
@@ -87,7 +87,7 @@
                                     {{ $branch->name }} - {{ $branch->address }}
                                     <br>
                                     @if($branch->is_open == 1)
-                                        <label class="opened font-n-b">Açıqdır - Bağlanacaq
+                                        <label class="opened font-n-b2">Açıqdır - Bağlanacaq
                                             @foreach($branch->work_hours as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_end_date}}
@@ -103,7 +103,7 @@
                                             </span>
                                         </label>
                                     @else
-                                        <label class="closed font-n-b">Bağlıdır - Açılacaq
+                                        <label class="closed font-n-b2">Bağlıdır - Açılacaq
                                             @foreach($branch->work_hours as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
@@ -157,7 +157,13 @@
 
 @section('styles')
     <style>
-        .font-n-b{
+        .section-title{
+            font-size: 22px;
+        }
+        .col-md-9{
+            font-size: 16px;
+        }
+        .font-n-b2{
             font-size: 12px;
         }
         .section-title {

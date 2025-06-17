@@ -11,13 +11,15 @@ use App\Title;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OurServicesController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         try {
-            $faqs = Faq::query()->where('page',3)->select([
+            $faqs = Faq::query()->where('page', 3)->select([
                 'id',
                 DB::raw("question_" . App::getLocale() . " as name"),
                 DB::raw("answer_" . App::getLocale() . " as content")
@@ -25,8 +27,7 @@ class OurServicesController extends Controller
                 ->get();
 
 
-
-            $text=ServiceText::query()
+            $text = ServiceText::query()
                 ->select([
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content")
@@ -37,13 +38,13 @@ class OurServicesController extends Controller
             ];
 
             $title = Title::query()
-                ->select(array_map(function($field) {
+                ->select(array_map(function ($field) {
                     return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
                 }, $fields))
                 ->first();
 
             $services = Service::query()->select([
-                'id','icon',
+                'id', 'icon',
                 DB::raw("name_" . App::getLocale() . " as name"),
                 DB::raw("content_" . App::getLocale() . " as content"),
                 DB::raw("slug_" . App::getLocale() . " as slug")
@@ -51,75 +52,76 @@ class OurServicesController extends Controller
                 ->get();
 
             $blogs = Blog::query()->orderBy('id', 'desc')->limit(3)
-                ->where('page',1)
+                ->where('page', 1)
                 ->select([
-                    'id','icon',
+                    'id', 'icon',
                     DB::raw("name_" . App::getLocale() . " as name"),
                     DB::raw("content_" . App::getLocale() . " as content"),
                     DB::raw("slug_" . App::getLocale() . " as slug")
                 ])
                 ->get();
 
-            $breadcrumbs=1;
+            $breadcrumbs = 1;
 
 
-
-            return view("web.services.index", compact("faqs", "text",'title','blogs','breadcrumbs','services'));
+            return view("web.services.index", compact("faqs", "text", 'title', 'blogs', 'breadcrumbs', 'services'));
         } catch (\Exception $exception) {
             return view("front.error");
         }
     }
-    
-    public function branches(){
+
+    public function branches()
+    {
         try {
             if (App::getLocale() == "az") {
                 $branches = DB::table('filial')->where('is_active', 1)->get();
-            }else{
+            } else {
                 $branches = DB::table('filial')->where('is_active', 1)
                     ->select('filial.name',
-                        'filial.address_'.App::getLocale().' as address',
+                        'filial.address_' . App::getLocale() . ' as address',
                         'filial.phone1',
                         'filial.phone2',
-                        'filial.work_hours_'.App::getLocale().' as work_hours',
+                        'filial.work_hours_' . App::getLocale() . ' as work_hours',
                         'filial.map_location'
                     )
                     ->get();
             }
-            $breadcrumbs=1;
+            $breadcrumbs = 1;
             $fields = [
                 'branch'
             ];
 
             $title = Title::query()
-                ->select(array_map(function($field) {
+                ->select(array_map(function ($field) {
                     return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
                 }, $fields))
                 ->first();
 
-            return view("web.services.branches", compact('branches','breadcrumbs','title'));
-        }catch (\Exception $exception){
-            return view("front.error");
-        }
-    }
-    
-    public function cargomat(){
-        try {
-            return view("web.services.cargomat");
-        }catch (\Exception $exception){
+            return view("web.services.branches", compact('branches', 'breadcrumbs', 'title'));
+        } catch (\Exception $exception) {
             return view("front.error");
         }
     }
 
-    public function get_services($locale , $id)
+    public function cargomat()
+    {
+        try {
+            return view("web.services.cargomat");
+        } catch (\Exception $exception) {
+            return view("front.error");
+        }
+    }
+
+    public function get_services($locale, $id)
     {
         $service = Service::query()->select([
-            'id','icon','internal_images',
+            'id', 'icon', 'internal_images',
             DB::raw("name_" . App::getLocale() . " as name"),
             DB::raw("content_" . App::getLocale() . " as content"),
             DB::raw("ceo_title_" . App::getLocale() . " as ceo_title"),
             DB::raw("seo_description_" . App::getLocale() . " as seo_description"),
         ])
-            ->where('id',$id)
+            ->where('id', $id)
             ->first();
 
 
@@ -128,23 +130,30 @@ class OurServicesController extends Controller
 
     public function branchNew()
     {
-        $branches = DB::table('filial')
-            ->select(
-                'filial.id',
-                'filial.name',
-                'filial.address',
-                'filial.phone1',
-                'filial.work_hours',
-                'filial.is_pudo',
-                'filial.map_location',
-                'filial.id',
-                'filial.weekday_start_date',
-                'filial.weekday_end_date',
-                'filial.weekend_start_date',
-                'filial.weekend_end_date'
+        $query = DB::table('filial');
 
-            )
+        if (Auth::check()) {
+            $userBranchId = Auth::user()->branch_id;
+
+            $query = $query->orderByRaw("CASE WHEN filial.id = ? THEN 0 ELSE 1 END", [$userBranchId])
+                ->orderBy(DB::raw('id = ' . $userBranchId), 'desc');;
+        }
+
+        $branches = $query->select(
+            'filial.id',
+            'filial.name',
+            'filial.address',
+            'filial.phone1',
+            'filial.work_hours',
+            'filial.is_pudo',
+            'filial.map_location',
+            'filial.weekday_start_date',
+            'filial.weekday_end_date',
+            'filial.weekend_start_date',
+            'filial.weekend_end_date'
+        )
             ->get();
+
 
         $today = Carbon::now()->locale('az')->isoFormat('dd');
         foreach ($branches as $branch) {
@@ -170,20 +179,20 @@ class OurServicesController extends Controller
                 } else {
                     $branch->is_open = 0;
                 }
-            }else{
+            } else {
                 $branch->is_open = 0;
             }
             $branch->today_abbr = $today;
 
             $workHours = [
-               'be' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ça' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ç' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ca' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'c' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ş' => $branch-> weekend_start_date . '-' . $branch-> weekend_end_date,
+                'be' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                'ça' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                'ç' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                'ca' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                'c' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                'ş' => $branch->weekend_start_date . '-' . $branch->weekend_end_date,
             ];
-           $branch->work_hours = $workHours;
+            $branch->work_hours = $workHours;
         }
 //        return $branches;
         return view("web.services.branchNew", compact('branches'));
