@@ -480,4 +480,12 @@ class OtherApiController extends Controller
             'data' => $prefix
         ]);
     }
+
+    public function specialOrderPopup()
+    {
+        return response()->json([
+            'status' => false,
+            'message' => 'Texniki işlər aparıldığından müvəqqəti olaraq link sifarişi dayandırılıb.'
+        ]);
+    }
 }

@@ -4092,15 +4092,15 @@ class AccountController extends Controller
             'urgent_order' => ['required', 'integer'],
         ], [
 
-            'packages_list.required' => __('popup.package_required'),
-            'date.required' => __('popup.date_required'),
-            'area_id.required' => __('popup.station_required'),
+            'packages_list.required' => __('validation.package_required'),
+            'date.required' => __('validation.date_required'),
+            'area_id.required' => __('validation.station_required'),
 
-            'address.required' => __('popup.adress_required'),
+            'address.required' => __('validation.adress_required'),
 
-            'phone.required' => __('popup.package_required'),
-            'courier_payment_type_id.required' => __('popup.courier_payment_required'),
-            'delivery_payment_type_id.required' => __('popup.international_payment_required'),
+            'phone.required' => __('validation.package_required'),
+            'courier_payment_type_id.required' => __('validation.courier_payment_required'),
+            'delivery_payment_type_id.required' => __('validation.international_payment_required'),
         ]);
 
         if ($validator->fails()) {

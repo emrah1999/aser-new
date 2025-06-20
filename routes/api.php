@@ -251,4 +251,5 @@ Route::group(['prefix' => 'external', 'middleware' => ['thirdPlatform', 'throttl
 Route::get('/users-for-courier',[\App\Http\Controllers\Api\OtherApiController::class,'get_user_for_courier']);
 
 Route::get('/special-order-terms',[\App\Http\Controllers\Api\OtherApiController::class,'special_order_terms']);
+Route::get('/special-order-popup',[\App\Http\Controllers\Api\OtherApiController::class,'specialOrderPopup']);
 
