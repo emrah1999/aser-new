@@ -224,7 +224,7 @@ class IndexController extends HomeController
             $chargeable_weight = $weight;
             foreach ($tariffs as $tariff) {
                 if ($tariff->volume_control == 1) {
-                    if ($length > 0 && $width > 0 && $height > 0) {
+                    if ($length > 100 || $width > 100 || $height > 100) {
                         if ($volume_weight > $weight) {
                             $chargeable_weight = $volume_weight;
                         } else {
@@ -306,7 +306,7 @@ class IndexController extends HomeController
             $chargeable_weight = $weight;
             foreach ($tariffs as $tariff) {
                 if ($tariff->volume_control == 1) {
-                    if ($length > 0 && $width > 0 && $height > 0) {
+                    if ($length > 100 || $width > 100 || $height > 100) {
                         if ($volume_weight > $weight) {
                             $chargeable_weight = $volume_weight;
                         } else {
