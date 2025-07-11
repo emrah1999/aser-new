@@ -1601,4 +1601,7 @@ class BalanceController extends Controller
         }
         return $rate->rate;
     }
+    public function callback_azericard_special(Request $request){
+        return true;
+    }
 }
