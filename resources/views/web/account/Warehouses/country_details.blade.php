@@ -85,11 +85,11 @@
                                     <span class="nav-tab-categories__link-title d-none d-md-block"> {{ $country->name }}</span>
                                 </a>
                             @endforeach
-                            <a href="{{route('get_country_details', ['locale' => App::getLocale(), 'special'])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-5 {{ $currentCountryId == 'special' ? 'nav-tab-categories__link--active mr-5 active' : '' }}">
+                            {{--<a href="{{route('get_country_details', ['locale' => App::getLocale(), 'special'])}}" class="nav-tab-categories__link nav-tab-categories__link flex-fill d-flex justify-content-center align-items-center mr-5 {{ $currentCountryId == 'special' ? 'nav-tab-categories__link--active mr-5 active' : '' }}">
                                 <img  class="nav-tab-categories__link-img" src="https://asercargo.az/web/images/content/flag-usa.png" alt="">
                                 <span class="nav-tab-categories__link-title d-none d-md-block">New York</span>
 
-                            </a>
+                            </a>--}}
                         </div>
                         <div class="tab-content tab-content-categories">
                             <div class="tab-pane fade show active" id="turkey">
@@ -100,6 +100,15 @@
                                         </div>
 
                                         <p class="information col-md-11 ">{!! __('static.germany_info') !!}</p>
+                                    </div>
+                                @endif
+                                @if($currentCountry==4)
+                                    <div class="row">
+                                        <div class=" information-div col-md-1">
+                                            <img src="{{asset('uploads/static/info.png')}}"  height="15px" width="15px" data-toggle="tooltip" data-placement="right" >
+                                        </div>
+
+                                        <p class="information col-md-11 ">{!! __('static.spain_info') !!}</p>
                                     </div>
                                 @endif
                                 @foreach($details as $detail)

@@ -184,6 +184,7 @@ return [
     'using_way_delivery_home_head' => 'We deliver your orders to your address',
     'using_way_delivery_home_title' => 'Your order is being delivered to Baku',
     'germany_info'=>'Attention!It is mandatory to indicate the company name along with the warehouse address. If the company name is not indicated on the package, DHL courier company will refuse to deliver the package.',
+    'spain_info'=>' Attention! The most common mistake made by customers: when entering the warehouse address on the seller`s website, the city should be entered as “Gava”, not “Barcelona”.',
 
     'select_country1' => 'Select country ',
     'kq1' => 'kq',

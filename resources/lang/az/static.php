@@ -110,7 +110,7 @@ return [
     'using_way_delivery_home_title' => 'Sifarişiniz Bakıya çatdırılır',
     'selectItem'=>'Zəhmət olmasa, sifariş etmək istədiyiniz ölkəni seçin',
     'germany_info'=>'Diqqət!Anbar ünvanı ilə bərabər şirkətin adını qeyd etməyiniz mütləqdir. Bağlamanın üzərində şirkətin adı qeyd edilmədikdə DHL kuryer şirkəti bağlamanı çatdırmaqdan imtina edir.',
-
+     "spain_info"=>"Diqqət! Müştərilər tərəfindən ən çox yol verilən səhv: Satıcının saytında anbar ünvanı qeyd edərkən şəhər olaraq “Barcelona” deyil “Gava” qeyd edilməlidir.",
     'select_country1' => 'Ölkə seçin',
     'kq1' => 'kq',
     'gr1' => 'qr',
