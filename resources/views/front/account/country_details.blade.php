@@ -39,18 +39,18 @@
 													</a>
 												</div>
 											@endforeach
-												<div class="col-md-2 col-xs-12">
-													<a href="{{route('get_country_details', 'special')}}" class="country-block-link">
-														<div class="country-block">
-															<div class="country-f">
-																<img src="https://asercargo.az/front/frontend/web/uploads/images/country/usa.png" alt="">
-															</div>
-															<div class="c-btn" title="">
-																New York
-															</div>
-														</div>
-													</a>
-												</div>
+{{--												<div class="col-md-2 col-xs-12">--}}
+{{--													<a href="{{route('get_country_details', 'special')}}" class="country-block-link">--}}
+{{--														<div class="country-block">--}}
+{{--															<div class="country-f">--}}
+{{--																<img src="https://asercargo.az/front/frontend/web/uploads/images/country/usa.png" alt="">--}}
+{{--															</div>--}}
+{{--															<div class="c-btn" title="">--}}
+{{--																New York--}}
+{{--															</div>--}}
+{{--														</div>--}}
+{{--													</a>--}}
+{{--												</div>--}}
 										</div>
 									</div>
 
