@@ -37,22 +37,22 @@ class CountryController extends Controller
             ->get();
 //        $countries = Country::where('url_permission', 1)->select('id', 'name_' . $header, 'flag', 'new_flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 //return $status ;
-        if ($status == 1) {
-            $staticCountry = [
-                'id' => 'special',
-                'title' => 'New York',
-                'flag' => 'https://asercargo.az/web/images/content/flag-usa.png',
-                'image' => 'https://asercargo.az/web/images/content/flag-usa.png',
-                'currency_id' => null,
-                'local_currency' => 'AZN',
-                'currency_for_declaration' => 'AZN',
-                'currency_type' => null,
-                'goods_fr' => null,
-                'goods_to' => null,
-            ];
-
-            $countries->push($staticCountry);
-        }
+//        if ($status == 1) {
+//            $staticCountry = [
+//                'id' => 'special',
+//                'title' => 'New York',
+//                'flag' => 'https://asercargo.az/web/images/content/flag-usa.png',
+//                'image' => 'https://asercargo.az/web/images/content/flag-usa.png',
+//                'currency_id' => null,
+//                'local_currency' => 'AZN',
+//                'currency_for_declaration' => 'AZN',
+//                'currency_type' => null,
+//                'goods_fr' => null,
+//                'goods_to' => null,
+//            ];
+//
+//            $countries->push($staticCountry);
+//        }
         
         return $countries;
     }
