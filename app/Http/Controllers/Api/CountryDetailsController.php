@@ -129,7 +129,8 @@ class CountryDetailsController extends Controller
         return [
             $countries,
             $user,
-            $country_id == 9 ? ['text' => __('static.germany_info')] : ""
+            $country_id == 9 ? ['text' => __('static.germany_info')] :($country_id == 4 ? ['text' => __('static.spain_info')] : ""),
+
         ];
 
     }
