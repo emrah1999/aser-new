@@ -130,21 +130,17 @@ class OurServicesController extends Controller
 
     public function branchNew()
     {
+        $lang = App::getLocale() ?? 'az';
+
         $query = DB::table('filial');
 
-        if (Auth::check()) {
-            $userBranchId = Auth::user()->branch_id;
-
-            $query = $query->orderByRaw("CASE WHEN filial.id = ? THEN 0 ELSE 1 END", [$userBranchId])
-                ->orderBy(DB::raw('id = ' . $userBranchId), 'desc');;
-        }
-
-        $branches = $query->select(
+        $branches = $query->where('is_active', 1)->select(
             'filial.id',
-            'filial.name',
-            'filial.address',
+            'filial.name_' . App::getLocale() . ' as name',
+            'filial.address_' . App::getLocale() . ' as address',
             'filial.phone1',
-            'filial.work_hours',
+            'filial.phone2',
+            App::getLocale() != 'az' ? 'filial.work_hours_' . App::getLocale() . ' as work_hours' : 'filial.work_hours',
             'filial.is_pudo',
             'filial.map_location',
             'filial.weekday_start_date',
@@ -153,7 +149,6 @@ class OurServicesController extends Controller
             'filial.weekend_end_date'
         )
             ->get();
-
 
         $today = Carbon::now()->locale('az')->isoFormat('dd');
         foreach ($branches as $branch) {
@@ -184,17 +179,26 @@ class OurServicesController extends Controller
             }
             $branch->today_abbr = $today;
 
-            $workHours = [
-                'be' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
-                'ça' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
-                'ç' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
-                'ca' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
-                'c' => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
-                'ş' => $branch->weekend_start_date . '-' . $branch->weekend_end_date,
+            $days = [
+                'az' => ['be' => 'B.e.', 'ça' => 'Ç.a.', 'ç' => 'Ç.', 'ca' => 'C.a.', 'c' => 'C.', 'ş' => 'Ş.'],
+                'en' => ['be' => 'Mon', 'ça' => 'Tue', 'ç' => 'Wed', 'ca' => 'Thu', 'c' => 'Fri', 'ş' => 'Sat'],
+                'ru' => ['be' => 'Пн', 'ça' => 'Вт', 'ç' => 'Ср', 'ca' => 'Чт', 'c' => 'Пт', 'ş' => 'Сб'],
             ];
-            $branch->work_hours = $workHours;
+            $locale = App::getLocale();
+
+            $labels = $days[$locale] ?? $days['az'];
+            $workHours = [
+                $labels['be'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ça'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ç'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ca'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['c'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ş'] => $branch->weekend_start_date . '-' . $branch->weekend_end_date,
+            ];
+
+            $branch->work_hours_details = $workHours;
         }
-//        return $branches;
+
         return view("web.services.branchNew", compact('branches'));
     }
 }

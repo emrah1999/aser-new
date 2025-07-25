@@ -9,7 +9,7 @@
 
     <div class="container">
         <div class="left-panel">
-            <ul class="locations">
+            <ul class="locations overflow-x-hidden">
                 <li class="section-title">Filiallar</li>
                 @foreach($branches as $branch)
                     @if($branch->is_pudo == 0)
@@ -23,9 +23,17 @@
                                 <div class="col-md-9">
                                     {{ $branch->name }} - {{ $branch->address }}
                                     <br>
+                                    @if($branch->phone1)
+                                        <a href="tel:{{$branch->phone1}}" class="text-secondary small">{{$branch->phone1}}</a>
+                                        <br>
+                                    @endif
+                                    @if($branch->phone2)
+                                        <a href="tel:{{$branch->phone2}}" class="text-secondary small">{{$branch->phone2}}</a>
+                                        <br>
+                                    @endif
                                     @if($branch->is_open == 1)
                                         <label class="opened font-n-b2">Açıqdır - Bağlanacaq
-                                            @foreach($branch->work_hours as $day => $time)
+                                            @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_end_date}}
                                                     @endif
@@ -41,7 +49,7 @@
                                         </label>
                                     @else
                                         <label class="closed font-n-b2">Bağlıdır - Açılacaq
-                                            @foreach($branch->work_hours as $day => $time)
+                                            @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
                                                     @endif
@@ -59,7 +67,7 @@
 
                                     <div class="schedule-table" id="schedule-{{ $branch->id }}">
                                         <table>
-                                            @foreach($branch->work_hours as $day => $time)
+                                            @foreach($branch->work_hours_details as $day => $time)
                                                 <tr @if(strtolower($day) ==strtolower($branch->today_abbr) )  style="font-weight: bold;" @endif>
                                                     <td>{{ $day }}:</td>
                                                     <td>{{ $time }}</td>
@@ -86,9 +94,17 @@
                                 <div class="col-md-9">
                                     {{ $branch->name }} - {{ $branch->address }}
                                     <br>
+                                    @if($branch->phone1)
+                                        <a href="tel:{{$branch->phone1}}" class="text-secondary small">{{$branch->phone1}}</a>
+                                        <br>
+                                    @endif
+                                    @if($branch->phone2)
+                                        <a href="tel:{{$branch->phone2}}" class="text-secondary small">{{$branch->phone2}}</a>
+                                        <br>
+                                    @endif
                                     @if($branch->is_open == 1)
                                         <label class="opened font-n-b2">Açıqdır - Bağlanacaq
-                                            @foreach($branch->work_hours as $day => $time)
+                                            @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_end_date}}
                                                     @endif
@@ -104,7 +120,7 @@
                                         </label>
                                     @else
                                         <label class="closed font-n-b2">Bağlıdır - Açılacaq
-                                            @foreach($branch->work_hours as $day => $time)
+                                            @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
                                                     @endif
@@ -122,7 +138,7 @@
 
                                     <div class="schedule-table" id="schedule-{{ $branch->id }}">
                                         <table>
-                                            @foreach($branch->work_hours as $day => $time)
+                                            @foreach($branch->work_hours_details as $day => $time)
                                                 <tr @if(strtolower($day) ==strtolower($branch->today_abbr) )  style="font-weight: bold;" @endif>
                                                     <td>{{ $day }}:</td>
                                                     <td>{{ $time }}</td>
