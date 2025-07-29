@@ -164,7 +164,8 @@
         <div class="right-panel">
             <div class="media-branches__left">
                 <iframe id="map" class="media-branches__map"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d759.7081685227259!2d49.84359226553985!3d40.39040094792123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d30e58f34c5%3A0xdbd9946f959d9e!2sAser%20Cargo%20Express!5e0!3m2!1str!2saz!4v1726507917582!5m2!1str!2saz"
+                src="{{ $userBranchMapLocation ?? $branches->first()->map_location }}"
+                        {{-- src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d759.7081685227259!2d49.84359226553985!3d40.39040094792123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d30e58f34c5%3A0xdbd9946f959d9e!2sAser%20Cargo%20Express!5e0!3m2!1str!2saz!4v1726507917582!5m2!1str!2saz" --}}
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="eager"></iframe>
             </div>
         </div>

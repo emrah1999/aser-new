@@ -199,6 +199,8 @@ class OurServicesController extends Controller
             $branch->work_hours_details = $workHours;
         }
 
-        return view("web.services.branchNew", compact('branches'));
+        $userBranchMapLocation = Auth::check() ? DB::table('filial')->where('id', Auth::user()->branch_id)->value('map_location') : null;
+
+        return view("web.services.branchNew", compact('branches', 'userBranchMapLocation'));
     }
 }
