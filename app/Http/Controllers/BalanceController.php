@@ -1616,10 +1616,10 @@ class BalanceController extends Controller
             $response = Http::asForm()->post('https://testmpi.3dsecure.az/cgi-bin/cgi_link', $data);
 
             Log::info("Azercard response link " . json_encode($response->body()));
-            return redirect("/");
+            return redirect("https://asercargo.az/az/account/orders");
 //            return view('web.payment.payment', compact('data'));
         }else{
-            return redirect("/");
+            return redirect("https://asercargo.az/az/account/orders");
         }
         return redirect("/");
         $fields = ['AMOUNT', 'TERMINAL', 'APPROVAL', 'RRN', 'INT_REF'];
