@@ -197,6 +197,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
             Route::get('/', 'AccountController@get_payment_page')->name("get_payment_page");
             Route::post('/', 'AccountController@payment_send_to_millikart')->name("post_payment_page");
             Route::get('/operations', 'AccountController@get_payment_logs')->name("get_payment_logs");
+            Route::get('/test-azeri-card', 'PaymentController@payment');
         });
 
         Route::group(['prefix' => '/address-otp'], function () {

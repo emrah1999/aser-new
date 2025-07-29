@@ -21,6 +21,7 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         "/secret/payment/callback/paytr",
         "/callback/pasha",
-        "/callback/special-order"
+        "/callback/special-order",
+        "/callback/azericard-special"
     ];
 }

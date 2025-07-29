@@ -13,6 +13,7 @@ use App\Package;
 use App\PartnerPaymentLog;
 use App\PaymentLog;
 use App\PaymentTask;
+use App\Service\AzerCardService;
 use App\SpecialOrderGroups;
 use App\SpecialOrderPayments;
 use App\SpecialOrderStatus;
@@ -22,6 +23,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
@@ -1601,7 +1603,51 @@ class BalanceController extends Controller
         }
         return $rate->rate;
     }
-    public function callback_azericard_special(Request $request){
-        return true;
+    public function callback_azericard_special(Request $request)
+    {
+
+        Log::info("Azercard response " . json_encode($request->all()));
+
+        $data = $request->all();
+        if($data['TRTYPE']==1) {
+            $model = new AzerCardService();
+            $data = $model->checkTrType($data);
+            Log::info("Azercard request trtype22 " . json_encode($data));
+            $response = Http::asForm()->post('https://testmpi.3dsecure.az/cgi-bin/cgi_link', $data);
+
+            Log::info("Azercard response link " . json_encode($response->body()));
+            return redirect("/");
+//            return view('web.payment.payment', compact('data'));
+        }else{
+            return redirect("/");
+        }
+        return redirect("/");
+        $fields = ['AMOUNT', 'TERMINAL', 'APPROVAL', 'RRN', 'INT_REF'];
+        $macSource = '';
+
+        foreach ($fields as $field) {
+            $value = isset($data[$field]) && $data[$field] !== '' ? $data[$field] : '-';
+            $macSource .= ($value === '-' ? '' : strlen($value)) . $value;
+        }
+
+        $signature = hex2bin($data['P_SIGN']);
+
+        $rawKey = file_get_contents(storage_path('keys/azeri-card-public.pem'));
+        $publicKey = openssl_get_publickey($rawKey);
+
+        $isValid = openssl_verify($macSource, $signature, $publicKey, OPENSSL_ALGO_SHA256);
+
+        if ($isValid === 1) {
+            return response('✅ İmza keçdi', 200);
+        } elseif ($isValid === 0) {
+            Log::info("❌ İmza səhvdir");
+            Log::info("MAC_SOURCE: " . $macSource);
+            Log::info("P_SIGN: " . $data['P_SIGN']);
+            return response('❌ İmza səhvdir', 400);
+        } else {
+            return response("⚠️ OpenSSL xəta: " . openssl_error_string(), 500);
+        }
+
     }
+
 }
