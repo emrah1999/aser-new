@@ -111,6 +111,12 @@
                                 </button>
                             </div>
                         </div>
+                           <div class="row">
+                                <div class=" information-div col-md-1">
+                                    <img src="{{asset('uploads/static/info.png')}}"  height="15px" width="15px" data-toggle="tooltip" data-placement="right" >
+                                </div>
+                                <p class="information col-md-11 ">{!! __('static.order_info') !!}</p>
+                            </div>
                         <div class="thumbnail thumbnail-data">
                             <div class="table-responsive d-none d-lg-block">
                                 @if(count($packages) > 0)
@@ -554,6 +560,14 @@
 @endsection
 @section('styles')
     <style>
+        .information{
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .information-div{
+            max-width: 15px;
+        }
+
         input[type="checkbox"] {
             accent-color: #f4cf41;
         }

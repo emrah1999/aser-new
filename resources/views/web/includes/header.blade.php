@@ -148,8 +148,11 @@
 
                                         <li class="nav-profile-menu__item">
                                             <a href="{{ route('get_account', ['locale' => App::getLocale()]) }}"
-                                                class="nav-profile-menu__link d-flex justify-content-start align-items-center">
-                                                <span class="nav-profile-menu__link-title">{!! __('account_menu.my_account') !!}</span>
+                                                class="nav-profile-menu__link d-flex justify-content-start align-items-center"
+                                                style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;">
+                                                <span class="nav-profile-menu__link-title"
+                                                style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;"
+                                                >{!! __('account_menu.my_account') !!}</span>
                                             </a>
                                         </li>
                                         <li class="nav-profile-menu__item">
@@ -161,8 +164,11 @@
 
                                         <li class="nav-profile-menu__item">
                                             <a href="{{ route('branchAndPudo', ['locale' => App::getLocale()]) }}"
-                                                class="nav-profile-menu__link d-flex justify-content-start align-items-center">
-                                                <span class="nav-profile-menu__link-title">Filiallar və təhvil məntəqələri</span>
+                                                class="nav-profile-menu__link d-flex justify-content-start align-items-center"
+                                                style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;">
+                                                <span class="nav-profile-menu__link-title" style="white-space: normal; word-break: break-word; overflow-wrap: anywhere;">
+                                                    {{ optional($menu['branch'])->{'name_' . App::getLocale()} }}
+                                                </span>
                                             </a>
                                         </li>
                                         <li class="nav-profile-menu__item">
