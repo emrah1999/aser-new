@@ -68,7 +68,7 @@
                                     @if($currentStatus==3)
                                         {!! __('static.external_warehouse') !!}
                                     @elseif($currentStatus==4)
-                                        {!! __('static.send__warehouse') !!}
+                                        {!! __('static.send_warehouse') !!}
                                     @elseif($currentStatus==5)
                                         {!! __('static.in_baku') !!}
                                     @elseif($currentStatus==6)

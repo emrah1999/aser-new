@@ -143,8 +143,8 @@ class AzerCardService
             'ORDER'      => $array['ORDER'],
             'RRN'        => $array['RRN'],
             'INT_REF'    => $array['INT_REF'],
-            'TIMESTAMP'  => now('UTC')->format('YmdHis'),
-            'NONCE'      => $nonce,
+            'TIMESTAMP'  => $array['TIMESTAMP'],
+            'NONCE'      => $array['NONCE'],
         ];
 
         $macFields = ['AMOUNT', 'CURRENCY', 'TERMINAL', 'TRTYPE', 'ORDER', 'RRN', 'INT_REF'];

@@ -30,6 +30,7 @@ use App\PartnerPaymentLog;
 use App\PaymentLog;
 use App\PaymentTask;
 use App\Seller;
+use App\Service\AzerCardService;
 use App\Settings;
 use App\SpecialOrder;
 use App\SpecialOrderGroups;
@@ -1945,14 +1946,15 @@ class AccountController extends Controller
             }
             $user_basket = base64_encode(json_encode($user_basket_arr));
             //$paytr = $this->amount_send_to_paytr($country_id, $user_basket, $amount);
-            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
-            $url = $pay[2];
-            $merchant_oid = urldecode($pay[3]);
+//            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
+//            $url = $pay[2];
+//            $merchant_oid = urldecode($pay[3]);
+            $data=$this->payAzeriCard($amount, Auth::user()->id, $ip_address, $currency_id);
 
 
             SpecialOrderPayments::create([
                 'order_id' => $order_id,
-                'payment_key' => $merchant_oid,
+                'payment_key' => $data['NONCE'],
                 'created_by' => $this->userID
             ]);
 
@@ -1964,8 +1966,10 @@ class AccountController extends Controller
 
 
             if ($this->api) {
-                return response(['case' => 'success', 'url' => $url]);
+                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+//                return response(['case' => 'success', 'url' => $url]);
             }
+            return view('web.payment.payment', compact('data'));
 
             return response(['case' => 'success', $url]);
         } catch (\Exception $exception) {
@@ -1973,7 +1977,40 @@ class AccountController extends Controller
         }
     }
 
+    private function payAzeriCard($get_amount,$user_id, $ip_address, $currency_id = 1, $payment_type = 'specialOrder', $order_id = 0){
+        $date = Carbon::today();
+        $rate = ExchangeRate::where(['from_currency_id' => $currency_id, 'to_currency_id' => 3]) // usd -> azn
+        ->whereDate('from_date', '<=', $date)->whereDate('to_date', '>=', $date)
+            ->select('rate')
+            ->first();
+        $amount = sprintf('%0.2f', ($get_amount * $rate->rate));
+        $user=User::find($user_id);
+        $order = [
+            'id'            => substr(microtime(), 2, 8),
+            'amount'        => $amount,
+            'description'   => 'Order Payment',
+            'merchant_id'   => time(),
+            'customer_name' => $user->name." ".$user->surname,
+            'currency'      => 'AZN',
+            'email'         => $user->email,
+            'phone'         =>$user->phone1
+        ];
+        $service=new AzerCardService();
+        $data = $service->buildPaymentData($order);
+        PaymentTask::create([
+            'payment_key' => $data['NONCE'],
+            'status' => 0,
+            'type' => "azeri-card",
+            'amount' => $amount,
+            'payment_type' => 'specialOrder',
+            'ip_address' => $ip_address,
+            'created_by' => $user_id,
+            'is_api' => $this->api,
+            'p_sign' => $data['P_SIGN']
+        ]);
+        return $data;
 
+    }
     private function pay_to_pashaBank_special($get_amount, $user_id, $ip_address, $currency_id = 1, $payment_type = 'specialOrder', $order_id = 0, $packages_str = null)
     {
         try {
@@ -2144,7 +2181,7 @@ class AccountController extends Controller
 
     public function add_special_order(Request $request)
     {
-        return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Texniki işlər aparıldığından müvəqqəti olaraq link sifarişi dayandırılıb']);
+//        return response(['case' => 'warning', 'title' => 'Oops!', 'content' => 'Texniki işlər aparıldığından müvəqqəti olaraq link sifarişi dayandırılıb']);
         $validator = Validator::make($request->all(), [
             'url.*' => ['required', 'string', 'max:1000'],
             'url' => ['required', 'array'],
@@ -2260,17 +2297,17 @@ class AccountController extends Controller
             ]);
 
             $user_basket = base64_encode(json_encode($user_basket_arr));
+            $data=$this->payAzeriCard($total_price, Auth::user()->id, $ip_address, $currency_id);
+//            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
 
-            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
 
-
-            $merchant_oid = urldecode($pay[3]);
-            $url = $pay[2];
+//            $merchant_oid = urldecode($pay[3]);
+//            $url = $pay[2];
             //SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
 
             SpecialOrderPayments::create([
                 'order_id' => $group->id,
-                'payment_key' => $merchant_oid,
+                'payment_key' => $data['NONCE'],
                 'created_by' => $this->userID
             ]);
 
@@ -2279,7 +2316,11 @@ class AccountController extends Controller
                 'status_id' => 32,
                 'created_by' => $this->userID
             ]);
-
+            if ($this->api) {
+                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+//                return response(['case' => 'success', 'url' => $url]);
+            }
+            return view('web.payment.payment', compact('data'));
             return response(['case' => 'success', $url]);
 
         } catch (\Exception $exception) {
@@ -4507,7 +4548,58 @@ class AccountController extends Controller
     public function get_branches(Request $request)
     {
 
-        $branches = DB::table('filial')->select('id', 'name as title', 'address', 'phone1 as phone_number', 'map_location', 'work_hours', 'orjinal_map_link')->get();
+        $branches = DB::table('filial')
+            ->select('id',
+                'name as title',
+                'address',
+                'phone1 as phone_number',
+                'map_location',
+                'work_hours',
+                'orjinal_map_link',
+                'weekday_start_date',
+                'weekday_end_date',
+                'weekend_start_date',
+                'weekend_end_date',
+                'is_pudo'
+            )
+            ->get()->map(function ($branch) {
+                $now = Carbon::now();
+                $dayOfWeek = $now->dayOfWeekIso; // 1 (Mon) - 7 (Sun)
+                $currentTime = $now->format('H:i');
+                $status = false;
+
+                if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                    if (
+                        $branch->weekday_start_date && $branch->weekday_end_date &&
+                        $currentTime >= $branch->weekday_start_date &&
+                        $currentTime <= $branch->weekday_end_date
+                    ) {
+                        $status = true;
+                    }
+                } elseif ($dayOfWeek === 6) {
+                    if (
+                        $branch->weekend_start_date && $branch->weekend_end_date &&
+                        $currentTime >= $branch->weekend_start_date &&
+                        $currentTime <= $branch->weekend_end_date
+                    ) {
+                        $status = true;
+                    }
+                }
+
+                // Weekly schedule (in Azerbaijani abbreviations)
+                $branch->weekly_schedule = [
+                    'be' => $branch->weekday_start_date && $branch->weekday_end_date ? $branch->weekday_start_date . '-' . $branch->weekday_end_date : 'Bağlı',
+                    'ça' => $branch->weekday_start_date && $branch->weekday_end_date ? $branch->weekday_start_date . '-' . $branch->weekday_end_date : 'Bağlı',
+                    'ç' => $branch->weekday_start_date && $branch->weekday_end_date ? $branch->weekday_start_date . '-' . $branch->weekday_end_date : 'Bağlı',
+                    'ca' => $branch->weekday_start_date && $branch->weekday_end_date ? $branch->weekday_start_date . '-' . $branch->weekday_end_date : 'Bağlı',
+                    'c' => $branch->weekday_start_date && $branch->weekday_end_date ? $branch->weekday_start_date . '-' . $branch->weekday_end_date : 'Bağlı',
+                    'ş' => $branch->weekend_start_date && $branch->weekend_end_date ? $branch->weekend_start_date . '-' . $branch->weekend_end_date : 'Bağlı'
+                ];
+
+                $branch->status = $status;
+
+                return $branch;
+            });
 
         return response()->json($branches);
 

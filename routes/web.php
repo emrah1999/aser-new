@@ -235,5 +235,6 @@ Route::post('/secret/payment/callback/paytr', 'BalanceController@callback_paytr'
 Route::post('/callback/pasha', 'BalanceController@callback_pashaBank')->name("callback_pashaBank");
 Route::post('/callback/special-order', 'BalanceController@callback_pashaBank_special')->name("callback_pashaBank_special");
 Route::post('/callback/azericard-special', 'BalanceController@callback_azericard_special')->name("callback_azericard_special");
+Route::get('/callback/azericard-special', 'BalanceController@callback_azericard_special')->name("callback_azericard_special");
 Route::post('/calculate','IndexController@calculate')->name("calculate");
 

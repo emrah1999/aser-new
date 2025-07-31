@@ -408,12 +408,12 @@ class IndexController extends HomeController
         ]);
         $version = Settings::query()->select('app_version','app_store_url','play_market_url')->first();
 
-        if($version->app_version == $request->version){
+//        if($version->app_version == $request->version){
             return response()->json([
                 'status' => true,
                 'message' => 'version is true',
             ]);
-        }
+//        }
         return response()->json([
             'status' => false,
             'message' => 'Tətbiqin yeni versiyası mövcuddur',
