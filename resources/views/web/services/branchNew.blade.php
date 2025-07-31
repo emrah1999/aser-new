@@ -107,11 +107,6 @@
                                         <a href="tel:{{$branch->phone2}}" class="text-secondary small">{{$branch->phone2}}</a>
                                         <br>
                                     @endif
-                                    @if($branch->work_hours)
-                                        <div class="mt-2 small">
-                                            {!! $branch->work_hours !!}
-                                        </div>
-                                    @endif
                                     @if($branch->is_open == 1)
                                         <label class="opened font-n-b2">Açıqdır - Bağlanacaq
                                             @foreach($branch->work_hours_details as $day => $time)
