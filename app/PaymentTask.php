@@ -20,7 +20,9 @@ class PaymentTask extends Model
         'deleted_by',
         'deleted_at',
         'amount',
-        'is_api'
+        'is_api',
+        'p_sign',
+        'trtype2'
     ];
 
     protected static function boot()
