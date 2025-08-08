@@ -1,259 +1,259 @@
 @extends('web.layouts.web')
 @section('content')
-<section class="content-page-section">
-
-    <div class="page-content-block">
-        <div class="container-fluid page_containers">
-            <div class="container-lg">
-                <div class="row">
-                    @include('web.account.account_left_bar')
-                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">
-                        <div class="page-content-header">
-                            <div class="page-content-text account-index-top">
-
-                                @include("front.account.country_select_bar")
-
-
-                                <div class="campaign hidden"></div>
-
-                            </div>
-                        </div>
-                        <div class="page-content-right">
-
-                            <div class="thumbnail thumbnail-data">
-                                <div class="table-responsive">
-                                    @if(count($orders) > 0)
-                                    <div class="n-order-table sp-order-table desktop-show" style="overflow-x: auto;">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>{!! __('table.id') !!}</th>
-                                                    <th>{!! __('table.url') !!}</th>
-                                                    <th>{!! __('table.price') !!}</th>
-                                                    <th>{!! __('table.debt') !!}</th>
-                                                    <th>{!! __('table.status') !!}</th>
-                                                    <th>{!! __('table.amount_for_special_order') !!}</th>
-                                                    <th>{!! __('table.pay') !!}</th>
-                                                    <th>{!! __('table.actions') !!}</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($orders as $order)
-                                                <tr class="order_{{$order->id}}">
-                                                    <td>{{$order->id}}</td>
-                                                    <td>
-                                                        @php($urls = $order->urls)
-                                                        @php($url_arr = explode(',', $urls))
-                                                        @for($i = 0; $i < count($url_arr); $i++)
-                                                            @php($url=$url_arr[$i])
-                                                            @php($url_show=$url)
-                                                            @if(strlen($url)> 20)
-                                                            @php($url_show = substr($url, 0, 20) . '...')
-                                                            @endif
-                                                            <p class="order_link">
-                                                                <a href="{{$url}}" target="_blank">{{$url_show}}</a>
-                                                            </p>
-                                                            @endfor
-                                                    </td>
-                                                    <td class="strong-p">
-                                                        {{$order->price}} {{$order->currency}}
-                                                    </td>
-                                                    <td class="strong-p">
-                                                        {{$order->cargo_debt + $order->common_debt}} {{$order->currency}}
-                                                    </td>
-                                                    <td>
-                                                        <span class="order-status">
-                                                            {{$order->status}}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        {{$order->total_amount}} {{$order->currency}}
-                                                    </td>
-                                                    <td class="order-payment">
-                                                        @if(($order->is_paid == 0 || $order->cargo_debt > 0 || $order->common_debt > 0) && $order->waiting_for_payment == 0)
-
-                                                        <button class="btn"
-                                                            onclick="pay_special_order('{{route("pay_to_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}', this);">
-                                                            {!! __('buttons.pay') !!}
-                                                        </button>
-                                                        @else
-                                                        <button disabled
-                                                            class="btn">{!! __('static.paid') !!}</button>
-                                                        @endif
-                                                    </td>
-                                                    <td class="order-op">
-                                                        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; height: 100%;">
-                                                            <span onclick="show_items_for_special_orders('{{$order->group_code}}', '{{route("show_orders_for_group_special_orders", [$country_id, 'locale' => App::getLocale()])}}');" class="order-view">
-                                                                <i class="fas fa-eye"></i>
-                                                            </span>
-
-                                                            @if($order->disable == 0 && $order->is_paid == 0 && $order->waiting_for_payment == 0)
-                                                            <a href="{{route("get_special_order_update", [$country_id, $order->id, 'locale' => App::getLocale()])}}" class="order-update" title="">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </a>
-
-                                                            <button class="order-delete-btn" data-confirm="{!! __('static.confirm_delete_for_special_order') !!}" onclick="delete_special_order(this, '{{route("delete_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}');">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                            @endif
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-                                    <div class="mobile-show">
-                                        <div class="order-item">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                    @foreach($orders as $order)
-                                                    <tr>
-                                                        <td>{!! __('table.url') !!}</td>
-                                                        <td>
-                                                            @php($urls = $order->urls)
-                                                            @php($url_arr = explode(',', $urls))
-                                                            @for($j = 0; $j < count($url_arr); $j++)
-                                                                @php($url=$url_arr[$j])
-                                                                @php($url_show=$url)
-                                                                @if(strlen($url)> 20)
-                                                                @php($url_show = substr($url, 0, 20) . '...')
-                                                                @endif
-                                                                <p>
-                                                                    <a href="{{$url}}"
-                                                                        target="_blank">{{$url_show}}</a>
-                                                                </p>
-                                                                @endfor
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.price') !!}</td>
-                                                        <td>
-                                                            {{$order->price}} {{$order->currency}}
-                                                            <span class="price-block"> ({{$order->price_azn}} AZN)</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            {!! __('table.cargo_debt') !!}
-                                                        </td>
-                                                        <td>
-                                                            {{$order->cargo_debt}} {{$order->currency}}
-                                                            <span class="price-block"> ({{$order->cargo_debt_azn}} AZN)</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.common_debt') !!}</td>
-                                                        <td>
-                                                            {{$order->common_debt}} {{$order->currency}}
-                                                            <span class="price-block"> ({{$order->common_debt_azn}} AZN)</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.status') !!}</td>
-                                                        <td>
-                                                            <span class="order-status">
-                                                                {{$order->status}}
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.amount_for_special_order') !!}</td>
-                                                        <td>
-                                                            {{$order->total_amount}} {{$order->currency}}
-                                                            <span class="price-block">({{$order->total_amount_azn}} AZN)</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.pay') !!}</td>
-                                                        <td class="order-payment">
-                                                            @if(($order->is_paid == 0 || $order->cargo_debt > 0 || $order->common_debt > 0) && $order->waiting_for_payment == 0)
-                                                            <button class="btn"
-                                                                onclick="pay_special_order('{{route("pay_to_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}', this);">
-                                                                {!! __('buttons.pay') !!}
-                                                            </button>
-                                                            @else
-                                                            <button disabled
-                                                                class="btn">{!! __('static.paid') !!}</button>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.details') !!}</td>
-                                                        <td>
-                                                            <span
-                                                                onclick="show_items_for_special_orders('{{$order->group_code}}', '{{route("show_orders_for_group_special_orders", [$country_id, 'locale' => App::getLocale()])}}');"
-                                                                class="order-view"><i
-                                                                    class="fas fa-eye"></i></span>
-                                                        </td>
-                                                    </tr>
-                                                    @if($order->disable == 0 && $order->is_paid == 0 && $order->waiting_for_payment == 0)
-                                                    <tr>
-                                                        <td>{!! __('table.edit') !!}</td>
-                                                        <td>
-                                                            <a href="{{route("get_special_order_update", [$country_id, $order->id, 'locale' => App::getLocale()])}}"
-                                                                class="order-update" title=""><i
-                                                                    class="fas fa-pencil-alt"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{!! __('table.delete') !!}</td>
-                                                        <td class="order-delete" style="padding-top: 0;">
-                                                            <button class="order-delete-btn"
-                                                                data-confirm="{!! __('static.confirm_delete_for_special_order') !!}"
-                                                                onclick="delete_special_order(this, '{{route("delete_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}');">
-                                                                <i class="fas fa-trash"></i></button>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-                                                    <br>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    @else
-                                    <div class="profile-information-block sp-padding">
-                                        <div class="form-alert show-alert">
-                                            <p>{!! __('static.selectItem') !!}</p>
-                                        </div>
-                                    </div>
-                                    @endif
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
 {{--<section class="content-page-section">--}}
+
 {{--    <div class="page-content-block">--}}
 {{--        <div class="container-fluid page_containers">--}}
 {{--            <div class="container-lg">--}}
 {{--                <div class="row">--}}
 {{--                    @include('web.account.account_left_bar')--}}
+{{--                    <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-7">--}}
+{{--                        <div class="page-content-header">--}}
+{{--                            <div class="page-content-text account-index-top">--}}
 
-{{--                    <div class="col-md-9">--}}
-{{--                        <div class="alert alert-warning text-center" style="margin-top: 100px; padding: 40px; font-size: 18px; border-radius: 10px;">--}}
-{{--                            Texniki işlər aparıldığından <br> müvəqqəti olaraq link sifarişi dayandırılıb.--}}
+{{--                                @include("front.account.country_select_bar")--}}
+
+
+{{--                                <div class="campaign hidden"></div>--}}
+
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="page-content-right">--}}
+
+{{--                            <div class="thumbnail thumbnail-data">--}}
+{{--                                <div class="table-responsive">--}}
+{{--                                    @if(count($orders) > 0)--}}
+{{--                                    <div class="n-order-table sp-order-table desktop-show" style="overflow-x: auto;">--}}
+{{--                                        <table>--}}
+{{--                                            <thead>--}}
+{{--                                                <tr>--}}
+{{--                                                    <th>{!! __('table.id') !!}</th>--}}
+{{--                                                    <th>{!! __('table.url') !!}</th>--}}
+{{--                                                    <th>{!! __('table.price') !!}</th>--}}
+{{--                                                    <th>{!! __('table.debt') !!}</th>--}}
+{{--                                                    <th>{!! __('table.status') !!}</th>--}}
+{{--                                                    <th>{!! __('table.amount_for_special_order') !!}</th>--}}
+{{--                                                    <th>{!! __('table.pay') !!}</th>--}}
+{{--                                                    <th>{!! __('table.actions') !!}</th>--}}
+{{--                                                </tr>--}}
+{{--                                            </thead>--}}
+{{--                                            <tbody>--}}
+{{--                                                @foreach($orders as $order)--}}
+{{--                                                <tr class="order_{{$order->id}}">--}}
+{{--                                                    <td>{{$order->id}}</td>--}}
+{{--                                                    <td>--}}
+{{--                                                        @php($urls = $order->urls)--}}
+{{--                                                        @php($url_arr = explode(',', $urls))--}}
+{{--                                                        @for($i = 0; $i < count($url_arr); $i++)--}}
+{{--                                                            @php($url=$url_arr[$i])--}}
+{{--                                                            @php($url_show=$url)--}}
+{{--                                                            @if(strlen($url)> 20)--}}
+{{--                                                            @php($url_show = substr($url, 0, 20) . '...')--}}
+{{--                                                            @endif--}}
+{{--                                                            <p class="order_link">--}}
+{{--                                                                <a href="{{$url}}" target="_blank">{{$url_show}}</a>--}}
+{{--                                                            </p>--}}
+{{--                                                            @endfor--}}
+{{--                                                    </td>--}}
+{{--                                                    <td class="strong-p">--}}
+{{--                                                        {{$order->price}} {{$order->currency}}--}}
+{{--                                                    </td>--}}
+{{--                                                    <td class="strong-p">--}}
+{{--                                                        {{$order->cargo_debt + $order->common_debt}} {{$order->currency}}--}}
+{{--                                                    </td>--}}
+{{--                                                    <td>--}}
+{{--                                                        <span class="order-status">--}}
+{{--                                                            {{$order->status}}--}}
+{{--                                                        </span>--}}
+{{--                                                    </td>--}}
+{{--                                                    <td>--}}
+{{--                                                        {{$order->total_amount}} {{$order->currency}}--}}
+{{--                                                    </td>--}}
+{{--                                                    <td class="order-payment">--}}
+{{--                                                        @if(($order->is_paid == 0 || $order->cargo_debt > 0 || $order->common_debt > 0) && $order->waiting_for_payment == 0)--}}
+
+{{--                                                        <button class="btn"--}}
+{{--                                                            onclick="pay_special_order('{{route("pay_to_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}', this);">--}}
+{{--                                                            {!! __('buttons.pay') !!}--}}
+{{--                                                        </button>--}}
+{{--                                                        @else--}}
+{{--                                                        <button disabled--}}
+{{--                                                            class="btn">{!! __('static.paid') !!}</button>--}}
+{{--                                                        @endif--}}
+{{--                                                    </td>--}}
+{{--                                                    <td class="order-op">--}}
+{{--                                                        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; height: 100%;">--}}
+{{--                                                            <span onclick="show_items_for_special_orders('{{$order->group_code}}', '{{route("show_orders_for_group_special_orders", [$country_id, 'locale' => App::getLocale()])}}');" class="order-view">--}}
+{{--                                                                <i class="fas fa-eye"></i>--}}
+{{--                                                            </span>--}}
+
+{{--                                                            @if($order->disable == 0 && $order->is_paid == 0 && $order->waiting_for_payment == 0)--}}
+{{--                                                            <a href="{{route("get_special_order_update", [$country_id, $order->id, 'locale' => App::getLocale()])}}" class="order-update" title="">--}}
+{{--                                                                <i class="fas fa-pencil-alt"></i>--}}
+{{--                                                            </a>--}}
+
+{{--                                                            <button class="order-delete-btn" data-confirm="{!! __('static.confirm_delete_for_special_order') !!}" onclick="delete_special_order(this, '{{route("delete_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}');">--}}
+{{--                                                                <i class="fas fa-trash"></i>--}}
+{{--                                                            </button>--}}
+{{--                                                            @endif--}}
+{{--                                                        </div>--}}
+{{--                                                    </td>--}}
+
+{{--                                                </tr>--}}
+{{--                                                @endforeach--}}
+{{--                                            </tbody>--}}
+{{--                                        </table>--}}
+
+{{--                                    </div>--}}
+
+{{--                                    <div class="mobile-show">--}}
+{{--                                        <div class="order-item">--}}
+{{--                                            <table class="table table-bordered">--}}
+{{--                                                <tbody>--}}
+{{--                                                    @foreach($orders as $order)--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.url') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @php($urls = $order->urls)--}}
+{{--                                                            @php($url_arr = explode(',', $urls))--}}
+{{--                                                            @for($j = 0; $j < count($url_arr); $j++)--}}
+{{--                                                                @php($url=$url_arr[$j])--}}
+{{--                                                                @php($url_show=$url)--}}
+{{--                                                                @if(strlen($url)> 20)--}}
+{{--                                                                @php($url_show = substr($url, 0, 20) . '...')--}}
+{{--                                                                @endif--}}
+{{--                                                                <p>--}}
+{{--                                                                    <a href="{{$url}}"--}}
+{{--                                                                        target="_blank">{{$url_show}}</a>--}}
+{{--                                                                </p>--}}
+{{--                                                                @endfor--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.price') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            {{$order->price}} {{$order->currency}}--}}
+{{--                                                            <span class="price-block"> ({{$order->price_azn}} AZN)</span>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>--}}
+{{--                                                            {!! __('table.cargo_debt') !!}--}}
+{{--                                                        </td>--}}
+{{--                                                        <td>--}}
+{{--                                                            {{$order->cargo_debt}} {{$order->currency}}--}}
+{{--                                                            <span class="price-block"> ({{$order->cargo_debt_azn}} AZN)</span>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.common_debt') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            {{$order->common_debt}} {{$order->currency}}--}}
+{{--                                                            <span class="price-block"> ({{$order->common_debt_azn}} AZN)</span>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.status') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            <span class="order-status">--}}
+{{--                                                                {{$order->status}}--}}
+{{--                                                            </span>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.amount_for_special_order') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            {{$order->total_amount}} {{$order->currency}}--}}
+{{--                                                            <span class="price-block">({{$order->total_amount_azn}} AZN)</span>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.pay') !!}</td>--}}
+{{--                                                        <td class="order-payment">--}}
+{{--                                                            @if(($order->is_paid == 0 || $order->cargo_debt > 0 || $order->common_debt > 0) && $order->waiting_for_payment == 0)--}}
+{{--                                                            <button class="btn"--}}
+{{--                                                                onclick="pay_special_order('{{route("pay_to_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}', this);">--}}
+{{--                                                                {!! __('buttons.pay') !!}--}}
+{{--                                                            </button>--}}
+{{--                                                            @else--}}
+{{--                                                            <button disabled--}}
+{{--                                                                class="btn">{!! __('static.paid') !!}</button>--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.details') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            <span--}}
+{{--                                                                onclick="show_items_for_special_orders('{{$order->group_code}}', '{{route("show_orders_for_group_special_orders", [$country_id, 'locale' => App::getLocale()])}}');"--}}
+{{--                                                                class="order-view"><i--}}
+{{--                                                                    class="fas fa-eye"></i></span>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    @if($order->disable == 0 && $order->is_paid == 0 && $order->waiting_for_payment == 0)--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.edit') !!}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            <a href="{{route("get_special_order_update", [$country_id, $order->id, 'locale' => App::getLocale()])}}"--}}
+{{--                                                                class="order-update" title=""><i--}}
+{{--                                                                    class="fas fa-pencil-alt"></i></a>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{!! __('table.delete') !!}</td>--}}
+{{--                                                        <td class="order-delete" style="padding-top: 0;">--}}
+{{--                                                            <button class="order-delete-btn"--}}
+{{--                                                                data-confirm="{!! __('static.confirm_delete_for_special_order') !!}"--}}
+{{--                                                                onclick="delete_special_order(this, '{{route("delete_special_order", [$country_id, $order->id, 'locale' => App::getLocale()])}}');">--}}
+{{--                                                                <i class="fas fa-trash"></i></button>--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                    @endif--}}
+{{--                                                    <br>--}}
+{{--                                                    @endforeach--}}
+{{--                                                </tbody>--}}
+{{--                                            </table>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    @else--}}
+{{--                                    <div class="profile-information-block sp-padding">--}}
+{{--                                        <div class="form-alert show-alert">--}}
+{{--                                            <p>{!! __('static.selectItem') !!}</p>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    @endif--}}
+
+
+{{--                                </div>--}}
+{{--                            </div>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
+
+
 {{--                </div>--}}
 {{--            </div>--}}
+
 {{--        </div>--}}
 {{--    </div>--}}
 {{--</section>--}}
+
+<section class="content-page-section">
+    <div class="page-content-block">
+        <div class="container-fluid page_containers">
+            <div class="container-lg">
+                <div class="row">
+                    @include('web.account.account_left_bar')
+
+                    <div class="col-md-9">
+                        <div class="alert alert-warning text-center" style="margin-top: 100px; padding: 40px; font-size: 18px; border-radius: 10px;">
+                            Texniki işlər aparıldığından <br> müvəqqəti olaraq link sifarişi dayandırılıb.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @endsection
 

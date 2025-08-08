@@ -8,6 +8,8 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\App;
     use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\Validator;
 
 
@@ -255,4 +257,19 @@
             return redirect()->route('seller-otps.index')
                 ->with('success', 'Seller OTP deleted successfully.');
         }
+        public function forwardSmsLog(Request $request)
+        {
+            Log::info("Seller OTP forwardSmsLog ".json_encode($request->all()));
+            if($request->subject && $request->message){
+                DB::table("phone_message")->insert([
+                    'phone_number'=>$request->subject,
+                    'message'=>$request->message,
+                ]);
+            }
+        }
+        public function getForwardSmsLog(Request $request){
+            $messages=DB::table("phone_message")->orderBy('created_at','desc')->paginate(50);
+            return view('web.sellers.forward_sms_log',compact('messages'));
+        }
+
     }

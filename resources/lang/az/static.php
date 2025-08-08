@@ -247,6 +247,10 @@ return [
 
     'trendyol' => 'Trendyol Onay Kodu' ,
     'trendyol_code' => 'Onay kodu' ,
+    'otp_messages'=>'OTP mesajları',
+    'messages' => 'Mesajlar' ,
+
+
 
 
     'information' => 'Şəxsi məlumatlarım' ,

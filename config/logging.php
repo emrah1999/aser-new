@@ -136,6 +136,11 @@ return [
             'path' => storage_path('logs/invoice/invoice.log'),
             'level' => 'debug',
         ],
+        'azeri_card' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payment/azeri-card/payment.log'),
+            'level' => 'debug',
+        ],
     ],
 
 ];

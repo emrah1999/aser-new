@@ -1593,16 +1593,16 @@ class BalanceController extends Controller
     public function callback_azericard_special(Request $request)
     {
 
-        Log::info("Azercard response " . json_encode($request->all()));
+        Log::channel('azeri_card')->info("Azercard response " . json_encode($request->all()));
 
         $data1 = $request->all();
         if ($data1['TRTYPE'] == 1) {
             $model = new AzerCardService();
             $data = $model->checkTrType($data1);
-            Log::info("Azercard request trtype22 " . json_encode($data));
-            $response = Http::asForm()->post('https://testmpi.3dsecure.az/cgi-bin/cgi_link', $data);
+            Log::channel('azeri_card')->info("Azercard request trtype22 " . json_encode($data));
+            $response = Http::asForm()->post('https://mpi.3dsecure.az/cgi-bin/cgi_link', $data);
 
-            Log::info("Azercard response link " . json_encode($response->body()));
+            Log::channel('azeri_card')->info("Azercard response link " . json_encode($response->body()));
             $formatted = str_replace("\n", "&", $response);
 
             parse_str($formatted, $data_r);
@@ -1814,9 +1814,7 @@ class BalanceController extends Controller
                     ]);
                 }
             }
-            return redirect("https://front.ailemiz.az/az/account/special-order");
         } else {
-            return redirect("https://front.ailemiz.az/az/account/special-order");
         }
     }
 

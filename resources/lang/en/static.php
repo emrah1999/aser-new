@@ -308,6 +308,8 @@ return [
 
     'create_otp' => 'Add OTP',
     'track' => 'Tracking',
+    'otp_messages'=>'OTP messages',
+    'messages' => 'Messages',
 
     'trendyol' => 'Trendyol Confirmation Code',
     'trendyol_code' => 'Confirmation Code',

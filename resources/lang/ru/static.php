@@ -287,6 +287,7 @@ return [
     'arceve' => 'Архив',
 
 
+
     'my_balance' => 'Мой баланс',
     'increase_balance' => 'Пополнить баланс',
     'card' => 'Карта',
@@ -301,6 +302,8 @@ return [
 
 
     'refereal_account' => 'Реферальные аккаунты',
+    'otp_messages'=>'OTP сообщения',
+    'messages'=>'Сообщения',
     'otp' => 'OTP',
     'trendyol_otp' => 'Код подтверждения Trendyol',
     'profile' => 'Профиль',

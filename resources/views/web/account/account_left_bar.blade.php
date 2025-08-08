@@ -98,6 +98,15 @@
             </a>
         </li>
         <li class="nav-profile-menu__item">
+            <a href="{{ route('spain_otp_list', ['locale' => App::getLocale()]) }}"
+               class="nav-profile-menu__link d-flex justify-content-start align-items-center
+                    {{ request()->routeIs('spain_otp_list') ? 'nav-profile-menu__link--active' : '' }}">
+                <img class="nav-profile-menu__link-img leftbar-icon-special" src="/web/images/content/trendyolOTP.png" height="20px" width="10px" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/trendyolOTP.png" alt="ProfileMenu">
+                <span class="nav-profile-menu__link-title">{!! __('static.otp_messages') !!}</span>
+            </a>
+        </li>
+        <li class="nav-profile-menu__item">
             <a href="{{route("get_user_settings", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_user_settings') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-user.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-user.png" alt="ProfileMenu">
