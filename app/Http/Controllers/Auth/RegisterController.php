@@ -467,11 +467,11 @@ class RegisterController extends Controller
 		 try {
              if($request->is('api/*')){
                  $request->merge([
-                     'phone1' => str_replace("-", "", '994'.$request->phone1),
+                     'phone1' => preg_replace("/[^0-9,.]/", "", '994'.$request->phone1),
                  ]);
              }else{
                  $request->merge([
-                     'phone1' => str_replace("-", "", '994'.$request->prefix.$request->phone_suffix),
+                     'phone1' => preg_replace("/[^0-9,.]/", "", '994'.$request->prefix.$request->phone_suffix),
                  ]);
              }
 

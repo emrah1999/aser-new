@@ -1,5 +1,5 @@
 
-<form method="POST" action="https://testmpi.3dsecure.az/cgi-bin/cgi_link" id="secureForm">
+<form method="POST" action="https://mpi.3dsecure.az/cgi-bin/cgi_link" id="secureForm">
     @foreach($data as $key => $value)
         <input type="hidden" name="{{ $key }}" value="{{ $value }}">
     @endforeach

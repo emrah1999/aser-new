@@ -898,12 +898,30 @@ $(document).ready(function () {
             });
         },
         success: function (response) {
-            if (response.case === 'success') {
-                let url = response[0];
-                location.href = url;
+            if (response.title) {
+                swal(
+                    response.title,
+                    response.content,
+                    response.case
+                );
+            }else if (response) {
+                $('body').append(response);
+                document.getElementById('secureForm').submit();
+
             } else {
-                form_submit_message(response, false, false);
+                swal.close();
+                swal(
+                    "Error!",
+                    "Sorry, something went wrong!",
+                    response.case
+                );
             }
+            // if (response.case === 'success') {
+            //     let url = response[0];
+            //     location.href = url;
+            // } else {
+            //     form_submit_message(response, false, false);
+            // }
         }
     });
 });

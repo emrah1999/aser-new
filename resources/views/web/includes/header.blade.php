@@ -211,6 +211,12 @@
                                             </a>
                                         </li>
                                         <li class="nav-profile-menu__item">
+                                            <a href="{{ route('spain_otp_list', ['locale' => App::getLocale()]) }}"
+                                               class="nav-profile-menu__link d-flex justify-content-start align-items-center">
+                                                <span class="nav-profile-menu__link-title">{!! __('static.otp_messages') !!}</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-profile-menu__item">
                                             <a href="{{route("get_user_settings", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center ">
                                                 <span class="nav-profile-menu__link-title">Profil</span>
                                             </a>

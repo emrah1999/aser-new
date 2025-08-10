@@ -3646,7 +3646,8 @@ class AccountController extends Controller
                 ->where([
                     'package.in_baku' => 1,
                     'package.is_warehouse' => 3,
-                    'has_courier' => 0
+                    'has_courier' => 0,
+                    'package.branch_id' => 1
                 ])
                 ->whereNull('package.delivered_by')
                 ->whereNull('package.deleted_by')
@@ -4548,7 +4549,7 @@ class AccountController extends Controller
     public function get_branches(Request $request)
     {
 
-        $branches = DB::table('filial')
+        $branches = DB::table('filial')->where('is_active',1)
             ->select('id',
                 'name as title',
                 'address',
@@ -4927,7 +4928,8 @@ class AccountController extends Controller
                 ->where([
                     'package.in_baku' => 1,
                     'package.is_warehouse' => 3,
-                    'has_courier' => 0
+                    'has_courier' => 0,
+                    'package.branch_id' => 1
                 ])
                 ->whereNull('package.delivered_by')
                 ->whereNull('package.deleted_by')
@@ -6299,7 +6301,7 @@ class AccountController extends Controller
 
     public function branchAndPudo()
     {
-        $query = DB::table('filial');
+        $query = DB::table('filial')->where('filial.is_active',1);;
 
         if (Auth::check()) {
             $userBranchId = Auth::user()->branch_id;

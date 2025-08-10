@@ -119,6 +119,8 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
         Route::get('/', [\App\Http\Controllers\SellerOtpController::class , 'index']);
         Route::post('/store', [\App\Http\Controllers\SellerOtpController::class, 'store'])->middleware('myApi');
 
+
+
     });
 
     Route::group(['prefix' => '/courier'], function () {
@@ -253,3 +255,4 @@ Route::get('/users-for-courier',[\App\Http\Controllers\Api\OtherApiController::c
 Route::get('/special-order-terms',[\App\Http\Controllers\Api\OtherApiController::class,'special_order_terms']);
 Route::get('/special-order-popup',[\App\Http\Controllers\Api\OtherApiController::class,'specialOrderPopup']);
 
+Route::post('/otp-code/forward', [\App\Http\Controllers\SellerOtpController::class , 'forwardSmsLog']);

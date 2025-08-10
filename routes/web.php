@@ -130,6 +130,8 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
         });
 
         Route::group(['prefix' => '/seller-otp'], function () {
+            Route::get('/spain', 'SellerOtpController@getForwardSmsLog')->name("spain_otp_list");
+
             Route::get('/', 'SellerOtpController@index')->name("get_seller_otp");
             Route::get('/add', 'SellerOtpController@create')->name("get_seller_add");
             Route::post('/add', 'SellerOtpController@store')->name("post_seller_add");

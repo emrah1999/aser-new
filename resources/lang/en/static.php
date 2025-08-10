@@ -298,7 +298,7 @@ return [
 
 
     'refereal_account' => 'Referral Accounts',
-    'otp' => 'OTP',
+    'otp' => 'Amazon OTP',
     'trendyol_otp' => 'Trendyol Confirmation Code',
     'profile' => 'Profile',
     'logout' => 'Logout',
@@ -308,9 +308,14 @@ return [
 
     'create_otp' => 'Add OTP',
     'track' => 'Tracking',
+    'otp_messages'=>'Spain OTP',
+    'otp_code' => 'OTP code',
+    'messages' => 'Messages',
 
     'trendyol' => 'Trendyol Confirmation Code',
     'trendyol_code' => 'Confirmation Code',
+
+    "courier_message"=>'Attention! Our courier service is only active for the Nasimi branch. For your regular courier orders, don’t forget to select "Nasimi" as the branch in your personal account!',
 
 
     'information' => 'My Personal Information',

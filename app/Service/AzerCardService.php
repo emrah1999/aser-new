@@ -7,11 +7,17 @@ use Illuminate\Support\Facades\Log;
 
 class AzerCardService
 {
-    private $baseUrl = "https://testmpi.3dsecure.az/cgi-bin/";
-    private $callBackUrl="http://front.ailemiz.az/callback/azericard-special";
-    private $merchName="Asercago";
-    private $merchUrl="http://front.ailemiz.az";
-    private $terminal="17204514";
+//    private $baseUrl = "https://testmpi.3dsecure.az/cgi-bin/";
+    private $baseUrl = "https://mpi.3dsecure.az/cgi-bin/";
+//    private $callBackUrl="https://front.ailemiz.az/az/account/special-order
+    private $callBackUrl="https://asercargo.az/az/account/special-order";
+    private $merchName="Asercago.az";
+//    private $merchUrl="http://front.ailemiz.az";
+
+    private $merchUrl="https://asercargo.az";
+
+//    private $terminal="17204514";
+    private $terminal="17205238";
     private $country="AZ";
     private $timezone="Asia/Baku";
     protected  $privateKey;
@@ -19,8 +25,10 @@ class AzerCardService
 
     public function __construct()
     {
-        $this->privateKey = file_get_contents(storage_path('keys/azeri-card-private.pem'));
-        $this->publicKey = file_get_contents(storage_path('keys/azeri-card-public.pem'));
+//        $this->privateKey = file_get_contents(storage_path('keys/azeri-card-private.pem'));
+//        $this->publicKey = file_get_contents(storage_path('keys/azeri-card-public.pem'));
+        $this->privateKey = file_get_contents('/var/www/sites/certificates/azeri-card-private.pem');
+        $this->publicKey = file_get_contents('/var/www/sites/certificates/azeri-card-public.pem');
     }
 
     public function generateMacSource(array $data, array $fields): string
@@ -34,7 +42,7 @@ class AzerCardService
             $value = (string)$data[$field];
             $mac .= strlen($value) . $value;
         }
-        Log::info("SOuirce kode".$mac);
+        Log::channel('azeri_card')->info("SOuirce kode".$mac);
 
         return $mac;
     }
@@ -50,7 +58,7 @@ class AzerCardService
         $pSign = $data['P_SIGN'] ?? null;
 
         if (!$pSign) {
-            Log::info('[Azericard] Callback P_SIGN tapılmadı.');
+            Log::channel('azeri_card')->info('[Azericard] Callback P_SIGN tapılmadı.');
             return false;
         }
 
@@ -68,27 +76,27 @@ class AzerCardService
         $publicKeyResource = openssl_pkey_get_public($bankPublicKey);
 
         if (!$publicKeyResource) {
-            Log::info('[Azericard] Public açar yüklənmədi.');
+            Log::channel('azeri_card')->info('[Azericard] Public açar yüklənmədi.');
             return false;
         }
 
         $pSignBinary = hex2bin($pSign);
 
         if ($pSignBinary === false) {
-            Log::info('[Azericard] P_SIGN hex çevrilməsində xəta.');
+            Log::channel('azeri_card')->info('[Azericard] P_SIGN hex çevrilməsində xəta.');
             return false;
         }
 
         $verified = openssl_verify($hashedData, $pSignBinary, $publicKeyResource, OPENSSL_ALGO_SHA256);
 
         if ($verified === 1) {
-            Log::info('[Azericard] ✅ Callback imzası doğrudur.');
+            Log::channel('azeri_card')->info('[Azericard] ✅ Callback imzası doğrudur.');
             return true;
         } elseif ($verified === 0) {
-            Log::info('[Azericard] ❌ Callback imzası səhvdir.');
+            Log::channel('azeri_card')->info('[Azericard] ❌ Callback imzası səhvdir.');
             return false;
         } else {
-            Log::info('[Azericard] ⚠️ OpenSSL xətası: ' . openssl_error_string());
+            Log::channel('azeri_card')->info('[Azericard] ⚠️ OpenSSL xətası: ' . openssl_error_string());
             return false;
         }
     }
