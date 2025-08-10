@@ -28,13 +28,17 @@
                                             <table id="dataTable">
                                                 <thead>
                                                 <tr>
-                                                    <th>{!! __('static.messages') !!}</th>
+                                                    <th>№</th>
+                                                    <th>{!! __('static.otp_code') !!}</th>
+                                                    <th>{!! __('table.date') !!}</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach($messages as $message)
+                                                @foreach($messages as $key=>$message)
                                                     <tr class="order_{{$message->id}}">
-                                                        <td >{{$message->message}}</td>
+                                                        <td>{{ $key+1 }}</td>
+                                                        <td>{{$message->message}}</td>
+                                                        <td>{{date('d.m.Y H:i:s',strtotime($message->created_at))}}</td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -78,6 +82,12 @@
             font-size: 28px;
             color: #10458C;
             font-weight: bold;
+        }
+        .n-order-table table th {
+            background: #F2C516;
+            color: white;
+            padding: 12px;
+            text-align: left;
         }
 
         .order-btn .btn {
@@ -163,6 +173,7 @@
                 padding: 20px;
                 /* Mobil uyumluluk için sadece 20px boşluk bırakır */
             }
+
             .n-order-table th, .n-order-table td {
                 min-width: 150px;
                 max-width: 150px;

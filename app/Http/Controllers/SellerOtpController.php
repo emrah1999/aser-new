@@ -268,7 +268,7 @@
             }
         }
         public function getForwardSmsLog(Request $request){
-            $messages=DB::table("phone_message")->orderBy('created_at','desc')->paginate(50);
+            $messages=DB::table("phone_message")->orderBy('created_at','desc')->paginate(20);
             return view('web.sellers.forward_sms_log',compact('messages'));
         }
 

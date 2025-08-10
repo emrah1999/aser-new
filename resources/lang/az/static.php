@@ -235,7 +235,8 @@ return [
 
 
     'refereal_account' => 'Referal Hesablar',
-    'otp' => 'OTP',
+    'otp' => 'Amazon OTP',
+    'otp_code' => 'OTP kod',
     'trendyol_otp' => 'Trendyol Onay kodu',
     'profile' => 'Profil' ,
     'logout' => 'Çıxış' ,
@@ -247,8 +248,10 @@ return [
 
     'trendyol' => 'Trendyol Onay Kodu' ,
     'trendyol_code' => 'Onay kodu' ,
-    'otp_messages'=>'OTP mesajları',
+    'otp_messages'=>'İspaniya OTP',
     'messages' => 'Mesajlar' ,
+    "courier_message"=>'Diqqət! Kuryer xidmətimiz yalnız Nəsimi filialı üçün aktivdir. Mütəmadi kuryer sifarişləriniz üçün, şəxsi kabinetinizdən filial olaraq "Nəsimi" seçməyi unutmayın!',
+
 
 
 
