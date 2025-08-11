@@ -10,6 +10,7 @@ use App\EmailListContent;
 use App\ExchangeRate;
 use App\Notifications\Emails;
 use App\Package;
+use App\PackageStatus;
 use App\PartnerPaymentLog;
 use App\PaymentLog;
 use App\PaymentTask;
@@ -1205,6 +1206,18 @@ class BalanceController extends Controller
                                     'paid_status' => 1,
                                     'payment_type_id' => 1
                                 ]);
+                            $sortPackages=Package::whereIn('id', $packages_arr)->where('last_status_id',61)->get();
+                            foreach ($sortPackages as $pack) {
+                                Package::where('id', $pack->id)
+                                    ->update([
+                                        'last_status_id'=>80
+                                    ]);
+                                PackageStatus::create([
+                                    'package_id' => $pack->id,
+                                    'status_id' => 80,
+                                    'created_by' => 1
+                                ]);
+                            }
                         }
                         $payment_code = Str::random(20);
                         BalanceLog::create([
