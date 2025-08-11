@@ -55,10 +55,10 @@
                                     @else
                                         <label class="closed font-n-b2">Bağlıdır - Açılacaq
                                             @foreach($branch->work_hours_details as $day => $time)
-                                                <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
+                                                <span> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
                                                     @endif
-                                                </tr>
+                                                </span>
                                             @endforeach
                                             <span class="toggle-schedule" data-id="{{ $branch->id }}" style="cursor: pointer;">
                                                 <img src="https://front.ailemiz.az/web/images/content/chevron-down.png"
