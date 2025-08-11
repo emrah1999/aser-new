@@ -6109,7 +6109,18 @@ class AccountController extends Controller
                 'paid_status' => $paid_status,
                 'payment_type_id' => 1 // online
             ]);
-
+        if($package->last_status_id==61)
+        {
+            Package::where('id', $package_id)
+                ->update([
+                    'last_status_id'=>80
+                ]);
+            PackageStatus::create([
+                'package_id' => $package_id,
+                'status_id' => 80,
+                'created_by' => 1
+            ]);
+        }
         $payment_code = Str::random(20);
         BalanceLog::create([
             'payment_code' => $payment_code,
