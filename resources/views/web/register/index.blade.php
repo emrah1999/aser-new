@@ -115,10 +115,10 @@
         </div>
     @endif
     @php
-        $showSecondPart = false;
-        if (session('errorType') && in_array(session('errorType'), ['passport_number', 'fin'])) {
-            $showSecondPart = true;
-        }
+$showSecondPart = false;
+if (session('errorType') && in_array(session('errorType'), ['passport_number', 'fin'])) {
+    $showSecondPart = true;
+}
     @endphp
 
     <div class="content" id="content">
@@ -264,7 +264,7 @@
                                         <select class="form__select" name="city" id="city" required>
                                             <option value="">{!! __('static.choose') !!}</option>
                                             @foreach($cities as $city)
-                                                <option value="{{$city->name}}" {{ old('city') == $city->name ? 'selected' : '' }}>{{$city->name}}</option>
+                                                <option data-id="{{$city->id}}" value="{{$city->name}}" {{ old('city') == $city->name ? 'selected' : '' }}>{{$city->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -452,7 +452,7 @@
 
                         </div>
                     </div>
-                    <div class="form-registration__btn-actions form-registration__btn-actions--1 {{ $showSecondPart ?  'd-none': '' }}">
+                    <div class="form-registration__btn-actions form-registration__btn-actions--1 {{ $showSecondPart ? 'd-none' : '' }}">
                         <div class="row justify-content-center align-items-center">
                             <div class="col-sm-6">
                                 <div class="form__group">
@@ -652,5 +652,33 @@
         });
     </script>
 
+    <script>
+        const branchs = @json($branchs);
+        
+        document.getElementById('city').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const cityId = parseInt(selectedOption.getAttribute('data-id'));
+            const branchSelect = document.getElementById('userBranch');
+
+            branchSelect.innerHTML = '<option value="0" disabled selected>{!! __('static.branch') !!}</option>';
+
+            if (cityId === 47) {
+                branchs.forEach(branch => {
+                    const option = document.createElement('option');
+                    option.value = branch.id;
+                    option.textContent = branch.name;
+                    branchSelect.appendChild(option);
+                });
+            } else {
+                const nesimiBranch = branchs.find(branch => branch.id === 1);
+                if (nesimiBranch) {
+                    const option = document.createElement('option');
+                    option.value = nesimiBranch.id;
+                    option.textContent = nesimiBranch.name;
+                    branchSelect.appendChild(option);
+                }
+            }
+        });
+    </script>
 
 @endsection
