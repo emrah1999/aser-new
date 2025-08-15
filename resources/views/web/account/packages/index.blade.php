@@ -14,14 +14,22 @@
                             <div class="dropdown-container dropdown-container3 d-none d-lg-block col-md-5 col-6">
                                 <label for="dropdown-toggle3" class="dropdown-label dropdown-label-1 float-right" id="dropdown-label-package">
 
-                                    @if($currentStatus==3)
+                                    @if($currentStatus == 3)
                                         {!! __('static.external_warehouse') !!}
-                                    @elseif($currentStatus==4)
+                                    @elseif($currentStatus == 4)
                                         {!! __('static.send_warehouse') !!}
-                                    @elseif($currentStatus==5)
+                                    @elseif($currentStatus == 5)
                                         {!! __('static.in_baku') !!}
-                                    @elseif($currentStatus==6)
+                                    @elseif($currentStatus == 6)
                                         {!! __('static.arceve') !!}
+                                    @elseif($currentStatus == 11)
+                                        {{$lb_statuses[60] ?? ''}}
+                                    @elseif($currentStatus == 12)
+                                        {{$lb_statuses[61] ?? ''}}
+                                    @elseif($currentStatus == 13)
+                                        {{$lb_statuses[80] ?? ''}}
+                                    @elseif($currentStatus == 14)
+                                        {{$lb_statuses[62] ?? ''}}
 
                                     @endif
                                     <span class="dropdown-icon"></span>
@@ -31,11 +39,15 @@
                                     @php
                                         $statuses = [
                                             // ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
-                                             ['key' => 'is_warehouse', 'text' => __('static.external_warehouse'), 'status' => 3],
-                                             ['key' => 'sent', 'text' => __('static.send_warehouse') , 'status' => 4],
-                                             ['key' => 'in_office', 'text' => __('static.in_baku'), 'status' => 5],
-                                             ['key' => 'delivered', 'text' => __('static.arceve'), 'status' => 6],
-                                         ];
+                                            ['key' => 'is_warehouse', 'text' => __('static.external_warehouse'), 'status' => 3],
+                                            ['key' => 'sent', 'text' => __('static.send_warehouse'), 'status' => 4],
+                                            ['key' => 'sorting', 'text' => $lb_statuses[60] ?? '', 'status' => 11],
+                                            ['key' => 'waiting_for_payment', 'text' => $lb_statuses[61] ?? '', 'status' => 12],
+                                            ['key' => 'paid-sorting', 'text' => $lb_statuses[80] ?? '', 'status' => 13],
+                                            ['key' => 'out_for_delivery', 'text' => $lb_statuses[62] ?? '', 'status' => 14],
+                                            ['key' => 'in_office', 'text' => __('static.in_baku'), 'status' => 5],
+                                            ['key' => 'delivered', 'text' => __('static.arceve'), 'status' => 6],
+                                        ];
                                     @endphp
 
                                     @foreach ($statuses as $status)
@@ -43,7 +55,9 @@
                                             <a class="bar-margin d-flex justify-content-between align-items-center"
                                                href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=' . $status['status'] }}"
                                                data-status="{{ $status['status'] }}">
-                                                <span>{{ $status['text'] }}</span>
+                                                <span class="dropdown-status-text" style="max-width: 160px; word-break: break-word; white-space: normal; display: inline-block; vertical-align: middle;" title="{{ strip_tags($status['text']) }}">
+                                                    {{ $status['text'] }}
+                                                </span>
                                                 <span class="badge badge-secondary count-badge">{{ $counts[$status['key']] ?? 0 }}</span>
                                             </a>
                                         </li>
@@ -65,14 +79,22 @@
                         <div class="d-flex justify-content-between align-items-center d-block d-lg-none mb-10">
                             <div class="dropdown-container dropdown-container2">
                                 <label for="dropdown-toggle2" class="dropdown-label dropdown-label-1" id="dropdown-label-package1">
-                                    @if($currentStatus==3)
+                                    @if($currentStatus == 3)
                                         {!! __('static.external_warehouse') !!}
-                                    @elseif($currentStatus==4)
+                                    @elseif($currentStatus == 4)
                                         {!! __('static.send_warehouse') !!}
-                                    @elseif($currentStatus==5)
+                                    @elseif($currentStatus == 5)
                                         {!! __('static.in_baku') !!}
-                                    @elseif($currentStatus==6)
+                                    @elseif($currentStatus == 6)
                                         {!! __('static.arceve') !!}
+                                    @elseif($currentStatus == 11)
+                                        {{$lb_statuses[60] ?? ''}}
+                                    @elseif($currentStatus == 12)
+                                        {{$lb_statuses[61] ?? ''}}
+                                    @elseif($currentStatus == 13)
+                                        {{$lb_statuses[80] ?? ''}}
+                                    @elseif($currentStatus == 14)
+                                    {{$lb_statuses[62] ?? ''}}
 
                                     @endif
                                     <span class="dropdown-icon"></span>
@@ -83,7 +105,11 @@
                                         $statuses = [
                                            // ['key' => 'total', 'text' => 'Bütün bağlamalarım', 'status' => 0],
                                             ['key' => 'is_warehouse', 'text' => __('static.external_warehouse'), 'status' => 3],
-                                            ['key' => 'sent', 'text' => __('static.send__warehouse') , 'status' => 4],
+                                            ['key' => 'sent', 'text' => __('static.send_warehouse') , 'status' => 4],
+                                            ['key' => 'sorting', 'text' => $lb_statuses[60] ?? '', 'status' => 11],
+                                            ['key' => 'waiting_for_payment', 'text' => $lb_statuses[61] ?? '', 'status' => 12],
+                                            ['key' => 'paid-sorting', 'text' => $lb_statuses[80] ?? '', 'status' => 13],
+                                            ['key' => 'out_for_delivery', 'text' => $lb_statuses[62] ?? '', 'status' => 14],
                                             ['key' => 'in_office', 'text' => __('static.in_baku'), 'status' => 5],
                                             ['key' => 'delivered', 'text' => __('static.arceve'), 'status' => 6],
                                         ];
@@ -94,7 +120,9 @@
                                             <a class="bar-margin d-flex justify-content-between align-items-center"
                                                href="{{ route('get_orders', ['locale' => app()->getLocale()]) . '?country=' . $search['country'] . '&status=' . $status['status'] }}"
                                                data-status="{{ $status['status'] }}">
-                                                <span>{{ $status['text'] }}</span>
+                                                <span class="dropdown-status-text" style="max-width: 160px; word-break: break-word; white-space: normal; display: inline-block; vertical-align: middle;" title="{{ strip_tags($status['text']) }}">
+                                                    {{ $status['text'] }}
+                                                </span>
                                                 <span class="badge badge-secondary count-badge">{{ $counts[$status['key']] ?? 0 }}</span>
                                             </a>
                                         </li>
@@ -123,7 +151,7 @@
                                     <table class="table table-data">
                                         <thead>
                                         <tr class="table-data__thead-tr">
-                                            @if($currentStatus!=6)
+                                            @if($currentStatus != 6)
                                                 <th class="table-data__thead-th">
                                                     <label class="form-checkbox form-checkbox-all d-flex justify-content-start align-items-center">
                                                         <input class="form-checkbox__input" type="checkbox" id="selectRowsCheckbox">
@@ -153,7 +181,7 @@
                                                 @php($package_weight = $package->volume_weight)
                                             @endif
                                             <tr class="table-data__tbody-tr order_package_{{$package->id}}" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
-                                                @if($currentStatus!=6)
+                                                @if($currentStatus != 6)
                                                     <td class="table-data__tbody-td" id="{{$package->id}}" aria-status="{{$package->paid_status}}">
                                                         <label class="form-checkbox d-flex justify-content-start align-items-center" for="checkbox-{{$package->id}}"
                                                                style="position: relative; z-index: 1; cursor: pointer; display: flex; align-items: center;">
@@ -263,7 +291,7 @@
                                                     @endif
                                                     <span class="order-status">
                                                 {{$package->status}}
-                                                <p class="order-status-changed"><span>{{$package->last_status_date ==null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
+                                                <p class="order-status-changed"><span>{{$package->last_status_date == null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
                                             </span>
                                                 </td>
                                                 <td class="table-data__tbody-td">
@@ -478,7 +506,7 @@
                                                 @endif
                                                 <span class="order-status">
                                         {{$package->status}}
-                                        <p class="order-status-changed"><span>{{$package->last_status_date ==null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
+                                        <p class="order-status-changed"><span>{{$package->last_status_date == null ? '-' : date('d.m.Y H:i', strtotime($package->last_status_date))}}</span></p>
                                     </span>
                                             </div>
                                         </div>
@@ -611,8 +639,8 @@
         }
 
         .dropdown-menu {
-            width: 55%;
-            left: 40%;
+            width: 60%;
+            left: 36%;
         }
         .dropdown-menu-mob {
             left: 4%;
@@ -642,7 +670,7 @@
         }
 
         #dropdown-label-package {
-            width: 60%;
+            width: 65%;
         }
 
         .th-new {
