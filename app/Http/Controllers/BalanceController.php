@@ -1120,21 +1120,22 @@ class BalanceController extends Controller
                                     'type' => 3, // balance
                                     'created_by' => $user_id
                                 ]);
+                                Package::where('id', $package->id)
+                                    ->update([
+                                        'paid' => $pay_for_currency,
+                                        'paid_sum' => $pay_usd,
+                                        'paid_azn' => $pay_azn,
+                                        'paid_status' => 1,
+                                        'payment_type_id' => 1, // online
+                                        'courier_order_id' => $courier_order_id,
+                                        'has_courier' => 1,
+                                        'has_courier_by' => $user_id,
+                                        'has_courier_at' => Carbon::now(),
+                                        'has_courier_type' => 'user_pasha_' . $courier_order_id
+                                    ]);
                             }
                             //dd($packages);
-                            Package::whereIn('id', $packages_arr)
-                                ->update([
-                                    'paid' => $pay_for_currency,
-                                    'paid_sum' => $pay_usd,
-                                    'paid_azn' => $pay_azn,
-                                    'paid_status' => 1,
-                                    'payment_type_id' => 1, // online
-                                    'courier_order_id' => $courier_order_id,
-                                    'has_courier' => 1,
-                                    'has_courier_by' => $user_id,
-                                    'has_courier_at' => Carbon::now(),
-                                    'has_courier_type' => 'user_pasha_' . $courier_order_id
-                                ]);
+
                         }
 
                         $courier_order = CourierOrders::where('id', $courier_order_id)->select('amount')->first();
@@ -1196,16 +1197,17 @@ class BalanceController extends Controller
                                     'type' => 3, // balance
                                     'created_by' => $user_id
                                 ]);
+                                Package::where('id', $package->id)
+                                    ->update([
+                                        'paid' => $pay_for_currency,
+                                        'paid_sum' => $pay_usd,
+                                        'paid_azn' => $pay_azn,
+                                        'paid_status' => 1,
+                                        'payment_type_id' => 1
+                                    ]);
                             }
                             // dd($packages);
-                            Package::whereIn('id', $packages_arr)
-                                ->update([
-                                    'paid' => $pay_for_currency,
-                                    'paid_sum' => $pay_usd,
-                                    'paid_azn' => $pay_azn,
-                                    'paid_status' => 1,
-                                    'payment_type_id' => 1
-                                ]);
+
                             $sortPackages=Package::whereIn('id', $packages_arr)->where('last_status_id',61)->get();
                             foreach ($sortPackages as $pack) {
                                 Package::where('id', $pack->id)
