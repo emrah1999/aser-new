@@ -621,6 +621,34 @@ class AccountController extends Controller
                 ->whereNull('package.delivered_by')
                 ->count();
             $totalCount += $counts['in_office'];
+            $counts['sorting'] = DB::table('package')
+                ->where('package.client_id', $this->userID)
+                ->where('package.last_status_id', 60)
+                ->whereNull('package.deleted_by')
+                ->whereNull('package.delivered_by')
+                ->count();
+            $totalCount += $counts['sorting'];
+            $counts['waiting_for_payment'] = DB::table('package')
+                ->where('package.client_id', $this->userID)
+                ->where('package.last_status_id', 61)
+                ->whereNull('package.deleted_by')
+                ->whereNull('package.delivered_by')
+                ->count();
+            $totalCount += $counts['waiting_for_payment'];
+            $counts['paid-sorting'] = DB::table('package')
+                ->where('package.client_id', $this->userID)
+                ->where('package.last_status_id', 80)
+                ->whereNull('package.deleted_by')
+                ->whereNull('package.delivered_by')
+                ->count();
+            $totalCount += $counts['paid-sorting'];
+            $counts['out_for_delivery'] = DB::table('package')
+                ->where('package.client_id', $this->userID)
+                ->where('package.last_status_id', 62)
+                ->whereNull('package.deleted_by')
+                ->whereNull('package.delivered_by')
+                ->count();
+            $totalCount += $counts['out_for_delivery'];
 
 
             $counts['delivered'] = DB::table('package')
@@ -670,7 +698,34 @@ class AccountController extends Controller
             if (isset($status) && !empty($status)) {
                 // search by status
                 switch ($status) {
-
+                    case 11: {
+                        $currentStatus = 11;
+                        $query->where('package.last_status_id', 60)
+                            ->whereNull('package.deleted_by')
+                            ->whereNull('package.delivered_by');
+                    }
+                        break;
+                    case 12: {
+                        $currentStatus = 12;
+                        $query->where('package.last_status_id', 61)
+                            ->whereNull('package.deleted_by')
+                            ->whereNull('package.delivered_by');
+                    }
+                        break;
+                    case 13: {
+                        $currentStatus = 13;
+                        $query->where('package.last_status_id', 80)
+                            ->whereNull('package.deleted_by')
+                            ->whereNull('package.delivered_by');
+                    }
+                        break;
+                    case 14: {
+                        $currentStatus = 14;
+                        $query->where('package.last_status_id', 62)
+                            ->whereNull('package.deleted_by')
+                            ->whereNull('package.delivered_by');
+                    }
+                        break;
                     case 2:
                         {
                             // incorrect_invoice (səhv invoys)
@@ -870,7 +925,12 @@ class AccountController extends Controller
             }
 
             $clients = User::whereNull('deleted_at')->where('id', $this->userID)->select('id', 'is_legality')->first();
-
+            $lb_statuses = [];
+            foreach (LbStatus::select('id', 'status_en', 'status_az', 'status_ru')->get() as $status) {
+                $lang = App::getLocale();
+                $status_key = 'status_' . $lang;
+                $lb_statuses[$status->id] = $status->$status_key;
+            }
 
             return view('web.account.packages.index', compact(
                 'countries',
@@ -880,7 +940,8 @@ class AccountController extends Controller
                 'counts',
                 'last30',
                 'clients',
-                'currentStatus'
+                'currentStatus',
+                'lb_statuses'
             ));
         } catch (\Exception $exception) {
             // dd($exception);
