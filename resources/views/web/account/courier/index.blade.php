@@ -10,7 +10,7 @@
                         <div class="thumbnail thumbnail-profile-title-block d-flex justify-content-between align-items-center">
                             <h4 class="thumbnail-profile-title-block__title font-n-b">{!! __('account_menu.courier') !!}</h4>
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="{{route('get_create_courier_page', ['locale' => App::getLocale()])}}" class="btn btn-blue thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b">
+                                <a @if($packagesCount>0) href="{{route('get_create_courier_page', ['locale' => App::getLocale()])}}" @else href="#0" style="background: #d8d8d8"  @endif class="btn btn-blue thumbnail-profile-title-block__btn d-flex justify-content-center align-items-center font-n-b">
                                     <img class="thumbnail-profile-title-block__btn-img" src="/web/images/content/other-plus-3.png" alt="Add">
                                     <span class="thumbnail-profile-title-block__btn-title d-none d-lg-block">{!! __('static.create_courier_order') !!}</span>
                                 </a>

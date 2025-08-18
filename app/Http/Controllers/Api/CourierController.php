@@ -222,7 +222,8 @@ class CourierController extends Controller
             ->where([
                 'package.in_baku' => 1,
                 'package.is_warehouse' => 3,
-                'has_courier' => 0
+                'has_courier' => 0,
+                'package.branch_id'=>1
             ])
             ->whereNull('package.delivered_by')
             ->whereNull('package.deleted_by')
@@ -247,7 +248,7 @@ class CourierController extends Controller
                 'client.surname as client_surname',
                 'package.external_w_debt_azn',
                 'package.internal_w_debt',
-                'package.internal_w_debt_usd',
+                'package.internal_w_debt_usd'
 
             )
             ->get();
@@ -271,7 +272,8 @@ class CourierController extends Controller
             } else {
                 $rate_to_azn = 1;
             }
-            $amount_azn = ($package->amount - $package->paid) * $rate_to_azn;
+//            $amount_azn = ($package->amount - $package->paid) * $rate_to_azn;
+            $amount_azn = $package->amount_azn;
             $amount_azn = sprintf('%0.2f', $amount_azn);
 
             $package->amount = $amount_azn;

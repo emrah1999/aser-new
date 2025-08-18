@@ -3573,6 +3573,15 @@ class AccountController extends Controller
                     'orders' => $orders
                 ]);
             }
+            $packagesCount = Package::where('package.client_id', $this->userID)
+                ->where([
+                    'package.in_baku' => 1,
+                    'package.is_warehouse' => 3,
+                    'has_courier' => 0,
+                    'package.branch_id' => 1
+                ])
+                ->whereNull('package.delivered_by')
+                ->whereNull('package.deleted_by')->count();
 
             return view("web.account.courier.index", compact(
             //'areas',
@@ -3580,9 +3589,9 @@ class AccountController extends Controller
             //'metro_stations',
                 'orders',
                 'min_date',
-                'max_date'
+                'max_date',
             //'amount_for_urgent',
-            //'packages',
+            'packagesCount'
             //'has_sub_accounts'
             ));
         } catch (\Exception $exception) {
@@ -5750,6 +5759,7 @@ class AccountController extends Controller
 
             $params['command'] = "V";
             $params['amount'] = $amount;
+//            $params['amount'] = 1;
             $params['currency'] = $currency;
             $params['description'] = $description;
             $params['language'] = $language;

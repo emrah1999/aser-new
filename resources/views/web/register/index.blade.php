@@ -297,6 +297,7 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                                         </select>
                                     </div>
                                     <div class="invalid-feedback"></div>
+                                    <div id="hiddenInputContainer"></div>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -654,31 +655,41 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
 
     <script>
         const branchs = @json($branchs);
-        
-        document.getElementById('city').addEventListener('change', function () {
-            const selectedOption = this.options[this.selectedIndex];
-            const cityId = parseInt(selectedOption.getAttribute('data-id'));
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const citySelect = document.getElementById('city');
             const branchSelect = document.getElementById('userBranch');
+            const hiddenContainer = document.getElementById('hiddenInputContainer');
 
-            branchSelect.innerHTML = '<option value="0" disabled selected>{!! __('static.branch') !!}</option>';
+            citySelect.addEventListener('change', function () {
+                const selectedOption = this.options[this.selectedIndex];
+                const cityId = parseInt(selectedOption.getAttribute('data-id'));
 
-            if (cityId === 47) {
-                branchs.forEach(branch => {
+                branchSelect.innerHTML = '<option value="0" disabled selected>{!! __('static.branch') !!}</option>';
+
+                if (cityId === 47) {
+                    branchs.forEach(branch => {
+                        const option = document.createElement('option');
+                        option.value = branch.id;
+                        option.textContent = branch.name;
+                        branchSelect.appendChild(option);
+                        branchSelect.disabled = false;
+                    });
+                } else {
                     const option = document.createElement('option');
-                    option.value = branch.id;
-                    option.textContent = branch.name;
+                    // option.value = nesimiBranch.id;
+                    // option.textContent = nesimiBranch.name;
+                    // option.selected = true;
                     branchSelect.appendChild(option);
-                });
-            } else {
-                const nesimiBranch = branchs.find(branch => branch.id === 1);
-                if (nesimiBranch) {
-                    const option = document.createElement('option');
-                    option.value = nesimiBranch.id;
-                    option.textContent = nesimiBranch.name;
-                    branchSelect.appendChild(option);
+                    branchSelect.disabled = true;
+                    hiddenContainer.innerHTML = '<input type="hidden" name="branch_id" value="15">';
                 }
-            }
+            });
+
+            // Səhifə açılarkən change event-i avtomatik işə sal
+            citySelect.dispatchEvent(new Event('change'));
         });
+
     </script>
 
 @endsection

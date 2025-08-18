@@ -103,9 +103,10 @@
 .mobile-dropdown-menu{
     left: -134px !important;
     width: 350px !important;
+    overflow: auto;
 }
 .mobile-dropdown-menu li {
-    padding: 5px 15px !important;
+    padding: 3px 15px !important;
 }
 .dropdown-menu li a {
     color: #333;
