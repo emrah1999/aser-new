@@ -871,9 +871,14 @@ function show_package_items(id, track, url) {
                         <td>${item.category}</td>
                         <td>${item.price} ${item.currency}</td>
                     </tr>`;
+
                 }
 
+
                 $("#items_list").html(body);
+                document.querySelectorAll('#items_list td').forEach(td => {
+                    td.innerHTML = td.innerHTML.replace(/&nbsp;/g, ' ');
+                });
 
                 // ✅ Bootstrap modalı aç
                 var modalElement = document.getElementById('item-modal');

@@ -347,9 +347,31 @@
         </section>
         @endif
     </div>
+    <div class="modal fade" id="popup-modal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body text-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    {!! __('static.popup_site') !!}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">{!! __('static.no_show') !!}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('styles')
     <style>
+        #closeModal{
+            background: #f2c516;
+            border: none;
+        }
+        #popup-modal .btn-close{
+            display: block;
+            float: inline-end;
+        }
          .img-responsive-2{
             width: 65%;
         }

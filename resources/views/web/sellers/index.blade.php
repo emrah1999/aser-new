@@ -25,12 +25,12 @@
                     <div class="title-block">
                         <div class="row justify-content-center align-items-start">
                             <div class="col-xl-9 col-lg-8 col-md-7 col-sm-7 col-6">
-                                <h1 class="title-block__title font-n-b">Mağazalar</h1>
+                                <h1 class="title-block__title font-n-b">{!! __('static.stores') !!}</h1>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-6">
                                 <form class="form form-search" name="formSearch" id="formSearch" method="post" action="/" novalidate="novalidate">
                                     <div class="form__group nm">
-                                        <input class="form__input" name="shop_search" type="text" id="shopSearch" placeholder="Mağaza adı..">
+                                        <input class="form__input" name="shop_search" type="text" id="shopSearch" placeholder="{!! __('static.store_name') !!}">
                                         <input class="form_input d-none" name="formSearchSubmit" type="submit">
                                         <img class="form-search__img" src="{{asset('web/images/content/other-search.png')}}" alt="Search">
                                     </div>

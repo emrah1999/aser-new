@@ -25,6 +25,7 @@ return [
     'height' => 'Hündürlük (sm)',
     'calculate_text' => 'Bağlamanın hər hansı bir tərəfinin ölçüsü 100 sm  və daha çox olarsa, bağlamanın həm həcm, həm də fiziki çəkisi hesablanır. Hansı çəki yüksək olarsa, daşınma haqqı ona əsasən hesablanır.',
     'stores' => 'Mağazalar',
+    'store_name' => 'Mağaza adı...',
     //tariffs
     'volume_title' => 'Diqqət! İri ölçülü məhsul sifariş verərkən diqqətli olun.',
     'volume_text' => 'Ölçüsü 100sm-dən böyük olan bağlamaların çatdırılma haqqı hesblanarkən həm həcmi həm fiziki çəki nəzərə alınır. Həcmi çəkinin hesablanması üçün (EN * HÜNDÜRLÜK * UZUNLUQ) / 6000 standartı tətbiq edilir.',
@@ -56,6 +57,10 @@ return [
                 müştərilərinə təklif edir
             </div>
             ',
+    'popup_site'=>'Hörmətli müştəri,<br> Artıq Bakı şəhəri üzrə 4 filial və 9 təhvil məntəqəmiz<br> fəaliyyət göstərməkdədir. <br> "Profil” - “Şəxsi məlumatlarım” bölməsinə daxil olaraq<br> Sizə uyğun filialı və ya məntəqəni seçə bilərsiniz.',
+    'popup_app'=>'Hörmətli müştəri,<br> Artıq Bakı şəhəri üzrə 4 filial və 9 təhvil məntəqəmiz fəaliyyət göstərməkdədir. <br> "Profil” - “Şəxsi məlumatlarım” bölməsinə daxil olaraq Sizə uyğun filialı və ya məntəqəni seçə bilərsiniz.',
+    'no_show'=>'Bir daha göstərmə',
+    'special_error_text'=>'Texniki işlər aparıldığından <br> müvəqqəti olaraq link sifarişi dayandırılıb.',
     'how_do_order' => 'Necə sifariş etməliyəm?',
     'payment' => 'Ödəmə',
     'delivery_static' => 'Alma və Çatdırılma',
@@ -284,7 +289,5 @@ return [
     'phone_exist1' => 'Bu nömrə artıq sistemdə mövcuddur' ,
 
 
-    'order_info'=>'Diqqət!
-        Təhvil məntəqəsi seçdiyiniz halda bağlamanızın daşınma haqqını öncədən ödəməyiniz mütləqdir! 
-        Əks halda bağlamanız qeyd etdiyiniz təhvil məntəqəsinə çatdırılmayacaqdır!'
+    'order_info'=>'Diqqət! Təhvil məntəqəsi seçdiyiniz halda bağlamanızın daşınma haqqını öncədən ödəməyiniz mütləqdir! Əks halda bağlamanız qeyd etdiyiniz təhvil məntəqəsinə çatdırılmayacaqdır!'
 ];

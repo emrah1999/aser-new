@@ -329,6 +329,9 @@
 @endsection
 @section('scripts')
     <script>
+        document.getElementById('date').addEventListener('click', function () {
+            this.showPicker();
+        });
         function choosePayment(hiddenInputId, activeButtonId, otherButtonIds) {
 
             const hiddenInput = document.getElementById(hiddenInputId);

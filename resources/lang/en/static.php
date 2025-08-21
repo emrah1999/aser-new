@@ -24,6 +24,7 @@ return [
     'height' => 'Height (cm)',
     'calculate_text' => 'If the size of any side of the package is 100 cm or more, both volume and physical weight of the package are calculated. The shipping fee will be calculated based on whichever weight is higher.',
     'stores' => 'Stores',
+    'store_name' => 'Store name...',
     //tariffs
     'volume_title' => 'Attention! Be careful when ordering large items.',
     'volume_text' => 'For the parcels larger than 100 cm, both volume and physical weight are taken into account when calculating the delivery fee. Standard (WIDTH * HEIGHT * LENGTH) / 6000 is used to calculate the volume weight.',
@@ -36,8 +37,11 @@ return [
     'tariff_from_to' => 'From :from_weight kg to :to_weight kg',
     'create_courier_order' => 'Create new courier order',
     'selectItem'=>'Please, select the country you want to order from',
-
-    'about_us' => 
+    'no_show'=>'Don’t show again',
+    'popup_app'=>'Dear customer,<br> We now have 4 branches and 9 pickup points<br> operating in Baku.<br> By going to the “Profile” – “My personal information” section,<br> you can select the branch or pickup point that is most convenient for you.',
+    'popup_site'=>'Dear customer,<br> We now have 4 branches and 9 pickup points<br> operating in Baku.<br> By going to the “Profile” – “My personal information” section,<br> you can select the branch or pickup point that is most convenient for you.',
+    'special_error_text'=>'Due to technical maintenance, <br> link ordering has been temporarily suspended.',
+    'about_us' =>
             '
             <h3 style="margin-bottom: 15px; margin-top: 15px">About Us</h3>
             <p dir="ltr">
@@ -339,8 +343,6 @@ return [
     'cancel' => 'Cancel',
     'save' => 'Save',
 
-    'order_info'=>'Attention!
-If you choose a pickup point, it is mandatory to pay the delivery fee for your package in advance!
-Otherwise, your package will not be delivered to the specified pickup point!'
+    'order_info'=>'Attention! If you choose a pickup point, it is mandatory to pay the delivery fee for your package in advance! Otherwise, your package will not be delivered to the specified pickup point!'
 
 ];

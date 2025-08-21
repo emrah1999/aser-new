@@ -110,5 +110,12 @@ class LayoutController extends Controller
             return 'error';
         }
     }
+    public function popup(Request $request){
+        return response()->json([
+            'status'=>true,
+            'hour'=>1,
+            'popup_text'=>__('static.popup_app'),
+        ]);
+    }
 
 }
