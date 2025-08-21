@@ -62,6 +62,24 @@ class CourierController extends Controller
         View::share(['exchange_rates_for_header' => $rates, 'general_settings' => $general_settings]);
     }
 
+    public function getTexts()
+    {
+        $packagesCount = Package::where('package.client_id', $this->userID)
+            ->where([
+                'package.in_baku' => 1,
+                'package.is_warehouse' => 3,
+                'has_courier' => 0,
+                'package.branch_id' => 1
+            ])
+            ->whereNull('package.delivered_by')
+            ->whereNull('package.deleted_by')->count();
+        return response()->json([
+           'package_text'=>__('static.order_info'),
+           'courier_text'=>__('static.courier_message'),
+           'packages_count' => $packagesCount>0?true:false,
+        ]);
+    }
+
     public function get_azerpost_courier_page(Request $request){
         $courier_settings = CourierSettings::first();
 

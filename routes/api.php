@@ -45,6 +45,7 @@ Route::get('/special_order/update/{country_id}/{order_id}', [\App\Http\Controlle
 Route::get('/pay_special_order/{country_id}/pay{order_id}', [\App\Http\Controllers\AccountController::class, 'pay_to_special_order'])->middleware('myApi')->name('api_pay_to_special_order');
 Route::get('/sellers', [\App\Http\Controllers\Api\LayoutController::class, 'get_seller'])->name("sellers_page");
 Route::get('/faq', [\App\Http\Controllers\Api\LayoutController::class, 'faq'])->name("faq");
+Route::get('/popup-text', [\App\Http\Controllers\Api\LayoutController::class, 'popup'])->name("popup");
 Route::get('/dangerous-goods', [\App\Http\Controllers\Api\LayoutController::class, 'dangerousGoods']);
 Route::get('/calculate-index', [\App\Http\Controllers\Api\CalculateController::class, 'index']);
 Route::post('/calculate-amount', [\App\Http\Controllers\Api\CalculateController::class, 'calculate_amount'])->name("calculate_amount");
@@ -114,6 +115,7 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
         Route::post('/bulk-pay', [\App\Http\Controllers\AccountController::class, 'bulk_pay']);
     });
 
+    Route::get('/get-spain-otp', [\App\Http\Controllers\Api\SellerController::class, 'getForwardSmsLog']);
 
     Route::group(['prefix' => '/seller-otp'], function () {
         Route::get('/', [\App\Http\Controllers\SellerOtpController::class , 'index']);
@@ -123,7 +125,10 @@ Route::group(['prefix' => '/', 'middleware' => 'myApi'], function () {
 
     });
 
+    Route::get('/static-texts', [\App\Http\Controllers\Api\CourierController::class, 'getTexts']);
+
     Route::group(['prefix' => '/courier'], function () {
+        Route::get('/settings', [\App\Http\Controllers\Api\CourierController::class, 'courier_settings'])->name("courier_settings");
         Route::get('/settings', [\App\Http\Controllers\Api\CourierController::class, 'courier_settings'])->name("courier_settings");
         Route::get('/area', [\App\Http\Controllers\Api\CourierController::class, 'courier_area'])->name("courier_area");
         Route::get('/metro', [\App\Http\Controllers\Api\CourierController::class, 'metro_station'])->name("metro_station");

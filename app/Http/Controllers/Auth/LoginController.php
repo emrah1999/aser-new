@@ -9,6 +9,7 @@ use App\Settings;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
@@ -33,7 +34,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/account';
+    protected $redirectTo;
 
     /**
      * Create a new controller instance.
@@ -42,6 +43,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->redirectTo = '/'.App::getLocale().'/account';
         $this->middleware('guest')->except('logout');
 
         $date = Carbon::today();
@@ -84,7 +86,7 @@ class LoginController extends Controller
 //            $remember=$request->remember_me?true:false;
 //
 //            if(Auth::attempt($checkData,$remember)){
-
+            $this->redirectTo = '/'.App::getLocale().'/account';
             return $this->sendLoginResponse($request);
         }
 
@@ -123,7 +125,7 @@ class LoginController extends Controller
             Session::flash('display', 'block');
         }
 
-        return redirect('/login');
+        return redirect('/'.App::getLocale().'/login');
     }
 
     public function user_reset_password() {

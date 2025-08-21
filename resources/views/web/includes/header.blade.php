@@ -9,7 +9,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
                     <a href="{{ route('home_page', ['locale' => App::getLocale()]) }}" class="logo">
-                        <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px" width=162px" alt="Logo">
+                        <img class="logo__img" src="{{asset('web/images/logo/logo2.png')}}" height="68px" width=153px" alt="Logo">
                     </a>
                 </div>
                 <div class="col-auto d-none d-xl-block">
@@ -130,7 +130,7 @@
                             <div class="media-profile__left mobile-dropdown">
                                 <!-- <a class="btn btn-yellow btn-user-mobile" href="{{ route('get_account', ['locale' => App::getLocale()]) }}">
                                         <h6 class="media-profile__title font-n-b">
-                                         <i class="fa fa-user"></i> 
+                                         <i class="fa fa-user"></i>
                                         </h6>
                                     </a> -->
                                 <div class="dropdown-container">
@@ -369,21 +369,27 @@
         }
     });
 
-    document.querySelector('.dropdown-container').addEventListener('click', function() {
-        document.querySelector('.menu-mobile-block').classList.add('d-none');
-    });
+    const dropdown = document.querySelector('.dropdown-container');
+    if (dropdown) {
+        dropdown.addEventListener('click', function() {
+            const menu = document.querySelector('.menu-mobile-block');
+            if (menu) {
+                menu.classList.add('d-none');
+            }
+        });
+    }
     document.querySelector('.nav-languages__link').addEventListener('click', function(e) {
         e.preventDefault();
         const languageDropdown = this.nextElementSibling;
 
-        // Açıqsa, bağla
+
         if (languageDropdown.classList.contains('d-none')) {
             languageDropdown.classList.remove('d-none');
         } else {
             languageDropdown.classList.add('d-none');
         }
     });
-    
+
     document.addEventListener('click', function(e) {
         const languageMenu = document.querySelector('.nav-languages');
         const isClickInside = languageMenu.contains(e.target);
@@ -407,7 +413,7 @@
         const menu = document.querySelector(".menu-mobile-block");
         const toggleButton = document.querySelector(".mobile-menu");
 
-        
+
 
         document.addEventListener("click", function (event) {
             if (!menu.contains(event.target) && !toggleButton.contains(event.target)) {

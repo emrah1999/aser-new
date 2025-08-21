@@ -246,7 +246,7 @@
 
                     <div class="col-md-9">
                         <div class="alert alert-warning text-center" style="margin-top: 100px; padding: 40px; font-size: 18px; border-radius: 10px;">
-                            Texniki işlər aparıldığından <br> müvəqqəti olaraq link sifarişi dayandırılıb.
+                            {!! __('static.special_error_text') !!}
                         </div>
                     </div>
                 </div>

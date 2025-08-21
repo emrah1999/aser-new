@@ -165,13 +165,13 @@
                 </div>
                 <div class="modal-body modal-profile-azerpoct__body">
                     <form class="form form-modal-profile form-modal-profile-azerpoct center-block">
-                        <h6 class="form-modal-profile__title form-modal-profile-azerpoct__title text-center font-n-b">Kuryer sifariş edilsin?</h6>
+                        <h6 class="form-modal-profile__title form-modal-profile-azerpoct__title text-center font-n-b">{!! __('popup.courier_question') !!}</h6>
                         <div class="row">
                             <div class="col-6">
-                                <button class="btn btn-trns-black btn-block form-modal-profile__btn form-modal-profile-azerpoct__btn font-n-b" type="button" data-bs-dismiss="modal">Xeyr</button>
+                                <button class="btn btn-trns-black btn-block form-modal-profile__btn form-modal-profile-azerpoct__btn font-n-b" type="button" data-bs-dismiss="modal">{!! __('popup.no') !!}</button>
                             </div>
                             <div class="col-6">
-                                <button class="btn btn-blue btn-block form-modal-profile__btn form-modal-profile-azerpoct__btn font-n-b" form="formProfileAzerpoct" type="submit">Bəli</button>
+                                <button class="btn btn-blue btn-block form-modal-profile__btn form-modal-profile-azerpoct__btn font-n-b" form="formProfileAzerpoct" type="submit">{!! __('popup.yes') !!}</button>
                             </div>
                         </div>
                     </form>
@@ -246,6 +246,9 @@
 
 @section('scripts')
     <script>
+        document.getElementById('date').addEventListener('click', function () {
+            this.showPicker();
+        });
         default_urgent_amount = '{{$amount_for_urgent}}';
 
         $(".region_id").on("change", function () {
