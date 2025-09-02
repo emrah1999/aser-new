@@ -324,7 +324,7 @@ class AccountController extends Controller
     public function special_orders_country(Request $request)
     {
         $lang = $request->header('Language');
-        $countr = Country::whereIn('countries.id', [2, 7,4, 9, 12])
+        $countr = Country::whereIn('countries.id', [2, 4, 9, 12])
             ->select('countries.id', 'countries.name_' . $lang . ' as title',
                 DB::raw("CONCAT('" . env('APP_URL') . "', countries.flag) as flag"),
                 DB::raw("CONCAT('" . env('APP_URL') . "', countries.image) as image"),
@@ -1712,8 +1712,8 @@ class AccountController extends Controller
     public function get_special_orders_select(Request $request)
     {
         try {
-            $countries = Country::whereIn('id', [7, 2, 4, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
-            $countr = Country::whereIn('id', [7, 2, 4,  9, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countries = Country::whereIn('id', [2, 4, 9, 12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 4,  9, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
             $not_paid_orders_count = SpecialOrderGroups::where(['is_paid' => 0, 'client_id' => $this->userID])
                 ->whereNull('placed_by')
                 ->whereNull('canceled_by')
@@ -1771,7 +1771,7 @@ class AccountController extends Controller
     public function get_special_orders(Request $request, $a, $country_id)
     {
         try {
-            $countr = Country::whereIn('id', [2, 9,4, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9,4, 12])->select('id', 'name_' . App::getLocale(), 'flag', 'image')->orderBy('sort', 'desc')->orderBy('id')->get();
 
             //return redirect()->route("get_account");
 
@@ -1832,7 +1832,7 @@ class AccountController extends Controller
             }
             $rate_azn = $rate->rate;
 
-            $countr = Country::whereIn('id', [2, 9,4, 12, 7])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
+            $countr = Country::whereIn('id', [2, 9,4, 12])->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
             $countrFlag = Country::where('id', $country_id)->select('id', 'name_' . App::getLocale(), 'flag')->orderBy('sort', 'desc')->orderBy('id')->first();
 
             $packages_price_for_last_month = $this->packages_price_for_last_month();
@@ -2007,15 +2007,15 @@ class AccountController extends Controller
             }
             $user_basket = base64_encode(json_encode($user_basket_arr));
             //$paytr = $this->amount_send_to_paytr($country_id, $user_basket, $amount);
-//            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
-//            $url = $pay[2];
-//            $merchant_oid = urldecode($pay[3]);
-            $data=$this->payAzeriCard($amount, Auth::user()->id, $ip_address, $currency_id);
+            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
+            $url = $pay[2];
+            $merchant_oid = urldecode($pay[3]);
+//            $data=$this->payAzeriCard($amount, Auth::user()->id, $ip_address, $currency_id);
 
 
             SpecialOrderPayments::create([
                 'order_id' => $order_id,
-                'payment_key' => $data['NONCE'],
+                'payment_key' => $merchant_oid,
                 'created_by' => $this->userID
             ]);
 
@@ -2027,10 +2027,10 @@ class AccountController extends Controller
 
 
             if ($this->api) {
-                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
-//                return response(['case' => 'success', 'url' => $url]);
+//                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+                return response(['case' => 'success', 'url' => $url]);
             }
-            return view('web.payment.payment', compact('data'));
+//            return view('web.payment.payment', compact('data'));
 
             return response(['case' => 'success', $url]);
         } catch (\Exception $exception) {
@@ -2358,17 +2358,17 @@ class AccountController extends Controller
             ]);
 
             $user_basket = base64_encode(json_encode($user_basket_arr));
-            $data=$this->payAzeriCard($total_price, Auth::user()->id, $ip_address, $currency_id);
-//            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
+//            $data=$this->payAzeriCard($total_price, Auth::user()->id, $ip_address, $currency_id);
+            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
 
 
-//            $merchant_oid = urldecode($pay[3]);
-//            $url = $pay[2];
-            //SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
+            $merchant_oid = urldecode($pay[3]);
+            $url = $pay[2];
+//            SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
 
             SpecialOrderPayments::create([
                 'order_id' => $group->id,
-                'payment_key' => $data['NONCE'],
+                'payment_key' => $merchant_oid,
                 'created_by' => $this->userID
             ]);
 
@@ -2378,10 +2378,10 @@ class AccountController extends Controller
                 'created_by' => $this->userID
             ]);
             if ($this->api) {
-                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
-//                return response(['case' => 'success', 'url' => $url]);
+//                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+                return response(['case' => 'success', 'url' => $url]);
             }
-            return view('web.payment.payment', compact('data'));
+//            return view('web.payment.payment', compact('data'));
             return response(['case' => 'success', $url]);
 
         } catch (\Exception $exception) {
@@ -3634,7 +3634,19 @@ class AccountController extends Controller
                     'orders' => $orders
                 ]);
             }
-            $packagesCount = Package::where('package.client_id', $this->userID)
+            $users = array();
+            array_push($users, $this->userID);
+
+            $sub_accounts = User::where('parent_id', $this->userID)->whereNull('deleted_by')
+                ->select('id')->get();
+
+            foreach ($sub_accounts as $sub_account) {
+                array_push($users, $sub_account->id);
+            }
+
+            $packagesCount = Package::leftJoin('courier_payment_types', 'package.payment_type_id', '=', 'courier_payment_types.id')
+                ->leftJoin('users as client', 'package.client_id', '=', 'client.id')
+                ->whereIn('package.client_id', $users)
                 ->where([
                     'package.in_baku' => 1,
                     'package.is_warehouse' => 3,

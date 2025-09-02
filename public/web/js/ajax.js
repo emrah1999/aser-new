@@ -903,30 +903,30 @@ $(document).ready(function () {
             });
         },
         success: function (response) {
-            if (response.title) {
-                swal(
-                    response.title,
-                    response.content,
-                    response.case
-                );
-            }else if (response) {
-                $('body').append(response);
-                document.getElementById('secureForm').submit();
-
-            } else {
-                swal.close();
-                swal(
-                    "Error!",
-                    "Sorry, something went wrong!",
-                    response.case
-                );
-            }
-            // if (response.case === 'success') {
-            //     let url = response[0];
-            //     location.href = url;
+            // if (response.title) {
+            //     swal(
+            //         response.title,
+            //         response.content,
+            //         response.case
+            //     );
+            // }else if (response) {
+            //     $('body').append(response);
+            //     document.getElementById('secureForm').submit();
+            //
             // } else {
-            //     form_submit_message(response, false, false);
+            //     swal.close();
+            //     swal(
+            //         "Error!",
+            //         "Sorry, something went wrong!",
+            //         response.case
+            //     );
             // }
+            if (response.case === 'success') {
+                let url = response[0];
+                location.href = url;
+            } else {
+                form_submit_message(response, false, false);
+            }
         }
     });
 });
@@ -1084,34 +1084,54 @@ function pay_special_order(url, e) {
             '_token': CSRF_TOKEN,
         },
         success: function (response) {
-            if (response.title) {
+            if (response.case === 'success') {
+                let url = response[0];
+                //location.href = "https://www.paytr.com/odeme/guvenli/" + token;
+                location.href = url;
+                // $(e).attr("disabled", true).removeAttr("onclick").text("Ödənilib");
+                // swal({
+                //     position: 'top-end',
+                //     type: response.case,
+                //     title: response.title,
+                //     showConfirmButton: false,
+                //     timer: 1500
+                // });
+            } else {
+                swal.close();
                 swal(
                     response.title,
                     response.content,
                     response.case
                 );
-            }else if (response) {
-                $('body').append(response); // formu DOM-a əlavə et
-                document.getElementById('secureForm').submit();
-                // let url = response[0];
-                // //location.href = "https://www.paytr.com/odeme/guvenli/" + token;
-                // location.href = url;
-                // // $(e).attr("disabled", true).removeAttr("onclick").text("Ödənilib");
-                // // swal({
-                // //     position: 'top-end',
-                // //     type: response.case,
-                // //     title: response.title,
-                // //     showConfirmButton: false,
-                // //     timer: 1500
-                // // });
-            } else {
-                swal.close();
-                swal(
-                    "Error!",
-                    "Sorry, something went wrong!",
-                    response.case
-                );
             }
+            // if (response.title) {
+            //     swal(
+            //         response.title,
+            //         response.content,
+            //         response.case
+            //     );
+            // }else if (response) {
+            //     $('body').append(response); // formu DOM-a əlavə et
+            //     document.getElementById('secureForm').submit();
+            //     // let url = response[0];
+            //     // //location.href = "https://www.paytr.com/odeme/guvenli/" + token;
+            //     // location.href = url;
+            //     // // $(e).attr("disabled", true).removeAttr("onclick").text("Ödənilib");
+            //     // // swal({
+            //     // //     position: 'top-end',
+            //     // //     type: response.case,
+            //     // //     title: response.title,
+            //     // //     showConfirmButton: false,
+            //     // //     timer: 1500
+            //     // // });
+            // } else {
+            //     swal.close();
+            //     swal(
+            //         "Error!",
+            //         "Sorry, something went wrong!",
+            //         response.case
+            //     );
+            // }
         }
     });
 }

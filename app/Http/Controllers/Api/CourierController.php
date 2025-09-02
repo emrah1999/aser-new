@@ -64,7 +64,19 @@ class CourierController extends Controller
 
     public function getTexts()
     {
-        $packagesCount = Package::where('package.client_id', $this->userID)
+        $users = array();
+        array_push($users, $this->userID);
+
+        $sub_accounts = User::where('parent_id', $this->userID)->whereNull('deleted_by')
+            ->select('id')->get();
+
+        foreach ($sub_accounts as $sub_account) {
+            array_push($users, $sub_account->id);
+        }
+
+        $packagesCount = Package::leftJoin('courier_payment_types', 'package.payment_type_id', '=', 'courier_payment_types.id')
+            ->leftJoin('users as client', 'package.client_id', '=', 'client.id')
+            ->whereIn('package.client_id', $users)
             ->where([
                 'package.in_baku' => 1,
                 'package.is_warehouse' => 3,
