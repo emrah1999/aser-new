@@ -333,7 +333,28 @@
 
 
 </header>
-
+<div class="modal modal-profile-logout fade" id="modalProfileLogout" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-profile-logout__dialog center-block">
+        <div class="modal-content modal-profile-logout__content">
+            <div class="modal-header modal-profile-logout__header justify-content-end">
+                <img class="modal-profile-logout__img-close" src="/web/images/content/modal-close.png" alt="Modal Close" data-bs-dismiss="modal">
+            </div>
+            <div class="modal-body modal-profile-logout__body">
+                <form class="form form-modal-profile form-modal-profile-logout center-block" name="formModalProfileLogout" id="formModalProfileLogout" method="get" action="{{route("logout", ['locale' => App::getLocale()])}}" novalidate="novalidate">
+                    <h6 class="form-modal-profile__title form-modal-profile-logout__title text-center font-n-b">{!! __('static.confirmLogout') !!}</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-trns-black btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" type="button" data-bs-dismiss="modal">{!! __('static.no') !!}</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-blue btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" name="formModalProfileLogoutSubmit" type="submit">{!! __('static.yes') !!}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @if(($breadcrumbs ?? 0) == 1)
 <section class="section section-breadcrumbs">
     <div class="container-lg">

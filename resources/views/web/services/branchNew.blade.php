@@ -333,6 +333,20 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
+        @media only screen and (max-width: 767px) {
+            .left-panel {
+                width: 100%;
+                height: 60%;
+            }
+
+            .right-panel {
+                width: 100%;
+                height: 43%;
+            }
+            .container{
+                display: block;
+            }
+        }
     </style>
 @endsection
 

@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 @endif
-<script src="{{asset('web/js/ajax.js?ver=1.4.4')}}"></script>
+<script src="{{asset('web/js/ajax.js?ver=1.4.5')}}"></script>
 <script src="{{asset('web/js/courier.js?v=1.2')}}"></script>
 <script src="{{asset('web/js/main.js?v=1.26')}}"></script>
 <script>
