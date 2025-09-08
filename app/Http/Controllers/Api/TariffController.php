@@ -69,7 +69,7 @@ class TariffController extends Controller
                 ->whereNotIn('contract_detail.departure_id', [14])
                 ->whereNotIn('country_id', [1, 10, 13])
                 ->where('country_id',$request['country_id'])
-                ->where('contract_detail.type_id', 1)
+//                ->where('contract_detail.type_id', 1)
                 ->select(
                     'contract_detail.title_' . $header,
                     'contract_detail.country_id',
@@ -102,9 +102,14 @@ class TariffController extends Controller
                             END) * 100) / 100
                         ELSE 0
                      END AS sales_amount_azn')
-                )
-                ->get();
+                );
 
+                if($request['type_id']==2 && $request['country_id']==4){
+                    $tariffs=$tariffs->where('contract_detail.type_id',2);
+                }else{
+                    $tariffs=$tariffs->where('contract_detail.type_id', 1);
+                }
+                $tariffs = $tariffs->get();
    
             $countries = Country::whereNotIn('id', [1,  10, 13])->select('id', 'name_' . $header.' as title', 'flag')->orderBy('sort', 'desc')->orderBy('id')->get();
 
