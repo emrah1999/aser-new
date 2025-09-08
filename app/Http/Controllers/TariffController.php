@@ -199,7 +199,7 @@ class TariffController extends HomeController
 //               return 'aaaaaaa';
 //            }
 
-            $tariffAll = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
+            $tariffQuery = ContractDetail::leftJoin('countries', 'contract_detail.country_id', '=', 'countries.id')
                 ->leftJoin('currency', 'contract_detail.currency_id', '=', 'currency.id')
                 ->leftJoin('tariff_types', 'contract_detail.type_id', '=', 'tariff_types.id')
                 ->leftJoin('exchange_rate', function ($join) {
@@ -214,9 +214,48 @@ class TariffController extends HomeController
                 ->orderBy('contract_detail.type_id')
                 ->orderBy('contract_detail.from_weight')
                 ->whereNotIn('contract_detail.departure_id', [14])
-                ->where('contract_detail.type_id', 1)
-                ->where('country_id', $country_id)
-                ->select(
+                // ->where('contract_detail.type_id', 1)
+                ->where('country_id', $country_id);
+
+                $tariffAll = clone $tariffQuery;
+
+                $spainLiquidTariffs = $tariffQuery->where('contract_detail.type_id', 2)->where('contract_detail.country_id', 4);
+                $spainLiquidTariffs = $spainLiquidTariffs->select(
+                    'contract_detail.title_' . App::getLocale(),
+                    'contract_detail.country_id',
+                    'contract_detail.from_weight',
+                    'contract_detail.to_weight',
+                    'contract_detail.rate',
+                    'contract_detail.sales_rate',
+                    'contract_detail.charge',
+                    'contract_detail.sales_charge',
+                    'contract_detail.type_id',
+                    'countries.flag',
+                    'contract_detail.currency_id as currency',
+                    'currency.icon',
+                    'tariff_types.name_' . App::getLocale() . ' as tariff_type_name',
+                    'contract_detail.description_' . App::getLocale() . ' as description',
+                    DB::raw('CASE 
+                    WHEN exchange_rate.rate IS NOT NULL THEN 
+                        CEIL((exchange_rate.rate * 
+                        CASE WHEN contract_detail.rate = 0 THEN contract_detail.charge ELSE contract_detail.rate END) * 100) / 100
+                    ELSE 0 
+                    END AS amount_azn'),
+                    DB::raw('CASE
+                        WHEN exchange_rate.rate IS NOT NULL
+                            AND (contract_detail.sales_rate > 0 OR contract_detail.sales_charge > 0) THEN
+                            CEIL((exchange_rate.rate *
+                            CASE
+                                WHEN contract_detail.sales_rate > 0 THEN contract_detail.sales_rate
+                                ELSE contract_detail.sales_charge
+                            END) * 100) / 100
+                        ELSE 0
+                     END AS sales_amount_azn')
+                )
+                ->get();
+
+                $tariffAll = $tariffAll
+                    ->select(
                     'contract_detail.title_' . App::getLocale(),
                     'contract_detail.country_id',
                     'contract_detail.from_weight',
@@ -253,9 +292,13 @@ class TariffController extends HomeController
             foreach ($tariffAll as $item) {
                 $item->to_weight = number_format($item->to_weight, 3, '.', '');
             }
+            foreach ($spainLiquidTariffs as $item) {
+                $item->to_weight = number_format($item->to_weight, 3, '.', '');
+            }
 
             return view('web.tariffs.single', compact(
                 'tariffAll',
+                'spainLiquidTariffs',
                 'country',
                 'countries',
                 'sellers',

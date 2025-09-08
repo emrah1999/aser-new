@@ -35,12 +35,22 @@
                                 <img class="media-tarif-country__img img-responsive" src="{{$country->internal_images}}"
                                      alt="Tarif">
                             </div>
+                             @if(isset($spainLiquidTariffs) && count($spainLiquidTariffs) > 0)
+                            <div class="media-tarif-country__body">
+                                    <h4 style="margin-top: 20px"
+                                        class="media-tarif-country__title font-n-b">{{$country->sub_title}}</h4>
+                                    <p class="media-tarif-country__desc">
+                                        {{$country->sub_description}}
+                                    </p>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="media media-tarif-country">
                     <div class="row">
-                        <div class="col-md-6">
+                        {{-- standart tariff --}}
+                        <div class="col-md-6 mt-2">
                             <div class="media-tarif-country__right">
                                 <div class="thumbnail thumbnail-tarifs-2 center-block">
                                     <table class="table table-tarifs">
@@ -88,15 +98,68 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="media-tarif-country__body">
-                                <h4 style="margin-top: 20px"
-                                    class="media-tarif-country__title font-n-b">{{$country->sub_title}}</h4>
-                                <p class="media-tarif-country__desc">
-                                    {{$country->sub_description}}
-                                </p>
+                        {{-- maye tarif --}}
+                        @if(isset($spainLiquidTariffs) && count($spainLiquidTariffs) > 0)
+                            <div class="col-md-6 mt-2">
+                            <div class="media-tarif-country__right">
+                                <div class="thumbnail thumbnail-tarifs-2 center-block">
+                                    <table class="table table-tarifs">
+                                        <caption class="table-tarifs__caption caption-top text-center font-n-b">
+                                            MAYE
+                                        </caption>
+                                        <tbody class="table-tarifs__tbody">
+                                        @foreach($spainLiquidTariffs as $tariff)
+                                            <tr class="table-tarifs__tbody-tr">
+                                                @php($rate = $tariff->rate == 0 ? $tariff->charge : $tariff->rate)
+                                                @if($tariff->to_weight > 1000)
+                                                    <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight', ['from_weight' => $tariff->from_weight  ]) !!}</td>
+                                                @elseif($tariff->to_weight > 9)
+                                                    <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight2', ['from_weight' => $tariff->from_weight ,'to_weight' => $tariff->to_weight]) !!}</td>
+
+                                                @else
+                                                    <td class="table-tarifs__tbody-td font-n-b">{{$tariff->from_weight}} {!! __('static.kq') !!}
+                                                        - {{$tariff->to_weight}} {!! __('static.kq') !!}</td>
+                                                @endif
+                                                <td class="table-tarifs__tbody-td text-right">{{$tariff->icon}}{{$rate}}
+                                                    / ₼{{ $tariff->amount_azn }}
+                                                    @if ($tariff->sales_rate > 0 || $tariff->sales_charge > 0)
+                                                        <div class="discounted-prices text-danger"
+                                                             style="margin-top: -4px">
+
+                                                            @if ($tariff->sales_rate > 0)
+                                                                <span>
+                                                                    <del>{{ $tariff->icon }}{{ $tariff->sales_rate }} / ₼{{ $tariff->sales_amount_azn }}</del>
+                                                                </span>
+                                                            @endif
+
+                                                            @if ($tariff->sales_charge > 0)
+                                                                <span>
+                                                                    <del>{{ $tariff->icon }}{{ $tariff->sales_charge }} / ₼{{ $tariff->sales_amount_azn }}</del>
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                    @endif
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                            </div>
+                        @endif
+                        @if(!isset($spainLiquidTariffs) || count($spainLiquidTariffs) == 0)
+                            <div class="col-md-6">
+                                <div class="media-tarif-country__body">
+                                    <h4 style="margin-top: 20px"
+                                        class="media-tarif-country__title font-n-b">{{$country->sub_title}}</h4>
+                                    <p class="media-tarif-country__desc">
+                                        {{$country->sub_description}}
+                                    </p>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
