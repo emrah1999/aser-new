@@ -104,8 +104,13 @@ class TariffController extends Controller
                      END AS sales_amount_azn')
                 );
 
-                if($request['type_id']==2 && $request['country_id']==4){
-                    $tariffs=$tariffs->where('contract_detail.type_id',2);
+                if($request['type_id']==2){
+                    if($request['country_id']==4){
+                        $tariffs=$tariffs->where('contract_detail.type_id',2);
+                    }else{
+                        $tariffs=$tariffs->where('contract_detail.type_id',10);
+                    }
+
                 }else{
                     $tariffs=$tariffs->where('contract_detail.type_id', 1);
                 }
