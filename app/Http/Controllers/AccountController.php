@@ -32,6 +32,7 @@ use App\PaymentTask;
 use App\Seller;
 use App\Service\AzerCardService;
 use App\Settings;
+use App\ShippingDay;
 use App\SpecialOrder;
 use App\SpecialOrderGroups;
 use App\SpecialOrderPayments;
@@ -6461,5 +6462,35 @@ class AccountController extends Controller
         }
 //        return $branches;
         return view("web.branch.branchAndPudo", compact('branches'));
+    }
+    public function get_shipping_days(){
+        $shipping_days = collect();
+        $countries = Country::where('url_permission', 1)
+        ->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')
+        ->orderBy('sort', 'desc')
+        ->orderBy('id')
+        ->get();
+
+        return view("web.account.shipping_days.index", compact('shipping_days','countries'));
+    }
+
+    public function get_shipping_days_details(Request $request, $locale, $country_id)
+    {
+        try {
+            $details = ShippingDay::where('is_active', 1)
+                ->where('country_id', $country_id)
+                ->first();
+            $countries = Country::where('url_permission', 1)
+                ->select('id', 'name_' . App::getLocale(), 'flag', 'new_flag', 'image')
+                ->orderBy('sort', 'desc')->orderBy('id')
+                ->get();
+
+            return view('web.account.shipping_days.details', compact(
+                'details',
+                'countries'
+            ));
+        } catch (\Exception $exception) {
+            return view("front.error");
+        }
     }
 }

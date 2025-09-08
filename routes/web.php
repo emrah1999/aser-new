@@ -70,6 +70,9 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
     Route::get('/branch-station', 'AccountController@branchAndPudo')->name("branchAndPudo");
 
+    Route::get('/shipping-days', 'AccountController@get_shipping_days')->name("shipping_days.index");
+    Route::get('/shipping-days/{country_id}', 'AccountController@get_shipping_days_details')->name("shipping_days.details");
+
     Route::group(['prefix' => '/our-services'], function () {
         Route::get('/', 'OurServicesController@index')->name("ourServices_page");
         Route::get('/branches', 'OurServicesController@branches')->name("ourServices_branhces");

@@ -343,6 +343,8 @@ return [
     'cancel' => 'Cancel',
     'save' => 'Save',
 
+    'shipping_days' => 'Shipping days',
+
     'order_info'=>'Attention! If you choose a pickup point, it is mandatory to pay the delivery fee for your package in advance! Otherwise, your package will not be delivered to the specified pickup point!'
 
 ];
