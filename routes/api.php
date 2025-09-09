@@ -215,6 +215,7 @@ Route::get('/number-prefix', [\App\Http\Controllers\Api\OtherApiController::clas
 Route::get('/tariffs', [\App\Http\Controllers\Api\TariffController::class, 'tariffs'])->name("tariffs");
 Route::post('/check-order', [\App\Http\Controllers\Api\OtherApiController::class, 'local_tracking_search']);
 Route::post('/send-otp', [\App\Http\Controllers\Api\OtherApiController::class, 'send_incoming_otp']);
+Route::post('/shipping-day', [\App\Http\Controllers\Api\ShippingDayController::class, 'index']);
 
 Route::group(['prefix' => 'external', 'middleware' => ['thirdPlatform', 'throttle:600,1']], function () {
     Route::group(['prefix' => 'v1'], function () {

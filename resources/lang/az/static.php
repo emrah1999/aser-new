@@ -288,6 +288,7 @@ return [
 
     'phone_exist1' => 'Bu nömrə artıq sistemdə mövcuddur' ,
 
+    'shipping_days'=>'Göndəriş günləri',
 
     'order_info'=>'Diqqət! Təhvil məntəqəsi seçdiyiniz halda bağlamanızın daşınma haqqını öncədən ödəməyiniz mütləqdir! Əks halda bağlamanız qeyd etdiyiniz təhvil məntəqəsinə çatdırılmayacaqdır!'
 ];

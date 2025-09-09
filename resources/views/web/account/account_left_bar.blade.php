@@ -107,6 +107,15 @@
             </a>
         </li>
         <li class="nav-profile-menu__item">
+            <a href="{{ route('shipping_days.index', ['locale' => App::getLocale()]) }}"
+                class="nav-profile-menu__link d-flex justify-content-start align-items-center
+                    {{ request()->routeIs('shipping_days.*') ? 'nav-profile-menu__link--active' : '' }}">
+                <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-address.png" alt="ProfileMenu">
+                <img class="nav-profile-menu__link-img nav-profile-menu__link-img--active" src="/web/images/content/profile-menu-address.png" alt="ProfileMenu">
+                <span class="nav-profile-menu__link-title">{!! __('static.shipping_days') !!}</span>
+            </a>
+        </li>
+        <li class="nav-profile-menu__item">
             <a href="{{route("get_user_settings", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center {{ request()->routeIs('get_user_settings') ? 'nav-profile-menu__link--active' : '' }}">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-user.png" alt="ProfileMenu">
                 <img class="nav-profile-menu__link-img" src="/web/images/content/profile-menu-user.png" alt="ProfileMenu">
