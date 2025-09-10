@@ -212,9 +212,11 @@ class NotificationController extends Controller
                 "date" => date('d.m.Y H:i',strtotime($not->created_at)),
             ];
             $date=date('Y-m-d',strtotime($not->created_at));
+            $yesterday = Carbon::yesterday('Asia/Baku')->toDateString();
+            $lastWeek = Carbon::today('Asia/Baku')->subDays(7)->toDateString();
             if($date==date('Y-m-d')){
                 $groupedData['today'][] = $notification;
-            }else if($date<date('Y-m-d', strtotime('yesterday')) && $date>date('Y-m-d', strtotime('yesterday -7 days'))){
+            }elseif ($date >= $lastWeek && $date <= $yesterday) {
                 $groupedData['weekend'][]= $notification;
             }else if($date<date('Y-m-d', strtotime('yesterday'))){
                 $groupedData['others'][]=$notification;
