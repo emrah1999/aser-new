@@ -262,3 +262,5 @@ Route::get('/special-order-terms',[\App\Http\Controllers\Api\OtherApiController:
 Route::get('/special-order-popup',[\App\Http\Controllers\Api\OtherApiController::class,'specialOrderPopup']);
 
 Route::post('/otp-code/forward', [\App\Http\Controllers\SellerOtpController::class , 'forwardSmsLog']);
+
+Route::post('/user-data', [\App\Http\Controllers\Api\Other\DataController::class, 'getUserData']);
