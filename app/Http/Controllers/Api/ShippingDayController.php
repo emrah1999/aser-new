@@ -35,7 +35,7 @@ class ShippingDayController extends Controller
                     'countries.name_' . $lang . ' as country_name',
                     'countries.code',
                     DB::raw("CONCAT('" . env('APP_URL') . "', countries.new_flag) as flag"),
-                    DB::raw("CONCAT('" . env('APP_URL') . "', countries.image) as image"),
+                    DB::raw("CONCAT('" . env('APP_URL') . "', countries.image) as image")
                 )->first();
 
             if (!$shippingDays) {
