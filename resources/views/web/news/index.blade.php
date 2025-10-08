@@ -4,7 +4,7 @@
 <div class="content" id="content">
     <section class="section section-news">
         <div class="container-lg">
-            <h1 class="section-title text-center font-n-b">Xəbərlər və yeniliklər</h1>
+            <h1 class="section-title text-center font-n-b">{!! __('static.news_and_updates', ['locale' => App::getLocale()]) !!}</h1>
             <div class="row">
                 @foreach($newses as $news)
                 <div class="col-md-4 col-sm-6">

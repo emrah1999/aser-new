@@ -78,5 +78,13 @@
             @yield('content')
         </main>
     </div>
+<script>
+    window.translations = {
+        pay_from_balance: "{!! __('static.pay_from_balance', ['locale' => App::getLocale()]) !!}",
+        pay_by_card: "{!! __('static.pay_by_card', ['locale' => App::getLocale()]) !!}",
+        pay_by_card: "{!! __('static.pay_by_card', ['locale' => App::getLocale()]) !!}",
+        select_payment_method: "{!! __('static.select_payment_method', ['locale' => App::getLocale()]) !!}",
+    };
+</script>
 </body>
 </html>

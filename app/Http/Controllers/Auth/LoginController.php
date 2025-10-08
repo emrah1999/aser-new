@@ -62,7 +62,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        try {
+        // try {
             $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -96,9 +96,9 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
             return $this->sendFailedLoginResponse($request);
-        } catch (\Exception $e) {
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     return redirect()->back();
+        // }
     }
 
     public function showLoginForm()

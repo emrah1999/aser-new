@@ -3,7 +3,7 @@
 <div class="content" id="content">
     <section class="section section-news-details">
         <div class="container-lg">
-            <h1 class="section-title text-center font-n-b">Xəbərlər və yeniliklər</h1>
+            <h1 class="section-title text-center font-n-b">{!! __('static.news_and_updates', ['locale' => App::getLocale()]) !!}</h1>
             <div class="media media-news-details">
                 <div class="row">
                     <div class="col-md-6">

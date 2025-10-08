@@ -79,7 +79,7 @@
             <div class="tariff-header">
                 <h3>{{ $tariff->country_name }}</h3>
                 <div class="tariff-type-selector">
-                    <button class="tariff-type-button active">Standart</button>
+                    <button class="tariff-type-button active">{!! __('static.standart', ['locale' => App::getLocale()]) !!}</button>
                     {{-- <button class="tariff-type-button">Maye</button> --}}
                 </div>
             </div>

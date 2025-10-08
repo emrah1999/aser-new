@@ -347,6 +347,39 @@ return [
 
     'shipping_days' => 'Shipping days',
 
-    'order_info'=>'Attention! If you choose a pickup point, it is mandatory to pay the delivery fee for your package in advance! Otherwise, your package will not be delivered to the specified pickup point!'
+    'order_info'=>'Attention! If you choose a pickup point, it is mandatory to pay the delivery fee for your package in advance! Otherwise, your package will not be delivered to the specified pickup point!',
+
+    'is_open' => 'Open',
+    'will_be_closed' => 'Will be closed',
+    'is_closed' => 'Closed',
+    'will_be_open' => 'Will be open',
+    'pudo' => 'Pickup & Drop-off Points',
+
+    'change' => 'Change',
+    'popup_error_text' => 'Please try again.',
+    'popup_success_text' => 'Branch changed successfully!',
+    'popup_success_title' => 'Successful operation!',
+    'please_wait' => 'Please wait...',
+    'error' => 'Error!',
+
+    'pay_from_balance' => 'Pay from balance',
+    'pay_by_card' => 'Pay by card',
+    'select_payment_method' => 'Select payment method',
+    'standart' => 'Standart',
+    'maye' => 'Liquid',
+    
+    'terms_title' => 'TERMS AND CONDITIONS FOR GOODS TRANSPORTATION SERVICE:',
+    'terms_text1' => 'ASER provides transportation of goods for personal use and courier shipments to Azerbaijan.
+Currently, the personal use limit in Azerbaijan is 300 USD per calendar month (including delivery fees). When transporting orders, the carrier assumes responsibility for customs clearance only for orders up to 300 USD. Orders exceeding this amount will be shipped only after the customs duty is paid via the Smart Customs mobile application. If the customer’s goods are held due to an incorrect customs declaration in Smart Customs or for commercial purposes, the customer assumes full responsibility, and customs clearance is carried out by the customer.',
+    'terms_text2' => 'Products within the personal use limit must be demonstrably intended for personal use and not for commercial purposes. If an individual exceeds the personal use limit or if the shipment is suspected to be for commercial purposes, the goods are subject to customs duty and value-added tax by the customs authority. For more information, please follow the link below:',
+    'terms_text3' => 'If the customer’s shipment is held by the customs authority, the carrier informs the customer. If the customer wishes to collect the package directly from customs, they pay the carrier the shipping fee. The carrier then provides the customer with an air waybill to receive the package. Using this document, the customer completes customs formalities at the Main Customs Office of Air Transport and collects the shipment from Baku Cargo Terminal, paying the storage fees.',
+    'terms_text4' => 'Insurance of the ordered goods is not provided by the carrier, and the company assumes no liability in this regard. Until the package is received at the carrier’s foreign warehouse, all inquiries should be directed solely to the seller store.',
+    'terms_text5' => 'When ordering products to the foreign warehouse, the customer must enter the address exactly as indicated on the ASER website. If the ID code and the registered person’s name and surname at the end of the address are incorrect, the package may be delivered to unknown recipients. The carrier bears no responsibility for packages with incorrect addresses.',
+    'terms_text6' => 'The carrier bears no responsibility for defective items, or for mistakes in size, color, type, etc., of goods in the transported package. In such cases, the customer may only report the issue to the seller store to resolve the problem.',
+    'terms_text7' => 'For shipments from the USA, Canada, Germany, and the UK, packages larger than 100 cm are charged based on both volumetric and physical weight, and the higher value is used to calculate the shipping cost.
+For shipments from Turkey, packages larger than 60 cm are charged based on both volumetric and physical weight, and the higher value is used for shipping cost calculation.
+Regardless of volume, shipments delivered in plastic bags are charged based only on PHYSICAL WEIGHT.',
+
+'news_and_updates' => 'News and Updates',
 
 ];

@@ -1223,8 +1223,8 @@ function paid_package_new(e, locale, url) {
         showCloseButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        cancelButtonText: 'Kartla ödə',
-        confirmButtonText: 'Balansdan ödə'
+        cancelButtonText: window.translations.pay_from_balance,
+        confirmButtonText: window.translations.pay_by_card
 
     }).then(function (result) {
         if (result.dismiss === swal.DismissReason.cancel) {
@@ -1746,12 +1746,12 @@ function bulk_paid_package_new(e, url) {
     let confirm_message = $(e).attr("data-confirm");
 
     swal({
-        title: 'Ödəniş üsulunu seçin',
+        title: window.translations.select_payment_method,
         type: 'warning',
         showCancelButton: true,
         showCloseButton: true,
-        cancelButtonText: 'Kartla ödə',
-        confirmButtonText: 'Balansdan ödə',
+        cancelButtonText: window.translations.pay_from_balance,
+        confirmButtonText: window.translations.pay_by_card,
         cancelButtonColor: '#d33',
         confirmButtonColor: '#3085d6'
     }).then(function (result) {
