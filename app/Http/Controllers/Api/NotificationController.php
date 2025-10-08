@@ -49,7 +49,8 @@ class NotificationController extends Controller
 
             if ($userDevice != null){
                 DB::table('user_devices')->where('device_id', $authKey)->update([
-                    'fcm_token' => $request->fcm_token
+                    'fcm_token' => $request->fcm_token,
+                    'platform'=>$request->platform
                 ]);
 
                 return response()->json([
@@ -63,7 +64,8 @@ class NotificationController extends Controller
                     DB::table('user_devices')->insert([
                         'fcm_token' => $request->fcm_token,
                         'device_id' => $authKey,
-                        'user_id' => $token->client_id
+                        'user_id' => $token->client_id,
+                        'platform'=>$request->platform
                     ]);
 
                     return response()->json([

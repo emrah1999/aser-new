@@ -111,7 +111,7 @@
                                         @foreach($spainLiquidTariffs as $tariff)
                                             <tr class="table-tarifs__tbody-tr">
                                                 @php($rate = $tariff->rate == 0 ? $tariff->charge : $tariff->rate)
-                                                @if($tariff->to_weight >= 1000)
+                                                @if($tariff->to_weight > 1000)
                                                     <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight', ['from_weight' => $tariff->from_weight  ]) !!}</td>
                                                 @elseif($tariff->to_weight > 9)
                                                     <td class="table-tarifs__tbody-td font-n-b">{!! __('static.tariff_from_weight2', ['from_weight' => $tariff->from_weight ,'to_weight' => $tariff->to_weight]) !!}</td>

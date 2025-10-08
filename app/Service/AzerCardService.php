@@ -9,8 +9,9 @@ class AzerCardService
 {
 //    private $baseUrl = "https://testmpi.3dsecure.az/cgi-bin/";
     private $baseUrl = "https://mpi.3dsecure.az/cgi-bin/";
-//    private $callBackUrl="https://front.ailemiz.az/az/account/special-order
+//    private $callBackUrl="https://front.ailemiz.az/az/account/special-order";
     private $callBackUrl="https://asercargo.az/az/account/special-order";
+    private $callBackAppUrl="asercargo://app/orders";
     private $merchName="Asercago.az";
 //    private $merchUrl="http://front.ailemiz.az";
 
@@ -102,7 +103,7 @@ class AzerCardService
     }
 
 
-    public function buildPaymentData(array $order): array
+    public function buildPaymentData(array $order,$api=false)
     {
         $nonce = bin2hex(random_bytes(8));
 
@@ -121,7 +122,7 @@ class AzerCardService
             'MERCH_GMT'  => $this->timezone,
             'TIMESTAMP'  => now('UTC')->format('YmdHis'),
             'NONCE'      => $nonce,
-            'BACKREF'    => $this->callBackUrl,
+            'BACKREF'    => $api?$this->callBackAppUrl:$this->callBackUrl,
             'LANG'       => $this->country,
             'NAME'       => $order['customer_name'],
             'M_INFO'     => base64_encode(json_encode([
@@ -156,6 +157,23 @@ class AzerCardService
         ];
 
         $macFields = ['AMOUNT', 'CURRENCY', 'TERMINAL', 'TRTYPE', 'ORDER', 'RRN', 'INT_REF'];
+        $macSource = $this->generateMacSource($data, $macFields);
+        $data['P_SIGN'] = $this->generatePsign($macSource);
+
+        return $data;
+    }
+
+    public function checkStatus($array){
+        $data = [
+            'TRAN_TRTYPE' => 1,
+            'ORDER'      => $array['ORDER'],
+            'TERMINAL'   => $this->terminal,
+            'TRTYPE'     => 90,
+            'TIMESTAMP'  => $array['TIMESTAMP'],
+            'NONCE'      => $array['NONCE'],
+        ];
+
+        $macFields = ['ORDER', 'TERMINAL', 'TRTYPE', 'TIMESTAMP', 'NONCE'];
         $macSource = $this->generateMacSource($data, $macFields);
         $data['P_SIGN'] = $this->generatePsign($macSource);
 

@@ -80,10 +80,11 @@
                                     <label class="form__label" for="passport_prefix">{!! __('auth.PassportSeries') !!}</label>
                                     <div class="form__select-wrapper">
                                         <select class="form__select" name="passport_prefix" id="passport_prefix">
-                                            <option value="{{Auth::user()->passport_series}}" selected>{{Auth::user()->passport_series}}</option>
-                                            <option value="AZE">AZE</option>
-                                            <option value="MYI">MYI</option>
-                                            <option value="DYI">DYI</option>
+                                            <option value="AA" {{Auth::user()->passport_series=='AA'?'selected':''}} >AA</option>
+                                            <option value="AB" {{Auth::user()->passport_series=='AB'?'selected':''}}>AB</option>
+                                            <option value="AZE" {{Auth::user()->passport_series=='AZE'?'selected':''}}>AZE</option>
+                                            <option value="MYI" {{Auth::user()->passport_series=='MYI'?'selected':''}}>MYI</option>
+                                            <option value="DYI" {{Auth::user()->passport_series=='DYI'?'selected':''}}>DYI</option>
                                         </select>
                                     </div>
                                     <div class="invalid-feedback"></div>
@@ -163,6 +164,11 @@
                                                         <option selected value="RU">RU
                                                         </option>
                                                         @break
+                                                    @default
+                                                        <option value="AZ">AZ</option>
+                                                        <option value="EN">EN</option>
+                                                        <option  value="RU">RU
+                                                    @break
                                                 @endswitch
                                             </select>
                                         </div>
@@ -209,6 +215,11 @@
                                                         <option value="EN">EN</option>
                                                         <option selected value="RU">RU
                                                         </option>
+                                                        @break
+                                                    @default
+                                                        <option value="AZ">AZ</option>
+                                                        <option value="EN">EN</option>
+                                                        <option  value="RU">RU
                                                         @break
                                                 @endswitch
                                             </select>

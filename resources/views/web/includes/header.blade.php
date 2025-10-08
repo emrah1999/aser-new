@@ -217,6 +217,12 @@
                                             </a>
                                         </li>
                                         <li class="nav-profile-menu__item">
+                                            <a href="{{ route('shipping_days.index', ['locale' => App::getLocale()]) }}"
+                                               class="nav-profile-menu__link d-flex justify-content-start align-items-center">
+                                                <span class="nav-profile-menu__link-title">{!! __('static.shipping_days') !!}</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-profile-menu__item">
                                             <a href="{{route("get_user_settings", ['locale' => App::getLocale()])}}" class="nav-profile-menu__link d-flex justify-content-start align-items-center ">
                                                 <span class="nav-profile-menu__link-title">Profil</span>
                                             </a>

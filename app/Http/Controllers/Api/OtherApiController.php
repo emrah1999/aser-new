@@ -54,7 +54,8 @@ class OtherApiController extends Controller
         $data = Settings::query()->first();
         return response()->json([
             'status' => 'success',
-            'data' => $data->app_release==1 ? true : false
+            'data' => $data->app_release==1 ? true : false,
+            'data_ios' => $data->ios_release==1 ? true : false
         ]);
     }
     public function seller()

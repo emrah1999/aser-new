@@ -1613,14 +1613,16 @@ class BalanceController extends Controller
         $data1 = $request->all();
         if ($data1['TRTYPE'] == 1) {
             $model = new AzerCardService();
-            $data = $model->checkTrType($data1);
-            Log::channel('azeri_card')->info("Azercard request trtype22 " . json_encode($data));
+            $data = $model->checkStatus($data1);
+            Log::channel('azeri_card')->info("Azercard request check status " . json_encode($data));
             $response = Http::asForm()->post('https://mpi.3dsecure.az/cgi-bin/cgi_link', $data);
 
-            Log::channel('azeri_card')->info("Azercard response link " . json_encode($response->body()));
-            $formatted = str_replace("\n", "&", $response);
 
-            parse_str($formatted, $data_r);
+            Log::channel('azeri_card')->info("Azercard response check status " . json_encode($response->body()));
+//            $formatted = str_replace("\n", "&", $response);
+
+//            parse_str($formatted, $data_r);
+            $data_r=json_decode($response);
             $payment_task = PaymentTask::where(['payment_key' => $data['NONCE'], 'type' => 'azeri-card', 'status' => 0])
                 ->orderBy('id', 'desc')
                 ->select('id', 'payment_type', 'order_id', 'packages', 'amount', 'created_by', 'is_api')
@@ -1628,7 +1630,7 @@ class BalanceController extends Controller
 
             $trans_id = $data['NONCE'];
 
-            $action = $data_r['action'] ?? null;
+            $action = $data_r->actionCode ?? null;
 
             $res_code = null;
             $code_control = false;
@@ -1639,7 +1641,9 @@ class BalanceController extends Controller
                 case '0':
                     {
                         $rc_description = "Uğurlu əməliyyat";
-                        $rc_control = true;
+                        if($data_r->responseCode==00){
+                            $rc_control=true;
+                        }
                     }
                     break;
                 case '1':
@@ -1684,6 +1688,8 @@ class BalanceController extends Controller
 
                 }
             }
+
+            Log::channel('azeri_card')->info("Azercard  ".$rc_control." rc_description " . $rc_description);
             $is_paid = 0;
             if ($rc_control) {
                 $is_paid = 1;

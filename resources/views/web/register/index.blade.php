@@ -328,6 +328,9 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                                             <option value="AA" {{ old('passport_series') == 'AA' ? 'selected' : '' }}>
                                                 AA
                                             </option>
+                                            <option value="AB" {{ old('passport_series') == 'AB' ? 'selected' : '' }}>
+                                                AB
+                                            </option>
                                             <option value="AZE" {{ old('passport_series') == 'AZE' ? 'selected' : '' }}>
                                                 AZE
                                             </option>
@@ -400,7 +403,7 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                                         <span class="eye-icon" id="togglePassword1"
                                               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">
                                         <i class="fas fa-eye"></i>
-                                    </span>z
+                                    </span>
                                     </div>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -661,12 +664,13 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
             const branchSelect = document.getElementById('userBranch');
             const hiddenContainer = document.getElementById('hiddenInputContainer');
 
+
             citySelect.addEventListener('change', function () {
                 const selectedOption = this.options[this.selectedIndex];
                 const cityId = parseInt(selectedOption.getAttribute('data-id'));
 
                 branchSelect.innerHTML = '<option value="0" disabled selected>{!! __('static.branch') !!}</option>';
-
+                console.log(cityId)
                 if (cityId === 47) {
                     branchs.forEach(branch => {
                         const option = document.createElement('option');
@@ -675,6 +679,7 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                         branchSelect.appendChild(option);
                         branchSelect.disabled = false;
                     });
+                    hiddenContainer.innerHTML = "";
                 } else {
                     const option = document.createElement('option');
                     // option.value = nesimiBranch.id;
@@ -682,7 +687,7 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                     // option.selected = true;
                     branchSelect.appendChild(option);
                     branchSelect.disabled = true;
-                    hiddenContainer.innerHTML = '<input type="hidden" name="branch_id" value="15">';
+                    hiddenContainer.innerHTML = '<input type="hidden" name="branch_id" value="1">';
                 }
             });
 
