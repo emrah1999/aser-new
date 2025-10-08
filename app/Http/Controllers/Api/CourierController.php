@@ -253,8 +253,8 @@ class CourierController extends Controller
                 'package.in_baku' => 1,
                 'package.is_warehouse' => 3,
                 'has_courier' => 0,
-                'package.branch_id'=>1
             ])
+            ->whereIn('package.branch_id',[1,17])
             ->whereNull('package.delivered_by')
             ->whereNull('package.deleted_by')
             ->orderBy('package.client_id')
@@ -303,10 +303,37 @@ class CourierController extends Controller
                 $rate_to_azn = 1;
             }
 //            $amount_azn = ($package->amount - $package->paid) * $rate_to_azn;
-            $amount_azn = $package->amount_azn;
-            $amount_azn = sprintf('%0.2f', $amount_azn);
+            $amount = $package->amount_azn;
+            $external_debt = $package->external_w_debt_azn;
+            $internal_debt = $package->internal_w_debt;
+            $paid_azn = $package->paid_azn;
+
+            if ($paid_azn > 0) {
+                $amount = $paid_azn - $amount;
+
+                if ($amount > 0) {
+                    $external_debt -= $amount;
+                }
+
+                if ($amount != 0 && $external_debt != 0) {
+                    $internal_debt_collect = $external_debt + $internal_debt;
+                    $external_debt = $external_debt > 0 ? $external_debt : 0;
+                    $internal_debt = $external_debt > 0 ? $internal_debt : $internal_debt_collect;
+                    $amount = 0;
+                } else {
+                    $internal_debt = $internal_debt;
+                    $amount = 0;
+                }
+
+
+            }
+            $amount_azn = sprintf('%0.2f', $amount);
+            $external_amount_azn = sprintf('%0.2f', $external_debt);
+            $internal_amount_azn = sprintf('%0.2f', $internal_debt);
 
             $package->amount = $amount_azn;
+            $package->external_w_debt = $external_amount_azn;
+            $package->internal_w_debt = $internal_amount_azn;
 
             if (strlen($package->track) > 7) {
                 $package->track = substr($package->track, strlen($package->track) - 7);

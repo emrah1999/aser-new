@@ -610,7 +610,7 @@ class AccountController extends Controller
             $counts['sent'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
                 ->where('package.is_warehouse', 2)
-                ->whereNull('package.deleted_by')
+                ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80])
                 ->whereNull('package.delivered_by')
                 ->count();
             $totalCount += $counts['sent'];
@@ -618,7 +618,7 @@ class AccountController extends Controller
             $counts['in_office'] = DB::table('package')
                 ->where('package.client_id', $this->userID)
                 ->where('package.is_warehouse', 3)
-                ->whereNull('package.deleted_by')
+                ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80])
                 ->whereNull('package.delivered_by')
                 ->count();
             $totalCount += $counts['in_office'];
@@ -746,7 +746,7 @@ class AccountController extends Controller
                             $currentStatus = 4;
 
                             // sent (gonderilib)
-                            $query->where('package.is_warehouse', 2); // flight closed
+                            $query->where('package.is_warehouse', 2)->whereNotIn('last_status_id',[60,61,62,80]); // flight closed
                             $query->whereNull('package.delivered_by');
                         }
                         break;
@@ -755,7 +755,7 @@ class AccountController extends Controller
                             $currentStatus = 5;
 
                             // in_office (baki ofisindedir)
-                            $query->where('package.is_warehouse', 3);
+                            $query->where('package.is_warehouse', 3)->whereNotIn('last_status_id',[60,61,62,80]);
                             $query->whereNull('package.delivered_by');
                         }
                         break;
@@ -2008,17 +2008,32 @@ class AccountController extends Controller
             }
             $user_basket = base64_encode(json_encode($user_basket_arr));
             //$paytr = $this->amount_send_to_paytr($country_id, $user_basket, $amount);
-            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
-            $url = $pay[2];
-            $merchant_oid = urldecode($pay[3]);
-//            $data=$this->payAzeriCard($amount, Auth::user()->id, $ip_address, $currency_id);
+//            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
+//            $url = $pay[2];
+//            $merchant_oid = urldecode($pay[3]);
+            if(!$this->api || $request->platform=="android"){
+                $data=$this->payAzeriCard($amount, Auth::user()->id, $ip_address, $currency_id);
 
 
-            SpecialOrderPayments::create([
-                'order_id' => $order_id,
-                'payment_key' => $merchant_oid,
-                'created_by' => $this->userID
-            ]);
+                SpecialOrderPayments::create([
+                    'order_id' => $order_id,
+                    'payment_key' => $data['NONCE'],
+                    'created_by' => $this->userID
+                ]);
+            }else {
+
+
+                $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
+                $url = $pay[2];
+                $merchant_oid = urldecode($pay[3]);
+
+
+                SpecialOrderPayments::create([
+                    'order_id' => $order_id,
+                    'payment_key' => $merchant_oid,
+                    'created_by' => $this->userID
+                ]);
+            }
 
             SpecialOrderStatus::create([
                 'order_id' => $order_id,
@@ -2028,10 +2043,14 @@ class AccountController extends Controller
 
 
             if ($this->api) {
-//                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+                if($request->platform=="android") {
+                    return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+                }
                 return response(['case' => 'success', 'url' => $url]);
             }
-//            return view('web.payment.payment', compact('data'));
+//            if(Auth::user()->id == 222578) {
+                return view('web.payment.payment', compact('data'));
+//            }
 
             return response(['case' => 'success', $url]);
         } catch (\Exception $exception) {
@@ -2058,7 +2077,12 @@ class AccountController extends Controller
             'phone'         =>$user->phone1
         ];
         $service=new AzerCardService();
-        $data = $service->buildPaymentData($order);
+        if($this->api){
+            $data = $service->buildPaymentData($order,true);
+        }else{
+            $data = $service->buildPaymentData($order);
+        }
+
         PaymentTask::create([
             'payment_key' => $data['NONCE'],
             'status' => 0,
@@ -2359,19 +2383,28 @@ class AccountController extends Controller
             ]);
 
             $user_basket = base64_encode(json_encode($user_basket_arr));
-//            $data=$this->payAzeriCard($total_price, Auth::user()->id, $ip_address, $currency_id);
-            $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
+//
+            if(!$this->api || $request->platform=="android"){
+                $data=$this->payAzeriCard($total_price, Auth::user()->id, $ip_address, $currency_id);
+                SpecialOrderPayments::create([
+                    'order_id' => $group->id,
+                    'payment_key' => $data['NONCE'],
+                    'created_by' => $this->userID
+                ]);
+            }else {
+                $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
 
 
-            $merchant_oid = urldecode($pay[3]);
-            $url = $pay[2];
+                $merchant_oid = urldecode($pay[3]);
+                $url = $pay[2];
 //            SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
 
-            SpecialOrderPayments::create([
-                'order_id' => $group->id,
-                'payment_key' => $merchant_oid,
-                'created_by' => $this->userID
-            ]);
+                SpecialOrderPayments::create([
+                    'order_id' => $group->id,
+                    'payment_key' => $merchant_oid,
+                    'created_by' => $this->userID
+                ]);
+            }
 
             SpecialOrderStatus::create([
                 'order_id' => $group->id,
@@ -2379,10 +2412,14 @@ class AccountController extends Controller
                 'created_by' => $this->userID
             ]);
             if ($this->api) {
-//                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+                if($request->platform=="android") {
+                return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
+                }
                 return response(['case' => 'success', 'url' => $url]);
             }
-//            return view('web.payment.payment', compact('data'));
+//            if(Auth::user()->id == 222578) {
+            return view('web.payment.payment', compact('data'));
+//            }
             return response(['case' => 'success', $url]);
 
         } catch (\Exception $exception) {
@@ -4696,6 +4733,62 @@ class AccountController extends Controller
                 $sent_status =str_replace("\n", "", html_entity_decode(__('static.sent_status'), ENT_QUOTES, 'UTF-8'));
                 $sent_status =str_replace("<p>", "", html_entity_decode($sent_status, ENT_QUOTES, 'UTF-8'));
                 $sent_status =str_replace("</p>", "", html_entity_decode($sent_status, ENT_QUOTES, 'UTF-8'));
+                $lb_statuses=[];
+                foreach (LbStatus::select('id', 'status_en', 'status_az', 'status_ru')->get() as $status) {
+                    $lang = App::getLocale();
+                    $status_key = 'status_' . $lang;
+                    $lb_statuses[$status->id] = $status->$status_key;
+                }
+                $counts['is_warehouse'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.is_warehouse', 1)
+                    ->whereNull('package.deleted_by')
+                    ->whereNull('package.delivered_by')
+                    ->count();
+                $counts['sent'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.is_warehouse', 2)
+                    ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80])
+                    ->whereNull('package.delivered_by')
+                    ->count();
+
+                $counts['in_office'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.is_warehouse', 3)
+                    ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80])
+                    ->whereNull('package.delivered_by')
+                    ->count();
+                $counts['sorting'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.last_status_id', 60)
+                    ->whereNull('package.deleted_by')
+                    ->whereNull('package.delivered_by')
+                    ->count();
+                $counts['waiting_for_payment'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.last_status_id', 61)
+                    ->whereNull('package.deleted_by')
+                    ->whereNull('package.delivered_by')
+                    ->count();
+                $counts['paid-sorting'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.last_status_id', 80)
+                    ->whereNull('package.deleted_by')
+                    ->whereNull('package.delivered_by')
+                    ->count();
+                $counts['out_for_delivery'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->where('package.last_status_id', 62)
+                    ->whereNull('package.deleted_by')
+                    ->whereNull('package.delivered_by')
+                    ->count();
+
+
+                $counts['delivered'] = DB::table('package')
+                    ->where('package.client_id', $this->userID)
+                    ->whereNotNull('package.delivered_by')
+                    ->whereNull('package.deleted_by')
+                    ->count();
                 $statuses = array(
 //                [
 //                    'id'=>null,
@@ -4703,20 +4796,36 @@ class AccountController extends Controller
 //                ],
                     [
                         'id' => 3,
-                        'title' => __('static.in_warehouse_status')
+                        'title' => "Xarici anbardadır (".$counts['is_warehouse'].")"
                     ],
                     [
                         'id' => 4,
-                        'title' => $sent_status
+                        'title' => "Anbardan göndərilib (".$counts['sent'].")"
+                    ],
+                    [
+                        'id' => 11,
+                        'title' => $lb_statuses[60]." (".$counts['sorting'].")"
+                    ],
+                    [
+                        'id' => 12,
+                        'title' => $lb_statuses[61]." (".$counts['waiting_for_payment'].")"
+                    ],
+                    [
+                        'id' => 13,
+                        'title' => $lb_statuses[80]." (".$counts['paid-sorting'].")"
+                    ],
+                    [
+                        'id' => 14,
+                        'title' => $lb_statuses[62]." (".$counts['out_for_delivery'].")"
                     ],
                     [
                         'id' => 5,
-                        'title' => __('static.in_baku_status')
+                        'title' => "Baku ofisindədir (".$counts['in_office'].")"
                     ],
                     [
                         'id' => 6,
-                        'title' => __('static.archive_status')
-                    ]
+                        'title' => "Arxiv (".$counts['delivered'].")"
+                    ],
                 );
                 return compact('statuses');
             }
@@ -5012,8 +5121,8 @@ class AccountController extends Controller
                     'package.in_baku' => 1,
                     'package.is_warehouse' => 3,
                     'has_courier' => 0,
-                    'package.branch_id' => 1
                 ])
+                ->whereIn('package.branch_id',[1,17])
                 ->whereNull('package.delivered_by')
                 ->whereNull('package.deleted_by')
                 ->orderBy('package.client_id')
@@ -6403,6 +6512,8 @@ class AccountController extends Controller
 
             $query = $query->orderByRaw("CASE WHEN filial.id = ? THEN 0 ELSE 1 END", [$userBranchId])
                 ->orderBy(DB::raw('id = ' . $userBranchId), 'desc');;
+        }else{
+            return app(OurServicesController::class)->branchNew();
         }
 
         $branches = $query->select(

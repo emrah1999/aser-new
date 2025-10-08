@@ -487,7 +487,7 @@ class RegisterController extends Controller
 			 $request->email = $this->convert_to_ascii($request->email);
 			 $request->phone1 = $this->convert_to_ascii($request->phone1);
 			 $request->phone2 = $this->convert_to_ascii($request->phone2);
-			 $request->city = $this->convert_to_ascii($request->city);
+//			 $request->city = $this->convert_to_ascii($request->city);
 			 $request->address1 = $this->convert_to_ascii($request->address1);
 			 $request->passport_series = $this->convert_to_ascii($request->passport_series);
 			 $request->passport_number = $this->convert_to_ascii($request->passport_number);
@@ -568,7 +568,7 @@ class RegisterController extends Controller
 
              if ($request->is_legality==0){
                  if($request->is('api/*')){
-                     $request->birthday = \Carbon\Carbon::createFromFormat('d.m.Y', $request->birthday)->format('Y-m-d');
+                     $request->birthday = \Carbon\Carbon::parse($request->birthday)->format('Y-m-d');
                  }
              }
 
@@ -730,7 +730,7 @@ class RegisterController extends Controller
 				 }
 			 }
 			 if($request->is('api/*')){
-				 $city=Cities::where('id',$request->city)->first();
+				 $city=Cities::where('name_az',$request->city)->whereOr('name_en',$request->city)->first();
 				 if($city){
 					 $request->city=$city->name_en;
 				 }else{
@@ -849,7 +849,7 @@ class RegisterController extends Controller
 					 'content' => __('register.sent_email_error'),
                      'error'=>1
 
- 
+
 				 ],400);
 			 }
              return $exception;
@@ -1195,7 +1195,7 @@ class RegisterController extends Controller
                 }
             }
             if($request->is('api/*')){
-                $city=Cities::where('id',$request->city)->first();
+                $city=Cities::where('name_az',$request->city)->whereOr('name_en',$request->city)->first();
                 if($city){
                     $request->city=$city->name_en;
                 }else{

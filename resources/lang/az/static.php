@@ -57,8 +57,10 @@ return [
                 müştərilərinə təklif edir
             </div>
             ',
-    'popup_site'=>'Hörmətli müştəri,<br> Artıq Bakı şəhəri üzrə 4 filial və 9 təhvil məntəqəmiz<br> fəaliyyət göstərməkdədir. <br> "Profil” - “Şəxsi məlumatlarım” bölməsinə daxil olaraq<br> Sizə uyğun filialı və ya məntəqəni seçə bilərsiniz.',
-    'popup_app'=>'Hörmətli müştəri,<br> Artıq Bakı şəhəri üzrə 4 filial və 9 təhvil məntəqəmiz fəaliyyət göstərməkdədir. <br> "Profil” - “Şəxsi məlumatlarım” bölməsinə daxil olaraq Sizə uyğun filialı və ya məntəqəni seçə bilərsiniz.',
+//    'popup_site'=>'Hörmətli müştəri,<br> Artıq Bakı şəhəri üzrə 4 filial və 9 təhvil məntəqəmiz<br> fəaliyyət göstərməkdədir. <br> "Profil” - “Şəxsi məlumatlarım” bölməsinə daxil olaraq<br> Sizə uyğun filialı və ya məntəqəni seçə bilərsiniz.',
+//    'popup_app'=>'Hörmətli müştəri,<br> Artıq Bakı şəhəri üzrə 4 filial və 9 təhvil məntəqəmiz fəaliyyət göstərməkdədir. <br> "Profil” - “Şəxsi məlumatlarım” bölməsinə daxil olaraq Sizə uyğun filialı və ya məntəqəni seçə bilərsiniz.',
+    'popup_site'=>'Diqqət! </br> Türkiyə anbar ünvanımız dəyişdi. </br>Xahiş edirik sifariş edərkən diqqətli olun.',
+    'popup_app'=>'Diqqət! </br> Türkiyə anbar ünvanımız dəyişdi. </br>Xahiş edirik sifariş edərkən diqqətli olun.',
     'no_show'=>'Bir daha göstərmə',
     'special_error_text'=>'Texniki işlər aparıldığından <br> müvəqqəti olaraq link sifarişi dayandırılıb.',
     'how_do_order' => 'Necə sifariş etməliyəm?',

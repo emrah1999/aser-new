@@ -288,10 +288,16 @@ class IndexController extends HomeController
             $height = $request->height;
             $length = $request->length;
             $volume_weight = ($width * $length * $height) / 6000;
+            $weight = str_replace(',', '.', $weight);
 
 
             if ($unit == 'gr') {
                 $weight = $weight / 1000;
+            }
+            if($country_id!=4){
+                if($type==2){
+                    $type=1;
+                }
             }
 
             $date = Carbon::today();
@@ -408,12 +414,12 @@ class IndexController extends HomeController
         ]);
         $version = Settings::query()->select('app_version','app_store_url','play_market_url')->first();
 
-        if($version->app_version == $request->version){
+//        if($version->app_version == $request->version){
             return response()->json([
                 'status' => true,
                 'message' => 'version is true',
             ]);
-        }
+//        }
         return response()->json([
             'status' => false,
             'message' => 'Tətbiqin yeni versiyası mövcuddur',

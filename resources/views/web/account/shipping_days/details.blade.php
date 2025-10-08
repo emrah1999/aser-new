@@ -61,6 +61,9 @@
                 margin-right: 4px;
             }
         }
+        .tab-pane p {
+            line-height: 19px;
+        }
     </style>
 @endsection
 
@@ -96,7 +99,7 @@
                                 @if($details)
                                     <div class="row">
                                         <p class="information col-md-11 ">
-                                            {{ $details->{'content_' . App::getLocale()} }}
+                                            {!!  $details->{'content_' . App::getLocale()} !!}
                                         </p>
                                     </div>
                                 @endif

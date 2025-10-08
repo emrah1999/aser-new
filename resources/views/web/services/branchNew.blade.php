@@ -45,7 +45,7 @@
                                                 </tr>
                                             @endforeach
                                             <span class="toggle-schedule" data-id="{{ $branch->id }}" style="cursor: pointer;">
-                                                <img src="https://front.ailemiz.az/web/images/content/chevron-down.png"
+                                                <img src="{{ asset('web/images/content/chevron-down.png') }}"
                                                      width="16" height="16"
                                                      alt="Toggle"
                                                      id="arrow-{{ $branch->id }}"
@@ -61,7 +61,7 @@
                                                 </span>
                                             @endforeach
                                             <span class="toggle-schedule" data-id="{{ $branch->id }}" style="cursor: pointer;">
-                                                <img src="https://front.ailemiz.az/web/images/content/chevron-down.png"
+                                                <img src="{{ asset('web/images/content/chevron-down.png') }}"
                                                      width="16" height="16"
                                                      alt="Toggle"
                                                      id="arrow-{{ $branch->id }}"
@@ -116,7 +116,7 @@
                                                 </tr>
                                             @endforeach
                                             <span class="toggle-schedule" data-id="{{ $branch->id }}" style="cursor: pointer;">
-                                                <img src="https://front.ailemiz.az/web/images/content/chevron-down.png"
+                                                <img src="{{ asset('web/images/content/chevron-down.png') }}"
                                                      width="16" height="16"
                                                      alt="Toggle"
                                                      id="arrow-{{ $branch->id }}"
@@ -132,7 +132,7 @@
                                                 </tr>
                                             @endforeach
                                             <span class="toggle-schedule" data-id="{{ $branch->id }}" style="cursor: pointer;">
-                                                <img src="https://front.ailemiz.az/web/images/content/chevron-down.png"
+                                                <img src="{{ asset('web/images/content/chevron-down.png') }}"
                                                      width="16" height="16"
                                                      alt="Toggle"
                                                      id="arrow-{{ $branch->id }}"
@@ -345,6 +345,12 @@
             }
             .container{
                 display: block;
+            }
+
+
+            body{
+                margin-right: 0;
+                padding-right: 0;
             }
         }
     </style>

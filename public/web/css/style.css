@@ -104,6 +104,7 @@
     left: -134px !important;
     width: 350px !important;
     overflow: auto;
+    height: 600px;
 }
 .mobile-dropdown-menu li {
     padding: 3px 15px !important;
