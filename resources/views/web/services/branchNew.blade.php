@@ -10,7 +10,7 @@
     <div class="container">
         <div class="left-panel">
             <ul class="locations overflow-x-hidden">
-                <li class="section-title">Filiallar</li>
+                <li class="section-title">{!! __('static.branches', ['locale' => App::getLocale()]) !!}</li>
                 @foreach($branches as $branch)
                     @if($branch->is_pudo == 0)
                         <li class="branch-item">
@@ -37,7 +37,7 @@
                                         </div>
                                     @endif
                                     @if($branch->is_open == 1)
-                                        <label class="opened font-n-b2">Açıqdır - Bağlanacaq
+                                        <label class="opened font-n-b2">{!! __('static.is_open', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_closed', ['locale' => App::getLocale()]) !!}
                                             @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_end_date}}
@@ -53,7 +53,7 @@
                                             </span>
                                         </label>
                                     @else
-                                        <label class="closed font-n-b2">Bağlıdır - Açılacaq
+                                        <label class="closed font-n-b2">{!! __('static.is_closed', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_open', ['locale' => App::getLocale()]) !!}
                                             @foreach($branch->work_hours_details as $day => $time)
                                                 <span> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
@@ -85,7 +85,7 @@
                         </li>
                     @endif
                 @endforeach
-                <li class="section-title">Məntəqələr</li>
+                <li class="section-title">{!! __('static.pudo', ['locale' => App::getLocale()]) !!}</li>
                 @foreach($branches as $branch)
                     @if($branch->is_pudo == 1)
                         <li class="branch-item">
@@ -108,7 +108,7 @@
                                         <br>
                                     @endif
                                     @if($branch->is_open == 1)
-                                        <label class="opened font-n-b2">Açıqdır - Bağlanacaq
+                                        <label class="opened font-n-b2">{!! __('static.is_open', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_closed', ['locale' => App::getLocale()]) !!}
                                             @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_end_date}}
@@ -124,7 +124,7 @@
                                             </span>
                                         </label>
                                     @else
-                                        <label class="closed font-n-b2">Bağlıdır - Açılacaq
+                                        <label class="closed font-n-b2">{!! __('static.is_closed', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_open', ['locale' => App::getLocale()]) !!}
                                             @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                         {{$branch->weekday_start_date}}
@@ -160,7 +160,7 @@
 
             @if($user)
                 <div class="change-branch-container">
-                    <button id="changeBranchBtn" class="change-branch-btn">Dəyişdir</button>
+                    <button id="changeBranchBtn" class="change-branch-btn">{!! __('static.change', ['locale' => App::getLocale()]) !!}</button>
                 </div>
             @endif
 
@@ -396,24 +396,24 @@
                         _token: '{{ csrf_token() }}'
                     },
                     beforeSend: function() {
-                        $('#changeBranchBtn').prop('disabled', true).text('Gözləyin...');
+                        $('#changeBranchBtn').prop('disabled', true).text('{!! __('static.please_wait', ['locale' => App::getLocale()]) !!}');
                     },
                     success: function(response) {
                         if (response.success) {
-                            Swal.fire({
+                                                        Swal.fire({
                                 icon: 'success',
-                                title: 'Uğurlu əməliyyat!',
-                                text: 'Filial uğurla dəyişdirildi!',
+                                title: '{!! __('static.popup_success_title', ['locale' => App::getLocale()]) !!}',
+                                text: '{!! __('static.popup_success_text', ['locale' => App::getLocale()]) !!}',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'OK'
+                                confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
                             });
                         } else {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Uğurlu əməliyyat!',
-                                text: response.message,
+                                title: '{!! __('static.popup_success_title', ['locale' => App::getLocale()]) !!}',
+                                text: '{!! __('static.popup_success_text', ['locale' => App::getLocale()]) !!}',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'OK'
+                                confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
                             });
                         }
                     },
@@ -421,14 +421,14 @@
                         console.log(xhr);
                         Swal.fire({
                             icon: 'error',
-                            title: 'Xəta!',
-                            text: 'Zəhmət olmasa yenidən cəhd edin.',
+                            title: '{!! __('static.error', ['locale' => App::getLocale()]) !!}',
+                            text: '{!! __('static.popup_error_text', ['locale' => App::getLocale()]) !!}',
                             confirmButtonColor: '#d33',
-                            confirmButtonText: 'Bağla'
+                            confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
                         });
                     },
                     complete: function() {
-                        $('#changeBranchBtn').prop('disabled', false).text('Dəyişdir');
+                        $('#changeBranchBtn').prop('disabled', false).text('{!! __('static.change', ['locale' => App::getLocale()]) !!}');
                     }
 
                 });

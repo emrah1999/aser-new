@@ -292,5 +292,62 @@ return [
 
     'shipping_days'=>'Göndəriş günləri',
 
-    'order_info'=>'Diqqət! Təhvil məntəqəsi seçdiyiniz halda bağlamanızın daşınma haqqını öncədən ödəməyiniz mütləqdir! Əks halda bağlamanız qeyd etdiyiniz təhvil məntəqəsinə çatdırılmayacaqdır!'
+    'order_info'=>'Diqqət! Təhvil məntəqəsi seçdiyiniz halda bağlamanızın daşınma haqqını öncədən ödəməyiniz mütləqdir! Əks halda bağlamanız qeyd etdiyiniz təhvil məntəqəsinə çatdırılmayacaqdır!',
+
+    'is_open' => 'Açıqdır',
+    'will_be_closed' => 'Bağlanacaq',
+    'is_closed' => 'Bağlıdır',
+    'will_be_open' => 'Açılacaq',
+    'pudo' => 'Məntəqələr',
+
+    'change' => 'Dəyişdir',
+    'popup_error_text' => 'Zəhmət olmasa yenidən cəhd edin.',
+    'popup_success_text' => 'Filial uğurla dəyişdirildi!',
+    'popup_success_title' => 'Uğurlu əməliyyat!',
+    'please_wait' => 'Gözləyin...',
+    'error' => 'Xəta!',
+    
+    'pay_from_balance' => 'Balansdan ödə',
+    'pay_by_card' => 'Kartla ödə',
+    'select_payment_method' => 'Ödəniş üsulunu seçin',
+    
+    'standart' => 'Standart',
+    'maye' => 'Maye',
+
+    'terms_title' => 'MALLARIN DAŞINMASI XİDMƏTİNƏ DAİR ŞƏRTLƏR TOPLUSU:',
+    'terms_text1' => 'ASER şəxsi istifadə və kuryer yüklərinin Azərbaycana daşınmasını həyata keçirir.
+                    Hazırda şəxsi istifadə limiti Azərbaycanda bir təqvim ayı ərzində 300 (USD) (çatdırılma haqqı
+                    daxil olmaqla) ABŞ dolları təşkil edir. Daşıyıcı bütün sifarişlərin daşımasını həyata keçirərkən
+                    yalnız 300 ABŞ dollarınadək sifariş olduqda gömrük sənədləşmələrini öz üzərinə götürür. Dəyəri
+                    daha yüksək məbləğdə sifarişlərin gömrük rüsumu Smart Customs mobil tətbiqində ödənildikdən
+                    sonra yola çıxacaqdır. Əgər sifarişçinin malı Smart Customsda gömrük bəyannamənisini yanlış
+                    yazdığı üçün və ya kommersiya məqsədli olduğu üçün saxlanırlarsa, bütün məsuliyyəti müştəri
+                    daşıyaraq gömrük sənədləşməsi sifarişçinin özü tərəfindən olunur.',
+    'terms_text2' => 'Şəxsi istifadə limitinə daxil olan məhsulların kommersiya
+                    məqsədli olmadığı və məhz şəxsi istifadə üçün olduğu əsaslandırıla bilməlidir.
+                    Fiziki şəxs şəxsi istifadə limitini keçdikdə və ya yükünün kommersiya məqsədli olduğu
+                    qənəati yarandıqda həmin yük gömrük orqanı tərəfindən gömrük rüsumuna və əlavə dəyər
+                    vergisinə tabe edilir. Ətraflı məlumat üçün aşağıdakı linkə daxil ola bilərsiniz:',
+    'terms_text3' => 'Sifarişçinin yükü gömrük orqanı tərəfindən saxlandıqda “Daşıyıcı”
+                    bu barədə sifarişçiyə məlumat verir. Sifarişçi gömrükdə saxlanmış bağlamasını özü götürmək
+                    istədikdə, “Daşıyıcı”ya bağlamanın daşınma haqqını ödəyir. “Daşıyıcı” isə öz növbəsində
+                    sifarişçiyə bağlamanı təhvil alması üçün aviaqaimə təqdim edir. Sifarişçi bu qaimə əsasında
+                    bağlamasını Hava Nəqliyyatında Baş Gömrük İdarəsində rəsmiləşdirir və Bakı Karqo Terminalında
+                    saxlama xərclərini ödəyərək yükünü təhvil alır.',
+    'terms_text4' => 'Sifariş edilən malların sığortalanması “Daşıyıcı” tərəfindən həyata
+                    keçirilmir və buna görə şirkət heç bir məsuliyyət daşımır. Bağlama "Daşıyıcı"nın xarici
+                    anbarında təhvil alınana qədər olan bütün müraciətlər yalnız satıcı mağazaya ünvanlanmalıdır.',
+    'terms_text5' => '“Sifarişçi” xarici anbara məhsul sifariş edərkən ünvanı ASER saytında
+                    olduğu kimi yazmalıdır, ünvan sonunda olan ID kod və qeydiyyatdan keçmiş şəxsin ad və soyadı
+                    düzgün olmadıqda bağlama naməlumlara düşə bilər, yanlış ünvan yazılmış bağlamalara görə
+                    “Daşıyıcı” heç bir məsuliyyət daşımır.',
+    'terms_text6' => 'Sifariş əsasında daşınan bağlamadakı əşyanın qüsurlu olmasına, məhsulun ölçüsünün, rənginin,
+                    çeşidinin və s. səhv gəlməsinə görə “Daşıyıcı” heç bir məsuliyyət daşımır. Bu kimi hallarda
+                    sifarişçi problemin aradan qaldırması üçün iradını ancaq satıcı mağazaya bildirə bilər.',
+    'terms_text7' => 'ABŞ, KANADA, ALMANİYA VƏ İNGİLTƏRƏ dən ölçüsü 100sm-dən böyük olan bağlamaların daşınma haqqı həm həcm həm də fiziki çəki əsasında hesablanır və alınan göstəricilərdən böyük olanı daşınma haqqının hesablanması üçün əsas çəki kimi qəbul edilir.
+                    TÜRKİYƏ dən isə ölçüsü 60sm-dən böyük olan bağlamaların daşınma haqqı həm həcm həm də fiziki çəki əsasında hesablanır və alınan göstəricilərdən böyük olanı daşınma haqqının hesablanması üçün əsas çəki kimi qəbul edilir.
+                    Həcmindən asılı olmayaraq, salafan torbalarda çatdırılan bağlamaların daşınma haqqı yalnız FİZİKİ ÇƏKİ əsasında hesablanır.',
+    
+    'news_and_updates' => 'Xəbərlər və yeniliklər',
+    
 ];

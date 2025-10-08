@@ -17,7 +17,7 @@
                     <div class="col-lg-6 col-md-5">
                         <form class="form form-login center-block" id="formLogin" name="formLogin" method="post" action="{{ route('login', ['locale' => App::getLocale()]) }}" novalidate="novalidate">
                             @csrf
-                            @if ($errors->any())
+                            {{-- @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
                                         @foreach ($errors->all() as $error)
@@ -25,7 +25,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                            @endif
+                            @endif --}}
                             <p class="form-login__title text-center font-n-b">{!! __('auth.login') !!}</p>
                             <div class="form__group">
                                 <label class="form__label" for="userEmail">{!! __('labels.email') !!}</label>
@@ -35,6 +35,15 @@
                                 <label class="form__label" for="userPassword">{!! __('labels.password') !!}</label>
                                 <input class="form__input" name="password" type="password" id="userPassword" placeholder="{!! __('static.passwordPhLogin') !!}" required>
                             </div>
+                            @if ($errors->any())
+                                <div style="color:red">
+                                    <ul style="list-style: none">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="form-login__remember_forgot-block d-flex justify-content-between align-items-center">
                                 <label class="form-checkbox form-login__form-checkbox d-flex justify-content-start align-items-center" for="userRemember">
                                     <input class="form-checkbox__input form-login__form-checkbox-input" name="remember" type="checkbox" id="userRemember">

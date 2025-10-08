@@ -3,7 +3,7 @@
 <div class="content" id="content">
     <section class="section section-questions">
         <div class="container-lg">
-            <h1 class="section-title text-center font-n-b">Suallar və cavablar</h1>
+            <h1 class="section-title text-center font-n-b">{!! __('static.faq1', ['locale' => App::getLocale()]) !!}</h1>
             <div class="accordion accordion-questions" id="accordionQuestions">
                
                     <div class="row">

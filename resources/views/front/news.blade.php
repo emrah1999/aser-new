@@ -5,7 +5,7 @@
         <div class="row">
             <!-- page title-->
             <div class="col-md-12 page_title" style="padding-top: 25px">
-                <h1>Xəbərlər və yeniliklər</h1>
+                <h1>{!! __('static.news_and_updates', ['locale' => App::getLocale()]) !!}</h1>
                 <p class="left_middle">Xidmətlərimizlə bağlı ən son yeniliklər və xəbərlər burada!</p>
             </div>
 

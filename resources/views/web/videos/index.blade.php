@@ -3,7 +3,7 @@
 <div class="content" id="content">
     <section class="section section-video">
         <div class="container-lg">
-            <h1 class="section-title text-center font-n-b">Video təlimatlar</h1>
+            <h1 class="section-title text-center font-n-b">{!! __('static.vodeos1', ['locale' => App::getLocale()]) !!}</h1>
             <div class="row">
 {{--                <div class="col-lg-4 col-md-6">--}}
 {{--                    <div class="thumbnail thumbnail-video">--}}
