@@ -36,7 +36,6 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 //    Route::get('/transport', 'IndexController@show_transport')->name("transport_page");
     Route::get('/promo-code', 'IndexController@promo_code') -> name("promo_code");
     Route::get('/index', 'IndexController@index');
-    Route::get('/onay-kodu', 'OTPController@getOnayCodeList')->name("onay_code_list");
     Route::get('/blogs', 'BlogController@index')->name("blogs");
 
 
@@ -94,6 +93,9 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
         Route::get('/', 'NewsController@show_news')->name("news_page");
         Route::get('/{id}', 'NewsController@news_details')->name("news_details");
     });
+
+
+    Route::get('/onay-kodu', 'OTPController@getOnayCodeList')->name("onay_code_list")->middleware(['auth','Login']);
 
     Route::group(['prefix' => '/account', 'middleware' => ['Login', 'auth']], function () {
 

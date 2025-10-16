@@ -365,7 +365,7 @@ return [
     'pay_from_balance' => 'Pay from balance',
     'pay_by_card' => 'Pay by card',
     'select_payment_method' => 'Select payment method',
-    'standart' => 'Standart',
+    'standart' => 'Standard',
     'maye' => 'Liquid',
     
     'terms_title' => 'TERMS AND CONDITIONS FOR GOODS TRANSPORTATION SERVICE:',

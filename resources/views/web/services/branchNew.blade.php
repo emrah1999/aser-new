@@ -405,7 +405,7 @@
                                 title: '{!! __('static.popup_success_title', ['locale' => App::getLocale()]) !!}',
                                 text: '{!! __('static.popup_success_text', ['locale' => App::getLocale()]) !!}',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
+                                confirmButtonText: {!! __('static.close', ['locale' => App::getLocale()]) !!}
                             });
                         } else {
                             Swal.fire({
@@ -413,7 +413,7 @@
                                 title: '{!! __('static.popup_success_title', ['locale' => App::getLocale()]) !!}',
                                 text: '{!! __('static.popup_success_text', ['locale' => App::getLocale()]) !!}',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
+                                confirmButtonText: {!! __('static.close', ['locale' => App::getLocale()]) !!}
                             });
                         }
                     },
@@ -424,7 +424,7 @@
                             title: '{!! __('static.error', ['locale' => App::getLocale()]) !!}',
                             text: '{!! __('static.popup_error_text', ['locale' => App::getLocale()]) !!}',
                             confirmButtonColor: '#d33',
-                            confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
+                            confirmButtonText: {!! __('static.close', ['locale' => App::getLocale()]) !!}
                         });
                     },
                     complete: function() {
