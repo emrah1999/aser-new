@@ -1358,7 +1358,7 @@ class AccountController extends Controller
                 $sellers = Seller::orderBy('title')->select('id', 'title')->get();
                 $categories = Category::orderBy('name_' . App::getLocale())
                     ->select('id', 'name_' . App::getLocale(), 'country_id')
-                    ->whereNull('country_id')
+                    ->whereNull('country_id')->whereNull('deleted_by')
                     ->get();
                 $currencies = Currency::orderBy('name')->select('id', 'name')->get();
 
@@ -6518,10 +6518,11 @@ class AccountController extends Controller
 
         $branches = $query->select(
             'filial.id',
-            'filial.name',
-            'filial.address',
+            'filial.name_' . App::getLocale() . ' as name',
+            'filial.address_' . App::getLocale() . ' as address',
             'filial.phone1',
-            'filial.work_hours',
+            'filial.phone2',
+            App::getLocale() != 'az' ? 'filial.work_hours_' . App::getLocale() . ' as work_hours' : 'filial.work_hours',
             'filial.is_pudo',
             'filial.map_location',
             'filial.weekday_start_date',
@@ -6560,16 +6561,24 @@ class AccountController extends Controller
                 $branch->is_open = 0;
             }
             $branch->today_abbr = $today;
-
-            $workHours = [
-                'be' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ça' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ç' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ca' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'c' => $branch-> weekday_start_date . '-' . $branch-> weekday_end_date,
-                'ş' => $branch-> weekend_start_date . '-' . $branch-> weekend_end_date,
+            $days = [
+                'az' => ['be' => 'B.e.', 'ça' => 'Ç.a.', 'ç' => 'Ç.', 'ca' => 'C.a.', 'c' => 'C.', 'ş' => 'Ş.'],
+                'en' => ['be' => 'Mon', 'ça' => 'Tue', 'ç' => 'Wed', 'ca' => 'Thu', 'c' => 'Fri', 'ş' => 'Sat'],
+                'ru' => ['be' => 'Пн', 'ça' => 'Вт', 'ç' => 'Ср', 'ca' => 'Чт', 'c' => 'Пт', 'ş' => 'Сб'],
             ];
-            $branch->work_hours = $workHours;
+            $locale = App::getLocale();
+
+            $labels = $days[$locale] ?? $days['az'];
+            $workHours = [
+                $labels['be'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ça'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ç'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ca'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['c'] => $branch->weekday_start_date . '-' . $branch->weekday_end_date,
+                $labels['ş'] => $branch->weekend_start_date . '-' . $branch->weekend_end_date,
+            ];
+
+            $branch->work_hours_details = $workHours;
         }
 //        return $branches;
         return view("web.branch.branchAndPudo", compact('branches'));

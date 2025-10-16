@@ -18,7 +18,7 @@
                         <div class="container">
                             <div class="left-panel">
                                 <ul class="locations">
-                                    <li class="section-title">{!! __('static.branches', ['locale' => App::getLocale()]) !!}</li>
+                                    <li class="section-title">{!! __('static.branches') !!}</li>
                                     @foreach($branches as $branch)
                                         @if($branch->is_pudo == 0)
                                             <li class="branch-item">
@@ -32,8 +32,8 @@
                                                         {{ $branch->name }} - {{ $branch->address }}
                                                         <br>
                                                         @if($branch->is_open == 1)
-                                                            <label class="opened font-n-b2">{!! __('static.is_open', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_closed', ['locale' => App::getLocale()]) !!}
-                                                                @foreach($branch->work_hours as $day => $time)
+                                                            <label class="opened font-n-b2">{!! __('static.is_open') !!} - {!! __('static.will_be_closed') !!}
+                                                                @foreach($branch->work_hours_details as $day => $time)
                                                                     <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                                             {{$branch->weekday_end_date}}
                                                                         @endif
@@ -48,8 +48,8 @@
                                             </span>
                                                             </label>
                                                         @else
-                                                            <label class="closed font-n-b">{!! __('static.is_closed', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_open', ['locale' => App::getLocale()]) !!}
-                                                                @foreach($branch->work_hours as $day => $time)
+                                                            <label class="closed font-n-b">{!! __('static.is_closed') !!} - {!! __('static.will_be_open') !!}
+                                                                @foreach($branch->work_hours_details as $day => $time)
                                                                     <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                                             {{$branch->weekday_start_date}}
                                                                         @endif
@@ -67,7 +67,7 @@
 
                                                         <div class="schedule-table" id="schedule-{{ $branch->id }}">
                                                             <table>
-                                                                @foreach($branch->work_hours as $day => $time)
+                                                                @foreach($branch->work_hours_details as $day => $time)
                                                                     <tr @if(strtolower($day) ==strtolower($branch->today_abbr) )  style="font-weight: bold;" @endif>
                                                                         <td>{{ $day }}:</td>
                                                                         <td>{{ $time }}</td>
@@ -80,7 +80,7 @@
                                             </li>
                                         @endif
                                     @endforeach
-                                    <li class="section-title">{!! __('static.pudo', ['locale' => App::getLocale()]) !!}</li>
+                                    <li class="section-title">{!! __('static.pudo') !!}</li>
                                     @foreach($branches as $branch)
                                         @if($branch->is_pudo == 1)
                                             <li class="branch-item">
@@ -96,7 +96,7 @@
                                                         <br>
                                                         @if($branch->is_open == 1)
                                                             <label class="opened font-n-b">{!! __('static.is_open', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_closed', ['locale' => App::getLocale()]) !!}
-                                                                @foreach($branch->work_hours as $day => $time)
+                                                                @foreach($branch->work_hours_details as $day => $time)
                                                                     <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                                             {{$branch->weekday_end_date}}
                                                                         @endif
@@ -112,7 +112,7 @@
                                                             </label>
                                                         @else
                                                             <label class="closed font-n-b">{!! __('static.is_closed', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_open', ['locale' => App::getLocale()]) !!}
-                                                                @foreach($branch->work_hours as $day => $time)
+                                                                @foreach($branch->work_hours_details as $day => $time)
                                                                     <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
                                                                             {{$branch->weekday_start_date}}
                                                                         @endif
@@ -130,7 +130,7 @@
 
                                                         <div class="schedule-table" id="schedule-{{ $branch->id }}">
                                                             <table>
-                                                                @foreach($branch->work_hours as $day => $time)
+                                                                @foreach($branch->work_hours_details as $day => $time)
                                                                     <tr @if(strtolower($day) ==strtolower($branch->today_abbr) )  style="font-weight: bold;" @endif>
                                                                         <td>{{ $day }}:</td>
                                                                         <td>{{ $time }}</td>
@@ -147,7 +147,7 @@
 
                                 @if($user)
                                     <div class="change-branch-container">
-                                        <button id="changeBranchBtn" class="change-branch-btn">{!! __('static.change', ['locale' => App::getLocale()]) !!}</button>
+                                        <button id="changeBranchBtn" class="change-branch-btn">{!! __('static.change') !!}</button>
                                     </div>
                                 @endif
 
@@ -412,7 +412,7 @@
                                 title: '{!! __('static.popup_success_title', ['locale' => App::getLocale()]) !!}',
                                 text: '{!! __('static.popup_success_text', ['locale' => App::getLocale()]) !!}',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
+                                confirmButtonText: {!! __('static.close', ['locale' => App::getLocale()]) !!}
                             });
                         } else {
                             Swal.fire({
@@ -420,7 +420,7 @@
                                 title: '{!! __('static.popup_success_title', ['locale' => App::getLocale()]) !!}',
                                 text: '{!! __('static.popup_success_text', ['locale' => App::getLocale()]) !!}',
                                 confirmButtonColor: '#3085d6',
-                                confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
+                                confirmButtonText: {!! __('static.close', ['locale' => App::getLocale()]) !!}
                             });
                         }
                     },
@@ -431,7 +431,7 @@
                             title: '{!! __('static.error', ['locale' => App::getLocale()]) !!}',
                             text: '{!! __('static.popup_error_text', ['locale' => App::getLocale()]) !!}',
                             confirmButtonColor: '#d33',
-                            confirmButtonText: '{!! __('static.close', ['locale' => App::getLocale()]) !!}'
+                            confirmButtonText: {!! __('static.close', ['locale' => App::getLocale()]) !!}
                         });
                     },
                     complete: function() {

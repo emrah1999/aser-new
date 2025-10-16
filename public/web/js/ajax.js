@@ -938,10 +938,10 @@ function delete_special_order(e, url) {
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'Xeyr',
+        cancelButtonText: window.translations.no,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Bəli!'
+        confirmButtonText: window.translations.yes
     }).then(function (result) {
         if (result.value) {
             swal({
@@ -1026,10 +1026,10 @@ function delete_order(e, url) {
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'Xeyr',
+        cancelButtonText: window.translations.no,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Bəli!'
+        confirmButtonText: window.translations.yes
     }).then(function (result) {
         if (result.value) {
             swal({
@@ -1223,8 +1223,8 @@ function paid_package_new(e, locale, url) {
         showCloseButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        cancelButtonText: window.translations.pay_from_balance,
-        confirmButtonText: window.translations.pay_by_card
+        cancelButtonText: window.translations.pay_by_card,
+        confirmButtonText: window.translations.pay_from_balance
 
     }).then(function (result) {
         if (result.dismiss === swal.DismissReason.cancel) {
@@ -1232,10 +1232,10 @@ function paid_package_new(e, locale, url) {
                 title: confirm_message,
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Xeyr',
+                cancelButtonText: window.translations.no,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Bəli!'
+                confirmButtonText: window.translations.yes
             }).then(function (result) {
                 if (result.value) {
                     swal({
@@ -1290,10 +1290,10 @@ function paid_package_new(e, locale, url) {
                 title: confirm_message,
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Xeyr',
+                cancelButtonText: window.translations.no,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Bəli!'
+                confirmButtonText: window.translations.yes
             }).then(function (result) {
                 if (result.value) {
                     swal({
@@ -1359,10 +1359,10 @@ function login_to_sub_account(e, url, referal_id) {
         title: confirm_message,
         type: 'warning',
         showCancelButton: true,
-        cancelButtonText: 'Xeyr',
+        cancelButtonText: window.translations.no,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Bəli!'
+        confirmButtonText: window.translations.yes
     }).then(function (result) {
         if (result.value) {
             swal({
@@ -1750,8 +1750,8 @@ function bulk_paid_package_new(e, url) {
         type: 'warning',
         showCancelButton: true,
         showCloseButton: true,
-        cancelButtonText: window.translations.pay_from_balance,
-        confirmButtonText: window.translations.pay_by_card,
+        cancelButtonText: window.translations.pay_by_card,
+        confirmButtonText: window.translations.pay_from_balance,
         cancelButtonColor: '#d33',
         confirmButtonColor: '#3085d6'
     }).then(function (result) {
@@ -1760,7 +1760,7 @@ function bulk_paid_package_new(e, url) {
                 title: confirm_message,
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Xeyr',
+                cancelButtonText: window.translations.no,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Bəli!'
@@ -1820,10 +1820,10 @@ function bulk_paid_package_new(e, url) {
                 title: confirm_message,
                 type: 'warning',
                 showCancelButton: true,
-                cancelButtonText: 'Xeyr',
+                cancelButtonText: window.translations.no,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Bəli!'
+                confirmButtonText: window.translations.yes
             }).then(function (result) {
                 if (result.value) {
                     swal({

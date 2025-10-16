@@ -55,7 +55,7 @@
                                 <div class="thumbnail thumbnail-tarifs-2 center-block">
                                     <table class="table table-tarifs">
                                         <caption class="table-tarifs__caption caption-top text-center font-n-b">
-                                            {!! __('static.standart', ['locale' => App::getLocale()]) !!}
+                                            {!! __('static.standart') !!}
                                         </caption>
                                         <tbody class="table-tarifs__tbody">
                                         @foreach($tariffAll->where('type_id', 1) as $tariff)
@@ -105,7 +105,7 @@
                                 <div class="thumbnail thumbnail-tarifs-2 center-block">
                                     <table class="table table-tarifs">
                                         <caption class="table-tarifs__caption caption-top text-center font-n-b">
-                                            {!! __('static.maye', ['locale' => App::getLocale()]) !!}
+                                            {!! __('static.maye') !!}
                                         </caption>
                                         <tbody class="table-tarifs__tbody">
                                         @foreach($spainLiquidTariffs as $tariff)
