@@ -6197,7 +6197,7 @@ class AccountController extends Controller
 
     function generateUniqueId()
     {
-        $uniqueId = 'CB' . substr(microtime(true) * 10000, -7) . rand(111, 999) . 'P';
+        $uniqueId = 'ASRP' . substr(microtime(true) * 10000, -7) . rand(111, 999);
         return $uniqueId;
     }
 
