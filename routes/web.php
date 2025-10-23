@@ -69,8 +69,7 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
 
     Route::get('/branch-station', 'AccountController@branchAndPudo')->name("branchAndPudo");
 
-    Route::get('/shipping-days', 'AccountController@get_shipping_days')->name("shipping_days.index");
-    Route::get('/shipping-days/{country_id}', 'AccountController@get_shipping_days_details')->name("shipping_days.details");
+
 
     Route::group(['prefix' => '/our-services'], function () {
         Route::get('/', 'OurServicesController@index')->name("ourServices_page");
@@ -94,8 +93,11 @@ Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () 
         Route::get('/{id}', 'NewsController@news_details')->name("news_details");
     });
 
-
-    Route::get('/onay-kodu', 'OTPController@getOnayCodeList')->name("onay_code_list")->middleware(['auth','Login']);
+    Route::group(['middleware' => ['Login', 'auth']], function () {
+        Route::get('/onay-kodu', 'OTPController@getOnayCodeList')->name("onay_code_list")->middleware(['auth', 'Login']);
+        Route::get('/shipping-days', 'AccountController@get_shipping_days')->name("shipping_days.index");
+        Route::get('/shipping-days/{country_id}', 'AccountController@get_shipping_days_details')->name("shipping_days.details");
+    });
 
     Route::group(['prefix' => '/account', 'middleware' => ['Login', 'auth']], function () {
 
