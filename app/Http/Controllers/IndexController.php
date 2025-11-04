@@ -415,11 +415,21 @@ class IndexController extends HomeController
         $version = Settings::query()->select('app_version','app_store_url','play_market_url')->first();
 
 //        if($version->app_version == $request->version){
+
+//        }
+        $can=true;
+        if($request->version=='1.1.12' && $request->platform=="andorid"){
+            $can=false;
+        }else if($request->version=='1.1.10' && $request->platform=="ios"){
+            $can=false;
+
+        }
+        if($can){
             return response()->json([
                 'status' => true,
                 'message' => 'version is true',
             ]);
-//        }
+        }
         return response()->json([
             'status' => false,
             'message' => 'Tətbiqin yeni versiyası mövcuddur',
