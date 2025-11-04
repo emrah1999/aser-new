@@ -219,7 +219,7 @@ class AccountController extends Controller
             'language' => ['required', 'string', 'max:2'],
             'address' => ['required', 'string', 'max:255'],
             // 'passport_fin' => ['required', 'string', 'max:255'],
-            'passport_prefix' => ['required', 'string', 'in:AZE,AA'],
+            'passport_prefix' => ['required', 'string', 'in:AZE,AA,AB'],
             'passport_number' => ['sometimes', 'string', 'min:7'],
             /*'location_longitude' => ['required', 'string', 'max:255'],
             'location_latitude' => ['required', 'string', 'max:255'],*/
@@ -1506,7 +1506,11 @@ class AccountController extends Controller
             $old_invoice_doc = $item_exist->invoice_doc;
 
             if (!isset($request->invoice) && $old_invoice_doc == null) {
-                //                return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('static.invoice_file_cannot_be_null')]);
+                if ($this->api) {
+                    return response(['case' => 'warning', 'title' => 'Oops!', 'content' => __('static.invoice_file_cannot_be_null')]);
+                }
+                return redirect()->route('get_package_update', ['locale' => App::getLocale(), $package_id])->with([
+                    'case' => 'warning', 'title' => 'Oops!', 'content' => __('static.invoice_file_cannot_be_null')]);
             }
 
             $package_arr = array();
@@ -2011,7 +2015,7 @@ class AccountController extends Controller
 //            $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
 //            $url = $pay[2];
 //            $merchant_oid = urldecode($pay[3]);
-            if(!$this->api || $request->platform=="android"){
+//            if(!$this->api || $request->platform=="android"){
                 $data=$this->payAzeriCard($amount, Auth::user()->id, $ip_address, $currency_id);
 
 
@@ -2020,20 +2024,20 @@ class AccountController extends Controller
                     'payment_key' => $data['NONCE'],
                     'created_by' => $this->userID
                 ]);
-            }else {
-
-
-                $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
-                $url = $pay[2];
-                $merchant_oid = urldecode($pay[3]);
-
-
-                SpecialOrderPayments::create([
-                    'order_id' => $order_id,
-                    'payment_key' => $merchant_oid,
-                    'created_by' => $this->userID
-                ]);
-            }
+//            }else {
+//
+//
+//                $pay = $this->pay_to_pashaBank_special($amount, Auth::user()->id, $ip_address, $currency_id);
+//                $url = $pay[2];
+//                $merchant_oid = urldecode($pay[3]);
+//
+//
+//                SpecialOrderPayments::create([
+//                    'order_id' => $order_id,
+//                    'payment_key' => $merchant_oid,
+//                    'created_by' => $this->userID
+//                ]);
+//            }
 
             SpecialOrderStatus::create([
                 'order_id' => $order_id,
@@ -2043,9 +2047,9 @@ class AccountController extends Controller
 
 
             if ($this->api) {
-                if($request->platform=="android") {
+//                if($request->platform=="android") {
                     return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
-                }
+//                }
                 return response(['case' => 'success', 'url' => $url]);
             }
 //            if(Auth::user()->id == 222578) {
@@ -2384,27 +2388,27 @@ class AccountController extends Controller
 
             $user_basket = base64_encode(json_encode($user_basket_arr));
 //
-            if(!$this->api || $request->platform=="android"){
+//            if(!$this->api || $request->platform=="android"){
                 $data=$this->payAzeriCard($total_price, Auth::user()->id, $ip_address, $currency_id);
                 SpecialOrderPayments::create([
                     'order_id' => $group->id,
                     'payment_key' => $data['NONCE'],
                     'created_by' => $this->userID
                 ]);
-            }else {
-                $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
-
-
-                $merchant_oid = urldecode($pay[3]);
-                $url = $pay[2];
-//            SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
-
-                SpecialOrderPayments::create([
-                    'order_id' => $group->id,
-                    'payment_key' => $merchant_oid,
-                    'created_by' => $this->userID
-                ]);
-            }
+//            }else {
+//                $pay = $this->pay_to_pashaBank_special($total_price, Auth::user()->id, $ip_address, $currency_id);
+//
+//
+//                $merchant_oid = urldecode($pay[3]);
+//                $url = $pay[2];
+////            SpecialOrderGroups::where('id', $group->id)->update(['pay_id' => $merchant_oid]);
+//
+//                SpecialOrderPayments::create([
+//                    'order_id' => $group->id,
+//                    'payment_key' => $merchant_oid,
+//                    'created_by' => $this->userID
+//                ]);
+//            }
 
             SpecialOrderStatus::create([
                 'order_id' => $group->id,
@@ -2412,9 +2416,9 @@ class AccountController extends Controller
                 'created_by' => $this->userID
             ]);
             if ($this->api) {
-                if($request->platform=="android") {
+//                if($request->platform=="android") {
                 return response()->view('web.payment.payment', compact('data'))->header('Content-Type', 'text/html');
-                }
+//                }
                 return response(['case' => 'success', 'url' => $url]);
             }
 //            if(Auth::user()->id == 222578) {
@@ -4748,14 +4752,14 @@ class AccountController extends Controller
                 $counts['sent'] = DB::table('package')
                     ->where('package.client_id', $this->userID)
                     ->where('package.is_warehouse', 2)
-                    ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80])
+                    ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80,81,82])
                     ->whereNull('package.delivered_by')
                     ->count();
 
                 $counts['in_office'] = DB::table('package')
                     ->where('package.client_id', $this->userID)
                     ->where('package.is_warehouse', 3)
-                    ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80])
+                    ->whereNull('package.deleted_by')->whereNotIn('last_status_id',[60,61,62,80,81,82])
                     ->whereNull('package.delivered_by')
                     ->count();
                 $counts['sorting'] = DB::table('package')
@@ -4778,7 +4782,7 @@ class AccountController extends Controller
                     ->count();
                 $counts['out_for_delivery'] = DB::table('package')
                     ->where('package.client_id', $this->userID)
-                    ->where('package.last_status_id', 62)
+                    ->whereIn('package.last_status_id', [62,81,82])
                     ->whereNull('package.deleted_by')
                     ->whereNull('package.delivered_by')
                     ->count();
@@ -5094,7 +5098,7 @@ class AccountController extends Controller
             $areas = CourierAreas::where('active', 1)->select('id', 'name_' . App::getLocale() . ' as name')->orderBy('name_' . App::getLocale())->get();
             $metro_stations = CourierMetroStations::select('id', 'name_' . App::getLocale() . ' as name')->orderBy('name_' . App::getLocale())->get();
 
-            $regions = CourierRegion::whereNull('deleted_at')->select('id', 'name_' . App::getLocale() . ' as name')->orderBy('name_' . App::getLocale())->get();
+            $regions = CourierRegion::whereNull('deleted_at')->select('id', 'name_' . App::getLocale() . ' as name')->orderBy('row')->orderBy('name_' . App::getLocale())->get();
 
             //$azerpost_index = DB::table('azerpost_index')->get();
             // show packages
@@ -5122,6 +5126,7 @@ class AccountController extends Controller
                     'package.is_warehouse' => 3,
                     'has_courier' => 0,
                 ])
+                ->whereNull('out_for_delivery_date')
                 ->whereIn('package.branch_id',[1,17])
                 ->whereNull('package.delivered_by')
                 ->whereNull('package.deleted_by')
