@@ -129,8 +129,10 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                       action="{{route("register", ['locale' => App::getLocale()])}}" novalidate="novalidate">
                     @csrf
                     <input class="form__input" name="is_legality" value="0" type="hidden">
-                    <h1 class="form-registration__title text-center font-n-b">{!! __('static.welcome') !!}</h1>
-                    <p class="form-registration__title-2 text-center font-n-b">{!! __('static.registerForm') !!}</p>
+                    <h1 class="form-registration__title text-center font-n-b">{{$title->register}}</h1>
+                    <p class="form-registration__title-2 text-center font-n-b">{{$title->description_register}}</p>
+                    {{-- <h1 class="form-registration__title text-center font-n-b">{!! __('static.welcome') !!}</h1>
+                    <p class="form-registration__title-2 text-center font-n-b">{!! __('static.registerForm') !!}</p> --}}
                     <div class="form-registration__btn-types d-flex justify-content-center align-items-center">
                         <div class="col">
                             <a href="{{route("register", ['locale' => App::getLocale(), 'type' => 'physical'])}}"
@@ -548,7 +550,7 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
 
     </script>
 
-    <input id="phoneSuffix" type="tel" maxlength="9" />
+    {{-- <input id="phoneSuffix" type="tel" maxlength="9" /> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -670,7 +672,7 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                 const cityId = parseInt(selectedOption.getAttribute('data-id'));
 
                 branchSelect.innerHTML = '<option value="0" disabled selected>{!! __('static.branch') !!}</option>';
-                console.log(cityId)
+                // console.log(cityId)
                 if (cityId === 47) {
                     branchs.forEach(branch => {
                         const option = document.createElement('option');

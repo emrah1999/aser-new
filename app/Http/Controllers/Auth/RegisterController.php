@@ -10,6 +10,7 @@ use App\Notifications\Emails;
 use App\Scopes\DeletedScope;
 use App\Service\SendOTPCode;
 use App\Settings;
+use App\Title;
 use App\User;
 use App\OTP;
 use Carbon\Carbon;
@@ -256,6 +257,15 @@ class RegisterController extends Controller
 
 			$language_arr['register_referral_info'] = __('register.referral_info');
             $errorType=null;
+
+			        $fields = ['register','description_register'];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+			
             if($request->input('type') == 'juridical'){
                 return view('web.register.juridical', compact(
                     'lang',
@@ -270,7 +280,8 @@ class RegisterController extends Controller
                     'cities',
                     'language_arr',
                     'branchs',
-                    'errorType'
+                    'errorType',
+					'title'
                 ));
             }
 			

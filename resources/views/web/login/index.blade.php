@@ -7,7 +7,9 @@
                     <div class="col-lg-6 col-md-7 d-none d-md-block">
                         <div class="thumbnail thumbnail-login">
                             <div class="thumbnail-login__caption">
-                                <h1 class="thumbnail-login__title font-n-b">{!! __('static.welcome') !!}</h1>
+                                {{-- <h1 class="thumbnail-login__title font-n-b">{!! __('static.welcome') !!}</h1> --}}
+                                <h1 class="section-title text-center font-n-b mb-3">{{$title->login}}</h1>
+                                <p class="section__desc text-center mb-2">{{$title->description_login}}</p>
                             </div>
                             <div class="thumbnail-login__img-block">
                                 <img class="thumbnail-login__img img-responsive" src="/web/images/content/login/login.png" alt="Login">

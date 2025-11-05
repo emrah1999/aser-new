@@ -81,16 +81,19 @@
             }
         })
     })
-
-    document.querySelector('.media-profile__left').addEventListener('mouseover', function() {
-        document.querySelector('.logout-menu').style.display = 'block';
-    });
-
-    document.querySelector('.media-profile__left').addEventListener('mouseleave', function() {
-        document.querySelector('.logout-menu').style.display = 'none';
-    });
 </script>
 
+@if(Auth::check())
+    <script>
+        document.querySelector('.media-profile__left').addEventListener('mouseover', function() {
+            document.querySelector('.logout-menu').style.display = 'block';
+        });
+
+        document.querySelector('.media-profile__left').addEventListener('mouseleave', function() {
+            document.querySelector('.logout-menu').style.display = 'none';
+        });
+    </script>
+@endif
 <script>
 
     document.querySelector('.nav-languages__link').addEventListener('click', function(e) {

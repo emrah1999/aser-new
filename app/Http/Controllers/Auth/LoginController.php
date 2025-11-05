@@ -6,7 +6,9 @@ use App\ExchangeRate;
 use App\Http\Controllers\Controller;
 use App\LoginLog;
 use App\Settings;
+use App\Title;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -103,7 +105,17 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('web.login.index');
+                $fields = [
+            'login',
+            'description_login',
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+        return view('web.login.index', compact('title'));
     }
 
     public function logout(Request $request)

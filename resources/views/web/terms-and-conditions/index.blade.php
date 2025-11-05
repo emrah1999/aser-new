@@ -2,7 +2,9 @@
 @section('content')
     <section class="section section-rules">
         <div class="container-lg terms"  >
-            <h1 class="section-title text-center font-n-b">{!! __('static.terms1', ['locale' => App::getLocale()]) !!}</h1>
+            {{-- <h1 class="section-title text-center font-n-b">{!! __('static.terms1', ['locale' => App::getLocale()]) !!}</h1> --}}
+            <h1 class="section-title text-center font-n-b mb-3">{{$title->terms}}</h1>
+            <p class="section__desc text-center mb-5">{{$title->description_terms}}</p>
             <p class="section__desc">{!! __('static.terms_title', ['locale' => App::getLocale()]) !!}</p>
             <ol class="nav nav-rules">
                 <li class="nav-rules__item">{!! __('static.terms_text1', ['locale' => App::getLocale()]) !!}

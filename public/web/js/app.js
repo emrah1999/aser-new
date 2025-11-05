@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 
     let currentLang = document.documentElement.lang;
-    console.log(currentLang);
+    // console.log(currentLang);
     //BODY ANIMATION
     $("body").animate({
         opacity: 1

@@ -25,7 +25,9 @@
                     <div class="title-block">
                         <div class="row justify-content-center align-items-start">
                             <div class="col-xl-9 col-lg-8 col-md-7 col-sm-7 col-6">
-                                <h1 class="title-block__title font-n-b">{!! __('static.stores') !!}</h1>
+                                {{-- <h1 class="title-block__title font-n-b">{!! __('static.stores') !!}</h1> --}}
+                                <h1 class="title-block__title font-n-b">{{$title->seller}}</h1>
+                                <p class="section__desc">{{$title->description_seller}}</p>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-6">
                                 <form class="form form-search" name="formSearch" id="formSearch" method="post" action="/" novalidate="novalidate">

@@ -9,7 +9,8 @@
 @endsection
 @section('content')
     <div class="container new-style">
-        <h1 class="section-title text-center font-n-b">{{$title->tracking_search}}</h1>
+        <h1 class="section-title text-center font-n-b mb-3">{{$title->tracking_search}}</h1>
+        <p class="section__desc text-center mb-5">{{$title->description_tracking_search}}</p>
         <div class="form form-tracking-search center-block" name="formTrackingSearch" id="formTrackingSearch" novalidate="novalidate">
             <div class="row">
                 <form id="trackingSearchForm" action="{{ route('tracking_search_in_aser', ['locale' => app()->getLocale()]) }}" method="POST">
