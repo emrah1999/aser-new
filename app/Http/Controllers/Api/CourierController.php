@@ -235,7 +235,7 @@ class CourierController extends Controller
     public function regions(Request $request)
     {
         $header = $request->header('Accept-Language');
-        $regions = CourierRegion::whereNull('deleted_at')->select('id', 'name_' . $header . ' as name')->orderBy('name_' . $header)->get();
+        $regions = CourierRegion::whereNull('deleted_at')->select('id', 'name_' . $header . ' as name')->orderBy('row')->orderBy('name_' . $header)->get();
 
         return $regions;
     }
