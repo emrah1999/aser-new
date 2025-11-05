@@ -18,7 +18,7 @@
     <div class="content" id="content">
     <section class="section section-partners">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">{{$title->international_delivery}}</h2>
+                <h1 class="section-title text-center font-n-b">{{$title->international_delivery}}</h1>
                 <div class="owl-carousel owl-partners-2 owlPartners">
                     @foreach($countries as $country)
 

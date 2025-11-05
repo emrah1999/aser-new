@@ -6,8 +6,21 @@
         $user = Auth::check();
         $userDetail = Auth::user();
     @endphp
-
-    <div class="container">
+    <section class="section section-tarifs-country section-margin-top pt-4 pb-4 branchText">
+            <div class="container-lg">
+                <div class="media media-tarif-country">
+                    <div class="row">
+                        <div class="media-tarif-country__body">
+                            <h1 class="media-tarif-country__title font-n-b text-center fs-2">{{$text->name}}</h1>
+                            <p class="media-tarif-country__desc">
+                                {{$text->content}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <div class="container mt-0">
         <div class="left-panel">
             <ul class="locations overflow-x-hidden">
                 <li class="section-title">{!! __('static.branches', ['locale' => App::getLocale()]) !!}</li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
+use App\BranchText;
 use App\Faq;
 use App\Menu;
 use App\Service;
@@ -199,8 +200,15 @@ class OurServicesController extends Controller
             $branch->work_hours_details = $workHours;
         }
 
+        $text=BranchText::query()
+            ->select([
+                DB::raw("name_" . App::getLocale() . " as name"),
+                DB::raw("content_" . App::getLocale() . " as content")
+            ])
+            ->first();
+
         $userBranchMapLocation = Auth::check() ? DB::table('filial')->where('id', Auth::user()->branch_id)->value('map_location') : null;
 
-        return view("web.services.branchNew", compact('branches', 'userBranchMapLocation'));
+        return view("web.services.branchNew", compact('branches', 'userBranchMapLocation','text'));
     }
 }
