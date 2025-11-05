@@ -532,7 +532,9 @@
                     `;
                             sellersList.appendChild(sellerDiv);
                         });
-                        showMoreBtn.style.display = 'block';
+                        if (showMoreBtn) {
+                            showMoreBtn.style.display = 'block';
+                        }
                     })
                     .catch(error => console.log('Error:', error));
             }

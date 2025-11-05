@@ -175,7 +175,7 @@ $(".checks_region").click(function (){
     $("#checkAllRegion")[0].checked = $(".checks_region").length === checkedCheckboxSize;
 });
 
-$(document).ready(function () {
+jQuery(function($) {
 
     $("#category_id").change(function (){
         const options = $("#category_id option");
@@ -189,13 +189,14 @@ $(document).ready(function () {
             }
         }
     });
-
+if ($('.select2').length) {
     $('.select2')[0].select2();
+}
     // $('#courier_form').click(() => {
     //     console.log("MEOW");
     // });
     
-    
+    if ($.fn.ajaxForm) {
     $('#courier_form').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -228,6 +229,7 @@ $(document).ready(function () {
             }
         }
     });
+    }
 });
 
 function courier_show_packages(order_id, url, e) {
@@ -906,6 +908,7 @@ $("#checkAllRegion").click(function () {
 });
 
 $(document).ready(function () {
+    if ($.fn.ajaxForm) {
     $('#courier_form_region').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -938,4 +941,5 @@ $(document).ready(function () {
             }
         }
     });
+    }
 });

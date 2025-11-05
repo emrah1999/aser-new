@@ -533,13 +533,14 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
             let infoIcon = document.getElementById("infoIcon");
             let tooltip = document.getElementById("customTooltip");
 
-
+        if (infoIcon) {
             infoIcon.addEventListener("click", function (event) {
                 if (window.innerWidth <= 768) {
                     event.stopPropagation();
                     tooltip.style.display = tooltip.style.display === "block" ? "none" : "block";
                 }
             });
+        }
 
             document.addEventListener("click", function () {
                 if (window.innerWidth <= 768) {

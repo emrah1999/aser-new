@@ -7,6 +7,10 @@ function formValidator(config){
         throw new Error("Objects should be array");
     }
 
+    if (!config.formSelector) {
+        return;
+    }
+
     config.formSelector.addEventListener('submit', (e) => {
         e.preventDefault();
         let isValid = true;
