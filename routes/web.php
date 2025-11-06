@@ -15,10 +15,8 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', function () {
     return redirect('/' . app()->getLocale());
 });
-Route::get('/branch2','OurServiceController@branchNew');
 Route::get('/sitemap','SitemapController@sitemap');
 
-Route::get('/testMurad', [RegisterController::class, 'testMurad']);
 Route::get('/language/{locale}', 'LanguageController@set_locale_language')->name("set_locale_language");
 Route::get('/r', 'RedirectController@redirect')->name('redirect_seller');
 Route::group(['prefix' => '/{locale}', 'middleware' => 'Language'], function () {

@@ -173,7 +173,7 @@
                        <div class="media-tarif-country__body">
                            <h1 class="media-tarif-country__title font-n-b">{{$text->name}}</h1>
                            <p class="media-tarif-country__desc">
-                             {{$text->content}}
+                             {!! $text->content !!}
                           </p>
                       </div>
                   </div>
