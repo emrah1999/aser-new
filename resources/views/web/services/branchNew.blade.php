@@ -56,7 +56,7 @@
                                             {!! $branch->work_hours !!}
                                         </div>
                                     @endif
-                                    @if($branch->is_open == 1)
+                                    @if($branch->is_open == 1 && !(date('Y-m-d')=="2025-11-08" || date('Y-m-d')=="2025-11-10"))
                                         <label class="opened font-n-b2">{!! __('static.is_open', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_closed', ['locale' => App::getLocale()]) !!}
                                             @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
@@ -127,7 +127,7 @@
                                         <a href="tel:{{$branch->phone2}}" class="text-secondary small">{{$branch->phone2}}</a>
                                         <br>
                                     @endif
-                                    @if($branch->is_open == 1)
+                                    @if($branch->is_open == 1 && !(date('Y-m-d')=="2025-11-08" || date('Y-m-d')=="2025-11-10"))
                                         <label class="opened font-n-b2">{!! __('static.is_open', ['locale' => App::getLocale()]) !!} - {!! __('static.will_be_closed', ['locale' => App::getLocale()]) !!}
                                             @foreach($branch->work_hours_details as $day => $time)
                                                 <tr> @if(strtolower($day) ==strtolower($branch->today_abbr) )
