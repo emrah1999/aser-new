@@ -8,6 +8,7 @@ use App\InternationalDelivery;
 use App\Menu;
 use DB;
 use Illuminate\Support\Facades\Route;
+use Str;
 
 class SitemapService
 {
@@ -25,23 +26,32 @@ class SitemapService
         $xml->addAttribute('xmlns:news', 'http://www.google.com/schemas/sitemap-news/0.9');
 
         $routes = Route::getRoutes();
+        $allowedUris = [
+            '{locale}/login',
+            '{locale}/register',
+        ];
         foreach ($routes as $route) {
             $methods = $route->methods();
             $uri = $route->uri();
 
             if (!in_array('GET', $methods))
                 continue;
-            if (strpos($uri, '{') !== false)
-                continue;
+            // if (strpos($uri, '{') !== false)
+            //     continue;
             if (strpos($uri, 'asercargobackend.ailemiz.az') !== false)
                 continue;
             if (strpos($uri, 'api') !== false)
                 continue;
             if (strpos($uri, 'azericard') !== false)
                 continue;
-            // if (strpos($uri, 'sitemap') !== false)
-            //     continue;
-
+            if (strpos($uri, 'sitemap') !== false)
+                continue;
+            if ($route->getName() === 'ignition.healthCheck') {
+                continue;
+            }
+            if (!in_array($uri, $allowedUris)) {
+                continue;
+            }
             foreach ($this->locales as $locale) {
                 $this->addUrl($xml, $locale, $uri);
             }
@@ -100,8 +110,11 @@ class SitemapService
 
     protected function addUrl(&$xml, $locale, $uri, $lastmod = null)
     {
+        $uri = str_replace('{locale}/', '', $uri);
+        $uri = str_replace('{locale}', '', $uri);
         $uri = trim($uri, '/');
-        $loc = $locale == 'az' ? url($uri) : url($locale . '/' . $uri);
+
+        $loc = url($locale . '/' . $uri);
 
         $url = $xml->addChild('url');
         $url->addChild('loc', htmlspecialchars($loc));
