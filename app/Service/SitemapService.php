@@ -6,10 +6,8 @@ use App\Blog;
 use App\CorporativeLogistic;
 use App\InternationalDelivery;
 use App\Menu;
-use App\Models\Product; // example model
 use DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\URL;
 
 class SitemapService
 {
@@ -22,6 +20,9 @@ class SitemapService
         $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset/>');
         $xml->addAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
         $xml->addAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
+        $xml->addAttribute('xmlns:image', 'http://www.google.com/schemas/sitemap-image/1.1');
+        $xml->addAttribute('xmlns:video', 'http://www.google.com/schemas/sitemap-video/1.1');
+        $xml->addAttribute('xmlns:news', 'http://www.google.com/schemas/sitemap-news/0.9');
 
         $routes = Route::getRoutes();
         foreach ($routes as $route) {
@@ -38,8 +39,8 @@ class SitemapService
                 continue;
             if (strpos($uri, 'azericard') !== false)
                 continue;
-            if (strpos($uri, 'sitemap') !== false)
-                continue;
+            // if (strpos($uri, 'sitemap') !== false)
+            //     continue;
 
             foreach ($this->locales as $locale) {
                 $this->addUrl($xml, $locale, $uri);
@@ -107,16 +108,16 @@ class SitemapService
         if ($lastmod) {
             $url->addChild('lastmod', date('Y-m-d', strtotime($lastmod)));
         }
-        $url->addChild('changefreq', 'weekly');
-        $url->addChild('priority', '0.7');
+        $url->addChild('changefreq', 'daily');
+        $url->addChild('priority', '0.8');
 
-        $locales = $this->locales;
-        foreach ($locales as $alt) {
-            $altLoc = $alt == 'az' ? url($uri) : url($alt . '/' . $uri);
-            $link = $url->addChild('xhtml:link', '', 'http://www.w3.org/1999/xhtml');
-            $link->addAttribute('rel', 'alternate');
-            $link->addAttribute('hreflang', $alt);
-            $link->addAttribute('href', $altLoc);
-        }
+        // $locales = $this->locales;
+        // foreach ($locales as $alt) {
+        //     $altLoc = $alt == 'az' ? url($uri) : url($alt . '/' . $uri);
+        //     $link = $url->addChild('xhtml:link', '', 'http://www.w3.org/1999/xhtml');
+        //     $link->addAttribute('rel', 'alternate');
+        //     $link->addAttribute('hreflang', $alt);
+        //     $link->addAttribute('href', $altLoc);
+        // }
     }
 }
