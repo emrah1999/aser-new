@@ -348,7 +348,7 @@
             </div>
             <div class="modal-body modal-profile-logout__body">
                 <form class="form form-modal-profile form-modal-profile-logout center-block" name="formModalProfileLogout" id="formModalProfileLogout" method="get" action="{{route("logout", ['locale' => App::getLocale()])}}" novalidate="novalidate">
-                    <h6 class="form-modal-profile__title form-modal-profile-logout__title text-center font-n-b">{!! __('static.confirmLogout') !!}</h6>
+                    <p class="form-modal-profile__title form-modal-profile-logout__title text-center font-n-b">{!! __('static.confirmLogout') !!}</p>
                     <div class="row">
                         <div class="col-6">
                             <button class="btn btn-trns-black btn-block form__btn form-modal-profile__btn form-modal-profile-logout__btn font-n-b" type="button" data-bs-dismiss="modal">{!! __('static.no') !!}</button>
