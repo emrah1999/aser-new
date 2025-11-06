@@ -207,8 +207,16 @@ class OurServicesController extends Controller
             ])
             ->first();
 
+                $fields = ['branch','description_branch'];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+
         $userBranchMapLocation = Auth::check() ? DB::table('filial')->where('id', Auth::user()->branch_id)->value('map_location') : null;
 
-        return view("web.services.branchNew", compact('branches', 'userBranchMapLocation','text'));
+        return view("web.services.branchNew", compact('branches', 'userBranchMapLocation','text','title'));
     }
 }

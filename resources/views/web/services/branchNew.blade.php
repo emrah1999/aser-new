@@ -1,4 +1,11 @@
 @extends('web.layouts.web')
+@section('title')
+    {{$title->branch}}
+@endsection
+
+@section('description')
+    {{$title->description_branch}}
+@endsection
 @section('content')
     @php
         use Illuminate\Support\Facades\Auth;

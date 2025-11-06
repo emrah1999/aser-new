@@ -108,6 +108,13 @@
     </style>
 
 @endsection
+@section('title')
+    {{$title->register}}
+@endsection
+
+@section('description')
+    {{$title->description_register}}
+@endsection
 @section('content')
     @if (session('case'))
         <div class="alert alert-{{ session('case') }}" style="height: 4rem;">
@@ -130,7 +137,6 @@ if (session('errorType') && in_array(session('errorType'), ['passport_number', '
                     @csrf
                     <input class="form__input" name="is_legality" value="0" type="hidden">
                     <h1 class="form-registration__title text-center font-n-b">{{$title->register}}</h1>
-                    <p class="form-registration__title-2 text-center font-n-b">{{$title->description_register}}</p>
                     {{-- <h1 class="form-registration__title text-center font-n-b">{!! __('static.welcome') !!}</h1>
                     <p class="form-registration__title-2 text-center font-n-b">{!! __('static.registerForm') !!}</p> --}}
                     <div class="form-registration__btn-types d-flex justify-content-center align-items-center">

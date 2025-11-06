@@ -1,4 +1,11 @@
 @extends('web.layouts.web')
+@section('title')
+    {{$title->news}}
+@endsection
+
+@section('description')
+    {{$title->description_news}}
+@endsection
 @section('content')
 
 <div class="content" id="content">
@@ -6,7 +13,6 @@
         <div class="container-lg">
             {{-- <h1 class="section-title text-center font-n-b">{!! __('static.news_and_updates', ['locale' => App::getLocale()]) !!}</h1> --}}
             <h1 class="section-title text-center font-n-b mb-3">{{$title->news}}</h1>
-            <p class="section__desc text-center mb-5">{{$title->description_news}}</p>
             <div class="row">
                 @foreach($newses as $news)
                 <div class="col-md-4 col-sm-6">

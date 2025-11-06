@@ -1,11 +1,17 @@
 @extends('web.layouts.web')
+@section('title')
+    {{$title->faqs}}
+@endsection
+
+@section('description')
+    {{$title->description_faqs}}
+@endsection
 @section('content')
 <div class="content" id="content">
     <section class="section section-questions">
         <div class="container-lg">
             {{-- <h1 class="section-title text-center font-n-b">{!! __('static.faq1', ['locale' => App::getLocale()]) !!}</h1> --}}
             <h1 class="section-title text-center font-n-b mb-3">{{$title->faqs}}</h1>
-            <p class="section__desc text-center mb-5">{{$title->description_faqs}}</p>
             <div class="accordion accordion-questions" id="accordionQuestions">
                
                     <div class="row">
