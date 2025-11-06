@@ -7,14 +7,15 @@
 <script src="{{asset('web/js/calculator.js?v=1.1')}}"></script>
 <script src="{{asset('web/js/app.js?v=1.11')}}"></script>
 @if(strpos(request()->fullUrl(), "special-order")!== false)
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 @endif
-
 @if(strpos(request()->fullUrl(), "courier")!== false)
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
 @endif
-<script src="{{asset('web/js/ajax.js?ver=1.5.6')}}"></script>
-<script src="{{asset('web/js/courier.js?v=1.3')}}"></script>
+<script src="{{asset('web/js/ajax.js?ver=1.5.5')}}"></script>
+<script src="{{asset('web/js/courier.js?v=1.2')}}"></script>
 <script src="{{asset('web/js/main.js?v=1.26')}}"></script>
 <script>
 
@@ -438,18 +439,16 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const modalEl = document.getElementById('popup-modal');
-        if (modalEl) {
-            var bsModal = new bootstrap.Modal(modalEl);
-            
-            
-            if (shouldShowModal()) {
+        const bsModal = new bootstrap.Modal(modalEl);
+
+
+        if (shouldShowModal()) {
             bsModal.show();
-            }
+        }
 
         modalEl.addEventListener('hidden.bs.modal', () => {
             localStorage.setItem(MODAL_KEY, Date.now().toString());
         });
-        }
     });
     document.addEventListener("DOMContentLoaded", function () {
         var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);

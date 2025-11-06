@@ -339,6 +339,7 @@
 
 
 </header>
+@if(Auth::check())
 <div class="modal modal-profile-logout fade" id="modalProfileLogout" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-profile-logout__dialog center-block">
         <div class="modal-content modal-profile-logout__content">
@@ -361,6 +362,7 @@
         </div>
     </div>
 </div>
+@endif
 @if(($breadcrumbs ?? 0) == 1)
 <section class="section section-breadcrumbs">
     <div class="container-lg">

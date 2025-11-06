@@ -24,7 +24,8 @@ class BlogController extends Controller
 
         $fields = [
             'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
-            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search','video'
+            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search','description_tracking_search',
+            'description_blogs',
         ];
 
         $title = Title::query()

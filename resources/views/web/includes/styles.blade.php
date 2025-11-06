@@ -95,6 +95,19 @@
             max-width: 200px;
         }
     }
+    .branchText {
+        margin-top: 166px;
+    }
 
+    @media (max-width: 768px){
+        .branchText {
+             margin-top: 100px;
+         }
+    }
+    @media (max-width: 480px){
+        .branchText {
+             margin-top: 80px;
+         }
+    }
 
 </style>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Country;
 use App\ProhibitedItem;
+use App\Title;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,17 @@ class ProhibitedItemsController extends HomeController
                 ->orderBy('id')
                 ->get();
 
-            return view('web.prohibited.index', compact('items', 'countries'));
+                        $fields = ['prohibited',
+'description_prohibited',
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+
+            return view('web.prohibited.index', compact('items', 'countries', 'title'));
         } catch (\Exception $exception) {
             dd($exception);
             return view("front.error");

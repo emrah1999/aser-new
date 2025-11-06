@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{App::getLocale()}}">
 <head>
+    @if (env('CEO_SCRIPT') && (request()->routeIs('home_page') || request()->is('/')))
+        @include('web.includes.json_seo')
+    @endif
     @include('web.includes.meta')
     @include('web.includes.styles')
     @yield('styles1')

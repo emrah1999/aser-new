@@ -893,6 +893,7 @@ function show_package_items(id, track, url) {
 }
 
 $(document).ready(function () {
+    if ($.fn.ajaxForm) {
     $('#special_order_form').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -929,6 +930,7 @@ $(document).ready(function () {
             // }
         }
     });
+    }
 });
 
 function delete_special_order(e, url) {
@@ -983,6 +985,7 @@ function delete_special_order(e, url) {
 }
 
 $(document).ready(function () {
+    if ($.fn.ajaxForm) {
     $('#special_order_update_form').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -996,10 +999,12 @@ $(document).ready(function () {
             form_submit_message(response, false, false);
         }
     });
+    }
 });
 
 $(document).ready(function () {
     let redirect_url = $("#preliminary_declaration_form").attr("redirect_url");
+    if ($.fn.ajaxForm) {
     $('#preliminary_declaration_form').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -1017,6 +1022,7 @@ $(document).ready(function () {
             }
         }
     });
+    }
 });
 
 function delete_order(e, url) {
@@ -1405,6 +1411,7 @@ function login_to_sub_account(e, url, referal_id) {
 }
 
 $(document).ready(function () {
+    if ($.fn.ajaxForm) {
     $('#referal_balance_form').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -1430,6 +1437,7 @@ $(document).ready(function () {
             }
         }
     });
+    }
 });
 
 function show_items_for_special_orders(group_id, url) {
@@ -1563,6 +1571,7 @@ function local_tracking_search(url) {
 }
 
 $(document).ready(function () {
+    if ($.fn.ajaxForm) {
     $('#update_user_details_form').ajaxForm({
         beforeSubmit: function () {
             //loading
@@ -1576,6 +1585,7 @@ $(document).ready(function () {
             form_submit_message(response, true, false);
         }
     });
+    }
 });
 
 function change_profile_image(e, url) {

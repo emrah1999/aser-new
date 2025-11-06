@@ -7,6 +7,8 @@ use App\Seller;
 use App\SellerCategory;
 use App\SellerLocation;
 use App\StoreCategory;
+use App\Title;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -66,6 +68,17 @@ class SellerController extends HomeController
             $categories = StoreCategory::whereNull('deleted_by')->select('id', 'name_' . App::getLocale())->orderBy('name_' . App::getLocale())->get();
             $countries = Country::where('url_permission', 1)->select('id', 'name_' . App::getLocale(), 'new_flag')->orderBy('sort', 'desc')->orderBy('id')->get();
 
+                    $fields = [
+'seller',
+'description_seller',
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+            
             if ($request->is('api/*')) {
                 // return $request;
                 $sellers->getCollection()->transform(function ($seller) {
@@ -82,7 +95,8 @@ class SellerController extends HomeController
                 'search_arr',
                 'locations',
                 'categories',
-                'countries'
+                'countries',
+                'title'
             ));
         } catch (\Exception $exception) {
             return $exception->getMessage();

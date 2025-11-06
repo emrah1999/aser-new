@@ -17,7 +17,18 @@ class TrackingSearchController extends Controller
     public function get_tracking_search(){
         $fields = [
             'how_it_work', 'international_delivery', 'corporative_logistics', 'services',
-            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search'
+            'partners', 'blogs', 'feedback', 'faqs', 'contacts', 'tracking_search','description_tracking_search',
+            'description_blogs',
+'description_tracking_search','about','description_about','description_faqs','terms',
+'description_terms',
+'news','description_news','description_video','prohibited',
+'description_prohibited',
+'seller',
+'description_seller',
+'login',
+'description_login',
+'register',
+'description_register',
         ];
 
         $title = Title::query()

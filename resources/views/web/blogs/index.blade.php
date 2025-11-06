@@ -6,7 +6,8 @@
     <div class="content" id="content">
         <section class="section section-blogs">
             <div class="container-lg">
-                <h2 class="section-title text-center font-n-b">{{$title->blogs}}</h2>
+                <h1 class="section-title text-center font-n-b mb-3">{{$title->blogs}}</h1>
+                <p class="section__desc text-center mb-5">{{$title->description_blogs}}</p>
                 <div class="row">
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">

@@ -178,7 +178,19 @@ class IndexController extends HomeController
     }
 
     public function terms_and_conditions(){
-        return view('web.terms-and-conditions.index');
+            $fields = ['terms',
+            'description_terms',
+        ];
+
+        $title = Title::query()
+            ->select(array_map(function($field) {
+                return DB::raw("{$field}_" . App::getLocale() . " as {$field}");
+            }, $fields))
+            ->first();
+
+        return view('web.terms-and-conditions.index')->with([
+            'title' => $title
+        ]);
     }
 
     public function show_transport(){

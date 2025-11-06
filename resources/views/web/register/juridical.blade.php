@@ -428,7 +428,7 @@
 {{--        });--}}
 {{--    </script>--}}
 
-    <input id="phoneSuffix" type="tel" maxlength="9" />
+    {{-- <input id="phoneSuffix" type="tel" maxlength="9" /> --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
