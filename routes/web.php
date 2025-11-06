@@ -16,6 +16,7 @@ Route::get('/', function () {
     return redirect('/' . app()->getLocale());
 });
 Route::get('/branch2','OurServiceController@branchNew');
+Route::get('/sitemap.xml','SitemapController@sitemap');
 
 Route::get('/testMurad', [RegisterController::class, 'testMurad']);
 Route::get('/language/{locale}', 'LanguageController@set_locale_language')->name("set_locale_language");
