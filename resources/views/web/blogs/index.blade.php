@@ -2,12 +2,18 @@
 @section('breadcrumbs')
     <li class="nav-breadcrumbs__item nav-breadcrumbs__item--active">{{ optional($menu['blog'])->{'name_' . App::getLocale()} }}</li>
 @endsection
+@section('title')
+    {{$title->blogs}}
+@endsection
+
+@section('description')
+    {{$title->description_blogs}}
+@endsection
 @section('content')
     <div class="content" id="content">
         <section class="section section-blogs">
             <div class="container-lg">
                 <h1 class="section-title text-center font-n-b mb-3">{{$title->blogs}}</h1>
-                <p class="section__desc text-center mb-5">{{$title->description_blogs}}</p>
                 <div class="row">
                     @foreach($blogs as $blog)
                         <div class="col-sm-4">
